@@ -6,7 +6,6 @@ import type { NavbarTheme } from "@/components/navbar/types/navbar.types";
 
 const THEME_COLORS = {
   main: {
-    gradient: "linear-gradient(135deg, #FFF3C4, #FFD700 45%, #C8891F)",
     lotusId: "lotusGold",
     lotusStops: [
       { offset: "0%", color: "#FFF3C4" },
@@ -16,7 +15,6 @@ const THEME_COLORS = {
     strokeColor: "#FFE9A8",
   },
   about: {
-    gradient: "linear-gradient(135deg, #E9D5FF, #A855F7 45%, #6D28D9)",
     lotusId: "lotusPurple",
     lotusStops: [
       { offset: "0%", color: "#E9D5FF" },
@@ -26,7 +24,6 @@ const THEME_COLORS = {
     strokeColor: "#C4B5FD",
   },
   sponsor: {
-    gradient: "linear-gradient(135deg, #DCFCE7, #4ADE80 45%, #166534)",
     lotusId: "lotusGreen",
     lotusStops: [
       { offset: "0%", color: "#DCFCE7" },
@@ -38,11 +35,10 @@ const THEME_COLORS = {
 };
 
 export function SpiritualIcon({
-  kind,
   theme = "main",
   className = "",
 }: {
-  kind: "om" | "lotus";
+  kind?: "lotus";
   theme?: NavbarTheme;
   className?: string;
 }) {
@@ -57,63 +53,46 @@ export function SpiritualIcon({
         height: "clamp(15px, 1.3vw, 22px)",
       }}
     >
-      {kind === "om" ? (
-        <span
-          className="leading-none"
-          style={{
-            fontFamily: "serif",
-            fontWeight: 700,
-            fontSize: "clamp(15px, 1.3vw, 22px)",
-            background: colors.gradient,
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            color: "transparent",
-          }}
-        >
-          ॐ
-        </span>
-      ) : (
-        <svg viewBox="0 0 24 24" className="h-full w-full">
-          <defs>
-            <linearGradient id={colors.lotusId} x1="0%" y1="0%" x2="0%" y2="100%">
-              {colors.lotusStops.map((stop, i) => (
-                <stop key={i} offset={stop.offset} stopColor={stop.color} />
-              ))}
-            </linearGradient>
-          </defs>
-          <path
-            d="M12 3 C13.6 8 13.6 13 12 17 C10.4 13 10.4 8 12 3 Z"
-            fill={`url(#${colors.lotusId})`}
-          />
-          <path
-            d="M12 17 C9 13 6.5 10.5 4 9.5 C5 13 8 16 12 17 Z"
-            fill={`url(#${colors.lotusId})`}
-            opacity="0.92"
-          />
-          <path
-            d="M12 17 C15 13 17.5 10.5 20 9.5 C19 13 16 16 12 17 Z"
-            fill={`url(#${colors.lotusId})`}
-            opacity="0.92"
-          />
-          <path
-            d="M12 17 C7 15 3.5 13.5 1.5 12.5 C3 16 7 18 12 18 Z"
-            fill={`url(#${colors.lotusId})`}
-            opacity="0.8"
-          />
-          <path
-            d="M12 17 C17 15 20.5 13.5 22.5 12.5 C21 16 17 18 12 18 Z"
-            fill={`url(#${colors.lotusId})`}
-            opacity="0.8"
-          />
-          <path
-            d="M3 19 Q12 21 21 19"
-            stroke={colors.strokeColor}
-            strokeWidth="0.8"
-            strokeOpacity="0.5"
-            fill="none"
-          />
-        </svg>
-      )}
+      <svg viewBox="0 0 24 24" className="h-full w-full">
+        <defs>
+          <linearGradient id={colors.lotusId} x1="0%" y1="0%" x2="0%" y2="100%">
+            {colors.lotusStops.map((stop, i) => (
+              <stop key={i} offset={stop.offset} stopColor={stop.color} />
+            ))}
+          </linearGradient>
+        </defs>
+        <path
+          d="M12 3 C13.6 8 13.6 13 12 17 C10.4 13 10.4 8 12 3 Z"
+          fill={`url(#${colors.lotusId})`}
+        />
+        <path
+          d="M12 17 C9 13 6.5 10.5 4 9.5 C5 13 8 16 12 17 Z"
+          fill={`url(#${colors.lotusId})`}
+          opacity="0.92"
+        />
+        <path
+          d="M12 17 C15 13 17.5 10.5 20 9.5 C19 13 16 16 12 17 Z"
+          fill={`url(#${colors.lotusId})`}
+          opacity="0.92"
+        />
+        <path
+          d="M12 17 C7 15 3.5 13.5 1.5 12.5 C3 16 7 18 12 18 Z"
+          fill={`url(#${colors.lotusId})`}
+          opacity="0.8"
+        />
+        <path
+          d="M12 17 C17 15 20.5 13.5 22.5 12.5 C21 16 17 18 12 18 Z"
+          fill={`url(#${colors.lotusId})`}
+          opacity="0.8"
+        />
+        <path
+          d="M3 19 Q12 21 21 19"
+          stroke={colors.strokeColor}
+          strokeWidth="0.8"
+          strokeOpacity="0.5"
+          fill="none"
+        />
+      </svg>
     </span>
   );
 }

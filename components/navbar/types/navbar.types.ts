@@ -125,5 +125,5 @@ export type DropdownThemeConfig = {
 export type NavLink = {
   label: string;
   href: string;
-  icon?: "lotus" | "om";
+  icon?: "lotus";
 };

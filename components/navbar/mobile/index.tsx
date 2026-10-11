@@ -205,7 +205,7 @@ export const NavbarMobile = memo(function NavbarMobile({
                   filter: `drop-shadow(0 0 4px ${styles.accentGold}60)`,
                 }}
               >
-                ॐ
+                ✦
               </span>
               <span
                 className="mt-1 text-[10px] tracking-[0.4em] uppercase"

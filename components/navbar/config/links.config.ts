@@ -3,6 +3,7 @@ export const NAV_ASPECT = 2928 / 209; // ≈ 14.01
 export const primaryLinks = [
   { label: "HOME", href: "/" },
   { label: "EVENTS", href: "/events" },
+  { label: "ZONALS", href: "/zonals" },
   { label: "SCHEDULE", href: "/schedule" },
   { label: "SPONSORS", href: "/sponsors" },
   { label: "PASSES", href: "/passes" },
@@ -10,7 +11,6 @@ export const primaryLinks = [
   { label: "ABOUT", href: "/about" },
 ];
 
-export const secondaryLinks: { label: string; href: string; icon: "om" | "lotus" }[] = [
-  { label: "CONTACT", href: "/contact", icon: "lotus" },
-  { label: "LOGIN", href: "/login", icon: "om" },
+export const secondaryLinks: { label: string; href: string; icon: "lotus" }[] = [
+  { label: "LOGIN", href: "/login", icon: "lotus" },
 ];

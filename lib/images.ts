@@ -150,7 +150,6 @@ export const IMAGES = {
     background: `${IMAGEKIT_BASE}/about/AboutBackground.png`,
     mandalaOrnament: `${IMAGEKIT_BASE}/about/MandalaOrnament.png`,
     peacock: `${IMAGEKIT_BASE}/about/Peacock.png`,
-    omLotus: `${IMAGEKIT_BASE}/about/OmLotus.png`,
     mysticDivider: `${IMAGEKIT_BASE}/about/MysticDivider.png`,
     diyaCluster: `${IMAGEKIT_BASE}/about/DiyaCluster.png`,
     cornerOrnament: `${IMAGEKIT_BASE}/about/CornerOrnament.png`,

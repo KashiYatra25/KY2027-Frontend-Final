@@ -83,7 +83,7 @@ export function ProfileFooter({ isSigningOut, handleSignOut }: ProfileFooterProp
 
         {/* Sanskrit blessing */}
         <p className="mt-4 text-center text-sm italic" style={{ color: `${COLORS.GOLD}50` }}>
-          ॐ असतो मा सद्गमय
+          असतो मा सद्गमय
         </p>
 
         <p

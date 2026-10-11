@@ -5,16 +5,16 @@ import { ROYAL_COLORS } from "@/components/pages/login/constants/palette";
 export function CardHeader() {
   return (
     <div className="relative z-10 mb-8 text-center">
-      {/* Om symbol */}
+      {/* Decorative symbol */}
       <div
-        className="mb-4 text-5xl"
+        className="mb-4 text-4xl"
         style={{
           color: ROYAL_COLORS.GOLD,
           textShadow: `0 0 30px ${ROYAL_COLORS.GOLD}60`,
           filter: `drop-shadow(0 0 15px ${ROYAL_COLORS.GOLD}40)`,
         }}
       >
-        ॐ
+        ✦
       </div>
 
       {/* Title */}
