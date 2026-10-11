@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useApiMutation } from "wire-axon/hooks";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT } from "@/lib/api/constants";
+import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import { UpdateCartQuantitySchema } from "@/lib/api/utils/cart.schema";
 import type { CartApiResponse } from "@/lib/api/helper/types";
@@ -97,7 +97,7 @@ export function useUpdateCartQuantity() {
         successConfig: { customToast: <QuantityUpdatedToast /> },
         errorConfig: { customToast: <QuantityErrorToast /> },
       },
-      mutationOptions: { retry: 1 },
+      mutationOptions: { retry: API_RETRY },
     });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

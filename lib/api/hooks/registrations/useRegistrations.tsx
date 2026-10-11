@@ -3,7 +3,7 @@
 import { useMemo, useCallback, useState, useEffect } from "react";
 import { useApiQuery, useApiMutation } from "wire-axon/hooks";
 import { useQueryClient } from "@tanstack/react-query";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT } from "@/lib/api/constants";
+import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import { RegisterIndividualSchema, RegisterTeamSchema } from "@/lib/api/utils/registration.schema";
 import type { EventCategorySlug, ParticipationType } from "@/lib/api/helper/types";
@@ -72,7 +72,7 @@ export function useMyRegistrations() {
     queryOptions: {
       staleTime: 1000 * 60 * 2, // 2 minutes
       gcTime: 1000 * 60 * 15, // 15 minutes
-      retry: 3,
+      retry: API_RETRY,
       refetchInterval: false, // Disable polling
       refetchOnWindowFocus: false, // Don't refetch when tab regains focus
       refetchOnMount: false, // Don't refetch on every mount if data exists
@@ -134,6 +134,7 @@ export function useEventRegisterIndividual(eventSlug: string) {
       apiConfig: { timeout: API_TIMEOUT },
       bodyValidator: { bodySchema: RegisterIndividualSchema },
       mutationOptions: {
+        retry: API_RETRY,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["my-registrations"] });
         },
@@ -180,6 +181,7 @@ export function useEventRegisterTeam(eventSlug: string) {
       apiConfig: { timeout: API_TIMEOUT },
       bodyValidator: { bodySchema: RegisterTeamSchema },
       mutationOptions: {
+        retry: API_RETRY,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["my-registrations"] });
           queryClient.invalidateQueries({ queryKey: ["my-teams"] });

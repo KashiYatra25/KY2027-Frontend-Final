@@ -7,7 +7,7 @@ import {
   type ContactSchemaType,
   type ContactResponse,
 } from "@/lib/api/utils/contact.schema";
-import { BACKEND_URL, API_TIMEOUT } from "@/lib/api/constants";
+import { BACKEND_URL, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 
 interface UseContactOptions {
@@ -26,6 +26,7 @@ export function useContact(options?: UseContactOptions) {
       successConfig: options?.successToast ? { customToast: options.successToast } : undefined,
       errorConfig: options?.errorToast ? { customToast: options.errorToast } : undefined,
     },
+    mutationOptions: { retry: API_RETRY },
   });
 
   const submitContact = (contactData: ContactSchemaType) => {

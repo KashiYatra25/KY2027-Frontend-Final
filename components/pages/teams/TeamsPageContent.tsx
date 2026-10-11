@@ -27,7 +27,7 @@ export function TeamsPageContent() {
       </div>
 
       <main
-        className="min-h-screen px-4 pt-28 pb-20 sm:px-6 sm:pt-32"
+        className="min-h-screen px-4 pt-36 pb-20 sm:px-6 sm:pt-40 lg:pt-44"
         style={{
           background: `
             radial-gradient(ellipse at 20% 0%, rgba(212,168,83,0.08) 0%, transparent 50%),
@@ -39,12 +39,15 @@ export function TeamsPageContent() {
         <div className="mx-auto max-w-4xl">
           {/* Header */}
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h1 className="flex items-center gap-3 text-2xl font-bold text-white sm:text-3xl">
+            <div className="text-center sm:text-left">
+              <h1 className="flex items-center justify-center gap-3 text-2xl font-bold text-white sm:justify-start sm:text-3xl">
                 <Users className="h-7 w-7" style={{ color: TEAMS_COLORS.GOLD }} />
                 My Teams
               </h1>
-              <p className="mt-1 text-sm" style={{ color: TEAMS_COLORS.TEXT_SECONDARY }}>
+              <p
+                className="mt-1 text-center text-sm sm:text-left"
+                style={{ color: TEAMS_COLORS.TEXT_SECONDARY }}
+              >
                 Create and manage teams for event registrations
               </p>
             </div>

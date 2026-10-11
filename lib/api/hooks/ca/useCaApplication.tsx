@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useApiMutation } from "wire-axon/hooks";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT } from "@/lib/api/constants";
+import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import { CaApplicationSchema } from "@/lib/api/utils/ca.schema";
 import type { CaApplicationApiResponse } from "@/lib/api/helper/types/ca.types";
@@ -37,6 +37,7 @@ export function useCaApplication(options?: UseCaApplicationOptions) {
         successConfig: options?.successToast ? { customToast: options.successToast } : undefined,
         errorConfig: options?.errorToast ? { customToast: options.errorToast } : undefined,
       },
+      mutationOptions: { retry: API_RETRY },
     });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

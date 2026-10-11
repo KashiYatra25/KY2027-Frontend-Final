@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useApiQuery } from "wire-axon/hooks";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT } from "@/lib/api/constants";
+import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import type {
   Event,
@@ -123,7 +123,7 @@ export function useEvents(params?: EventsQueryParams) {
     queryOptions: {
       staleTime: 1000 * 60 * 5, // 5 minutes
       gcTime: 1000 * 60 * 30, // 30 minutes
-      retry: 3,
+      retry: API_RETRY,
     },
   });
 
@@ -174,7 +174,7 @@ export function useEvent(slug: string | undefined) {
       enabled: !!slug,
       staleTime: 1000 * 60 * 5,
       gcTime: 1000 * 60 * 30,
-      retry: 3,
+      retry: API_RETRY,
     },
   });
 

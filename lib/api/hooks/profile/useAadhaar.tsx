@@ -4,7 +4,7 @@ import { useApiMutation } from "wire-axon/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState, useCallback } from "react";
 import { z } from "zod";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT } from "@/lib/api/constants";
+import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { AadhaarUploadUrlSchema, ConfirmUploadSchema } from "@/lib/api/utils/aadhaar.schema";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import type {
@@ -31,7 +31,7 @@ export function useAadhaarUpload(userId?: string) {
     featureConfig: sharedFeatureConfig,
     apiConfig: { timeout: API_TIMEOUT },
     bodyValidator: { bodySchema: AadhaarUploadUrlSchema },
-    mutationOptions: { retry: false },
+    mutationOptions: { retry: API_RETRY },
   });
 
   // Confirm upload mutation
@@ -45,7 +45,7 @@ export function useAadhaarUpload(userId?: string) {
     featureConfig: sharedFeatureConfig,
     apiConfig: { timeout: API_TIMEOUT },
     bodyValidator: { bodySchema: ConfirmUploadSchema },
-    mutationOptions: { retry: 3 },
+    mutationOptions: { retry: API_RETRY },
   });
 
   // Promisified get upload URL
@@ -181,7 +181,7 @@ export function useAadhaarVerify(userId?: string) {
     featureConfig: sharedFeatureConfig,
     apiConfig: { timeout: API_TIMEOUT },
     bodyValidator: { bodySchema: z.object({}) },
-    mutationOptions: { retry: false },
+    mutationOptions: { retry: API_RETRY },
   });
 
   /**

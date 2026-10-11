@@ -3,7 +3,7 @@
 import { useMemo, useCallback, useState, useEffect } from "react";
 import { useApiQuery, useApiMutation } from "wire-axon/hooks";
 import { useQueryClient } from "@tanstack/react-query";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT } from "@/lib/api/constants";
+import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import { CreateTeamSchema } from "@/lib/api/utils/team.schema";
 
@@ -87,7 +87,7 @@ export function useMyTeams() {
     queryOptions: {
       staleTime: 1000 * 60 * 2, // 2 minutes
       gcTime: 1000 * 60 * 15, // 15 minutes
-      retry: 3,
+      retry: API_RETRY,
       refetchInterval: false,
       refetchOnWindowFocus: false,
     },
@@ -143,6 +143,7 @@ export function useCreateTeam() {
       apiConfig: { timeout: API_TIMEOUT },
       bodyValidator: { bodySchema: CreateTeamSchema },
       mutationOptions: {
+        retry: API_RETRY,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["my-teams"] });
         },
@@ -193,7 +194,7 @@ export function useUserSearch(query: string, options?: { enabled?: boolean }) {
       enabled,
       staleTime: 1000 * 60 * 1, // 1 minute
       gcTime: 1000 * 60 * 5, // 5 minutes
-      retry: 3, // Don't retry search much
+      retry: API_RETRY, // Don't retry search much
     },
   });
 

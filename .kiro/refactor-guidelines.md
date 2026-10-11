@@ -1,5 +1,19 @@
 # Frontend Code Refactor Guidelines
 
+## ⚠️ GIT OPERATIONS - PERMISSION REQUIRED
+
+**NEVER commit or push to any repository without explicit user permission.**
+
+Before any `git commit` or `git push`:
+
+1. Show the user what files will be committed
+2. Ask for explicit permission to proceed
+3. Only commit/push after user confirms
+
+This applies to ALL repositories - admin-dashboard, ky-2026-frontend, ky-2027-backend, etc.
+
+---
+
 ## Command Trigger
 
 When user says: "full frontend code refactor" or "refactor this page/component"

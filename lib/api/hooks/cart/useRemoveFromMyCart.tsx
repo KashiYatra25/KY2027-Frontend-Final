@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useApiMutation } from "wire-axon/hooks";
 import { XCircle } from "lucide-react";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT } from "@/lib/api/constants";
+import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import { RemoveFromCartSchema } from "@/lib/api/utils/cart.schema";
 import type { CartApiResponse, RemoveFromCartRequest } from "@/lib/api/helper/types";
@@ -75,7 +75,7 @@ export function useRemoveFromMyCart(options?: UseRemoveFromMyCartOptions) {
         successConfig: { customToast: options?.successToast ?? <DefaultSuccessToast /> },
         errorConfig: { customToast: options?.errorToast ?? <DefaultErrorToast /> },
       },
-      mutationOptions: { retry: 2 },
+      mutationOptions: { retry: API_RETRY },
     });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

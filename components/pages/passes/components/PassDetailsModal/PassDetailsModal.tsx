@@ -72,10 +72,10 @@ export const PassDetailsModal = memo(function PassDetailsModal({
               className="relative flex max-h-[90vh] w-full max-w-lg flex-col"
               style={{ perspective: "1000px" }}
             >
-              {/* Close button - outside the parchment for visibility */}
+              {/* Close button - top left */}
               <button
                 onClick={onClose}
-                className="absolute -top-2 -right-2 z-20 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:scale-110"
+                className="absolute -top-2 -left-2 z-20 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:scale-110"
                 style={{
                   background: "rgba(30, 15, 10, 0.95)",
                   border: "2px solid rgba(212, 168, 83, 0.6)",
