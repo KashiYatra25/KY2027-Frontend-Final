@@ -3,8 +3,12 @@
 import { useApiMutation } from "wire-axon/hooks";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT } from "@/lib/api/constants";
+import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
+import {
+  PhoneSuccessToast,
+  PhoneErrorToast,
+} from "@/components/pages/complete-profile/steps/phone/toasts";
 import type { PhoneUpdateData } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -33,9 +37,10 @@ export function useUpdatePhone(userId?: string) {
     bodyValidator: { bodySchema: UpdatePhoneSchema },
     invalidateQueryName: ["account-progress", userId!],
     toastConfig: {
-      successConfig: { message: "Phone number saved successfully!" },
-      errorConfig: { message: "Failed to save phone number. Please try again." },
+      successConfig: { customToast: <PhoneSuccessToast /> },
+      errorConfig: { customToast: <PhoneErrorToast /> },
     },
+    mutationOptions: { retry: API_RETRY },
   });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
