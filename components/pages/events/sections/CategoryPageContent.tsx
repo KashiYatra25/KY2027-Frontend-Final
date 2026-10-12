@@ -97,7 +97,7 @@ function EventCardSkeleton({ index, color }: { index: number; color: string }) {
 
 function EventsGridLoader({ color }: { color: string }) {
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-8">
       {Array.from({ length: 6 }).map((_, index) => (
         <EventCardSkeleton key={index} index={index} color={color} />
       ))}
@@ -281,7 +281,7 @@ export function CategoryPageContent({
           }}
         />
 
-        <div className="relative z-10 mx-auto max-w-6xl">
+        <div className="relative z-10 mx-auto max-w-6xl 2xl:max-w-7xl">
           {/* Category header (always shown - metadata is synchronous) */}
           <CategoryHeader category={categoryForHeader} />
 
@@ -321,7 +321,7 @@ export function CategoryPageContent({
           ) : subEvents.length === 0 ? (
             <EmptyEvents categoryName={categoryMeta.name} color={categoryMeta.color} />
           ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-8">
               {subEvents.map((event, index) => (
                 <SubEventCard
                   key={event.id}

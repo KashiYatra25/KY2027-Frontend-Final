@@ -85,7 +85,7 @@ export const VisionSection = memo(function VisionSection() {
   if (isMobile) {
     return (
       <section className="relative px-4 py-16">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl 2xl:max-w-7xl">
           <div className="mb-12 text-center">
             <p className="mb-3 text-sm font-bold tracking-[0.3em] text-[#D4A853] uppercase">
               What We&apos;re About
@@ -120,7 +120,7 @@ export const VisionSection = memo(function VisionSection() {
           "linear-gradient(180deg, transparent 0%, rgba(124, 45, 18, 0.05) 50%, transparent 100%)",
       }}
     >
-      <div className="mx-auto flex h-full w-full max-w-6xl flex-col px-4 pt-28 pb-8 sm:px-6 sm:pt-32">
+      <div className="mx-auto flex h-full w-full max-w-6xl flex-col px-4 pt-28 pb-8 sm:px-6 sm:pt-32 2xl:max-w-7xl">
         {/* Section header - improved UI */}
         <div className="mb-4 text-center">
           {/* Decorative line above */}

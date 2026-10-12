@@ -356,10 +356,10 @@ export function initPartyMode(ctx: IntroCtx) {
   }
 
   /* ---------- tap anywhere in the concert / the ENTER plate = more chaos ---------- */
+  // Confetti and shock waves on tap disabled - kept only vibration
   ctx.on(document, "pointerdown", (e: PointerEvent) => {
     if (!run || (e.target as Element).closest("[data-ui]")) return;
-    confetti(e.clientX, e.clientY, 45, -Math.PI / 2, 1.3, HH * 0.6);
-    shock(e.clientX, e.clientY, 520, R(0, 360), 3);
+    // confetti and shock removed
     dropShake = Math.max(dropShake, 0.35);
     navigator.vibrate && navigator.vibrate(15);
   });

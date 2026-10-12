@@ -160,7 +160,7 @@ export function CompleteProfileContent() {
           `,
         }}
       >
-        <div className="mx-auto max-w-4xl">{renderContent()}</div>
+        <div className="mx-auto max-w-4xl lg:max-w-5xl 2xl:max-w-6xl">{renderContent()}</div>
       </main>
     </>
   );

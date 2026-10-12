@@ -65,7 +65,7 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
           `,
         }}
       >
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-5xl 2xl:max-w-6xl">
           {isLoading || caLoading ? (
             <ProfileLoader />
           ) : isError ? (

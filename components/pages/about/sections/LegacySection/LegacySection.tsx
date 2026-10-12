@@ -31,7 +31,7 @@ export const LegacySection = memo(function LegacySection() {
         <MusicNotesSVG className="h-16 w-16 opacity-30" animate={!isMobile} />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl">
+      <div className="relative z-10 mx-auto max-w-6xl 2xl:max-w-7xl">
         {/* Section header */}
         {isMobile ? (
           <div className="mb-10 text-center">

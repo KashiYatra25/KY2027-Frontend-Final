@@ -50,7 +50,7 @@ export const CTASection = memo(function CTASection() {
         </>
       )}
 
-      <div className="relative z-10 mx-auto max-w-4xl">
+      <div className="relative z-10 mx-auto max-w-4xl 2xl:max-w-5xl">
         {/* Main CTA content */}
         {isMobile ? (
           <h2
