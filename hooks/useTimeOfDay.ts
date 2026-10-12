@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   type TimeOfDay,
   TIME_GRADIENTS,
@@ -17,6 +17,18 @@ interface TimeOfDayState {
   showStars: boolean;
   starsOpacity: number;
   hour: number;
+  /** Whether the user has manually overridden the theme */
+  isManualMode: boolean;
+  /** Whether the theme picker is open */
+  isPickerOpen: boolean;
+  /** Set a specific theme */
+  setTheme: (theme: TimeOfDay) => void;
+  /** Toggle the theme picker visibility */
+  togglePicker: () => void;
+  /** Close the picker */
+  closePicker: () => void;
+  /** Reset to automatic time-based mode */
+  resetToAuto: () => void;
 }
 
 // ⚠️ DEV OVERRIDE: Set to a specific time period for testing, or null for real time
@@ -27,7 +39,10 @@ const DEV_TIME_OVERRIDE: TimeOfDay | null = null; // Change to null for producti
  * Hook that returns current time of day and associated sky configuration.
  * Updates every minute to check for time period changes.
  *
- * Time periods:
+ * Supports manual theme selection with a visual picker.
+ * Available themes: night, dawn, morning, afternoon, evening, dusk
+ *
+ * Time periods (auto mode):
  * - Dawn:      5:00 - 7:00
  * - Morning:   7:00 - 11:00
  * - Afternoon: 11:00 - 16:00
@@ -36,34 +51,37 @@ const DEV_TIME_OVERRIDE: TimeOfDay | null = null; // Change to null for producti
  * - Night:     21:00 - 5:00
  */
 export function useTimeOfDay(): TimeOfDayState {
-  const [state, setState] = useState<TimeOfDayState>(() => {
-    // SSR DEFAULT (intentional): The server cannot know the visitor's local
-    // clock, so there is no server-correct value for time-of-day. We seed with
-    // "night" and switch to the real local time in the effect below after
-    // hydration. For visitors whose local time is NOT night, this produces a
-    // brief night -> actual-time transition on first paint.
-    //
-    // This is an accepted SSR limitation. We deliberately do NOT gate the hero
-    // behind a loading/hidden state (options considered: hide-until-hydrated,
-    // loading state), because the hero is the primary above-the-fold content
-    // (with a `priority` temple image) and blanking it would hurt perceived
-    // performance / LCP more than the transition hurts. Instead, the Hero
-    // section mitigates the visual by animating the change: the sky gradient
-    // uses `transition: background 2s ease-in-out`, stars use a 2s opacity
-    // fade, and the celestial body uses a 1s transition — so the shift reads
-    // as a smooth sunrise/sunset sweep rather than a hard flicker.
-    //
-    // Use the dev override if set, otherwise default to night for SSR.
-    const defaultTime: TimeOfDay = DEV_TIME_OVERRIDE ?? "night";
-    return {
-      timeOfDay: defaultTime,
-      gradient: TIME_GRADIENTS[defaultTime],
-      showMoon: SHOW_MOON[defaultTime],
-      showStars: SHOW_STARS[defaultTime],
-      starsOpacity: STARS_OPACITY[defaultTime],
-      hour: 12,
-    };
+  const [manualTheme, setManualTheme] = useState<TimeOfDay | null>(null);
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [autoTime, setAutoTime] = useState<TimeOfDay>(() => {
+    return DEV_TIME_OVERRIDE ?? "night";
   });
+  const [hour, setHour] = useState(12);
+
+  // Determine the active theme (manual override takes precedence)
+  const activeTheme: TimeOfDay = manualTheme ?? autoTime;
+
+  // Set a specific theme
+  const setTheme = useCallback((theme: TimeOfDay) => {
+    setManualTheme(theme);
+    setIsPickerOpen(false);
+  }, []);
+
+  // Toggle picker visibility
+  const togglePicker = useCallback(() => {
+    setIsPickerOpen((prev) => !prev);
+  }, []);
+
+  // Close picker
+  const closePicker = useCallback(() => {
+    setIsPickerOpen(false);
+  }, []);
+
+  // Reset to automatic time-based mode
+  const resetToAuto = useCallback(() => {
+    setManualTheme(null);
+    setIsPickerOpen(false);
+  }, []);
 
   useEffect(() => {
     // If DEV override is set, don't update based on real time
@@ -71,17 +89,11 @@ export function useTimeOfDay(): TimeOfDayState {
 
     const updateTime = () => {
       const now = new Date();
-      const hour = now.getHours();
-      const timeOfDay = getTimeOfDay(hour);
+      const currentHour = now.getHours();
+      const timeOfDay = getTimeOfDay(currentHour);
 
-      setState({
-        timeOfDay,
-        gradient: TIME_GRADIENTS[timeOfDay],
-        showMoon: SHOW_MOON[timeOfDay],
-        showStars: SHOW_STARS[timeOfDay],
-        starsOpacity: STARS_OPACITY[timeOfDay],
-        hour,
-      });
+      setAutoTime(timeOfDay);
+      setHour(currentHour);
     };
 
     // Set initial value
@@ -93,5 +105,21 @@ export function useTimeOfDay(): TimeOfDayState {
     return () => clearInterval(interval);
   }, []);
 
-  return state;
+  return {
+    timeOfDay: activeTheme,
+    gradient: TIME_GRADIENTS[activeTheme],
+    showMoon: SHOW_MOON[activeTheme],
+    showStars: SHOW_STARS[activeTheme],
+    starsOpacity: STARS_OPACITY[activeTheme],
+    hour,
+    isManualMode: manualTheme !== null,
+    isPickerOpen,
+    setTheme,
+    togglePicker,
+    closePicker,
+    resetToAuto,
+  };
 }
+
+// Re-export TimeOfDay for components that need it
+export type { TimeOfDay };

@@ -18,7 +18,7 @@ import { Kandeels } from "@/components/pages/home/sections/Hero/desktop/Kandeels
 import { DriftingClouds } from "@/components/pages/home/sections/Hero/desktop/DriftingClouds";
 import { EmberField } from "@/components/pages/home/sections/Hero/desktop/EmberField";
 import { MobileKite } from "@/components/pages/home/sections/Hero/mobile/MobileKite";
-import { Ghats } from "@/components/pages/home/sections/Hero/common";
+import { Ghats, ThemePicker } from "@/components/pages/home/sections/Hero/common";
 
 // Register plugin at module level (runs once when file is imported)
 gsap.registerPlugin(ScrollTrigger);
@@ -33,7 +33,19 @@ export function HeroSection() {
   const kitesRef = useRef<HTMLDivElement>(null);
 
   // Get current time-based sky configuration
-  const { gradient, showMoon, showStars, starsOpacity, timeOfDay } = useTimeOfDay();
+  const {
+    gradient,
+    showMoon,
+    showStars,
+    starsOpacity,
+    timeOfDay,
+    isPickerOpen,
+    isManualMode,
+    togglePicker,
+    closePicker,
+    setTheme,
+    resetToAuto,
+  } = useTimeOfDay();
   const { isMobile, shouldAnimate } = useAnimationPolicy();
 
   // Entry animation: Celestial body (Moon or Sun)
@@ -213,17 +225,12 @@ export function HeroSection() {
       className="relative h-screen max-w-[100vw] overflow-hidden"
       style={{
         background: gradient,
-        transition: "background 2s ease-in-out", // Smooth transition when time changes
+        transition: "background 1.5s ease-in-out",
       }}
     >
       {/* Cinematic Sky with stars, clouds, shooting stars - only visible at night/dusk */}
       {showStars && (
-        <div
-          style={{
-            opacity: starsOpacity,
-            transition: "opacity 2s ease-in-out",
-          }}
-        >
+        <div style={{ opacity: starsOpacity, transition: "opacity 1.5s ease-in-out" }}>
           <CinematicSky className="z-1" />
         </div>
       )}
@@ -272,6 +279,38 @@ export function HeroSection() {
 
       {/* Floating Kandeels (Sky Lanterns) - Desktop only */}
       <Kandeels />
+
+      {/* Theme Selection - Mode Change Button OR Theme Picker */}
+      {!isPickerOpen ? (
+        /* Mode Change Button - Top Right (shown when picker is closed) */
+        <button
+          onClick={togglePicker}
+          className="group absolute top-4 right-4 z-[100] h-12 w-12 cursor-pointer transition-transform duration-300 hover:scale-110 sm:top-6 sm:right-6 sm:h-14 sm:w-14 md:h-16 md:w-16"
+          aria-label="Open theme picker"
+          title="Choose theme"
+        >
+          <Image
+            src={IMAGES.hero.modeChange}
+            alt="Choose Theme"
+            width={64}
+            height={64}
+            className="h-full w-full object-contain drop-shadow-[0_0_10px_rgba(255,215,0,0.6)] transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]"
+            style={{
+              filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+            }}
+          />
+        </button>
+      ) : (
+        /* Theme Picker (shown when button is clicked) */
+        <ThemePicker
+          isOpen={isPickerOpen}
+          currentTheme={timeOfDay}
+          isManualMode={isManualMode}
+          onSelectTheme={setTheme}
+          onSelectAuto={resetToAuto}
+          onClose={closePicker}
+        />
+      )}
 
       {/* Flying Birds - Mobile optimized */}
       {/* Wrapped in MotionZone to pause SMIL animations when off-screen */}
