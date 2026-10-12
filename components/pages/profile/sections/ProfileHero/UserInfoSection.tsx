@@ -6,6 +6,7 @@ import { COLORS } from "@/components/pages/profile/constants/palette";
 import { UserProfile, UserAccountProgress, ProfileUser } from "@/lib/api/helper/types";
 import { AdminRoleBadge } from "./AdminRoleBadge";
 import { CaBadge } from "./CaBadge";
+import { IITBhuBadge } from "./IITBhuBadge";
 
 // ═══════════════════════════════════════════════════════════════════
 // USER INFO SECTION
@@ -20,6 +21,7 @@ interface UserInfoSectionProps {
 export function UserInfoSection({ userData, user, progress, isApprovedCa }: UserInfoSectionProps) {
   const roleLevel = userData?.role?.level;
   const isAdmin = roleLevel && roleLevel !== "USER";
+  const isFromIITBhu = userData?.isFromIITBhu;
 
   return (
     <div className="flex-1 text-center lg:text-left">
@@ -50,6 +52,9 @@ export function UserInfoSection({ userData, user, progress, isApprovedCa }: User
       <div className="mb-4 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
         {/* Admin Role Badge - Only show for non-USER roles */}
         {isAdmin && <AdminRoleBadge role={roleLevel as "MASTER_ADMIN" | "MANAGER" | "OPERATOR"} />}
+
+        {/* IIT BHU Badge - Show for verified IIT BHU students */}
+        {isFromIITBhu && <IITBhuBadge />}
 
         {/* CA Badge - Only show for approved Campus Ambassadors */}
         {isApprovedCa && <CaBadge />}

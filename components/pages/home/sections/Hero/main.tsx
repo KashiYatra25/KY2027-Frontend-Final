@@ -292,7 +292,7 @@ export function HeroSection() {
           showMoon
             ? "top-[2%] left-1/2 h-16 w-16 -translate-x-1/2 sm:top-[3%] sm:h-20 sm:w-20 md:h-28 md:w-28" // Moon - centered, high
             : timeOfDay === "dawn"
-              ? "top-[12%] right-[8%] h-12 w-12 sm:top-[8%] sm:right-[12%] sm:h-16 sm:w-16 md:h-20 md:w-20" // Dawn - right side, rising
+              ? "top-[12%] right-[8%] h-12 w-12 sm:top-[8%] sm:right-[25%] sm:h-16 sm:w-16 md:h-20 md:w-20" // Dawn - right side, rising
               : timeOfDay === "morning"
                 ? "top-[5%] left-1/2 h-14 w-14 -translate-x-1/2 sm:top-[6%] sm:h-18 sm:w-18 md:h-24 md:w-24" // Morning - centered, rising
                 : "top-[2%] left-1/2 h-16 w-16 -translate-x-1/2 sm:top-[3%] sm:h-20 sm:w-20 md:h-28 md:w-28" // Afternoon/evening - centered, high
