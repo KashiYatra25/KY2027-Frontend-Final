@@ -136,8 +136,8 @@ export function useEvents(params?: EventsQueryParams) {
 
   // Group events by category
   const eventsByCategory = useMemo(() => {
-    if (!data?.data) return {};
-    return data.data.reduce(
+    if (!data?.events) return {};
+    return data.events.reduce(
       (acc, event) => {
         if (!acc[event.category]) {
           acc[event.category] = [];
@@ -150,7 +150,7 @@ export function useEvents(params?: EventsQueryParams) {
   }, [data]);
 
   return {
-    events: data?.data ?? [],
+    events: data?.events ?? [],
     eventsByCategory,
     isLoading,
     isError,
@@ -186,10 +186,10 @@ export function useEvent(slug: string | undefined) {
   }, [error]);
 
   // Get category metadata
-  const categoryMeta = data?.data?.category ? CATEGORY_METADATA[data.data.category] : null;
+  const categoryMeta = data?.event?.category ? CATEGORY_METADATA[data.event.category] : null;
 
   return {
-    event: data?.data ?? null,
+    event: data?.event ?? null,
     categoryMeta,
     isLoading,
     isError,

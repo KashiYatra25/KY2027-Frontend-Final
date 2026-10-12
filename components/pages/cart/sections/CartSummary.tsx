@@ -22,8 +22,9 @@ interface CartSummaryProps {
   totalItems: number;
   totalAmount: number;
   onClearCart: () => void;
-  onCheckout: () => void;
+  onCheckout: (couponCode?: string) => void;
   isClearing?: boolean;
+  isCheckingOut?: boolean;
 }
 
 export function CartSummary({
@@ -32,6 +33,7 @@ export function CartSummary({
   onClearCart,
   onCheckout,
   isClearing,
+  isCheckingOut,
 }: CartSummaryProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
@@ -70,7 +72,8 @@ export function CartSummary({
 
   const finalAmount = totalAmount - discountAmount;
 
-  // Handle coupon
+  // Handle coupon - validation happens server-side on checkout
+  // This just provides optimistic UI feedback
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
       setCouponError("Enter a code");
@@ -80,19 +83,12 @@ export function CartSummary({
     setIsApplyingCoupon(true);
     setCouponError(null);
 
-    // Mock API call
+    // Optimistically show the coupon as "applied" - actual validation on checkout
     setTimeout(() => {
-      if (couponCode.toUpperCase() === "KASHIYATRA10") {
-        setAppliedCoupon({ code: couponCode.toUpperCase(), discount: 10, type: "percentage" });
-        setCouponCode("");
-      } else if (couponCode.toUpperCase() === "YATRA500") {
-        setAppliedCoupon({ code: couponCode.toUpperCase(), discount: 500, type: "fixed" });
-        setCouponCode("");
-      } else {
-        setCouponError("Invalid code");
-      }
+      setAppliedCoupon({ code: couponCode.toUpperCase(), discount: 0, type: "percentage" });
+      setCouponCode("");
       setIsApplyingCoupon(false);
-    }, 800);
+    }, 300);
   };
 
   const handleRemoveCoupon = () => {
@@ -351,8 +347,9 @@ export function CartSummary({
         <motion.button
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
-          onClick={onCheckout}
-          className="group relative mb-4 w-full overflow-hidden rounded-xl py-4 font-semibold text-white"
+          onClick={() => onCheckout(appliedCoupon?.code || couponCode || undefined)}
+          disabled={isCheckingOut}
+          className="group relative mb-4 w-full overflow-hidden rounded-xl py-4 font-semibold text-white disabled:opacity-70"
           style={{
             background: `linear-gradient(135deg, ${COLORS.GOLD}, ${COLORS.DARK_GOLD})`,
             boxShadow: `0 4px 20px ${COLORS.GOLD}30`,
@@ -368,8 +365,17 @@ export function CartSummary({
             }}
           />
           <span className="relative flex items-center justify-center gap-2">
-            Proceed to Checkout
-            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+            {isCheckingOut ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Processing...
+              </>
+            ) : (
+              <>
+                Proceed to Checkout
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+              </>
+            )}
           </span>
         </motion.button>
 
