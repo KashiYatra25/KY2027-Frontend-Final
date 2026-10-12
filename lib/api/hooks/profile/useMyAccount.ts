@@ -51,6 +51,8 @@ interface UseMyAccountReturn {
   userId: string | null;
   displayName: string | null;
   avatarUrl: string | null;
+  isFromIITBhu: boolean;
+  userRole: "MASTER_ADMIN" | "MANAGER" | "OPERATOR" | "USER" | null;
 
   // Progress Data
   progress: UserAccountProgress | null;
@@ -126,6 +128,8 @@ export function useMyAccount<T extends AccountQueryType = "full">(
     ? `${profile.firstName}${profile.lastName ? ` ${profile.lastName}` : ""}`
     : null;
   const avatarUrl = profile?.candidatePhotoUrl || profile?.googleAvatarUrl || null;
+  const isFromIITBhu = profile?.isFromIITBhu ?? false;
+  const userRole = profile?.role?.level ?? null;
 
   // Progress data (available in full, navbar, access, progress queries)
   const progress = (myAccount as FullAccountQueryResponse["myAccount"])?.progress ?? null;
@@ -158,6 +162,8 @@ export function useMyAccount<T extends AccountQueryType = "full">(
     userId,
     displayName,
     avatarUrl,
+    isFromIITBhu,
+    userRole,
 
     // Progress Data
     progress,

@@ -136,20 +136,19 @@ export function useEvents(params?: EventsQueryParams) {
 
   // Group events by category
   const eventsByCategory = useMemo(() => {
-    if (!data?.events) return {};
-    return data.events.reduce(
-      (acc, event) => {
-        if (!acc[event.category]) {
-          acc[event.category] = [];
-        }
-        acc[event.category].push(event);
-        return acc;
-      },
-      {} as Record<EventCategorySlug, Event[]>
-    );
+    const result: Partial<Record<EventCategorySlug, Event[]>> = {};
+    if (!data?.events) return result;
+    return data.events.reduce((acc, event) => {
+      if (!acc[event.category]) {
+        acc[event.category] = [];
+      }
+      acc[event.category]!.push(event);
+      return acc;
+    }, result);
   }, [data]);
 
   return {
+    events: data?.events ?? [],
     events: data?.events ?? [],
     eventsByCategory,
     isLoading,
@@ -187,8 +186,10 @@ export function useEvent(slug: string | undefined) {
 
   // Get category metadata
   const categoryMeta = data?.event?.category ? CATEGORY_METADATA[data.event.category] : null;
+  const categoryMeta = data?.event?.category ? CATEGORY_METADATA[data.event.category] : null;
 
   return {
+    event: data?.event ?? null,
     event: data?.event ?? null,
     categoryMeta,
     isLoading,
