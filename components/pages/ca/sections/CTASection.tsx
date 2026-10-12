@@ -16,6 +16,106 @@ import { COLORS_RGBA, GRADIENTS } from "@/components/pages/ca/constants/palette"
 gsap.registerPlugin(ScrollTrigger);
 
 // ═══════════════════════════════════════════════════════════════════
+// IIT BHU USER RESTRICTED DISPLAY
+// Shows message when IIT BHU student tries to access CA application
+// ═══════════════════════════════════════════════════════════════════
+
+function IITBhuRestrictedDisplay() {
+  return (
+    <div className="relative mx-auto max-w-lg rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 p-8 backdrop-blur-sm">
+      {/* Glow effect */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-20 blur-xl"
+        style={{
+          background: "radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent)",
+        }}
+      />
+
+      {/* Icon */}
+      <div className="mb-4 text-5xl">🏛️</div>
+
+      {/* Title */}
+      <h3 className="mb-3 text-2xl font-bold text-blue-400">
+        You&apos;re Already Part of the Team!
+      </h3>
+
+      {/* Description */}
+      <p className="mb-4 text-gray-300">
+        As an IIT BHU student, you&apos;re already part of the Kashi Yatra family! The Campus
+        Ambassador program is designed to help students from other colleges spread the word about
+        our fest.
+      </p>
+
+      {/* Additional info */}
+      <div className="mt-6 rounded-lg border border-blue-500/20 bg-blue-500/10 p-4">
+        <p className="text-sm text-blue-300">
+          💡 Want to contribute? Join one of our organizing teams or volunteer during the fest!
+        </p>
+      </div>
+
+      {/* Link to teams page */}
+      <Link
+        href="/teams"
+        className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-all hover:opacity-90"
+        style={{
+          background: "linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(99, 102, 241, 0.2))",
+          border: "1px solid rgba(59, 130, 246, 0.4)",
+          color: "#60a5fa",
+        }}
+      >
+        Explore Teams
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 7l5 5m0 0l-5 5m5-5H6"
+          />
+        </svg>
+      </Link>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ADMIN USER RESTRICTED DISPLAY
+// Shows message when admin tries to access CA application
+// ═══════════════════════════════════════════════════════════════════
+
+function AdminRestrictedDisplay() {
+  return (
+    <div className="relative mx-auto max-w-lg rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-500/20 to-pink-500/20 p-8 backdrop-blur-sm">
+      {/* Glow effect */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-20 blur-xl"
+        style={{
+          background: "radial-gradient(circle, rgba(147, 51, 234, 0.3), transparent)",
+        }}
+      />
+
+      {/* Icon */}
+      <div className="mb-4 text-5xl">👑</div>
+
+      {/* Title */}
+      <h3 className="mb-3 text-2xl font-bold text-purple-400">You&apos;re Already an Admin!</h3>
+
+      {/* Description */}
+      <p className="mb-4 text-gray-300">
+        As an admin of Kashi Yatra, you&apos;re already part of the core team! The Campus Ambassador
+        program is designed for students who want to promote the fest at their colleges.
+      </p>
+
+      {/* Additional info */}
+      <div className="mt-6 rounded-lg border border-purple-500/20 bg-purple-500/10 p-4">
+        <p className="text-sm text-purple-300">
+          🎯 Head to the admin dashboard to manage CA applications and more!
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
 // APPLICATION STATUS DISPLAY COMPONENT
 // Shows the current application status when user has already applied
 // ═══════════════════════════════════════════════════════════════════
@@ -145,8 +245,14 @@ export function CTASection() {
   const [showErrorModal, setShowErrorModal] = useState(false);
 
   const { status } = useSession();
-  const { isProfileComplete, isLoading, completionPercentage, displayName } =
-    useMyAccount("navbar");
+  const {
+    isProfileComplete,
+    isLoading,
+    completionPercentage,
+    displayName,
+    isFromIITBhu,
+    userRole,
+  } = useMyAccount("full");
 
   // CA Application Status hook - check if already applied
   const {
@@ -243,6 +349,13 @@ export function CTASection() {
   // Check if user has already applied
   const showApplicationStatus = isAuthenticated && hasApplied && applicationStatus;
 
+  // Check if user is from IIT BHU (they cannot apply for CA)
+  const showIITBhuRestricted = isAuthenticated && isFromIITBhu && !hasApplied;
+
+  // Check if user is an admin (they cannot apply for CA - only USER role can apply)
+  const isAdmin = userRole && userRole !== "USER";
+  const showAdminRestricted = isAuthenticated && isAdmin && !hasApplied && !isFromIITBhu;
+
   return (
     <section ref={sectionRef} className="relative min-h-[700px] overflow-hidden px-4 py-24">
       {/* Centered content wrapper - TRUE CENTER */}
@@ -264,6 +377,14 @@ export function CTASection() {
             <>
               Your <span className="ca-gradient-text">Application</span>
             </>
+          ) : showAdminRestricted ? (
+            <>
+              Hey, <span className="ca-gradient-text">Admin</span>! 👑
+            </>
+          ) : showIITBhuRestricted ? (
+            <>
+              Hey, <span className="ca-gradient-text">IITian</span>! 👋
+            </>
           ) : (
             <>
               Ready to <span className="ca-gradient-text">Lead</span>?
@@ -271,8 +392,36 @@ export function CTASection() {
           )}
         </h2>
 
-        {/* Show application status if already applied */}
-        {showApplicationStatus ? (
+        {/* Show admin restricted message */}
+        {showAdminRestricted ? (
+          <>
+            <AdminRestrictedDisplay />
+
+            {/* Secondary links */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+              <Link href="/about" className="transition-colors hover:text-white">
+                Learn about Kashi Yatra →
+              </Link>
+              <Link href="/contact" className="transition-colors hover:text-white">
+                Have questions? Contact us →
+              </Link>
+            </div>
+          </>
+        ) : showIITBhuRestricted ? (
+          <>
+            <IITBhuRestrictedDisplay />
+
+            {/* Secondary links */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+              <Link href="/about" className="transition-colors hover:text-white">
+                Learn about Kashi Yatra →
+              </Link>
+              <Link href="/contact" className="transition-colors hover:text-white">
+                Have questions? Contact us →
+              </Link>
+            </div>
+          </>
+        ) : showApplicationStatus ? (
           <>
             <ApplicationStatusDisplay status={applicationStatus} appliedAt={appliedAt} />
 

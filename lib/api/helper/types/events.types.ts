@@ -51,14 +51,14 @@ export interface EventsApiResponse {
   statusCode: number;
   message: string;
   info: string;
-  data: Event[];
+  events: Event[];
 }
 
 export interface EventDetailsApiResponse {
   statusCode: number;
   message: string;
   info: string;
-  data: EventDetails;
+  event: EventDetails;
 }
 
 // ═══════════════════════════════════════════════════════════════════
