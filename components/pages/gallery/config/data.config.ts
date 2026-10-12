@@ -19,19 +19,24 @@ import type {
 // optional caption (title, sub) and optional w/h for aspect ratio.
 // ═══════════════════════════════════════════════════════════════════
 export const PHOTOS: PhotoItem[] = [
-  // Using slider images as sample gallery photos
-  { src: "/about/slider/SliderLeft1.jpg", title: "Kashi Yatra 2026", sub: "Opening Ceremony" },
-  { src: "/about/slider/SliderRight1.jpg", title: "Pro Nite", sub: "Main Stage" },
-  { src: "/about/slider/SliderLeft2.jpg", title: "Cultural Night", sub: "Day 2" },
-  { src: "/about/slider/SliderRight2.jpg", title: "Dance Performance", sub: "Natraj" },
-  { src: "/about/slider/SliderLeft3.jpg", title: "Crowd Energy", sub: "Pro Nite" },
-  { src: "/about/slider/SliderRight3.jpg", title: "Stage Lights", sub: "Night Show" },
-  { src: "/about/slider/SliderLeft4.jpg", title: "Artists Live", sub: "Day 3" },
-  { src: "/about/slider/SliderRight4.jpg", title: "Festival Vibes", sub: "Campus" },
-  { src: "/about/slider/SliderLeft5.jpg", title: "Celebrations", sub: "Day 4" },
-  { src: "/about/slider/SliderRight5.jpg", title: "Grand Finale", sub: "Closing" },
-  { src: "/about/slider/SliderLeft6.jpg", title: "Memories", sub: "KY 2026" },
-  { src: "/about/slider/SliderRight6.jpg", title: "Till Next Time", sub: "See You" },
+  // Gallery photos from Kashi Yatra 2026
+  { src: "/gallery/grand-finale-1.jpg", title: "Grand Finale", sub: "Pro Nite" },
+  { src: "/gallery/concert-night-1.jpg", title: "Concert Night", sub: "Main Stage" },
+  { src: "/gallery/concert-night-2.jpg", title: "Live Performance", sub: "Day 3" },
+  { src: "/gallery/concert-night-3.jpg", title: "Stage Vibes", sub: "Night Show" },
+  { src: "/gallery/stage-lights-1.jpg", title: "Stage Lights", sub: "Pro Nite" },
+  { src: "/gallery/pronite-crowd-1.jpg", title: "Crowd Energy", sub: "Pro Nite" },
+  { src: "/gallery/pronite-crowd-2.jpg", title: "Festival Crowd", sub: "Main Arena" },
+  { src: "/gallery/stage-atmosphere-1.jpg", title: "Stage Atmosphere", sub: "Night Show" },
+  { src: "/gallery/performance-1.jpg", title: "Live Show", sub: "Day 2" },
+  { src: "/gallery/festival-vibes-1.jpg", title: "Festival Vibes", sub: "Campus" },
+  { src: "/gallery/crowd-energy-1.jpg", title: "Celebrations", sub: "KY 2026" },
+  // Additional slider images
+  { src: "/about/slider/SliderLeft1.jpg", title: "Opening Ceremony", sub: "Day 1" },
+  { src: "/about/slider/SliderRight1.jpg", title: "Cultural Night", sub: "Day 2" },
+  { src: "/about/slider/SliderLeft2.jpg", title: "Dance Performance", sub: "Natraj" },
+  { src: "/about/slider/SliderRight2.jpg", title: "Artists Live", sub: "Day 3" },
+  { src: "/about/slider/SliderLeft3.jpg", title: "Memories", sub: "KY 2026" },
 ];
 
 // ═══════════════════════════════════════════════════════════════════
@@ -39,13 +44,36 @@ export const PHOTOS: PhotoItem[] = [
 // Video clips that scroll horizontally. Provide poster for thumbnail.
 // ═══════════════════════════════════════════════════════════════════
 export const VIDEOS: VideoItem[] = [
-  // Using slider images as video posters (actual videos would be added later)
-  { src: "#", poster: "/about/slider/SliderLeft1.jpg", title: "Day 1 Highlights" },
-  { src: "#", poster: "/about/slider/SliderRight2.jpg", title: "Pro Nite Moments" },
-  { src: "#", poster: "/about/slider/SliderLeft3.jpg", title: "Cultural Events" },
-  { src: "#", poster: "/about/slider/SliderRight4.jpg", title: "Campus Tour" },
-  { src: "#", poster: "/about/slider/SliderLeft5.jpg", title: "Grand Finale" },
-  { src: "#", poster: "/about/slider/SliderRight6.jpg", title: "Aftermovie Teaser" },
+  {
+    src: "/gallery/pronite-highlights.mp4",
+    poster: "/gallery/grand-finale-1.jpg",
+    title: "Pro Nite Highlights",
+  },
+  {
+    src: "/gallery/crowd-moments.mp4",
+    poster: "/gallery/pronite-crowd-1.jpg",
+    title: "Crowd Moments",
+  },
+  {
+    src: "/gallery/festival-aftermovie.mp4",
+    poster: "/gallery/stage-lights-1.jpg",
+    title: "Festival Aftermovie",
+  },
+  {
+    src: "/gallery/pronite-highlights.mp4",
+    poster: "/gallery/concert-night-1.jpg",
+    title: "Day 1 Highlights",
+  },
+  {
+    src: "/gallery/crowd-moments.mp4",
+    poster: "/gallery/concert-night-2.jpg",
+    title: "Cultural Events",
+  },
+  {
+    src: "/gallery/festival-aftermovie.mp4",
+    poster: "/gallery/stage-atmosphere-1.jpg",
+    title: "Grand Finale",
+  },
 ];
 
 // ═══════════════════════════════════════════════════════════════════
@@ -54,17 +82,17 @@ export const VIDEOS: VideoItem[] = [
 // ═══════════════════════════════════════════════════════════════════
 export const SPECIAL_VIDEOS: SpecialVideoItem[] = [
   {
-    src: "#",
-    poster: "/about/slider/SliderRight1.jpg",
+    src: "/gallery/festival-aftermovie.mp4",
+    poster: "/gallery/grand-finale-1.jpg",
     title: "Live from the crowd",
     sub: "Lights · Fireworks · Chaos",
     orientation: "landscape",
   },
   {
-    src: "#",
-    poster: "/about/slider/SliderLeft4.jpg",
+    src: "/gallery/pronite-highlights.mp4",
+    poster: "/gallery/stage-lights-1.jpg",
     title: "The night, reimagined",
-    sub: "Special reel",
+    sub: "Pro Nite Special",
     orientation: "portrait",
   },
 ];
@@ -86,7 +114,7 @@ export const PERFORMERS: PerformerItem[] = [
 // TEAM PHOTO - Group photo of the organizing team
 // ═══════════════════════════════════════════════════════════════════
 export const TEAM_PHOTO: TeamPhotoItem | null = {
-  src: "/about/slider/SliderRight1.jpg",
+  src: "/gallery/grand-finale-1.jpg",
   title: "Kashi Yatra 2026 Team",
   aspectRatio: 1.6,
 };
