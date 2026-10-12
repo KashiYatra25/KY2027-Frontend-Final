@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useApiMutation } from "wire-axon/hooks";
 import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
@@ -54,9 +54,9 @@ export function useCaApplication(options?: UseCaApplicationOptions) {
    * Submit CA application
    * Sends empty body - backend derives userId from auth
    */
-  const apply = () => {
+  const apply = useCallback(() => {
     mutate({});
-  };
+  }, [mutate]);
 
   return {
     apply,

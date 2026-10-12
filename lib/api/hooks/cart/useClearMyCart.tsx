@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useApiMutation } from "wire-axon/hooks";
 import { z } from "zod";
 import { XCircle } from "lucide-react";
@@ -91,9 +91,9 @@ export function useClearMyCart(options?: UseClearMyCartOptions) {
     }
   }, [error]);
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     mutate({});
-  };
+  }, [mutate]);
 
   return {
     clearCart,

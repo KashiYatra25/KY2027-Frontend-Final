@@ -191,7 +191,9 @@ export function CaStatusSection({
             href={
               applicationStatus === "REJECTED"
                 ? "/campus-ambassador/application"
-                : "/campus-ambassador"
+                : applicationStatus === "ACCEPTED"
+                  ? "/ca-dashboard"
+                  : "/campus-ambassador"
             }
             className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-all hover:opacity-90"
             style={{
@@ -200,7 +202,11 @@ export function CaStatusSection({
               color: COLORS.GOLD,
             }}
           >
-            {applicationStatus === "REJECTED" ? "View Details" : "View CA Dashboard"}
+            {applicationStatus === "REJECTED"
+              ? "View Details"
+              : applicationStatus === "ACCEPTED"
+                ? "View CA Dashboard"
+                : "View Application Status"}
             <ExternalLink className="h-4 w-4" />
           </Link>
         </div>

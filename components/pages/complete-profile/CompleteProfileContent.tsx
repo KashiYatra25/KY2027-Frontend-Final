@@ -128,10 +128,10 @@ export function CompleteProfileContent() {
           />
 
           <div className="p-6 sm:p-10">
-            {/* Step Content */}
-            {currentStep === 1 && <AadhaarUploadStep refetchProgress={refetchProgress} />}
-            {currentStep === 2 && <AadhaarVerifyStep refetchProgress={refetchProgress} />}
-            {currentStep === 3 && <CollegeDetailsStep refetchProgress={refetchProgress} />}
+            {/* Step Content - Order: College (1) → Aadhaar Upload (2) → Aadhaar Verify (3) → Phone (4) */}
+            {currentStep === 1 && <CollegeDetailsStep refetchProgress={refetchProgress} />}
+            {currentStep === 2 && <AadhaarUploadStep refetchProgress={refetchProgress} />}
+            {currentStep === 3 && <AadhaarVerifyStep refetchProgress={refetchProgress} />}
             {currentStep === 4 && <PhoneVerificationStep refetchProgress={refetchProgress} />}
           </div>
         </div>

@@ -2570,3 +2570,301 @@ body {
     overflow-y: auto;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   GALLERY PAGE ANIMATIONS
+   Film reel scrolling, floating cards, sparkles, and spotlight beams
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Film reel scrolling animation */
+@keyframes galleryReelScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.film-track {
+  animation: galleryReelScroll var(--reel-duration, 46s) linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.film-track-reverse {
+  animation-direction: reverse;
+}
+
+/* Pause on hover (desktop only) */
+@media (hover: hover) {
+  .reel:hover .film-track,
+  .video-reel:hover .film-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Pause when any frame is focused */
+.reel:has(.photo-frame:focus-visible) .film-track,
+.video-reel:has(.video-frame:focus-visible) .film-track {
+  animation-play-state: paused;
+}
+
+/* Sprocket holes on film reels */
+.sprocket-holes {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  opacity: 0.85;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 6' preserveAspectRatio='none'%3E%3Crect x='8' width='12' height='6' rx='2' fill='%23f6ecdc'/%3E%3C/svg%3E")
+    repeat-x;
+  background-size: 28px 6px;
+}
+
+.sprocket-top {
+  top: -11px;
+}
+
+.sprocket-bottom {
+  bottom: -11px;
+}
+
+/* Photo frame height responsive */
+.gallery-reels {
+  --frame-height: clamp(170px, 24vw, 270px);
+}
+
+.video-reel {
+  --video-frame-height: clamp(120px, 16vw, 190px);
+}
+
+/* Camera bob animation */
+@keyframes cameraBob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(6px);
+  }
+}
+
+.camera-bob {
+  animation: cameraBob 5s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Lens glow pulse */
+@keyframes lensGlow {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lens-glow {
+  animation: lensGlow 3s ease-in-out infinite alternate;
+}
+
+/* Camera flash animation */
+@keyframes cameraFlash {
+  0%,
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  90% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+}
+
+.camera-flash {
+  transform-origin: center;
+  animation: cameraFlash 3.6s ease-in-out infinite;
+}
+
+/* Sparkle twinkle animation */
+@keyframes sparkleTwinkle {
+  0%,
+  100% {
+    opacity: 0.12;
+    transform: scale(0.55);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.1);
+  }
+}
+
+.sparkle-star {
+  animation: sparkleTwinkle var(--duration, 3s) ease-in-out infinite;
+}
+
+.sparkle-hot {
+  filter: drop-shadow(0 0 5px rgba(255, 214, 120, 0.9));
+}
+
+/* Special video card floating animation */
+@keyframes specialVideoFloat {
+  from {
+    transform: translate3d(0, -8px, 0) rotate(var(--float-tilt, 0deg));
+  }
+  to {
+    transform: translate3d(0, 10px, 0) rotate(calc(var(--float-tilt, 0deg) * -0.5));
+  }
+}
+
+.special-video-wrapper {
+  animation: specialVideoFloat var(--float-duration, 6s) ease-in-out infinite alternate;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Animated gradient ring for special videos */
+@keyframes ringSpin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.ring-spin {
+  animation: ringSpin 5s linear infinite;
+}
+
+/* Spotlight beam sway animation */
+@keyframes beamSway {
+  from {
+    transform: rotate(var(--sway-start, -14deg));
+  }
+  to {
+    transform: rotate(var(--sway-end, 10deg));
+  }
+}
+
+.beam-sway {
+  transform-origin: 50% 0;
+  animation: beamSway var(--sway-duration, 8s) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Blinking dot animation (for "Special" tags) */
+@keyframes blinkDot {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.blink-dot {
+  animation: blinkDot 1.2s ease-in-out infinite;
+}
+
+/* Performer card float animation */
+@keyframes performerCardFloat {
+  from {
+    transform: translate(-5px, -14px) rotate(var(--float-tilt, 0deg));
+  }
+  to {
+    transform: translate(6px, 16px) rotate(calc(var(--float-tilt, 0deg) * -0.6));
+  }
+}
+
+.performer-card {
+  animation: performerCardFloat var(--float-duration, 6s) ease-in-out infinite alternate;
+  animation-delay: var(--float-delay, 0s);
+  will-change: transform;
+}
+
+/* Lightbox pop-in animation */
+@keyframes lightboxPop {
+  from {
+    transform: scale(0.96);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.lightbox-media {
+  animation: lightboxPop 0.3s ease;
+}
+
+/* Desktop adjustments for gallery */
+@media (min-width: 701px) {
+  .gallery-reels {
+    --frame-height: clamp(170px, 20vw, 225px);
+  }
+  .video-reel {
+    --video-frame-height: clamp(120px, 13vw, 160px);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 560px) {
+  .gallery-reels {
+    --frame-height: 138px;
+  }
+  .video-reel {
+    --video-frame-height: 100px;
+  }
+}
+
+/* Reduced motion: disable gallery animations */
+@media (prefers-reduced-motion: reduce) {
+  .film-track {
+    animation: none;
+  }
+  .reel,
+  .video-reel {
+    overflow-x: auto;
+    transform: none;
+    width: 100%;
+    margin-left: 0;
+  }
+  .photo-frame[data-dup],
+  .video-frame[data-dup] {
+    display: none;
+  }
+  .sprocket-holes {
+    display: none;
+  }
+  .camera-bob,
+  .lens-glow,
+  .camera-flash,
+  .sparkle-star,
+  .special-video-wrapper,
+  .ring-spin,
+  .beam-sway,
+  .blink-dot,
+  .performer-card {
+    animation: none;
+  }
+  .sparkle-star {
+    opacity: 0.6;
+  }
+  .camera-flash {
+    opacity: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   GALLERY NAVBAR STYLES
+   Custom cinematic film/camera themed navbar for gallery page
+   ═══════════════════════════════════════════════════════════════════ */
+
+.nav-pill-gallery:hover {
+  background: rgba(246, 236, 220, 0.15) !important;
+  border-color: rgba(245, 166, 35, 0.4) !important;
+}
+
+.nav-pill-gallery:hover span:first-child {
+  box-shadow: 0 0 8px rgba(245, 166, 35, 0.8);
+}

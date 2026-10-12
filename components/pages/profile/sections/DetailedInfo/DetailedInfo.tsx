@@ -28,7 +28,7 @@ export function DetailedInfo({ userData, user, progress }: DetailedInfoProps) {
   };
 
   return (
-    <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <div className="mt-10 mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
       {/* Left Column - Account Info Cards */}
       <div className="space-y-4 lg:col-span-2">
         <div className="mb-6 flex items-center gap-4">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useApiMutation } from "wire-axon/hooks";
 import { XCircle } from "lucide-react";
 import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
@@ -88,9 +88,12 @@ export function useAddToMyCart(options?: UseAddToMyCartOptions) {
     }
   }, [error]);
 
-  const addToCart = (request: AddToCartRequest) => {
-    mutate(request as unknown as Record<string, unknown>);
-  };
+  const addToCart = useCallback(
+    (request: AddToCartRequest) => {
+      mutate(request as unknown as Record<string, unknown>);
+    },
+    [mutate]
+  );
 
   return {
     addToCart,

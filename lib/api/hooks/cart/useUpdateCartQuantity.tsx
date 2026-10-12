@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useApiMutation } from "wire-axon/hooks";
 import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
@@ -110,14 +110,14 @@ export function useUpdateCartQuantity() {
     }
   }, [error]);
 
-  const updateQuantity = (
-    request: UpdateQuantityRequest,
-    callbacks?: { onSettled?: () => void }
-  ) => {
-    mutate(request as unknown as Record<string, unknown>, {
-      onSettled: callbacks?.onSettled,
-    });
-  };
+  const updateQuantity = useCallback(
+    (request: UpdateQuantityRequest, callbacks?: { onSettled?: () => void }) => {
+      mutate(request as unknown as Record<string, unknown>, {
+        onSettled: callbacks?.onSettled,
+      });
+    },
+    [mutate]
+  );
 
   return {
     mutate: updateQuantity,

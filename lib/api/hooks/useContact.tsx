@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useApiMutation } from "wire-axon/hooks";
 import {
   ContactSchema,
@@ -29,9 +29,12 @@ export function useContact(options?: UseContactOptions) {
     mutationOptions: { retry: API_RETRY },
   });
 
-  const submitContact = (contactData: ContactSchemaType) => {
-    mutate(contactData);
-  };
+  const submitContact = useCallback(
+    (contactData: ContactSchemaType) => {
+      mutate(contactData);
+    },
+    [mutate]
+  );
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
