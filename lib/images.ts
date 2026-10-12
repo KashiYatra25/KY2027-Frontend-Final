@@ -32,6 +32,7 @@ export const IMAGES = {
     ghatsDay: `${IMAGEKIT_BASE}/hero/common/ghats-day.png?v=2`,
     ghatsNight: `${IMAGEKIT_BASE}/hero/common/ghats-night.png?v=3`,
     modeChange: `${IMAGEKIT_BASE}/hero/common/mode-change.png`,
+    themePickerBox: "/home/hero/lotusChooseThemeBox.png",
     temple: `${IMAGEKIT_BASE}/hero/common/kashivishwanath-temple.png`,
     varanasiBack: `${IMAGEKIT_BASE}/hero/common/varanasi-back.png`,
     steppingStone: "/home/hero/SteppingStone.webp",

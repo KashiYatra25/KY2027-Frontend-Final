@@ -16,6 +16,9 @@ import {
 import { socialLinks, quickLinks } from "./common/data";
 import { IMAGES } from "@/lib/images";
 
+// Pinkish heading tone (matches the brand header + "PRO NITES" accent).
+const PINK_HEADING = "#FF4D8D";
+
 // ═══════════════════════════════════════════════════════════════════
 // MAIN FOOTER SECTION
 // ═══════════════════════════════════════════════════════════════════
@@ -78,7 +81,7 @@ export function FooterSection() {
               <GlassmorphismCard accentColor={FOOTER_COLORS.NEON_CYAN}>
                 <h4
                   className="mb-4 text-lg font-bold tracking-wider"
-                  style={{ color: FOOTER_COLORS.NEON_CYAN }}
+                  style={{ color: PINK_HEADING }}
                 >
                   EXPLORE
                 </h4>
@@ -106,7 +109,7 @@ export function FooterSection() {
               <GlassmorphismCard accentColor={FOOTER_COLORS.NEON_PINK}>
                 <h4
                   className="mb-4 text-lg font-bold tracking-wider"
-                  style={{ color: FOOTER_COLORS.NEON_PINK }}
+                  style={{ color: PINK_HEADING }}
                 >
                   CONNECT
                 </h4>

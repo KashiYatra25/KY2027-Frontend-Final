@@ -9,7 +9,7 @@ import {
   CursorTrail,
   EnterButton,
   BlastEffect,
-  VideoPlayer,
+  CountdownPoster,
   FirePot,
   NavigationDrawer,
 } from "./sections";
@@ -30,8 +30,8 @@ export function IntroSection() {
       {/* Stage background with zoom effect */}
       <StageBackground />
 
-      {/* Video player - shows after blast */}
-      <VideoPlayer />
+      {/* Countdown concert poster - shows after blast (replaces the old video) */}
+      <CountdownPoster />
 
       {/* Audio-reactive fire pot - shows during video phase */}
       <FirePot />
