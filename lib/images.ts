@@ -29,8 +29,9 @@ export const IMAGES = {
   hero: {
     logo: `${IMAGEKIT_BASE}/hero/common/kashiyatra-logo.png`,
     heroLogo: `${IMAGEKIT_BASE}/hero/common/hero-logo.png`,
-    ghatsDay: `${IMAGEKIT_BASE}/hero/common/ghats-day.png`,
-    ghatsNight: `${IMAGEKIT_BASE}/hero/common/ghats-night.png`,
+    ghatsDay: `${IMAGEKIT_BASE}/hero/common/ghats-day.png?v=2`,
+    ghatsNight: `${IMAGEKIT_BASE}/hero/common/ghats-night.png?v=3`,
+    modeChange: `${IMAGEKIT_BASE}/hero/common/mode-change.png`,
     temple: `${IMAGEKIT_BASE}/hero/common/kashivishwanath-temple.png`,
     varanasiBack: `${IMAGEKIT_BASE}/hero/common/varanasi-back.png`,
     steppingStone: "/home/hero/SteppingStone.webp",

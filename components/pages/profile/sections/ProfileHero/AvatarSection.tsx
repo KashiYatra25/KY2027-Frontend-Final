@@ -212,8 +212,22 @@ export function AvatarSection({ userData, user, progress, initials }: AvatarSect
       </div>
 
       {/* All steps chips - green for completed, red for pending */}
+      {/* Order: College → Aadhaar Upload → Aadhaar Verify → Phone */}
       {progress && (
         <div className="mt-3 grid grid-cols-2 gap-1.5">
+          {/* College */}
+          <span
+            className="flex items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium"
+            style={{
+              background: progress.steps.college ? `${COLORS.SUCCESS}15` : `${COLORS.ERROR}15`,
+              color: progress.steps.college ? `${COLORS.SUCCESS}` : `${COLORS.ERROR}cc`,
+              border: `1px solid ${progress.steps.college ? COLORS.SUCCESS : COLORS.ERROR}25`,
+            }}
+          >
+            <GraduationCap className="h-3 w-3" />
+            College
+          </span>
+
           {/* Aadhaar Upload */}
           <span
             className="flex items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium"
@@ -242,19 +256,6 @@ export function AvatarSection({ userData, user, progress, initials }: AvatarSect
           >
             <ShieldCheck className="h-3 w-3" />
             Verify
-          </span>
-
-          {/* College */}
-          <span
-            className="flex items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium"
-            style={{
-              background: progress.steps.college ? `${COLORS.SUCCESS}15` : `${COLORS.ERROR}15`,
-              color: progress.steps.college ? `${COLORS.SUCCESS}` : `${COLORS.ERROR}cc`,
-              border: `1px solid ${progress.steps.college ? COLORS.SUCCESS : COLORS.ERROR}25`,
-            }}
-          >
-            <GraduationCap className="h-3 w-3" />
-            College
           </span>
 
           {/* Phone */}

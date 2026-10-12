@@ -36,6 +36,11 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     folder: "/hero/common",
   },
   {
+    localFile: "home/hero/ModeChange.png",
+    remoteName: "mode-change.png",
+    folder: "/hero/common",
+  },
+  {
     localFile: "home/hero/KashiVishwanathTemple.png",
     remoteName: "kashivishwanath-temple.png",
     folder: "/hero/common",

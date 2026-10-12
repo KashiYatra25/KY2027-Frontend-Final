@@ -34,7 +34,14 @@ export function ProfileIncompleteCard({
   displayName,
   steps,
 }: ProfileIncompleteCardProps) {
+  // Order: College → Aadhaar Upload → Aadhaar Verify → Phone
   const stepsList = [
+    {
+      key: "college",
+      label: "College Details",
+      icon: GraduationCap,
+      completed: steps?.college ?? false,
+    },
     {
       key: "aadhaarUploaded",
       label: "Upload Aadhaar",
@@ -46,12 +53,6 @@ export function ProfileIncompleteCard({
       label: "Verify Aadhaar",
       icon: ShieldCheck,
       completed: steps?.aadhaarVerified ?? false,
-    },
-    {
-      key: "college",
-      label: "College Details",
-      icon: GraduationCap,
-      completed: steps?.college ?? false,
     },
     {
       key: "phone",
