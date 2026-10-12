@@ -927,7 +927,7 @@ function FestHighlightsContent() {
           </div>
 
           {/* Highlight Cards - Static on mobile, animated on desktop */}
-          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 2xl:max-w-6xl">
             {highlights.map((item, i) =>
               isMobile ? (
                 <StaticHighlightCard key={i} item={item} index={i} />

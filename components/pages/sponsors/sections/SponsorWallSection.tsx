@@ -37,7 +37,7 @@ export const SponsorWallSection = memo(function SponsorWallSection() {
         <Starburst size={60} color={PALETTE.ACID_LIME} points={8} />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 2xl:max-w-7xl">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -155,7 +155,7 @@ export const SponsorWallSection = memo(function SponsorWallSection() {
       </div>
 
       {/* CTA */}
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 2xl:max-w-7xl">
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}

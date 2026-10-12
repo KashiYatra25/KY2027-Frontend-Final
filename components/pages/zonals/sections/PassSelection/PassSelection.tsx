@@ -60,7 +60,7 @@ export function PassSelection() {
       style={{ background: COLORS.DEEP_INK }}
       aria-label="Pass selection"
     >
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative mx-auto max-w-6xl 2xl:max-w-7xl">
         {/* Heading block */}
         <motion.div
           {...sectionMotion}

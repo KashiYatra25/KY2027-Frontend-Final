@@ -39,7 +39,7 @@ export function TeamSection({ onPhotoClick }: TeamSectionProps) {
     <section ref={sectionRef} className="gallery-section relative z-10 mt-16 sm:mt-24" id="team">
       {/* Section header with scroll animation */}
       <motion.div
-        className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-12 lg:px-16"
+        className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-12 lg:px-16 2xl:max-w-[1400px]"
         initial={{ opacity: 0, y: 50 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
         transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -75,7 +75,7 @@ export function TeamSection({ onPhotoClick }: TeamSectionProps) {
 
       {/* Team photo with animation */}
       <motion.div
-        className="mx-auto mt-9 max-w-[1200px] px-4 sm:px-6 md:px-12 lg:px-16"
+        className="mx-auto mt-9 max-w-[1200px] px-4 sm:px-6 md:px-12 lg:px-16 2xl:max-w-[1400px]"
         initial={{ opacity: 0, scale: 0.9, rotate: 3 }}
         animate={
           isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.9, rotate: 3 }

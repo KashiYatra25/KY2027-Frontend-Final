@@ -255,7 +255,7 @@ export function ZonalsNavbar() {
           }}
         />
 
-        <div className="relative mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+        <div className="relative mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8 2xl:max-w-[1600px]">
           {/* ═══════════════════════════════════════════════════════════
               LEFT: Brand Lockup
           ═══════════════════════════════════════════════════════════ */}

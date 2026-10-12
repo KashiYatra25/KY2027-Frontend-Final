@@ -46,7 +46,7 @@ export function EventsExplorer() {
     <section
       id="events"
       ref={sectionRef}
-      className="relative mx-auto w-full max-w-7xl px-4 py-24 sm:py-32"
+      className="relative mx-auto w-full max-w-7xl px-4 py-24 sm:py-32 2xl:max-w-[1600px]"
     >
       {/* ── Header ──────────────────────────────────────────────── */}
       <header className="mb-12 sm:mb-16">

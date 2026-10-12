@@ -80,7 +80,7 @@ export function SpecialVideosSection({ onVideoClick }: SpecialVideosSectionProps
       </div>
 
       {/* Section header */}
-      <div className="relative mx-auto max-w-[1100px] px-4 text-center sm:px-6">
+      <div className="relative mx-auto max-w-[1100px] px-4 text-center sm:px-6 2xl:max-w-[1300px]">
         {/* Eyebrow badge */}
         <p
           className="mb-4 inline-flex items-center gap-2.5 rounded-full border px-3.5 py-1.5 font-mono text-xs tracking-[0.18em] uppercase"
@@ -130,7 +130,7 @@ export function SpecialVideosSection({ onVideoClick }: SpecialVideosSectionProps
 
       {/* Video cards */}
       <div
-        className="relative mx-auto mt-10 flex max-w-[1100px] flex-wrap items-center justify-center gap-6 px-4 sm:mt-14 sm:gap-16"
+        className="relative mx-auto mt-10 flex max-w-[1100px] flex-wrap items-center justify-center gap-6 px-4 sm:mt-14 sm:gap-16 2xl:max-w-[1300px]"
         id="splStage"
       >
         {hasContent ? (

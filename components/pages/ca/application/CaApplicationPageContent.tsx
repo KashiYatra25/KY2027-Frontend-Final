@@ -139,7 +139,7 @@ export function CaApplicationPageContent() {
 
       {/* Main content */}
       <main className="relative z-10 px-4 pt-28 pb-16 sm:pt-32">
-        <div className="mx-auto max-w-2xl">
+        <div className="mx-auto max-w-2xl 2xl:max-w-3xl">
           {/* Back button */}
           <Link
             href="/campus-ambassador"

@@ -32,7 +32,7 @@ const Footer = memo(function Footer() {
         }}
       />
 
-      <div className="mx-auto max-w-6xl text-center">
+      <div className="mx-auto max-w-6xl text-center 2xl:max-w-7xl">
         {/* Logo */}
         <div
           className="mb-4 text-2xl font-bold tracking-tight"

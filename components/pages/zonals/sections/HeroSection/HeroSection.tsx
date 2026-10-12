@@ -326,7 +326,7 @@ export function HeroSection() {
         variants={containerVariants}
         initial="hidden"
         animate="show"
-        className="relative mx-auto flex w-full max-w-7xl flex-col px-5 py-24 sm:px-8 lg:px-12"
+        className="relative mx-auto flex w-full max-w-7xl flex-col px-5 py-24 sm:px-8 lg:px-12 2xl:max-w-[1600px]"
       >
         {/* Eyebrow */}
         <motion.div variants={riseVariants} className="mb-6 flex items-center gap-3">

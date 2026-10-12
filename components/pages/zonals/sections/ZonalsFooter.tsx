@@ -112,7 +112,7 @@ export function ZonalsFooter() {
         }}
       />
 
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 2xl:max-w-[1600px]">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           {/* ── Branding ────────────────────────────────────────── */}
           <div className="flex flex-col gap-4">
