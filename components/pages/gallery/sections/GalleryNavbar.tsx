@@ -71,7 +71,7 @@ export const GalleryNavbar = memo(function GalleryNavbar() {
           : "drop-shadow(0 4px 16px rgba(0,0,0,0.35))",
       }}
     >
-      <div className="relative mx-auto w-full max-w-[1400px] px-3 pt-3 sm:px-4">
+      <div className="relative mx-auto w-full max-w-[1400px] px-3 pt-3 sm:px-4 2xl:max-w-[1600px]">
         {/* Main navbar bar */}
         <div
           className="relative flex h-14 items-center justify-between rounded-full px-4 sm:h-16 sm:px-6"

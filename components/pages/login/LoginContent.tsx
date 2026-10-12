@@ -59,7 +59,7 @@ export function LoginContent() {
         <BackgroundEffects />
 
         {/* Main Content Container */}
-        <div className="relative mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
+        <div className="relative mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12 2xl:max-w-6xl">
           <MysticGateSection />
           <LoginCard onGoogleLogin={handleSignIn} />
         </div>

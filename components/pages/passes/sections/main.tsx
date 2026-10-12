@@ -171,7 +171,7 @@ export function PassesSection() {
 
       {/* Content */}
       <motion.div
-        className="relative mx-auto max-w-7xl px-4 pt-20 sm:px-6 md:pt-24 lg:px-8"
+        className="relative mx-auto max-w-7xl px-4 pt-20 sm:px-6 md:pt-24 lg:px-8 2xl:max-w-[1600px]"
         style={{ zIndex: Z_INDEX.cards }}
         variants={ANIMATION.containerVariants}
         initial="hidden"

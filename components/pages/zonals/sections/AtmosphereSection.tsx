@@ -147,7 +147,7 @@ export function AtmosphereSection() {
       </div>
 
       {/* ── Content: oversized typography ────────────────────────── */}
-      <div className="relative z-20 mx-auto flex min-h-[90vh] max-w-7xl flex-col justify-center px-4 py-28">
+      <div className="relative z-20 mx-auto flex min-h-[90vh] max-w-7xl flex-col justify-center px-4 py-28 2xl:max-w-[1600px]">
         <h2
           className="font-black uppercase"
           style={{ fontSize: "clamp(3rem, 13vw, 11rem)", lineHeight: 0.85 }}

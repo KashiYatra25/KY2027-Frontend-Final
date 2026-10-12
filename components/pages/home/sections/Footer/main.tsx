@@ -55,7 +55,7 @@ export function FooterSection() {
             <ConcertBrandHeader />
 
             {/* Cards Grid */}
-            <div className="relative mx-auto mb-12 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8">
+            <div className="relative mx-auto mb-12 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8 2xl:max-w-5xl">
               {/* Mobile Dancer - Absolutely positioned beside Explore/Connect */}
               <div className="pointer-events-none absolute top-0 right-0 z-20 h-[400px] w-[180px] sm:hidden">
                 {/* Glow behind dancer */}

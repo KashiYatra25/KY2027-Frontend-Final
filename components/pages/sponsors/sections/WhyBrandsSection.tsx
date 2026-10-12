@@ -73,7 +73,7 @@ export const WhyBrandsSection = memo(function WhyBrandsSection() {
         <CrossDecor size={24} color={PALETTE.FESTIVAL_GOLD} />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 2xl:max-w-7xl">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

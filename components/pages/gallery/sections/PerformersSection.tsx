@@ -50,7 +50,7 @@ export function PerformersSection({ onCardClick }: PerformersSectionProps) {
     <section ref={sectionRef} className="gallery-section relative z-10 mt-16 sm:mt-24" id="stage">
       {/* Section header with scroll animation */}
       <motion.div
-        className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-12 lg:px-16"
+        className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-12 lg:px-16 2xl:max-w-[1400px]"
         initial={{ opacity: 0, y: 50 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
         transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -74,7 +74,7 @@ export function PerformersSection({ onCardClick }: PerformersSectionProps) {
       </motion.div>
 
       {/* Performer cards grid with staggered animation */}
-      <div className="mx-auto mt-10 max-w-[1200px] px-4 sm:px-6 md:px-12 lg:px-16">
+      <div className="mx-auto mt-10 max-w-[1200px] px-4 sm:px-6 md:px-12 lg:px-16 2xl:max-w-[1400px]">
         <motion.div
           className="performers-grid grid grid-cols-2 gap-[clamp(18px,3.4vw,40px)] pb-8 md:grid-cols-3"
           initial="hidden"

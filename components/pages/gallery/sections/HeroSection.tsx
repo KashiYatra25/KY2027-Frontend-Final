@@ -10,7 +10,7 @@ import { COLORS, SHADOWS } from "../constants/palette";
 export function HeroSection() {
   return (
     <header className="relative z-10 px-4 pt-24 pb-8 sm:px-6 sm:pt-32 md:px-12 lg:px-16">
-      <div className="mx-auto max-w-[1200px]">
+      <div className="mx-auto max-w-[1200px] 2xl:max-w-[1400px]">
         {/* Eyebrow text with fade in */}
         <motion.p
           className="mb-3 font-mono text-xs tracking-[0.18em] uppercase sm:mb-4"

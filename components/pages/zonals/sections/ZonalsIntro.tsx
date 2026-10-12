@@ -110,7 +110,7 @@ export function ZonalsIntro() {
         00
       </span>
 
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative mx-auto max-w-6xl 2xl:max-w-7xl">
         {/* Kicker */}
         <motion.p
           {...motionProps}

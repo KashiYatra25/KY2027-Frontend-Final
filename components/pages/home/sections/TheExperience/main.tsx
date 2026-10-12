@@ -145,7 +145,7 @@ export const TheExperience = memo(function TheExperience() {
         {/* DJ Character - Mobile only, static, lower z-index (no animation) */}
         <MobileDJ />
 
-        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 2xl:max-w-7xl">
           {/* Section Title */}
           <div ref={titleRef}>
             <SectionTitle />

@@ -99,7 +99,7 @@ export function FinalCTA() {
       </FloatingSticker>
 
       {/* ── Content ──────────────────────────────────────────────── */}
-      <div className="relative z-20 mx-auto max-w-6xl text-center">
+      <div className="relative z-20 mx-auto max-w-6xl text-center 2xl:max-w-7xl">
         <h2
           className="cta-rise font-black uppercase"
           style={{ fontSize: "clamp(2.5rem, 9vw, 8rem)", lineHeight: 0.9 }}

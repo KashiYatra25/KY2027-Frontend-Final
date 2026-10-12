@@ -72,7 +72,7 @@ export const ActivationsSection = memo(function ActivationsSection() {
         <DotGrid color={PALETTE.ELECTRIC_VIOLET} rows={3} cols={4} />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 2xl:max-w-7xl">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

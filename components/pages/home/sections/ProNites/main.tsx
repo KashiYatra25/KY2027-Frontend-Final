@@ -78,7 +78,7 @@ export const ProNitesSection = memo(function ProNitesSection() {
         <TopBorder />
 
         {/* ═══ Main Content ═══ */}
-        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 2xl:max-w-7xl">
           <div ref={titleRef}>
             <SectionTitle />
           </div>
@@ -127,7 +127,7 @@ export const ProNitesSection = memo(function ProNitesSection() {
 
             <div
               ref={featuringRef}
-              className="mx-auto grid max-w-[320px] grid-cols-2 gap-7 sm:max-w-4xl sm:grid-cols-4 sm:gap-5"
+              className="mx-auto grid max-w-[320px] grid-cols-2 gap-7 sm:max-w-4xl sm:grid-cols-4 sm:gap-5 2xl:max-w-5xl"
             >
               {previousLineups.map((artist, i) => (
                 <FeaturingCard key={artist.id} artist={artist} index={i} />
