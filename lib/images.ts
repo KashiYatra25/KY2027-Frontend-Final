@@ -66,7 +66,7 @@ export const IMAGES = {
   vibes: {
     // Common (both platforms)
     background: `${IMAGEKIT_BASE}/vibes/common/vibes-bg.png`,
-    backgroundDark: "/home/banarasiVibes/BanarasiVibesBackgroundDark.webp",
+    backgroundDark: "/home/banarasiVibes/BanarasiVibesBg.png",
     mahamana: `${IMAGEKIT_BASE}/vibes/common/mahamana.png`,
     bhuGate: `${IMAGEKIT_BASE}/vibes/common/bhu-gate.png`,
     rickshaw: "/home/banarasiVibes/Rickshaw.webp",
