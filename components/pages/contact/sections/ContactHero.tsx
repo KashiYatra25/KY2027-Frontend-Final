@@ -38,7 +38,7 @@ export const ContactHero = memo(function ContactHero() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6">
+      <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 2xl:max-w-4xl">
         {/* Eyebrow */}
         <div className="mb-5 flex items-center justify-center gap-3 sm:mb-6 sm:gap-4">
           <div

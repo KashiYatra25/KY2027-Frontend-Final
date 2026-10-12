@@ -55,7 +55,7 @@ export const ContactForm = memo(function ContactForm() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-2xl">
+      <div className="relative z-10 mx-auto max-w-2xl 2xl:max-w-3xl">
         <div
           className="relative rounded-2xl p-6 sm:p-10"
           style={{

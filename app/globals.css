@@ -2922,6 +2922,9 @@ body {
   transform-origin: 50% 48%;
   transform: scale(0.8);
   filter: drop-shadow(0 0 8px rgba(255, 190, 100, 0.6)) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
+  transition:
+    transform 0.2s ease-out,
+    filter 0.2s ease-out;
 }
 /* the plate artwork is cut to the badge outline so the canvas has no rectangular edge */
 .ky-countdown-plate__canvas {
@@ -2966,9 +2969,8 @@ body {
     kyCountdownPlateBeat 2.2s ease-in-out 1s infinite;
 }
 .ky-countdown-plate[data-show="true"][data-ready="true"]:hover .ky-countdown-plate__pw {
-  animation: none;
-  transform: scale(0.88);
-  filter: drop-shadow(0 0 18px rgba(255, 210, 120, 0.95))
+  transform: scale(0.85);
+  filter: drop-shadow(0 0 24px rgba(255, 210, 120, 0.95))
     drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
 }
 @keyframes kyCountdownPlatePop {

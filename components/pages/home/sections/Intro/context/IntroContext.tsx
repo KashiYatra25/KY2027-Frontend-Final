@@ -9,6 +9,7 @@ import {
   useRef,
   type ReactNode,
 } from "react";
+import { useIsMobile } from "@/hooks";
 
 /**
  * Intro phases:
@@ -26,6 +27,7 @@ interface IntroContextType {
   isIntroComplete: boolean;
   hasSeenIntro: boolean; // Tracks if user has completed intro this session
   isMuted: boolean;
+  beatDrop: boolean; // Triggers fire blast effect at beat drop (17 seconds)
   audioRef: React.RefObject<HTMLAudioElement | null>; // Exposed for audio analysis (FirePot)
   startLoading: () => void;
   cancelLoading: () => void;
@@ -42,19 +44,36 @@ const IntroContext = createContext<IntroContextType | null>(null);
 // Global flag - persists across client-side navigations but resets on full page refresh
 let globalHasSeenIntro = false;
 
+// Beat drop timestamp in the music (in seconds)
+const BEAT_DROP_TIME = 17;
+
 export function IntroProvider({ children }: { children: ReactNode }) {
+  // Use the global useIsMobile hook - intro is skipped on mobile devices
+  const isMobile = useIsMobile();
+
   // If user has already seen intro (client-side nav), start at complete
   const [phase, setPhase] = useState<IntroPhase>(globalHasSeenIntro ? "complete" : "idle");
   const [loadProgress, setLoadProgress] = useState(0);
   const [hasSeenIntro, setHasSeenIntro] = useState(globalHasSeenIntro);
   const [isMuted, setIsMuted] = useState(false);
+  const [beatDrop, setBeatDrop] = useState(false);
+  const beatDropTriggeredRef = useRef(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize audio
+  // Skip intro on mobile
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      audioRef.current = new Audio("/intro/PortalSong.mp3");
+    if (isMobile && phase !== "complete") {
+      globalHasSeenIntro = true;
+      setHasSeenIntro(true);
+      setPhase("complete");
+    }
+  }, [isMobile, phase]);
+
+  // Initialize audio (only on desktop)
+  useEffect(() => {
+    if (typeof window !== "undefined" && !isMobile) {
+      audioRef.current = new Audio("/home/mainMusic.mp3");
       audioRef.current.loop = true;
       audioRef.current.volume = 0.5;
     }
@@ -65,7 +84,30 @@ export function IntroProvider({ children }: { children: ReactNode }) {
         audioRef.current = null;
       }
     };
-  }, []);
+  }, [isMobile]);
+
+  // Monitor audio time for beat drop
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const checkBeatDrop = () => {
+      if (
+        !beatDropTriggeredRef.current &&
+        audio.currentTime >= BEAT_DROP_TIME &&
+        audio.currentTime < BEAT_DROP_TIME + 0.5 &&
+        phase === "video"
+      ) {
+        beatDropTriggeredRef.current = true;
+        setBeatDrop(true);
+        // Reset after animation completes
+        setTimeout(() => setBeatDrop(false), 1500);
+      }
+    };
+
+    audio.addEventListener("timeupdate", checkBeatDrop);
+    return () => audio.removeEventListener("timeupdate", checkBeatDrop);
+  }, [phase]);
 
   // Handle mute state
   useEffect(() => {
@@ -75,24 +117,29 @@ export function IntroProvider({ children }: { children: ReactNode }) {
   }, [isMuted]);
 
   const startLoading = useCallback(() => {
+    // Don't start loading on mobile
+    if (isMobile) return;
+
     setPhase("loading");
     setLoadProgress(0);
+    beatDropTriggeredRef.current = false; // Reset beat drop trigger
 
-    // Start playing audio
+    // Start playing audio from 3 seconds
     if (audioRef.current) {
-      audioRef.current.currentTime = 0;
+      audioRef.current.currentTime = 3.8;
       audioRef.current.play().catch(() => {});
     }
-  }, []);
+  }, [isMobile]);
 
   const cancelLoading = useCallback(() => {
     setPhase("idle");
     setLoadProgress(0);
+    beatDropTriggeredRef.current = false;
 
-    // Stop and reset audio
+    // Stop and reset audio to 3 seconds
     if (audioRef.current) {
       audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+      audioRef.current.currentTime = 3;
     }
   }, []);
 
@@ -109,6 +156,7 @@ export function IntroProvider({ children }: { children: ReactNode }) {
 
   const completeIntro = useCallback(() => {
     setPhase("complete");
+    beatDropTriggeredRef.current = false;
 
     // Mark intro as seen globally (persists across client-side navigations)
     globalHasSeenIntro = true;
@@ -117,12 +165,13 @@ export function IntroProvider({ children }: { children: ReactNode }) {
     // Stop audio when intro completes
     if (audioRef.current) {
       audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+      audioRef.current.currentTime = 3;
     }
   }, []);
 
   const skipIntro = useCallback(() => {
     setPhase("complete");
+    beatDropTriggeredRef.current = false;
 
     // Mark intro as seen globally
     globalHasSeenIntro = true;
@@ -131,7 +180,7 @@ export function IntroProvider({ children }: { children: ReactNode }) {
     // Stop audio when skipping
     if (audioRef.current) {
       audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+      audioRef.current.currentTime = 3;
     }
   }, []);
 
@@ -149,6 +198,7 @@ export function IntroProvider({ children }: { children: ReactNode }) {
         isIntroComplete,
         hasSeenIntro,
         isMuted,
+        beatDrop,
         audioRef,
         startLoading,
         cancelLoading,

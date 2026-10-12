@@ -95,7 +95,7 @@ export function HeroSection() {
       </div>
 
       {/* Left-aligned content */}
-      <div className="relative z-30 ml-[5%] flex max-w-2xl flex-col items-start pt-16 text-left md:ml-[8%] lg:pt-24">
+      <div className="relative z-30 ml-[5%] flex max-w-2xl flex-col items-start pt-16 text-left md:ml-[8%] lg:pt-24 2xl:max-w-3xl">
         {/* Funky badges */}
         <div className="mb-8 flex flex-wrap justify-start gap-3">
           {["🔥 LIMITED SPOTS", "⚡ EXCLUSIVE PERKS", "🎯 LEAD YOUR CAMPUS"].map((badge, i) => (

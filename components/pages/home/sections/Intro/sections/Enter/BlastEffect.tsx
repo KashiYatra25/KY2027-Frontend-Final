@@ -12,8 +12,8 @@ export function BlastEffect() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      audioRef.current = new Audio("/audio/explosion.mp3");
-      audioRef.current.volume = 0.6;
+      audioRef.current = new Audio("/home/explosion.mp3");
+      audioRef.current.volume = 1.0; // Max volume (2x of previous 0.6)
     }
   }, []);
 

@@ -57,7 +57,7 @@ export const StatsSection = memo(function StatsSection() {
           </motion.div>
         ))}
 
-      <div className="relative z-10 mx-auto max-w-5xl">
+      <div className="relative z-10 mx-auto max-w-5xl 2xl:max-w-6xl">
         {/* Section title - static on mobile */}
         {isMobile ? (
           <div className="mb-10 text-center">

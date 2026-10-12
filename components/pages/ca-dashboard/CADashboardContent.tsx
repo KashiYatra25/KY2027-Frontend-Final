@@ -181,7 +181,7 @@ export function CADashboardContent() {
 
       {/* Main content - Added more top padding and centered vertically */}
       <main className="flex min-h-screen flex-col items-center justify-center px-4 py-32 sm:px-6 lg:px-8">
-        <div className="w-full max-w-5xl">
+        <div className="w-full max-w-5xl 2xl:max-w-6xl">
           {/* Header */}
           <div className="mb-12 text-center">
             <div className="mb-4 flex items-center justify-center gap-3">

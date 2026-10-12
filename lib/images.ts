@@ -231,20 +231,9 @@ export const IMAGES = {
   },
 
   // ============================================
-  // SPONSORS
+  // SPONSORS - Logo images only
   // ============================================
   sponsors: {
-    // Background (CDN)
-    background: `${IMAGEKIT_BASE}/sponsors/common/sponsor-bg.png`,
-
-    // Decorative elements - flat in /public/sponsors/
-    ornamentalDivider: "/sponsors/OrnamentalDivider.png",
-    rectangularFrame: "/sponsors/RectangularFrame.png",
-    sponsorStamp: "/sponsors/SponsorStamp.png",
-    standingGirl: "/sponsors/StandingGirl.png",
-    leftTreeBranch: "/sponsors/LeftTreeBranch.png",
-    sponsorPresentor: "/sponsors/SponsorPresentor.png",
-
     // Title & Co-Title
     titleSponsor: "/sponsors/logos/TitleSponsor.jpeg",
     coTitlePartner: "/sponsors/logos/CoTitlePartner.png",

@@ -28,7 +28,7 @@ import { useScrollPosition } from "@/hooks/useScrollPosition";
  */
 export function Navbar() {
   const { visible } = useScrollPosition({
-    showAfterPercent: 1.2, // Show after scrolling ~1.2x viewport (when ProNites section is in view)
+    showAfterPercent: 0.85, // Show after scrolling ~85% of viewport (when ProNites header visible)
     hideBeforeBottomPercent: 1.5, // Hide when 1.5x viewport from bottom (desktop)
     hideBeforeBottomPercentMobile: 0.5, // Hide when 0.5x viewport from bottom (mobile)
   });

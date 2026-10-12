@@ -148,7 +148,7 @@ export const HeroSection = memo(function HeroSection() {
       )}
 
       {/* Center Content */}
-      <div className="relative z-10 mx-auto w-full max-w-4xl py-8 text-center sm:py-20">
+      <div className="relative z-10 mx-auto w-full max-w-4xl py-8 text-center sm:py-20 2xl:max-w-5xl">
         {/* Eyebrow badge */}
         {isMobile ? (
           <div

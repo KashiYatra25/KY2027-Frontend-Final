@@ -36,7 +36,7 @@ export function TeamsPageContent() {
           `,
         }}
       >
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-4xl lg:max-w-5xl 2xl:max-w-6xl">
           {/* Header */}
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="text-center sm:text-left">

@@ -93,7 +93,7 @@ export function TimelineSection() {
       </div>
 
       {/* Timeline - centered */}
-      <div className="timeline-container relative z-20 mx-auto max-w-3xl">
+      <div className="timeline-container relative z-20 mx-auto max-w-3xl 2xl:max-w-4xl">
         {/* Vertical line */}
         <div
           ref={lineRef}

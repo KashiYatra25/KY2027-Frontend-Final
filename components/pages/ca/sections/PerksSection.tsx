@@ -73,7 +73,7 @@ export function PerksSection() {
   return (
     <section className="relative min-h-[900px] overflow-hidden px-4 py-24">
       {/* Section header - CENTERED */}
-      <div className="relative z-20 mx-auto mb-16 max-w-4xl text-center">
+      <div className="relative z-20 mx-auto mb-16 max-w-4xl text-center 2xl:max-w-5xl">
         <span className="perks-title mb-4 inline-block rounded-full border border-purple-500/20 bg-purple-500/10 px-4 py-1 text-xs font-bold tracking-wider text-purple-400 uppercase">
           Why Join?
         </span>
@@ -87,7 +87,7 @@ export function PerksSection() {
       </div>
 
       {/* Perks grid - CENTERED */}
-      <div className="perks-grid relative z-20 mx-auto grid max-w-4xl grid-cols-1 gap-6 px-4 sm:grid-cols-2">
+      <div className="perks-grid relative z-20 mx-auto grid max-w-4xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 2xl:max-w-5xl">
         {PERKS.map((perk, i) => {
           const colors = colorMap[perk.color as keyof typeof colorMap];
           return (

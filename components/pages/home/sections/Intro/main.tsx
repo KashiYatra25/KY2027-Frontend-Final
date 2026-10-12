@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useAnimationPolicy } from "@/hooks";
 import { useIntro } from "./context/IntroContext";
 import {
   StageBackground,
@@ -11,7 +10,6 @@ import {
   BlastEffect,
   CountdownPoster,
   FirePot,
-  NavigationDrawer,
 } from "./sections";
 import "./styles/cursor.css";
 
@@ -65,9 +63,6 @@ export function IntroSection() {
       <AnimatePresence>
         {(phase === "idle" || phase === "loading") && <SkipButton />}
       </AnimatePresence>
-
-      {/* Navigation drawer - shows during video phase */}
-      <NavigationDrawer />
     </section>
   );
 }

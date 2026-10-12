@@ -58,7 +58,7 @@ function CategoryCardSkeleton({ index }: { index: number }) {
 
 function CategoriesLoader() {
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 xl:grid-cols-5">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 2xl:gap-8">
       {Array.from({ length: 9 }).map((_, index) => (
         <CategoryCardSkeleton key={index} index={index} />
       ))}
@@ -159,7 +159,7 @@ export function EventsPageContent() {
         {/* Background decorative elements */}
         <DecorativeElements />
 
-        <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="relative z-10 mx-auto max-w-7xl 2xl:max-w-[1600px]">
           <PageTitle />
 
           {/* Categories Grid - with inline states */}
@@ -168,7 +168,7 @@ export function EventsPageContent() {
           ) : isError ? (
             <CategoriesError message={errorMessage ?? "Something went wrong"} onRetry={refetch} />
           ) : (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 2xl:gap-8">
               {categories.map((category, index) => (
                 <CategoryCard key={category.id} category={category} index={index} />
               ))}
