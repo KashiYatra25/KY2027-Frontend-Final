@@ -28,7 +28,7 @@ import { useScrollPosition } from "@/hooks/useScrollPosition";
  */
 export function Navbar() {
   const { visible } = useScrollPosition({
-    showAfterPercent: 3.7, // Show after scrolling ~4x viewport (when BanarasiVibes is in view)
+    showAfterPercent: 1.2, // Show after scrolling ~1.2x viewport (when ProNites section is in view)
     hideBeforeBottomPercent: 1.5, // Hide when 1.5x viewport from bottom (desktop)
     hideBeforeBottomPercentMobile: 0.5, // Hide when 0.5x viewport from bottom (mobile)
   });
