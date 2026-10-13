@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { EventsPageContent } from "@/components/pages/events";
+import FestEvents from "@/components/pages/events/fest/FestEvents";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -20,5 +20,5 @@ export const metadata: Metadata = {
 };
 
 export default function EventsPage() {
-  return <EventsPageContent />;
+  return <FestEvents />;
 }
