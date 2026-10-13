@@ -3,6 +3,7 @@
 import { useMemo, useCallback, useState, useEffect } from "react";
 import { useApiQuery, useApiMutation } from "wire-axon/hooks";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import { RegisterIndividualSchema, RegisterTeamSchema } from "@/lib/api/utils/registration.schema";
@@ -63,6 +64,9 @@ interface RegisterResponse {
 // ═══════════════════════════════════════════════════════════════════
 
 export function useMyRegistrations() {
+  const { status: sessionStatus } = useSession();
+  const isAuthenticated = sessionStatus === "authenticated";
+
   const { data, isLoading, isError, error, refetch } = useApiQuery<RegistrationsApiResponse>({
     queryKey: ["my-registrations"],
     url: "/user/registrations",
@@ -70,12 +74,13 @@ export function useMyRegistrations() {
     featureConfig: sharedFeatureConfig,
     apiConfig: { timeout: API_TIMEOUT },
     queryOptions: {
+      enabled: isAuthenticated, // Only fetch when user is logged in
       staleTime: 1000 * 60 * 2, // 2 minutes
       gcTime: 1000 * 60 * 15, // 15 minutes
       retry: API_RETRY,
       refetchInterval: false, // Disable polling
-      refetchOnWindowFocus: false, // Don't refetch when tab regains focus
-      refetchOnMount: false, // Don't refetch on every mount if data exists
+      refetchOnWindowFocus: true, // Refetch when tab regains focus to get latest data
+      refetchOnMount: "always", // Always refetch on mount to ensure fresh data
     },
   });
 
@@ -110,7 +115,7 @@ export function useMyRegistrations() {
     registeredEventSlugs,
     isRegisteredFor,
     getRegistrationFor,
-    isLoading,
+    isLoading: isLoading || sessionStatus === "loading",
     isError,
     errorMessage,
     refetch,
