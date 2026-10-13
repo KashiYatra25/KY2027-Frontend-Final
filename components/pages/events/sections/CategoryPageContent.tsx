@@ -1,6 +1,5 @@
 "use client";
 
-import { ThemedNavbar } from "@/components/navbar";
 import type { EventCategory, EventCategorySlug } from "@/lib/api/helper/types";
 import {
   useEventsByCategory,
@@ -8,7 +7,11 @@ import {
   usePaymentStatus,
   CATEGORY_METADATA,
 } from "@/lib/api/hooks";
-import { SubEventCard, CategoryHeader } from "@/components/pages/events/components";
+import {
+  SubEventCard,
+  CategoryHeader,
+  EventsCategoryNavbar,
+} from "@/components/pages/events/components";
 import { BackgroundDecorations } from "@/components/pages/events/components/CategoryDecorations";
 import { AlertCircle, RefreshCw, Sparkles, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -275,15 +278,13 @@ export function CategoryPageContent({
   const { isRegisteredFor, refetch: refetchRegistrations } = useMyRegistrations();
   const { hasPaid } = usePaymentStatus();
 
-  // 404 state
+  // 404 state - still use basic navbar
   if (!categoryKey || !categoryMeta) {
     return (
       <>
-        <div className="fixed inset-x-0 top-0 z-[200]">
-          <ThemedNavbar position="relative" topOffset={18} theme="main" />
-        </div>
+        <EventsCategoryNavbar activeCategory="NATRAJ" />
         <main
-          className="flex min-h-screen items-center justify-center px-4 pt-28 pb-20"
+          className="flex min-h-screen items-center justify-center px-4 pb-20"
           style={{
             background: "linear-gradient(180deg, #0c0810 0%, #150a14 50%, #0c0810 100%)",
           }}
@@ -347,13 +348,11 @@ export function CategoryPageContent({
 
   return (
     <>
-      {/* Fixed navbar */}
-      <div className="fixed inset-x-0 top-0 z-[200]">
-        <ThemedNavbar position="relative" topOffset={18} theme="main" />
-      </div>
+      {/* Custom Events Category Navbar */}
+      <EventsCategoryNavbar activeCategory={categoryKey} />
 
       <main
-        className="relative min-h-screen overflow-hidden px-4 pt-28 pb-20 sm:px-6 sm:pt-32"
+        className="relative min-h-screen overflow-hidden px-4 pb-20 sm:px-6"
         style={{
           background: `linear-gradient(180deg, 
             #0c0810 0%,
@@ -437,8 +436,8 @@ export function CategoryPageContent({
         ═══════════════════════════════════════════════════════════════════ */}
 
         <div className="relative z-10 mx-auto max-w-6xl 2xl:max-w-7xl">
-          {/* Category header */}
-          <CategoryHeader category={categoryWithEvents} />
+          {/* Category header - without back button now since navbar has category nav */}
+          <CategoryHeader category={categoryWithEvents} showBackButton={false} />
 
           {/* Payment required banner */}
           {!hasPaid && <PaymentRequiredBanner color={categoryMeta.color} />}

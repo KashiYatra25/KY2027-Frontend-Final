@@ -13,33 +13,39 @@ import { ArrowLeft, Sparkles, CalendarCheck } from "lucide-react";
 
 interface CategoryHeaderProps {
   category: EventCategory;
+  showBackButton?: boolean;
 }
 
-export const CategoryHeader = memo(function CategoryHeader({ category }: CategoryHeaderProps) {
+export const CategoryHeader = memo(function CategoryHeader({
+  category,
+  showBackButton = true,
+}: CategoryHeaderProps) {
   const openCount = category.subEvents.filter((e) => e.registrationOpen).length;
 
   return (
     <div className="relative mb-10 sm:mb-14">
       {/* Back navigation - positioned with more margin to avoid navbar overlap */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.4 }}
-      >
-        <Link
-          href="/events"
-          className="group mb-6 inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:gap-3"
-          style={{
-            background: `linear-gradient(135deg, ${category.color}20 0%, ${category.color}10 100%)`,
-            border: `1px solid ${category.color}40`,
-            color: category.color,
-            boxShadow: `0 0 20px ${category.color}15`,
-          }}
+      {showBackButton && (
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
         >
-          <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-          <span>Back to Events</span>
-        </Link>
-      </motion.div>
+          <Link
+            href="/events"
+            className="group mb-6 inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:gap-3"
+            style={{
+              background: `linear-gradient(135deg, ${category.color}20 0%, ${category.color}10 100%)`,
+              border: `1px solid ${category.color}40`,
+              color: category.color,
+              boxShadow: `0 0 20px ${category.color}15`,
+            }}
+          >
+            <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
+            <span>Back to Events</span>
+          </Link>
+        </motion.div>
+      )}
 
       {/* Main header card */}
       <motion.div
