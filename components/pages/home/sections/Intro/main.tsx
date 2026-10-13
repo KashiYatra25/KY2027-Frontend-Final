@@ -1,16 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useIntro } from "./context/IntroContext";
-import {
-  StageBackground,
-  FloatingElements,
-  CursorTrail,
-  EnterButton,
-  BlastEffect,
-  CountdownPoster,
-  FirePot,
-} from "./sections";
+import { CursorTrail, BlastEffect, CountdownPoster, FirePot, NeonStage } from "./sections";
 import "./styles/cursor.css";
 
 export function IntroSection() {
@@ -25,8 +16,8 @@ export function IntroSection() {
       {/* Cursor trail effect - z-index 100 but pointer-events-none */}
       <CursorTrail />
 
-      {/* Stage background with zoom effect - z-0 */}
-      <StageBackground />
+      {/* Neon stage with hold-to-enter ring + skip - z-10 (idle, loading, blasting) */}
+      <NeonStage />
 
       {/* Countdown concert poster - shows after blast (replaces the old video) - z-0 */}
       <CountdownPoster />
@@ -36,85 +27,6 @@ export function IntroSection() {
 
       {/* Blast effect overlay - z-100 but pointer-events-none */}
       <BlastEffect />
-
-      {/* Enter button with floating elements - z-10 */}
-      <AnimatePresence>
-        {(phase === "idle" || phase === "loading") && (
-          <motion.div
-            className="absolute inset-0 z-10 flex items-center justify-center"
-            exit={{ opacity: 0, scale: 1.5 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Floating diamond elements - pointer-events-none */}
-            <FloatingElements />
-
-            {/* Enter button - moved down slightly */}
-            <div className="relative z-20 mt-16">
-              <EnterButton />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Hold to enter hint at bottom - z-20 */}
-      <AnimatePresence>{phase === "idle" && <HoldHint />}</AnimatePresence>
-
-      {/* Skip button - only during idle and loading - z-50 */}
-      <AnimatePresence>
-        {(phase === "idle" || phase === "loading") && <SkipButton />}
-      </AnimatePresence>
     </section>
-  );
-}
-
-function HoldHint() {
-  return (
-    <motion.div
-      className="absolute bottom-20 left-1/2 z-20 hidden -translate-x-1/2 sm:block"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 1.5 }}
-    >
-      <p
-        className="text-sm font-light tracking-[0.3em] text-white/80"
-        style={{ textShadow: "0 0 10px rgba(255, 255, 255, 0.5)" }}
-      >
-        HOLD TO ENTER
-      </p>
-
-      <motion.div
-        className="mt-2 flex justify-center"
-        animate={{ y: [0, -5, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path
-            d="M10 15 L10 5 M6 9 L10 5 L14 9"
-            stroke="rgba(255, 255, 255, 0.6)"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-function SkipButton() {
-  const { skipIntro } = useIntro();
-
-  return (
-    <motion.button
-      onClick={skipIntro}
-      className="absolute right-8 bottom-8 z-50 cursor-pointer rounded-full border border-white/20 px-4 py-2 text-sm text-white/50 backdrop-blur-sm transition-colors hover:border-white/40 hover:text-white/80"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 2 }}
-    >
-      Skip Intro
-    </motion.button>
   );
 }
