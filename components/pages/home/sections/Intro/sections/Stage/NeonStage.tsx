@@ -49,12 +49,17 @@ export function NeonStage() {
   const { phase, startLoading, cancelLoading, startBlast, setLoadProgress, skipIntro } = useIntro();
   const [p, setP] = useState(0);
   const [hr, setHr] = useState(0);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
   const hold = useRef(false);
   const prog = useRef(0);
 
-  // Size the button to the hole in the stage art (image is cover-fitted)
+  // Size and place the button on the hole in the stage art (image is cover-fitted)
   useEffect(() => {
-    const fit = () => setHr(HR * Math.max(innerWidth / W, innerHeight / H));
+    const fit = () => {
+      const k = Math.max(innerWidth / W, innerHeight / H);
+      setHr(HR * k);
+      setPos({ x: innerWidth / 2 + (HX - W / 2) * k, y: innerHeight / 2 + (HY - H / 2) * k });
+    };
     fit();
     addEventListener("resize", fit);
     return () => removeEventListener("resize", fit);
@@ -67,7 +72,7 @@ export function NeonStage() {
     let raf = 0,
       last = performance.now();
     const tick = (t: number) => {
-      const dt = t - last;
+      const dt = Math.min(t - last, 100); // cap so a paused (hidden) tab cannot jump the ring
       last = t;
       const before = prog.current;
       const v = Math.min(1, Math.max(0, before + (hold.current ? dt / HOLD_MS : -dt / DROP_MS)));
@@ -116,8 +121,13 @@ export function NeonStage() {
 
   if (phase === "video" || phase === "complete") return null;
 
-  const C = 2 * Math.PI * 0.62;
-  const vars = { "--p": p, "--hr": hr + "px" } as CSSProperties;
+  const C = 2 * Math.PI * 0.95;
+  const vars = {
+    "--p": p,
+    "--hr": hr + "px",
+    "--hx": pos.x + "px",
+    "--hy": pos.y + "px",
+  } as CSSProperties;
   const release = () => (hold.current = false);
 
   return (
@@ -223,8 +233,8 @@ export function NeonStage() {
           ))}
         </div>
         <svg className={s.ring} viewBox="-1 -1 2 2" aria-hidden="true">
-          <circle r=".62" className={s.track} />
-          <circle r=".62" className={s.fill} strokeDasharray={C} strokeDashoffset={C * (1 - p)} />
+          <circle r=".95" className={s.track} />
+          <circle r=".95" className={s.fill} strokeDasharray={C} strokeDashoffset={C * (1 - p)} />
         </svg>
         <button className={s.btn} aria-label="Hold to enter" onKeyDown={(e) => e.preventDefault()}>
           <b>{p > 0 ? "HOLD" : "ENTER"}</b>
