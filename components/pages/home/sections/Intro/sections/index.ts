@@ -1,6 +1,9 @@
 // Background section - stage, floating elements, cursor trail
 export { StageBackground, FloatingElements, CursorTrail } from "./Background";
 
+// Stage section - neon stage with hold-to-enter ring
+export { NeonStage } from "./Stage/NeonStage";
+
 // Enter section - hold button and blast effect
 export { EnterButton, BlastEffect } from "./Enter";
 
