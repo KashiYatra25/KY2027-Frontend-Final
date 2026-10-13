@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { FEST_DAYS } from "@/components/pages/schedule/config/campusMap.config";
-import type { ScheduledEvent, Venue } from "@/lib/api/helper/types";
+import { useVenueSchedule, useVenues, getCategoryMeta } from "@/lib/api/hooks";
 import { CampusMap } from "./CampusMap";
+import { ScheduleLoader } from "./loader/ScheduleLoader";
 
 // ═══════════════════════════════════════════════════════════════════
 // VENUE PAGE CONTENT
@@ -13,11 +13,52 @@ import { CampusMap } from "./CampusMap";
 // ═══════════════════════════════════════════════════════════════════
 
 interface VenuePageContentProps {
-  venue: Venue;
-  events: ScheduledEvent[];
+  venueSlug: string;
 }
 
-export function VenuePageContent({ venue, events }: VenuePageContentProps) {
+export function VenuePageContent({ venueSlug }: VenuePageContentProps) {
+  // Fetch venue-specific schedule
+  const {
+    venue,
+    scheduledEvents: events,
+    festDays,
+    isLoading: isLoadingSchedule,
+    isError,
+    errorMessage,
+  } = useVenueSchedule(venueSlug);
+
+  // Fetch all venues for the map
+  const { venues, isLoading: isLoadingVenues } = useVenues();
+
+  const isLoading = isLoadingSchedule || isLoadingVenues;
+
+  // Show unified loader while data is loading
+  if (isLoading) {
+    return (
+      <main className="relative flex min-h-[100dvh] items-center justify-center bg-[#080b18] text-white">
+        <ScheduleLoader />
+      </main>
+    );
+  }
+
+  // Show error state
+  if (isError || !venue) {
+    return (
+      <main className="relative flex min-h-[100dvh] flex-col items-center justify-center gap-4 bg-[#080b18] text-white">
+        <p className="text-xl text-red-400">
+          {venue === null ? "Venue not found" : "Failed to load venue"}
+        </p>
+        {errorMessage && <p className="text-sm text-white/60">{errorMessage}</p>}
+        <Link
+          href="/schedule"
+          className="mt-4 inline-flex items-center gap-2 rounded border border-white/20 px-4 py-2 text-sm text-[#f3e6c8] transition-colors hover:border-[#D4A853] hover:text-[#D4A853]"
+        >
+          <ArrowLeft className="h-4 w-4" /> Back to Schedule
+        </Link>
+      </main>
+    );
+  }
+
   const categories = [...new Set(events.map((e) => e.category.name))];
 
   return (
@@ -30,6 +71,7 @@ export function VenuePageContent({ venue, events }: VenuePageContentProps) {
               key={venue.slug}
               focusSlug={venue.slug}
               showControls={false}
+              venues={venues}
               className="absolute top-1/2 left-1/2 w-[max(100%,calc(45vh*1.064))] -translate-x-1/2 -translate-y-1/2 lg:w-[max(100%,calc((100dvh_-_112px)*1.064))]"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#080b18] lg:bg-gradient-to-r" />
@@ -68,43 +110,54 @@ export function VenuePageContent({ venue, events }: VenuePageContentProps) {
               </p>
             ) : (
               <ol className="space-y-3">
-                {events.map(({ event, category, day }) => (
-                  <li
-                    key={event.id}
-                    className="grid grid-cols-[64px_1fr] gap-4 border-l-2 border-[#D4A853]/70 py-3 pl-4"
-                  >
-                    <div className="text-[11px] font-semibold tracking-[0.18em] text-[#D4A853] uppercase">
-                      Day {day}
-                      <span className="mt-0.5 block text-[10px] tracking-normal text-white/40 normal-case">
-                        {FEST_DAYS[day]}
-                      </span>
-                    </div>
-                    <div>
-                      <h2 className="font-[family-name:var(--font-cinzel)] text-lg leading-snug font-semibold text-[#f3e6c8]">
-                        {event.name}
-                      </h2>
-                      <p
-                        className="mt-0.5 text-[10px] font-semibold tracking-[0.2em] uppercase"
-                        style={{ color: category.color }}
-                      >
-                        {category.name}
-                      </p>
-                      <p className="mt-1 text-sm text-white/70">{event.tagline}</p>
-                      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/45">
-                        <span className="capitalize">
-                          {event.type}
-                          {event.teamSize ? ` · ${event.teamSize}` : ""}
+                {events.map(({ event, category, day, startTime, endTime }) => {
+                  const categoryMeta = getCategoryMeta(category.slug);
+                  const categoryColor = categoryMeta?.color ?? "#D4A853";
+
+                  return (
+                    <li
+                      key={`${event.id}-${day}`}
+                      className="grid grid-cols-[64px_1fr] gap-4 border-l-2 border-[#D4A853]/70 py-3 pl-4"
+                    >
+                      <div className="text-[11px] font-semibold tracking-[0.18em] text-[#D4A853] uppercase">
+                        Day {day}
+                        <span className="mt-0.5 block text-[10px] tracking-normal text-white/40 normal-case">
+                          {festDays[day] ?? ""}
                         </span>
-                        <Link
-                          href={`/events/${category.slug}`}
-                          className="inline-flex items-center gap-1 text-[#D4A853] hover:underline"
-                        >
-                          View event <ArrowRight className="h-3 w-3" />
-                        </Link>
+                        {startTime && (
+                          <span className="mt-1 block text-[10px] tracking-normal text-white/50 normal-case">
+                            {startTime}
+                            {endTime && ` - ${endTime}`}
+                          </span>
+                        )}
                       </div>
-                    </div>
-                  </li>
-                ))}
+                      <div>
+                        <h2 className="font-[family-name:var(--font-cinzel)] text-lg leading-snug font-semibold text-[#f3e6c8]">
+                          {event.name}
+                        </h2>
+                        <p
+                          className="mt-0.5 text-[10px] font-semibold tracking-[0.2em] uppercase"
+                          style={{ color: categoryColor }}
+                        >
+                          {category.name}
+                        </p>
+                        <p className="mt-1 text-sm text-white/70">{event.tagline}</p>
+                        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/45">
+                          <span className="capitalize">
+                            {event.type}
+                            {event.teamSize ? ` · ${event.teamSize}` : ""}
+                          </span>
+                          <Link
+                            href={`/events/${category.slug}`}
+                            className="inline-flex items-center gap-1 text-[#D4A853] hover:underline"
+                          >
+                            View event <ArrowRight className="h-3 w-3" />
+                          </Link>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
               </ol>
             )}
           </section>

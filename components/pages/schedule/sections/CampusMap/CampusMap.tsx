@@ -1,16 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { MapControls } from "./MapControls";
-import {
-  VENUES,
-  LAMPS,
-  SCHEDULED_EVENTS,
-} from "@/components/pages/schedule/config/campusMap.config";
+import { LAMPS } from "@/components/pages/schedule/config/campusMap.config";
 import { TONE_COLORS } from "@/components/pages/schedule/constants/palette";
 import { DEFAULT_LAYERS } from "@/components/pages/schedule/constants/layers";
-import type { Layer, MapLayers, Venue } from "@/lib/api/helper/types";
+import type { Layer, MapLayers, Venue, ScheduledEvent } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════
 // CAMPUS MAP
@@ -51,11 +47,6 @@ const FLOCK_SHAPE: [number, number][] = [
   [140, -80],
 ];
 
-const EVENT_COUNTS = SCHEDULED_EVENTS.reduce<Record<string, number>>(
-  (acc, s) => ({ ...acc, [s.venue.slug]: (acc[s.venue.slug] ?? 0) + 1 }),
-  {}
-);
-
 interface CampusMapProps {
   focusSlug?: string;
   hoverZoom?: boolean;
@@ -63,6 +54,8 @@ interface CampusMapProps {
   edgeFade?: boolean;
   fill?: boolean;
   layers?: MapLayers;
+  venues: Venue[];
+  eventsByVenue?: Record<string, ScheduledEvent[]>;
   onLayerToggle?: (key: Layer) => void;
   onSearchClick?: () => void;
   className?: string;
@@ -76,6 +69,8 @@ export function CampusMap({
   edgeFade = false,
   fill = false,
   layers: controlledLayers,
+  venues,
+  eventsByVenue = {},
   onLayerToggle,
   onSearchClick,
   className = "",
@@ -86,7 +81,16 @@ export function CampusMap({
   const [hovered, setHovered] = useState<Venue | null>(null);
   const isNight = layers.night;
 
-  const focused = VENUES.find((v) => v.slug === focusSlug);
+  // Compute event counts per venue
+  const eventCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const [slug, events] of Object.entries(eventsByVenue)) {
+      counts[slug] = events.length;
+    }
+    return counts;
+  }, [eventsByVenue]);
+
+  const focused = venues.find((v) => v.slug === focusSlug);
 
   const handleHover = (venue: Venue | null) => setHovered(venue);
 
@@ -336,7 +340,7 @@ export function CampusMap({
             preserveAspectRatio="none"
             className="absolute inset-0 h-full w-full"
           >
-            {VENUES.map((v) =>
+            {venues.map((v) =>
               v.anchor ? (
                 <line
                   key={v.slug}
@@ -371,9 +375,9 @@ export function CampusMap({
           )}
 
           {/* Venue dots and labels */}
-          {VENUES.map((v) => {
+          {venues.map((v) => {
             const isActive = v.slug === focusSlug || v.slug === hovered?.slug;
-            const count = EVENT_COUNTS[v.slug] ?? 0;
+            const count = eventCounts[v.slug] ?? 0;
             const color = TONE_COLORS[v.tone];
 
             return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { motion, useSpring } from "framer-motion";
 import { useIntro } from "@/components/pages/home/sections/Intro/context/IntroContext";
 import { useAnimationPolicy } from "@/hooks";
@@ -36,8 +36,11 @@ function Speaker({
   const shakeX = isMuted ? 0 : (Math.random() - 0.5) * intensity * 10; // Increased from 4
   const shakeY = isMuted ? 0 : intensity * 8; // Increased from 2
 
-  // Unique ID for this speaker instance
-  const uniqueId = useRef(`speaker-${size}-${Math.random().toString(36).substr(2, 9)}`).current;
+  // Unique ID for this speaker instance - stable across renders
+  const uniqueId = useMemo(
+    () => `speaker-${size}-${Math.random().toString(36).substr(2, 9)}`,
+    [size]
+  );
 
   return (
     <motion.div
@@ -359,26 +362,35 @@ export function FirePot() {
     springIntensity.set(intensity);
   }, [intensity, springIntensity]);
 
+  // Use ref to store analyze function for stable recursive calls
+  const analyzeAudioRef = useRef<() => void>(() => {});
+
+  useEffect(() => {
+    analyzeAudioRef.current = () => {
+      if (!analyzerRef.current) {
+        animationFrameRef.current = requestAnimationFrame(analyzeAudioRef.current);
+        return;
+      }
+
+      const dataArray = new Uint8Array(analyzerRef.current.frequencyBinCount);
+      analyzerRef.current.getByteFrequencyData(dataArray);
+
+      const allFreqs = Array.from(dataArray);
+      const avgVolume = allFreqs.reduce((a, b) => a + b, 0) / allFreqs.length;
+      const bass = dataArray.slice(0, 6).reduce((a, b) => a + b, 0) / 6;
+      const mids = dataArray.slice(6, 20).reduce((a, b) => a + b, 0) / 14;
+
+      const combined = (bass * 0.5 + mids * 0.3 + avgVolume * 0.2) / 255;
+      const curved = Math.pow(combined, 0.7);
+      const finalIntensity = Math.max(0.15, Math.min(1, curved * 1.3));
+
+      setIntensity(finalIntensity);
+      animationFrameRef.current = requestAnimationFrame(analyzeAudioRef.current);
+    };
+  }, []);
+
   const analyzeAudio = useCallback(() => {
-    if (!analyzerRef.current) {
-      animationFrameRef.current = requestAnimationFrame(analyzeAudio);
-      return;
-    }
-
-    const dataArray = new Uint8Array(analyzerRef.current.frequencyBinCount);
-    analyzerRef.current.getByteFrequencyData(dataArray);
-
-    const allFreqs = Array.from(dataArray);
-    const avgVolume = allFreqs.reduce((a, b) => a + b, 0) / allFreqs.length;
-    const bass = dataArray.slice(0, 6).reduce((a, b) => a + b, 0) / 6;
-    const mids = dataArray.slice(6, 20).reduce((a, b) => a + b, 0) / 14;
-
-    const combined = (bass * 0.5 + mids * 0.3 + avgVolume * 0.2) / 255;
-    const curved = Math.pow(combined, 0.7);
-    const finalIntensity = Math.max(0.15, Math.min(1, curved * 1.3));
-
-    setIntensity(finalIntensity);
-    animationFrameRef.current = requestAnimationFrame(analyzeAudio);
+    analyzeAudioRef.current();
   }, []);
 
   useEffect(() => {

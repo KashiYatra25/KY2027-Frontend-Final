@@ -13,7 +13,7 @@ const valueProps = [
   {
     title: "Gen-Z Audience",
     description:
-      "Direct access to 15,000+ college students — India's future decision-makers and trendsetters.",
+      "Direct access to 15,000+ college students — India&apos;s future decision-makers and trendsetters.",
     color: PALETTE.ACID_LIME,
   },
   {
@@ -25,7 +25,7 @@ const valueProps = [
   {
     title: "Premium Exposure",
     description:
-      "IIT BHU's flagship event. Association with excellence, innovation, and cultural prestige.",
+      "IIT BHU&apos;s flagship event. Association with excellence, innovation, and cultural prestige.",
     color: PALETTE.NEON_CYAN,
   },
   {
@@ -94,7 +94,7 @@ export const WhyBrandsSection = memo(function WhyBrandsSection() {
             Why Partner With Us
           </h2>
           <p className="text-lg" style={{ color: PALETTE.TEXT_SECONDARY }}>
-            More than sponsorship — it's a cultural partnership.
+            More than sponsorship — it&apos;s a cultural partnership.
           </p>
         </motion.div>
 

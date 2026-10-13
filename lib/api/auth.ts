@@ -1,14 +1,8 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { EnhancedSession } from "./helper/types/index";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 const isProduction = process.env.NODE_ENV === "production";
-
-const authenticatedUser = {
-  role: null,
-  accountStatus: null,
-};
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -87,8 +81,9 @@ export const authOptions: NextAuthOptions = {
 
           if (response.ok || response.status === 409) {
             const userData = await response.json();
-            authenticatedUser.role = userData.role;
-            authenticatedUser.accountStatus = userData.accountStatus;
+            // Store role and accountStatus on user object for jwt callback
+            user.role = userData.role?.level ?? "USER";
+            user.accountStatus = userData.accountStatus ?? "ACTIVE";
             return true;
           }
 
@@ -103,9 +98,12 @@ export const authOptions: NextAuthOptions = {
     },
 
     async jwt({ token, user, account }) {
+      // Initial sign in - user object is available
       if (user) {
         token.id = user.id;
         token.email = user.email;
+        token.role = user.role ?? "USER";
+        token.accountStatus = user.accountStatus ?? "ACTIVE";
       }
 
       if (account) {
@@ -121,8 +119,9 @@ export const authOptions: NextAuthOptions = {
         session.user.name = token.name as string;
         session.user.email = token.email as string;
         session.user.image = token.picture as string;
-        (session as EnhancedSession).user.role = authenticatedUser.role!;
-        (session as EnhancedSession).user.accountStatus = authenticatedUser.accountStatus!;
+        session.user.role =
+          (token.role as "MANAGER" | "OPERATOR" | "MASTER_ADMIN" | "USER") ?? "USER";
+        session.user.accountStatus = (token.accountStatus as "ACTIVE" | "SUSPENDED") ?? "ACTIVE";
       }
       return session;
     },

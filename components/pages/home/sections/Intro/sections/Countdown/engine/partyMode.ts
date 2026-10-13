@@ -1,6 +1,7 @@
-// @ts-nocheck — vendored canvas FX module ported verbatim from kashiyatra-countdown-clean.
-// Kept as-is (it relied on noImplicitAny:false upstream); typing the dense per-frame math
-// would risk altering behaviour. Scope is limited to this self-contained engine module.
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Canvas FX module ported from kashiyatra-countdown-clean.
+// Dense per-frame math for party mode concert effects.
+// Note: This file uses dynamic animation structures that are difficult to type strictly.
 import { smooth } from "./utils";
 import type { IntroCtx } from "./types";
 
@@ -15,12 +16,12 @@ export function initPartyMode(ctx: IntroCtx) {
     flash = refs.flash,
     f2 = refs.fx2,
     c = f2.getContext("2d")!;
-  const R = (a, b) => a + Math.random() * (b - a),
+  const R = (a: number, b: number) => a + Math.random() * (b - a),
     PI2 = Math.PI * 2,
-    neon = (hu, l = 60, a = 1) => `hsla(${((hu % 360) + 360) % 360},100%,${l}%,${a})`;
-  let HW,
-    HH,
-    hd,
+    neon = (hu: number, l = 60, a = 1) => `hsla(${((hu % 360) + 360) % 360},100%,${l}%,${a})`;
+  let HW: number = 0,
+    HH: number = 0,
+    hd: number = 1,
     FW = 1,
     FH = 1,
     sc = 1,
@@ -47,7 +48,7 @@ export function initPartyMode(ctx: IntroCtx) {
     bOrg = 0,
     lastBi = -1,
     dropShake = 0;
-  function confetti(x, y, n, ang, spread, spd) {
+  function confetti(x: number, y: number, n: number, ang: number, spread: number, spd: number) {
     for (let i = 0; i < n && CF.length < 700; i++) {
       const a = ang + R(-spread, spread),
         v = spd * R(0.35, 1);
@@ -67,7 +68,8 @@ export function initPartyMode(ctx: IntroCtx) {
       });
     }
   }
-  const shock = (x, y, sp, hu, w) => HR.push({ x, y, r: 20, sp, hu, w });
+  const shock = (x: number, y: number, sp: number, hu: number, w: number) =>
+    HR.push({ x, y, r: 20, sp, hu, w });
 
   const _sf = ctx.startFx;
   ctx.startFx = function () {
@@ -124,11 +126,11 @@ export function initPartyMode(ctx: IntroCtx) {
     confetti(0, HH * 0.95, 70, -1.05, 0.4, sp);
     confetti(HW, HH * 0.95, 70, -Math.PI + 1.05, 0.4, sp);
   }
-  function onBeat(bi) {
+  function onBeat(bi: number) {
     if (bi % 16 === 0 && bi > 0) cannons();
     if (bi % 8 === 0 || bi % 8 === 4) fountains();
   }
-  function conFrame(now, dt) {
+  function conFrame(now: number, dt: number) {
     const t = now / 1000,
       per = 60 / 124,
       el = (now - bOrg) / 1000,
@@ -163,7 +165,7 @@ export function initPartyMode(ctx: IntroCtx) {
       c.save();
       c.translate(ox, oy);
       c.rotate(ang);
-      let g = c.createLinearGradient(0, 0, 0, -len);
+      const g = c.createLinearGradient(0, 0, 0, -len);
       g.addColorStop(0, neon(hh, 65, a));
       g.addColorStop(0.6, neon(hh, 60, a * 0.35));
       g.addColorStop(1, neon(hh, 60, 0));
@@ -301,7 +303,7 @@ export function initPartyMode(ctx: IntroCtx) {
   }
 
   /* ---------- main viewport loop ---------- */
-  function hloop(now) {
+  function hloop(now: number) {
     if (!ctx.alive) return;
     const dt = Math.min(0.05, (now - tT) / 1000);
     tT = now;
@@ -357,12 +359,12 @@ export function initPartyMode(ctx: IntroCtx) {
 
   /* ---------- tap anywhere in the concert / the ENTER plate = more chaos ---------- */
   // Confetti and shock waves on tap disabled - kept only vibration
-  ctx.on(document, "pointerdown", (e: PointerEvent) => {
+  ctx.on(document, "pointerdown", ((e: PointerEvent) => {
     if (!run || (e.target as Element).closest("[data-ui]")) return;
     // confetti and shock removed
     dropShake = Math.max(dropShake, 0.35);
     navigator.vibrate && navigator.vibrate(15);
-  });
+  }) as EventListener);
   ctx.enter = () => {
     if (S.enterGo) return;
     S.enterGo = true;
@@ -391,7 +393,7 @@ export function initPartyMode(ctx: IntroCtx) {
     pp.width = HW * hd;
     pp.height = HH * hd;
     pc2.setTransform(hd, 0, 0, hd, 0, 0);
-    const mk = (n, u, yb, col, rim) => ({
+    const mk = (n: number, u: number, yb: number, col: string, rim: number) => ({
       u,
       yb,
       col,
@@ -424,7 +426,7 @@ export function initPartyMode(ctx: IntroCtx) {
       mk(Math.round(n * 0.78), HH * 0.068, HH * 1.1, "#020309", 0.8),
     ];
   }
-  function drawPeople(now) {
+  function drawPeople(now: number) {
     const t = now / 1000;
     pc2.clearRect(0, 0, HW, HH);
     if (!S.done) return;
@@ -441,7 +443,7 @@ export function initPartyMode(ctx: IntroCtx) {
         const u = row.u * q.s,
           cd = Math.abs(q.x - 0.5),
           x = q.x * HW + Math.sin(t * 2.3 + q.x * 6 + q.ph * 0.25) * u * 0.4 * (1 + 0.5 * k);
-        let sink = u * 0.6 * Math.max(0, 1 - cd / 0.2); // same gentle V as before; only the few people right below the button sit a bit higher so their heads show
+        const sink = u * 0.6 * Math.max(0, 1 - cd / 0.2); // same gentle V as before; only the few people right below the button sit a bit higher so their heads show
         const jump = (k * u * 0.55 + exc * u * 0.9) * q.j * (0.6 + 0.4 * Math.sin(t * 3 + q.ph)),
           yb = row.yb - jump - q.hgt * u + sink + (1 - pe) * HH * 0.22;
         const wave = 0.5 + 0.5 * Math.sin(q.x * 7 - t * 2.6),
@@ -449,7 +451,7 @@ export function initPartyMode(ctx: IntroCtx) {
         const hh = hu0 + q.x * 180,
           rim = neon(hh, 62, row.rim * (0.35 + 0.65 * k));
         const arms = q.arm < 0.2 ? [] : q.arm < 0.6 ? [q.hs % 2 ? 1 : -1] : [-1, 1];
-        const draw = (dy, col, pass) => {
+        const draw = (dy: number, col: string, pass: boolean) => {
           const sw = u * q.w,
             lean = Math.sin(t * 1.6 + q.ph) * u * (0.07 + 0.1 * k) + q.lean * u,
             by = yb + dy,

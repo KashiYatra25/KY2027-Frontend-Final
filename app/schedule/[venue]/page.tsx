@@ -1,45 +1,27 @@
-import { Metadata } from "next";
+"use client";
+
+import { use } from "react";
 import { notFound } from "next/navigation";
-import {
-  getVenueBySlug,
-  getEventsAtVenue,
-  getAllVenueSlugs,
-} from "@/components/pages/schedule/config/campusMap.config";
 import { VenuePageContent } from "@/components/pages/schedule";
+
+// ═══════════════════════════════════════════════════════════════════
+// VENUE PAGE
+// Dynamic venue page - fetches data client-side via hooks
+// The VenuePageContent handles loading states and error handling
+// ═══════════════════════════════════════════════════════════════════
 
 interface PageProps {
   params: Promise<{ venue: string }>;
 }
 
-export async function generateStaticParams() {
-  return getAllVenueSlugs().map((slug) => ({
-    venue: slug,
-  }));
-}
+export default function VenuePage({ params }: PageProps) {
+  const { venue: slug } = use(params);
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { venue: slug } = await params;
-  const venue = getVenueBySlug(slug);
-
-  if (!venue) {
-    return {
-      title: "Venue Not Found",
-    };
-  }
-
-  return {
-    title: `${venue.name} | Schedule`,
-    description: `All Kashi Yatra 2027 events happening at ${venue.name}, IIT (BHU) Varanasi.`,
-  };
-}
-
-export default async function VenuePage({ params }: PageProps) {
-  const { venue: slug } = await params;
-  const venue = getVenueBySlug(slug);
-
-  if (!venue) {
+  // Basic validation - slug must exist
+  if (!slug || typeof slug !== "string") {
     notFound();
   }
 
-  return <VenuePageContent venue={venue} events={getEventsAtVenue(slug)} />;
+  // VenuePageContent handles all data fetching, loading, and error states
+  return <VenuePageContent venueSlug={slug} />;
 }
