@@ -149,7 +149,6 @@ export function useEvents(params?: EventsQueryParams) {
 
   return {
     events: data?.events ?? [],
-    events: data?.events ?? [],
     eventsByCategory,
     isLoading,
     isError,
@@ -186,10 +185,8 @@ export function useEvent(slug: string | undefined) {
 
   // Get category metadata
   const categoryMeta = data?.event?.category ? CATEGORY_METADATA[data.event.category] : null;
-  const categoryMeta = data?.event?.category ? CATEGORY_METADATA[data.event.category] : null;
 
   return {
-    event: data?.event ?? null,
     event: data?.event ?? null,
     categoryMeta,
     isLoading,
