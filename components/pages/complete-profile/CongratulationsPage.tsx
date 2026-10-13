@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { PartyPopper, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
 import confetti from "canvas-confetti";
-import { useAnimationPolicy } from "@/hooks";
 import { COLORS } from "./constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -143,7 +142,7 @@ export function CongratulationsPage() {
         transition={{ delay: 0.5 }}
         className="mb-10 flex flex-wrap justify-center gap-3"
       >
-        {["Identity Verified", "College Added", "Phone Verified"].map((item, i) => (
+        {["Identity Verified", "College Added", "Phone Verified"].map((item) => (
           <div
             key={item}
             className="flex items-center gap-2 rounded-full px-4 py-2"

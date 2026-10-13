@@ -2,7 +2,7 @@
 // SCHEDULE PAGE CONSTANTS
 // ═══════════════════════════════════════════════════════════════════
 
-import type { Layer, MapLayers, LayerConfig } from "@/lib/api/helper/types";
+import type { MapLayers, LayerConfig } from "@/lib/api/helper/types";
 
 export const DEFAULT_LAYERS: MapLayers = {
   night: true,

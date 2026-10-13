@@ -34,7 +34,7 @@ export function useSignOut(options: UseSignOutOptions = {}) {
             : destination
       );
       router.refresh();
-    } catch (_) {
+    } catch {
       router.push("/?signout=failure");
     } finally {
       setIsSigningOut(false);

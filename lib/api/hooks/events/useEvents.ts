@@ -6,7 +6,6 @@ import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import type {
   Event,
-  EventDetails,
   EventsApiResponse,
   EventDetailsApiResponse,
   EventsQueryParams,

@@ -54,10 +54,10 @@ export function CartPageContent() {
   } = useMyAccount("progress");
 
   // Account status (suspension check)
-  const { isSuspended, canPerformAction } = useAccountStatus();
+  const { isSuspended } = useAccountStatus();
 
   // Cart data
-  const { items, totalQuantity, isEmpty, isLoading: isCartLoading, refetch } = useGetMyCart();
+  const { items, totalQuantity, isEmpty, isLoading: isCartLoading } = useGetMyCart();
 
   // Passes data (to enrich cart items)
   const { passes } = usePasses();
@@ -316,6 +316,7 @@ export function CartPageContent() {
                   onCheckout={handleCheckout}
                   isClearing={isClearing}
                   isCheckingOut={isCheckingOut}
+                  isSuspended={isSuspended}
                 />
               </div>
             </motion.div>

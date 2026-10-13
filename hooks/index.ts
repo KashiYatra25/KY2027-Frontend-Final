@@ -9,3 +9,4 @@ export { useScrollPosition } from "./useScrollPosition";
 export { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 export { useAnimationPolicy, ANIMATION_MOBILE_BREAKPOINT } from "./useAnimationPolicy";
 export type { AnimationPolicy } from "./useAnimationPolicy";
+export { useModalA11y } from "./useModalA11y";

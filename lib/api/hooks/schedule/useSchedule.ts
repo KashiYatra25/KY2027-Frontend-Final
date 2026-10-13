@@ -10,8 +10,6 @@ import type {
   FestDaysApiResponse,
   VenueScheduleApiResponse,
   ScheduledEvent,
-  Venue,
-  FestDaysMap,
   ScheduleQueryParams,
   CategoryMetadataMap,
 } from "@/lib/api/helper/types";

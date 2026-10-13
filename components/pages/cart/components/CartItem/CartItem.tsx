@@ -173,6 +173,7 @@ export function CartItem({
                   handleDecrement();
                 }}
                 disabled={item.quantity <= 1 || isUpdatingQuantity}
+                aria-label="Decrease quantity"
                 className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <Minus className="h-3.5 w-3.5 text-gray-300" />
@@ -195,6 +196,7 @@ export function CartItem({
                   handleIncrement();
                 }}
                 disabled={item.quantity >= 50 || isUpdatingQuantity}
+                aria-label="Increase quantity"
                 className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <Plus className="h-3.5 w-3.5 text-gray-300" />
@@ -233,6 +235,7 @@ export function CartItem({
             background: "rgba(0,0,0,0.3)",
             border: "1px solid rgba(255,255,255,0.1)",
           }}
+          aria-label="Remove item"
         >
           {isRemoving ? (
             <Loader2 className="h-4 w-4 animate-spin" />

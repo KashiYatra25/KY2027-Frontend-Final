@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useMyTeams, useEventRegisterTeam, type Team } from "@/lib/api/hooks";
 import { X, Users, Check, AlertCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useModalA11y } from "@/hooks/useModalA11y";
 
 interface TeamSelectorModalProps {
   isOpen: boolean;
@@ -39,9 +40,11 @@ export function TeamSelectorModal({
   minTeamSize,
   maxTeamSize,
 }: TeamSelectorModalProps) {
-  const { teams, isLoading: isLoadingTeams, refetch } = useMyTeams();
+  const { teams, isLoading: isLoadingTeams } = useMyTeams();
   const { registerWithTeam, isRegistering, isSuccess, isError, errorMessage, reset } =
     useEventRegisterTeam(eventSlug);
+
+  const modalRef = useModalA11y<HTMLDivElement>(isOpen, onClose);
 
   // Filter teams by size requirements
   const eligibleTeams = useMemo(() => {
@@ -102,6 +105,11 @@ export function TeamSelectorModal({
 
       {/* Modal */}
       <div
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="team-selector-modal-title"
+        tabIndex={-1}
         className="relative w-full max-w-md rounded-xl border shadow-2xl"
         style={{
           background: COLORS.BG_ROYAL,
@@ -114,11 +122,14 @@ export function TeamSelectorModal({
           style={{ borderColor: COLORS.BORDER_SUBTLE }}
         >
           <div>
-            <h2 className="text-lg font-semibold text-white">Select Team</h2>
+            <h2 id="team-selector-modal-title" className="text-lg font-semibold text-white">
+              Select Team
+            </h2>
             <p className="mt-0.5 text-sm text-white/60">{eventName}</p>
           </div>
           <button
             onClick={onClose}
+            aria-label="Close"
             className="rounded-lg p-1.5 transition-colors hover:bg-white/10"
           >
             <X className="h-5 w-5 text-white/60" />

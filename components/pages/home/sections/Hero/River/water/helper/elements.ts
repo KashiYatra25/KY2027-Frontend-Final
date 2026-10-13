@@ -131,7 +131,7 @@ export const computeDiyaPositions = (w: number, h: number): ComputedDiya[] => {
   }));
 };
 
-export const computeRippleBases = (w: number, h: number): RippleBase[] => {
+export const computeRippleBases = (): RippleBase[] => {
   const bases: RippleBase[] = [];
   for (let i = 0; i < 6; i++) {
     bases.push({
@@ -194,7 +194,7 @@ export interface ComputedValues {
 export const computeAllValues = (w: number, h: number): ComputedValues => ({
   waveLayers: computeWaveLayers(h),
   diyaPositions: computeDiyaPositions(w, h),
-  rippleBases: computeRippleBases(w, h),
+  rippleBases: computeRippleBases(),
   flowLineYs: computeFlowLineYs(h),
   waveXCoords: computeWaveXCoords(w),
   flowLineXCoords: computeFlowLineXCoords(w),

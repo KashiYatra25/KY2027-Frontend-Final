@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useAnimationPolicy } from "@/hooks";
 
 // ═══════════════════════════════════════════════════════════════════
 // COMPLETE PROFILE PAGE LOADER

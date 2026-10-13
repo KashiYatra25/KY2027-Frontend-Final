@@ -81,9 +81,10 @@ export const authOptions: NextAuthOptions = {
 
           if (response.ok || response.status === 409) {
             const userData = await response.json();
-            // Store role and accountStatus on user object for jwt callback
+            // Store role, accountStatus, and isPaidUser on user object for jwt callback
             user.role = userData.role?.level ?? "USER";
             user.accountStatus = userData.accountStatus ?? "ACTIVE";
+            user.isPaidUser = userData.isPaidUser ?? false;
             return true;
           }
 
@@ -102,8 +103,11 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.email = user.email;
+        token.name = user.name;
+        token.picture = user.image;
         token.role = user.role ?? "USER";
         token.accountStatus = user.accountStatus ?? "ACTIVE";
+        token.isPaidUser = user.isPaidUser ?? false;
       }
 
       if (account) {
@@ -122,6 +126,7 @@ export const authOptions: NextAuthOptions = {
         session.user.role =
           (token.role as "MANAGER" | "OPERATOR" | "MASTER_ADMIN" | "USER") ?? "USER";
         session.user.accountStatus = (token.accountStatus as "ACTIVE" | "SUSPENDED") ?? "ACTIVE";
+        session.user.isPaidUser = (token.isPaidUser as boolean) ?? false;
       }
       return session;
     },

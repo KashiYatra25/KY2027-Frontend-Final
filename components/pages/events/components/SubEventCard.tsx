@@ -302,25 +302,20 @@ export const SubEventCard = memo(function SubEventCard({
               }
               className="group/btn relative mt-auto w-full overflow-hidden rounded-xl py-3.5 text-sm font-bold tracking-wider uppercase transition-all duration-300"
               style={{
-                background: showAsRegistered
-                  ? "transparent"
-                  : !event.registrationOpen || !canRegister
-                    ? "linear-gradient(135deg, rgba(100,100,100,0.3) 0%, rgba(60,60,60,0.3) 100%)"
-                    : `linear-gradient(135deg, ${categoryColor} 0%, hsl(from ${categoryColor} h s 30%) 100%)`,
+                background: "transparent",
                 border: showAsRegistered
                   ? "2px solid #166534"
                   : !event.registrationOpen || !canRegister
-                    ? "2px solid rgba(100,100,100,0.3)"
+                    ? "2px solid rgba(100,100,100,0.4)"
                     : `2px solid ${categoryColor}`,
                 color: showAsRegistered
                   ? "#22c55e"
-                  : event.registrationOpen && canRegister
-                    ? "#FDF6E3"
-                    : "rgba(255,255,255,0.4)",
-                boxShadow: showAsRegistered
-                  ? "none"
-                  : event.registrationOpen && canRegister
-                    ? `0 0 25px ${categoryColor}40`
+                  : !event.registrationOpen || !canRegister
+                    ? "rgba(255,255,255,0.4)"
+                    : categoryColor,
+                boxShadow:
+                  event.registrationOpen && canRegister && !showAsRegistered
+                    ? `0 0 20px ${categoryColor}25`
                     : "none",
                 cursor:
                   !event.registrationOpen || showAsRegistered || !canRegister

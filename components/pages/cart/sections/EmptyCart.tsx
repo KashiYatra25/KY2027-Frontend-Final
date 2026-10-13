@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ShoppingBag, ArrowRight, Sparkles } from "lucide-react";
-import { COLORS, SHADOWS } from "@/components/pages/cart/constants/palette";
+import { COLORS } from "@/components/pages/cart/constants/palette";
 
 /**
  * Displayed when the cart has no items - with royal decorative elements

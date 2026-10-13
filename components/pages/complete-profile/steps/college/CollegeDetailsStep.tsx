@@ -57,7 +57,6 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
   const {
     updateCollege,
     isPending: isUpdating,
-    isError,
     errorMessage,
   } = useUpdateCollege(session?.user?.id);
 

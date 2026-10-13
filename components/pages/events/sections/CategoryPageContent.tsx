@@ -1,13 +1,9 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import { ThemedNavbar } from "@/components/navbar";
 import type { EventCategory, EventCategorySlug } from "@/lib/api/helper/types";
-import {
-  useEventsByCategory,
-  useMyRegistrations,
-  usePaymentStatus,
-  CATEGORY_METADATA,
-} from "@/lib/api/hooks";
+import { useEventsByCategory, useMyRegistrations, CATEGORY_METADATA } from "@/lib/api/hooks";
 import { SubEventCard, CategoryHeader } from "@/components/pages/events/components";
 import { BackgroundDecorations } from "@/components/pages/events/components/CategoryDecorations";
 import { AlertCircle, RefreshCw, Sparkles, ArrowRight } from "lucide-react";
@@ -212,7 +208,7 @@ function EmptyEvents({ categoryName, color }: { categoryName: string; color: str
 // PAYMENT REQUIRED BANNER
 // ═══════════════════════════════════════════════════════════════════
 
-function PaymentRequiredBanner({ color }: { color: string }) {
+function PaymentRequiredBanner({}: { color: string }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
@@ -273,7 +269,8 @@ export function CategoryPageContent({
   );
 
   const { isRegisteredFor, refetch: refetchRegistrations } = useMyRegistrations();
-  const { hasPaid } = usePaymentStatus();
+  const { data: session } = useSession();
+  const isPaidUser = session?.user?.isPaidUser ?? false;
 
   // 404 state - still use basic navbar
   if (!categoryKey || !categoryMeta) {
@@ -441,7 +438,7 @@ export function CategoryPageContent({
           <CategoryHeader category={categoryWithEvents} />
 
           {/* Payment required banner */}
-          {!hasPaid && <PaymentRequiredBanner color={categoryMeta.color} />}
+          {!isPaidUser && <PaymentRequiredBanner color={categoryMeta.color} />}
 
           {/* Events grid - using auto-rows-fr for equal height */}
           {isLoading && !legacyCategory ? (
@@ -464,7 +461,7 @@ export function CategoryPageContent({
                   index={index}
                   isRegistered={isRegisteredFor(event.slug ?? event.id)}
                   onRegistrationSuccess={refetchRegistrations}
-                  canRegister={hasPaid}
+                  canRegister={isPaidUser}
                 />
               ))}
             </div>

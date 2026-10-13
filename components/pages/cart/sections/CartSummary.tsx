@@ -34,6 +34,7 @@ export function CartSummary({
   onClearCart,
   onCheckout,
   isClearing,
+  isCheckingOut,
   isSuspended,
 }: CartSummaryProps) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -346,10 +347,10 @@ export function CartSummary({
 
         {/* Checkout button */}
         <motion.button
-          whileHover={!isSuspended ? { scale: 1.01 } : undefined}
-          whileTap={!isSuspended ? { scale: 0.99 } : undefined}
+          whileHover={!isSuspended && !isCheckingOut ? { scale: 1.01 } : undefined}
+          whileTap={!isSuspended && !isCheckingOut ? { scale: 0.99 } : undefined}
           onClick={() => onCheckout(appliedCoupon?.code)}
-          disabled={isSuspended}
+          disabled={isSuspended || isCheckingOut}
           className="group relative mb-4 w-full overflow-hidden rounded-xl py-4 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
           style={{
             background: isSuspended
@@ -358,7 +359,7 @@ export function CartSummary({
             boxShadow: isSuspended ? "none" : `0 4px 20px ${COLORS.GOLD}30`,
           }}
         >
-          {!isSuspended && (
+          {!isSuspended && !isCheckingOut && (
             <motion.div
               className="absolute inset-0"
               animate={{ x: ["-100%", "200%"] }}
@@ -371,9 +372,18 @@ export function CartSummary({
             />
           )}
           <span className="relative flex items-center justify-center gap-2">
-            {isSuspended ? "Account Suspended" : "Proceed to Checkout"}
-            {!isSuspended && (
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+            {isSuspended ? (
+              "Account Suspended"
+            ) : isCheckingOut ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Processing...
+              </>
+            ) : (
+              <>
+                Proceed to Checkout
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+              </>
             )}
           </span>
         </motion.button>

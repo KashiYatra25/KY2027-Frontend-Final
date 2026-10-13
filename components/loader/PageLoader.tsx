@@ -15,7 +15,7 @@ export function PageLoader() {
   const prevPathRef = useRef(pathname);
 
   // Handle route change start
-  const handleRouteChangeStart = useCallback((href: string) => {
+  const handleRouteChangeStart = useCallback(() => {
     setIsLoading(true);
     setIsVisible(true);
     // Lock scroll
@@ -50,14 +50,14 @@ export function PageLoader() {
           !link.hasAttribute("download") &&
           link.target !== "_blank"
         ) {
-          handleRouteChangeStart(href);
+          handleRouteChangeStart();
         }
       }
     };
 
     // Listen for browser back/forward
     const handlePopState = () => {
-      handleRouteChangeStart(window.location.pathname);
+      handleRouteChangeStart();
     };
 
     document.addEventListener("click", handleClick, true);

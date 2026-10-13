@@ -8,11 +8,10 @@ import {
   GraduationCap,
   Phone,
   Check,
-  X,
   Sparkles,
   ArrowRight,
 } from "lucide-react";
-import { COLORS, GRADIENTS, SHADOWS } from "@/components/pages/cart/constants/palette";
+import { COLORS, SHADOWS } from "@/components/pages/cart/constants/palette";
 
 interface ProfileIncompleteCardProps {
   completionPercentage: number;

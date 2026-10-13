@@ -29,7 +29,7 @@ export const TheExperience = memo(function TheExperience() {
   const tilesRef = useRef<HTMLDivElement>(null);
   const djRef = useRef<HTMLDivElement>(null);
   const taglineRef = useRef<HTMLDivElement>(null);
-  const { shouldAnimate, isMobile } = useAnimationPolicy();
+  const { shouldAnimate } = useAnimationPolicy();
 
   // GSAP ScrollTrigger animations - Desktop only
   useEffect(() => {

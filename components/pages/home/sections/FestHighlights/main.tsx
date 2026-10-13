@@ -601,28 +601,8 @@ function NeonSideBorders() {
   );
 }
 
-// Neon Grid Floor
-function NeonGrid() {
-  return (
-    <div className="absolute right-0 bottom-24 left-0 h-32 overflow-hidden opacity-30 sm:bottom-32">
-      <div
-        className="h-full w-full"
-        style={{
-          background: `
-            linear-gradient(90deg, #8B5CF6 1px, transparent 1px),
-            linear-gradient(0deg, #8B5CF6 1px, transparent 1px)
-          `,
-          backgroundSize: "40px 40px",
-          transform: "perspective(200px) rotateX(60deg)",
-          transformOrigin: "bottom",
-        }}
-      />
-    </div>
-  );
-}
-
 // Static Highlight Card for Mobile
-function StaticHighlightCard({ item, index }: { item: (typeof highlights)[0]; index: number }) {
+function StaticHighlightCard({ item }: { item: (typeof highlights)[0]; index: number }) {
   return (
     <div className="highlight-card group relative overflow-hidden rounded-2xl p-4 sm:p-6">
       {/* Static gradient background */}

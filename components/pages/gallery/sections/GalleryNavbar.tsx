@@ -198,38 +198,6 @@ export const GalleryNavbar = memo(function GalleryNavbar() {
 });
 
 // ═══════════════════════════════════════════════════════════════════
-// FILM STRIP DECORATION
-// ═══════════════════════════════════════════════════════════════════
-
-function FilmStripDecor({ side }: { side: "left" | "right" }) {
-  return (
-    <div
-      className="pointer-events-none absolute top-1/2 hidden h-8 w-6 -translate-y-1/2 sm:block"
-      style={{
-        [side]: side === "left" ? "70px" : "70px",
-        opacity: 0.4,
-      }}
-      aria-hidden="true"
-    >
-      {/* Sprocket holes */}
-      {[0, 1, 2].map((i) => (
-        <div
-          key={i}
-          className="absolute h-1.5 w-3 rounded-sm"
-          style={{
-            background: COLORS.MARIGOLD,
-            top: `${8 + i * 10}px`,
-            left: "50%",
-            transform: "translateX(-50%)",
-            boxShadow: `0 0 4px ${COLORS.MARIGOLD}60`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════
 // CAMERA LENS ICON
 // ═══════════════════════════════════════════════════════════════════
 

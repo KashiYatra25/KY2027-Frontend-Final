@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { motion, useSpring } from "framer-motion";
 import { useIntro } from "@/components/pages/home/sections/Intro/context/IntroContext";
-import { useAnimationPolicy } from "@/hooks";
 
 // Speaker component with vibrant design
 function Speaker({

@@ -4,8 +4,7 @@ import { memo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useMotionZone } from "@/lib/motion";
-import { useAnimationPolicy } from "@/hooks";
-import { FOOTER_COLORS, FOOTER_GRADIENTS } from "./constants";
+import { FOOTER_COLORS } from "./constants";
 import { IMAGES } from "@/lib/images";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -52,57 +51,6 @@ export const FooterDancer = memo(function FooterDancer() {
         }}
       />
     </motion.div>
-  );
-});
-
-// ═══════════════════════════════════════════════════════════════════
-// CONCERT FLOOR - 3D perspective grid from the image
-// ═══════════════════════════════════════════════════════════════════
-const ConcertFloor = memo(function ConcertFloor() {
-  return (
-    <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[40%] overflow-hidden">
-      <Image
-        src="/home/footer/ConcertFloor.png"
-        alt=""
-        fill
-        className="object-cover object-top"
-        style={{
-          opacity: 0.8,
-          maskImage: "linear-gradient(to top, black 60%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to top, black 60%, transparent 100%)",
-        }}
-      />
-      {/* Overlay glow */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: `radial-gradient(ellipse at center bottom, ${FOOTER_COLORS.NEON_PURPLE}20 0%, transparent 70%)`,
-        }}
-      />
-    </div>
-  );
-});
-
-// ═══════════════════════════════════════════════════════════════════
-// GLITCH LINES - Horizontal scan lines (subtle, no blinking)
-// ═══════════════════════════════════════════════════════════════════
-const GlitchLines = memo(function GlitchLines() {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* Scan lines overlay - static */}
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            rgba(255, 255, 255, 0.05) 2px,
-            rgba(255, 255, 255, 0.05) 4px
-          )`,
-        }}
-      />
-    </div>
   );
 });
 
@@ -158,26 +106,6 @@ const SpotlightCones = memo(function SpotlightCones() {
           repeat: Infinity,
           ease: "easeInOut",
           delay: 0.5,
-        }}
-      />
-    </div>
-  );
-});
-
-// ═══════════════════════════════════════════════════════════════════
-// CROWD SILHOUETTE - Concert crowd at bottom
-// ═══════════════════════════════════════════════════════════════════
-const CrowdSilhouette = memo(function CrowdSilhouette() {
-  return (
-    <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-[5] h-[150px] sm:h-[180px]">
-      <Image
-        src="/home/proNites/Silhouette.png"
-        alt=""
-        fill
-        className="object-cover object-bottom"
-        style={{
-          opacity: 1,
-          filter: `drop-shadow(0 -10px 30px ${FOOTER_COLORS.NEON_PINK}50)`,
         }}
       />
     </div>

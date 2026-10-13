@@ -26,7 +26,7 @@ export function SchedulePageContent() {
   const [layers, setLayers] = useState<MapLayers>(DEFAULT_LAYERS);
 
   // Fetch schedule data from backend
-  const { scheduledEvents, venues, festDays, eventsByVenue, isLoading, isError, errorMessage } =
+  const { scheduledEvents, venues, eventsByVenue, isLoading, isError, errorMessage } =
     useSchedule();
 
   const toggleLayer = (key: Layer) => {

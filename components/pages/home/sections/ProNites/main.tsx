@@ -27,7 +27,7 @@ export const ProNitesSection = memo(function ProNitesSection() {
   const titleRef = useRef<HTMLDivElement>(null);
   const headlinersRef = useRef<HTMLDivElement>(null);
   const featuringRef = useRef<HTMLDivElement>(null);
-  const { shouldAnimate, isMobile } = useAnimationPolicy();
+  const { shouldAnimate } = useAnimationPolicy();
 
   // GSAP ScrollTrigger animations - Desktop only
   useEffect(() => {

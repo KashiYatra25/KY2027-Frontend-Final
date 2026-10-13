@@ -6,6 +6,7 @@ import { TEAMS_COLORS } from "@/components/pages/teams/constants/palette";
 import { X, Search, UserPlus, Trash2, Users, Loader2, Crown } from "lucide-react";
 import Image from "next/image";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useModalA11y } from "@/hooks/useModalA11y";
 
 interface CreateTeamModalProps {
   isOpen: boolean;
@@ -23,6 +24,8 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
   const debouncedSearch = useDebounce(searchQuery, 300);
   const { users, isLoading: isSearching } = useUserSearch(debouncedSearch);
   const { createTeam, isCreating, isSuccess, isError, errorMessage, reset } = useCreateTeam();
+
+  const modalRef = useModalA11y<HTMLDivElement>(isOpen, onClose);
 
   // Current user as creator (non-removable)
   const creator: SearchedUser | null = useMemo(() => {
@@ -91,6 +94,11 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
 
       {/* Modal */}
       <div
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="create-team-modal-title"
+        tabIndex={-1}
         className="relative w-full max-w-lg rounded-xl border shadow-2xl"
         style={{
           background: TEAMS_COLORS.BG_ROYAL,
@@ -104,10 +112,13 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
         >
           <div className="flex items-center gap-3">
             <Users className="h-5 w-5" style={{ color: TEAMS_COLORS.GOLD }} />
-            <h2 className="text-lg font-semibold text-white">Create Team</h2>
+            <h2 id="create-team-modal-title" className="text-lg font-semibold text-white">
+              Create Team
+            </h2>
           </div>
           <button
             onClick={onClose}
+            aria-label="Close"
             className="rounded-lg p-1.5 transition-colors hover:bg-white/10"
           >
             <X className="h-5 w-5 text-white/60" />
@@ -275,6 +286,7 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
                   </div>
                   <button
                     onClick={() => handleRemoveMember(member.id)}
+                    aria-label="Remove member"
                     className="rounded p-1 text-red-400 transition-colors hover:bg-red-500/20"
                   >
                     <Trash2 className="h-4 w-4" />

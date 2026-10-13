@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useAnimationPolicy } from "@/hooks";
 
 const COLORS = {
   BG_DEEP: "#0a0612",

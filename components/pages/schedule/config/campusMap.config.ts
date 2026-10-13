@@ -7,7 +7,7 @@
  */
 
 import { EVENT_CATEGORIES } from "@/components/pages/events/config/events.config";
-import type { ScheduledEvent, Venue, EventCategory, SubEvent } from "@/lib/api/helper/types";
+import type { ScheduledEvent, Venue } from "@/lib/api/helper/types";
 
 export const MAP_ASPECT = 1332 / 1252;
 

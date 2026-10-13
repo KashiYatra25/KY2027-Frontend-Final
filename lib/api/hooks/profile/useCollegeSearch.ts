@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import type { College } from "@/components/pages/complete-profile/steps/college/data/config";
 import { smartSearch } from "@/lib/api/helper/functions/college.functions";
 
 // ═══════════════════════════════════════════════════════════════════

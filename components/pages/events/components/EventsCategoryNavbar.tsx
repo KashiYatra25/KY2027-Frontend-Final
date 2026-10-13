@@ -60,27 +60,6 @@ const CATEGORY_SLUGS: Record<EventCategorySlug, string> = {
 // DECORATIVE SVG ELEMENTS
 // ═══════════════════════════════════════════════════════════════════
 
-const OrnateCorner = memo(function OrnateCorner({
-  color,
-  flip = false,
-}: {
-  color: string;
-  flip?: boolean;
-}) {
-  return (
-    <svg
-      viewBox="0 0 40 40"
-      fill="none"
-      className={`h-8 w-8 ${flip ? "scale-x-[-1]" : ""}`}
-      style={{ opacity: 0.6 }}
-    >
-      <path d="M0 0 C0 20 20 40 40 40 L40 35 C22 35 5 18 5 0 Z" fill={color} />
-      <circle cx="8" cy="8" r="2" fill={color} opacity="0.8" />
-      <circle cx="16" cy="16" r="1.5" fill={color} opacity="0.6" />
-    </svg>
-  );
-});
-
 const NavDivider = memo(function NavDivider({ color }: { color: string }) {
   return (
     <svg viewBox="0 0 8 24" fill="none" className="h-6 w-2" style={{ opacity: 0.4 }}>

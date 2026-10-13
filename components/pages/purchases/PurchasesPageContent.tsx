@@ -4,19 +4,10 @@ import { useEffect, useState, Suspense } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Receipt,
-  Package,
-  Calendar,
-  CreditCard,
-  CheckCircle2,
-  Clock,
-  XCircle,
-  Sparkles,
-} from "lucide-react";
+import { Receipt, Package, CreditCard, CheckCircle2, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { ThemedNavbar } from "@/components/navbar";
-import { usePurchases, type Purchase } from "@/lib/api/hooks";
+import { usePurchases } from "@/lib/api/hooks";
 import { PurchaseCard } from "./components/PurchaseCard";
 import { EmptyPurchases } from "./components/EmptyPurchases";
 import { PurchasesLoader } from "./components/PurchasesLoader";

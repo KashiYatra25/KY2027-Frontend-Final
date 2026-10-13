@@ -13,6 +13,7 @@ declare module "next-auth" {
       image: string;
       role: UserRole;
       accountStatus: AccountStatus;
+      isPaidUser: boolean;
     };
   }
 
@@ -20,6 +21,7 @@ declare module "next-auth" {
     id: string;
     role?: UserRole;
     accountStatus?: AccountStatus;
+    isPaidUser?: boolean;
   }
 }
 
@@ -29,5 +31,6 @@ declare module "next-auth/jwt" {
     accessToken?: string;
     role?: UserRole;
     accountStatus?: AccountStatus;
+    isPaidUser?: boolean;
   }
 }

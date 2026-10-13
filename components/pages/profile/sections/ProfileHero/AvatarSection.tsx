@@ -7,8 +7,6 @@ import {
   Sparkles,
   ArrowRight,
   Crown,
-  Check,
-  X,
   Upload,
   ShieldCheck,
   GraduationCap,

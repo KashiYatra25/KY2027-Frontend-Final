@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { ThemedNavbar } from "@/components/navbar";
 import { useMyTeams } from "@/lib/api/hooks";
 import { TEAMS_COLORS } from "./constants/palette";
@@ -8,7 +10,7 @@ import { TeamCard } from "./components/TeamCard";
 import { CreateTeamModal } from "./components/CreateTeamModal";
 import { TeamsLoader } from "./loader/TeamsLoader";
 import { EmptyTeamsState } from "./components/EmptyTeamsState";
-import { Users, Plus } from "lucide-react";
+import { Users, Plus, ShoppingCart } from "lucide-react";
 
 // ═══════════════════════════════════════════════════════════════════
 // TEAMS PAGE CONTENT
@@ -16,6 +18,8 @@ import { Users, Plus } from "lucide-react";
 // ═══════════════════════════════════════════════════════════════════
 
 export function TeamsPageContent() {
+  const { data: session } = useSession();
+  const isPaidUser = session?.user?.isPaidUser ?? false;
   const { teams, count, isLoading, isError, errorMessage, refetch } = useMyTeams();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -52,17 +56,31 @@ export function TeamsPageContent() {
               </p>
             </div>
 
-            <button
-              onClick={() => setIsCreateModalOpen(true)}
-              className="flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
-              style={{
-                background: `linear-gradient(135deg, ${TEAMS_COLORS.GOLD} 0%, ${TEAMS_COLORS.GOLD_LIGHT} 100%)`,
-                color: TEAMS_COLORS.BG_DEEP,
-              }}
-            >
-              <Plus className="h-4 w-4" />
-              Create Team
-            </button>
+            {isPaidUser ? (
+              <button
+                onClick={() => setIsCreateModalOpen(true)}
+                className="flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
+                style={{
+                  background: `linear-gradient(135deg, ${TEAMS_COLORS.GOLD} 0%, ${TEAMS_COLORS.GOLD_LIGHT} 100%)`,
+                  color: TEAMS_COLORS.BG_DEEP,
+                }}
+              >
+                <Plus className="h-4 w-4" />
+                Create Team
+              </button>
+            ) : (
+              <Link
+                href="/passes"
+                className="flex items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
+                style={{
+                  borderColor: TEAMS_COLORS.GOLD + "50",
+                  color: TEAMS_COLORS.GOLD,
+                }}
+              >
+                <ShoppingCart className="h-4 w-4" />
+                Buy Pass to Create Teams
+              </Link>
+            )}
           </div>
 
           {/* Content */}
@@ -85,7 +103,10 @@ export function TeamsPageContent() {
               </button>
             </div>
           ) : count === 0 ? (
-            <EmptyTeamsState onCreateClick={() => setIsCreateModalOpen(true)} />
+            <EmptyTeamsState
+              onCreateClick={() => setIsCreateModalOpen(true)}
+              isPaidUser={isPaidUser}
+            />
           ) : (
             <div className="space-y-4">
               <p className="text-sm" style={{ color: TEAMS_COLORS.TEXT_MUTED }}>

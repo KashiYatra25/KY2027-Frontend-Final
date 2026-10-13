@@ -10,6 +10,8 @@ import { PageLoader } from "@/components/loader";
 import { AuthProvider, QueryProvider, ApolloProvider } from "@/components/providers";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -206,7 +208,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Toaster />
         <ApolloProvider>
           <QueryProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
+            {isDevelopment && <ReactQueryDevtools initialIsOpen={false} />}
             <AuthProvider>
               <GsapRegistration />
               <Suspense fallback={null}>

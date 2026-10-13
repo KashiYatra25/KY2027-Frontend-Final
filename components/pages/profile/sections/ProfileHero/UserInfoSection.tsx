@@ -18,7 +18,7 @@ interface UserInfoSectionProps {
   isApprovedCa?: boolean;
 }
 
-export function UserInfoSection({ userData, user, progress, isApprovedCa }: UserInfoSectionProps) {
+export function UserInfoSection({ userData, user, isApprovedCa }: UserInfoSectionProps) {
   const roleLevel = userData?.role?.level;
   const isAdmin = roleLevel && roleLevel !== "USER";
   const isFromIITBhu = userData?.isFromIITBhu;

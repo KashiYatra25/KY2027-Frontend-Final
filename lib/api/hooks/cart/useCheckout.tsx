@@ -57,9 +57,11 @@ export function useCheckout() {
           const paymentSessionId = response.data?.paymentSessionId;
           if (paymentSessionId) {
             try {
-              // Load Cashfree SDK
+              // Load Cashfree SDK — mode is env-driven so production
+              // builds use live payments. Defaults to sandbox when unset.
               const cashfree = await load({
-                mode: "sandbox", // Change to "production" for live
+                mode:
+                  process.env.NEXT_PUBLIC_CASHFREE_MODE === "production" ? "production" : "sandbox",
               });
 
               // Open Cashfree checkout

@@ -1,11 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Hide the X-Powered-By: Next.js header
+  poweredByHeader: false,
   // Disable automatic scroll restoration - we handle it manually
   experimental: {
     scrollRestoration: false,
   },
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",

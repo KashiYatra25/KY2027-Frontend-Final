@@ -38,12 +38,7 @@ interface PassCardProps {
 // ============================================
 // Main PassCard Component
 // ============================================
-export const PassCard = memo(function PassCard({
-  pass,
-  index,
-  onSelect,
-  onDetailsClick,
-}: PassCardProps) {
+export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: PassCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [showToast, setShowToast] = useState<"profile" | "login" | null>(null);
   const { isMobile } = useAnimationPolicy();

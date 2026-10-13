@@ -3,16 +3,10 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useAnimationPolicy } from "@/hooks";
-import { MotionZone, useMotionZone } from "@/lib/motion";
+import { MotionZone } from "@/lib/motion";
 import { FOOTER_COLORS, FOOTER_GRADIENTS } from "./common/constants";
 import { BackgroundDecor, AmbientGlow } from "./common/BackgroundDecorNew";
-import {
-  ConcertBrandHeader,
-  GlassmorphismCard,
-  NeonSocialButton,
-  FloatingStickers,
-} from "./common/GenZComponents";
+import { ConcertBrandHeader, GlassmorphismCard, NeonSocialButton } from "./common/GenZComponents";
 import { socialLinks, quickLinks } from "./common/data";
 import { IMAGES } from "@/lib/images";
 
@@ -24,7 +18,6 @@ const PINK_HEADING = "#FF4D8D";
 // ═══════════════════════════════════════════════════════════════════
 export function FooterSection() {
   const footerRef = useRef<HTMLDivElement>(null);
-  const { shouldAnimate } = useAnimationPolicy();
 
   return (
     <MotionZone threshold={0.05} rootMargin="100px">
