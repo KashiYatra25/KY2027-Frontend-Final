@@ -66,7 +66,11 @@ export function CountdownPoster() {
     completeIntro();
   }, [completeIntro]);
   const enterMainRef = useRef(enterMain);
-  enterMainRef.current = enterMain;
+
+  // Keep the ref in sync with the latest callback
+  useEffect(() => {
+    enterMainRef.current = enterMain;
+  }, [enterMain]);
 
   const isActive = phase === "video";
 

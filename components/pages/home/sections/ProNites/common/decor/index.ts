@@ -4,5 +4,6 @@ export { VerticalNeonText } from "./VerticalNeonText";
 export { CrowdSilhouette } from "./CrowdSilhouette";
 export { DancingGirlFestiveVibes } from "./DancingGirlFestiveVibes";
 export { GlowingMoon } from "./GlowingMoon";
+export { GlowingMoon3D } from "./GlowingMoon3D";
 export { GridOverlay } from "./GridOverlay";
 export { TopBorder, BottomBorder } from "./NeonBorders";

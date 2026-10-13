@@ -13,7 +13,10 @@ import {
   useClearMyCart,
   useUpdateCartQuantity,
   usePasses,
+  useAccountStatus,
+  useAccountStatus,
 } from "@/lib/api/hooks";
+import { useCheckout } from "@/lib/api/hooks/cart";
 import { ProfileIncompleteCard } from "./components/ProfileIncompleteCard";
 import { EmptyCart } from "./sections/EmptyCart";
 import { CartSection } from "./sections/CartSection";
@@ -51,6 +54,12 @@ export function CartPageContent() {
     isLoading: isAccountLoading,
   } = useMyAccount("progress");
 
+  // Account status (suspension check)
+  const { isSuspended, canPerformAction } = useAccountStatus();
+
+  // Account status (suspension check)
+  const { isSuspended, canPerformAction } = useAccountStatus();
+
   // Cart data
   const { items, totalQuantity, isEmpty, isLoading: isCartLoading, refetch } = useGetMyCart();
 
@@ -67,6 +76,9 @@ export function CartPageContent() {
   });
 
   const { mutate: updateQuantity, isPending: isUpdatingQuantity } = useUpdateCartQuantity();
+
+  // Checkout
+  const { checkout, isLoading: isCheckingOut } = useCheckout();
 
   const isAuthenticated = status === "authenticated";
   const isAuthLoading = status === "loading";
@@ -122,9 +134,8 @@ export function CartPageContent() {
     clearCart();
   };
 
-  const handleCheckout = () => {
-    // TODO: Implement checkout flow
-    router.push("/checkout");
+  const handleCheckout = (couponCode?: string) => {
+    checkout({ couponCode });
   };
 
   // Show loading while checking auth
@@ -308,6 +319,7 @@ export function CartPageContent() {
                   onClearCart={handleClearCart}
                   onCheckout={handleCheckout}
                   isClearing={isClearing}
+                  isCheckingOut={isCheckingOut}
                 />
               </div>
             </motion.div>

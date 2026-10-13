@@ -51,6 +51,8 @@ export interface EventsApiResponse {
   statusCode: number;
   message: string;
   info: string;
+  // Backend (OkResponseStrategy) spreads a named key, not a generic `data`.
+  // GET /events → { info, events }
   events: Event[];
 }
 
@@ -58,6 +60,7 @@ export interface EventDetailsApiResponse {
   statusCode: number;
   message: string;
   info: string;
+  // GET /events/:slug → { info, event }
   event: EventDetails;
 }
 

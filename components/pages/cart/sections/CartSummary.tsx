@@ -22,8 +22,10 @@ interface CartSummaryProps {
   totalItems: number;
   totalAmount: number;
   onClearCart: () => void;
-  onCheckout: () => void;
+  onCheckout: (couponCode?: string) => void;
   isClearing?: boolean;
+  isCheckingOut?: boolean;
+  isSuspended?: boolean;
 }
 
 export function CartSummary({
@@ -32,6 +34,8 @@ export function CartSummary({
   onClearCart,
   onCheckout,
   isClearing,
+  isSuspended,
+  isSuspended,
 }: CartSummaryProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
@@ -70,7 +74,8 @@ export function CartSummary({
 
   const finalAmount = totalAmount - discountAmount;
 
-  // Handle coupon
+  // Handle coupon - validation happens server-side on checkout
+  // This just provides optimistic UI feedback
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
       setCouponError("Enter a code");
@@ -80,19 +85,12 @@ export function CartSummary({
     setIsApplyingCoupon(true);
     setCouponError(null);
 
-    // Mock API call
+    // Optimistically show the coupon as "applied" - actual validation on checkout
     setTimeout(() => {
-      if (couponCode.toUpperCase() === "KASHIYATRA10") {
-        setAppliedCoupon({ code: couponCode.toUpperCase(), discount: 10, type: "percentage" });
-        setCouponCode("");
-      } else if (couponCode.toUpperCase() === "YATRA500") {
-        setAppliedCoupon({ code: couponCode.toUpperCase(), discount: 500, type: "fixed" });
-        setCouponCode("");
-      } else {
-        setCouponError("Invalid code");
-      }
+      setAppliedCoupon({ code: couponCode.toUpperCase(), discount: 0, type: "percentage" });
+      setCouponCode("");
       setIsApplyingCoupon(false);
-    }, 800);
+    }, 300);
   };
 
   const handleRemoveCoupon = () => {
@@ -349,29 +347,89 @@ export function CartSummary({
 
         {/* Checkout button */}
         <motion.button
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.99 }}
+          whileHover={!isSuspended ? { scale: 1.01 } : undefined}
+          whileTap={!isSuspended ? { scale: 0.99 } : undefined}
+          whileHover={!isSuspended ? { scale: 1.01 } : undefined}
+          whileTap={!isSuspended ? { scale: 0.99 } : undefined}
           onClick={onCheckout}
-          className="group relative mb-4 w-full overflow-hidden rounded-xl py-4 font-semibold text-white"
+          disabled={isSuspended}
+          className="group relative mb-4 w-full overflow-hidden rounded-xl py-4 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+          disabled={isSuspended}
+          className="group relative mb-4 w-full overflow-hidden rounded-xl py-4 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
           style={{
-            background: `linear-gradient(135deg, ${COLORS.GOLD}, ${COLORS.DARK_GOLD})`,
-            boxShadow: `0 4px 20px ${COLORS.GOLD}30`,
+            background: isSuspended
+              ? "linear-gradient(135deg, #666, #444)"
+              : `linear-gradient(135deg, ${COLORS.GOLD}, ${COLORS.DARK_GOLD})`,
+            boxShadow: isSuspended ? "none" : `0 4px 20px ${COLORS.GOLD}30`,
+            background: isSuspended
+              ? "linear-gradient(135deg, #666, #444)"
+              : `linear-gradient(135deg, ${COLORS.GOLD}, ${COLORS.DARK_GOLD})`,
+            boxShadow: isSuspended ? "none" : `0 4px 20px ${COLORS.GOLD}30`,
           }}
         >
-          <motion.div
-            className="absolute inset-0"
-            animate={{ x: ["-100%", "200%"] }}
-            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-            style={{
-              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
-              width: "50%",
-            }}
-          />
+          {!isSuspended && (
+            <motion.div
+              className="absolute inset-0"
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
+                width: "50%",
+              }}
+            />
+          )}
+          {!isSuspended && (
+            <motion.div
+              className="absolute inset-0"
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
+                width: "50%",
+              }}
+            />
+          )}
           <span className="relative flex items-center justify-center gap-2">
-            Proceed to Checkout
-            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+            {isSuspended ? "Account Suspended" : "Proceed to Checkout"}
+            {!isSuspended && (
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+            )}
+            {isSuspended ? "Account Suspended" : "Proceed to Checkout"}
+            {!isSuspended && (
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+            )}
           </span>
         </motion.button>
+
+        {/* Suspended warning */}
+        {isSuspended && (
+          <div
+            className="mb-4 rounded-lg p-3 text-center text-xs"
+            style={{
+              background: "rgba(239, 68, 68, 0.1)",
+              border: "1px solid rgba(239, 68, 68, 0.25)",
+              color: "#fca5a5",
+            }}
+          >
+            Your account is suspended. Please contact support to continue.
+          </div>
+        )}
+
+        {/* Suspended warning */}
+        {isSuspended && (
+          <div
+            className="mb-4 rounded-lg p-3 text-center text-xs"
+            style={{
+              background: "rgba(239, 68, 68, 0.1)",
+              border: "1px solid rgba(239, 68, 68, 0.25)",
+              color: "#fca5a5",
+            }}
+          >
+            Your account is suspended. Please contact support to continue.
+          </div>
+        )}
 
         {/* Clear cart */}
         <button

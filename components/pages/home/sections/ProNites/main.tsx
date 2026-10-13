@@ -6,7 +6,7 @@ import {
   HeadlinerCard,
   FeaturingCard,
   SectionTitle,
-  GlowingMoon,
+  GlowingMoon3D,
   DancingGirlFestiveVibes,
   TopBorder,
   BottomBorder,
@@ -69,7 +69,7 @@ export const ProNitesSection = memo(function ProNitesSection() {
         style={{ background: GRADIENT_STAGE }}
       >
         {/* ═══ Background Elements ═══ */}
-        <GlowingMoon />
+        <GlowingMoon3D />
         <DancingGirlFestiveVibes />
         <GridOverlay />
         <FloatingSoundParticles />
