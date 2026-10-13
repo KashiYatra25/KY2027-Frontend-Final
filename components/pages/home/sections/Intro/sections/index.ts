@@ -1,20 +1,14 @@
-// Background section - stage, floating elements, cursor trail
-export { StageBackground, FloatingElements, CursorTrail } from "./Background";
+// Background section - cursor trail
+export { CursorTrail } from "./Background";
 
 // Stage section - neon stage with hold-to-enter ring
 export { NeonStage } from "./Stage/NeonStage";
 
-// Enter section - hold button and blast effect
-export { EnterButton, BlastEffect } from "./Enter";
+// Enter section - blast effect
+export { BlastEffect } from "./Enter";
 
 // Video section - FirePot audio-reactive speakers (video player replaced by Countdown poster)
 export { FirePot } from "./Video";
 
 // Countdown section - canvas concert poster shown during the video phase
 export { CountdownPoster } from "./Countdown";
-
-// Drawer section - navigation drawer
-export { NavigationDrawer } from "./Drawer";
-
-// Controls section - mute, continue buttons
-export { MuteButton, ContinueButton } from "./Controls";

@@ -127,6 +127,16 @@ export const SubEventCard = memo(function SubEventCard({
             `,
           }}
         >
+          {/* Outer glow on hover - wraps the card */}
+          <div
+            className="pointer-events-none absolute -inset-[2px] rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            style={{
+              background: `linear-gradient(135deg, ${categoryColor}60, ${categoryColor}30)`,
+              filter: "blur(8px)",
+              zIndex: -1,
+            }}
+          />
+
           {/* Ornate top border */}
           <div
             className="absolute top-0 right-0 left-0 h-1"
@@ -135,29 +145,44 @@ export const SubEventCard = memo(function SubEventCard({
             }}
           />
 
-          {/* Hover glow effect */}
+          {/* Hover glow effect - inner */}
           <div
             className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             style={{
-              background: `radial-gradient(ellipse at 50% 0%, ${categoryColor}25 0%, transparent 60%)`,
+              background: `
+                radial-gradient(ellipse at 50% 0%, ${categoryColor}30 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, ${categoryColor}15 0%, transparent 40%)
+              `,
+            }}
+          />
+
+          {/* Border glow on hover */}
+          <div
+            className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            style={{
+              boxShadow: `
+                0 0 30px ${categoryColor}40,
+                0 0 60px ${categoryColor}20,
+                inset 0 0 20px ${categoryColor}10
+              `,
             }}
           />
 
           {/* Corner ornaments */}
           <div
-            className="absolute top-2.5 left-2.5 h-4 w-4 rounded-tl border-t-2 border-l-2"
+            className="group-hover:border-opacity-80 absolute top-2.5 left-2.5 h-4 w-4 rounded-tl border-t-2 border-l-2 transition-colors duration-300"
             style={{ borderColor: `${categoryColor}50` }}
           />
           <div
-            className="absolute top-2.5 right-2.5 h-4 w-4 rounded-tr border-t-2 border-r-2"
+            className="group-hover:border-opacity-80 absolute top-2.5 right-2.5 h-4 w-4 rounded-tr border-t-2 border-r-2 transition-colors duration-300"
             style={{ borderColor: `${categoryColor}50` }}
           />
           <div
-            className="absolute bottom-2.5 left-2.5 h-4 w-4 rounded-bl border-b-2 border-l-2"
+            className="group-hover:border-opacity-80 absolute bottom-2.5 left-2.5 h-4 w-4 rounded-bl border-b-2 border-l-2 transition-colors duration-300"
             style={{ borderColor: `${categoryColor}50` }}
           />
           <div
-            className="absolute right-2.5 bottom-2.5 h-4 w-4 rounded-br border-r-2 border-b-2"
+            className="group-hover:border-opacity-80 absolute right-2.5 bottom-2.5 h-4 w-4 rounded-br border-r-2 border-b-2 transition-colors duration-300"
             style={{ borderColor: `${categoryColor}50` }}
           />
 

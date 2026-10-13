@@ -33,15 +33,13 @@ const baseClip =
 const STAGE_SRC = "/intro/countdown/stage.png";
 
 /**
- * Countdown concert poster that replaces the old `<VideoPlayer/>` during the
- * intro's `video` phase. Ported from kashiyatra-countdown-clean.
+ * Countdown concert poster shown during the intro's `video` phase.
+ * Ported from kashiyatra-countdown-clean.
  *
- * Option A integration:
- *  - Shows only while `phase === "video"` (same slot the video used to occupy).
- *  - The poster's "ENTER KASHIYATRA" plate + its hotspot buttons drive the
+ *  - Shows only while `phase === "video"` (the phase reached after the blast).
+ *  - The poster's "ENTER KASHIYATRA" plate + its hotspot button drive the
  *    existing `completeIntro()` so the rest of the site takes over.
- *  - The old `ContinueButton` is hidden during the video phase (the plate is
- *    the CTA now); `NavigationDrawer` + `FirePot` still render on top.
+ *  - `FirePot` renders on top during this phase.
  */
 export function CountdownPoster() {
   const { phase, completeIntro } = useIntro();

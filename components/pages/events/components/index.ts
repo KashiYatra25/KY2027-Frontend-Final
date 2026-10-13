@@ -13,3 +13,16 @@ export {
   RangoliStar,
   SwirlDecor,
 } from "./CategoryDecorations";
+export {
+  CATEGORY_ICONS,
+  getCategoryIcon,
+  NatrajIcon,
+  CrosswindzIcon,
+  BandishIcon,
+  AbhinayIcon,
+  MirageIcon,
+  ToolikaIcon,
+  EnquiztaIcon,
+  SamwaadIcon,
+  ZaikaIcon,
+} from "./CategoryIcons";

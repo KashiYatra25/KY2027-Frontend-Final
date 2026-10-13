@@ -93,6 +93,7 @@ export {
   useMyRegistrations,
   useEventRegisterIndividual,
   useEventRegisterTeam,
+  useCancelRegistration,
   type Registration,
 } from "./registrations/useRegistrations";
 

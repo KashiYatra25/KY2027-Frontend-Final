@@ -4,9 +4,13 @@ import { useMemo, useCallback, useState, useEffect } from "react";
 import { useApiQuery, useApiMutation } from "wire-axon/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { z } from "zod";
 import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import { RegisterIndividualSchema, RegisterTeamSchema } from "@/lib/api/utils/registration.schema";
+
+// Empty schema for DELETE requests that don't require a body
+const EmptyBodySchema = z.object({});
 import type { EventCategorySlug, ParticipationType } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -101,17 +105,31 @@ export function useMyRegistrations() {
     return null;
   }, [error]);
 
-  // Create a Set of registered event slugs for quick lookup
+  // Create a Set of registered event slugs for quick lookup (excluding cancelled)
   const registeredEventSlugs = useMemo(() => {
     if (!data?.registrations) return new Set<string>();
-    return new Set(data.registrations.map((r) => r.eventSlug));
+    return new Set(
+      data.registrations.filter((r) => r.status !== "cancelled").map((r) => r.eventSlug)
+    );
   }, [data]);
 
-  // Check if user is registered for a specific event
+  // Check if user is registered for a specific event (excludes cancelled)
   const isRegisteredFor = useCallback(
     (eventSlug: string) => registeredEventSlugs.has(eventSlug),
     [registeredEventSlugs]
   );
+
+  // Get active (non-cancelled) registrations
+  const activeRegistrations = useMemo(() => {
+    if (!data?.registrations) return [];
+    return data.registrations.filter((r) => r.status !== "cancelled");
+  }, [data]);
+
+  // Get cancelled registrations separately
+  const cancelledRegistrations = useMemo(() => {
+    if (!data?.registrations) return [];
+    return data.registrations.filter((r) => r.status === "cancelled");
+  }, [data]);
 
   // Get registration for a specific event (if exists)
   const getRegistrationFor = useCallback(
@@ -121,7 +139,10 @@ export function useMyRegistrations() {
 
   return {
     registrations: data?.registrations ?? [],
+    activeRegistrations,
+    cancelledRegistrations,
     count: data?.count ?? 0,
+    activeCount: activeRegistrations.length,
     registeredEventSlugs,
     isRegisteredFor,
     getRegistrationFor,
@@ -227,5 +248,81 @@ export function useEventRegisterTeam(eventSlug: string) {
     errorMessage,
     data: data?.data ?? null,
     reset,
+  };
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// useCancelRegistration - Cancel a registration for an event
+// ═══════════════════════════════════════════════════════════════════
+
+interface CancelRegistrationResponse {
+  statusCode: number;
+  message: string;
+  info: string;
+  eventSlug: string;
+  eventName: string;
+  participationType: string;
+}
+
+export function useCancelRegistration() {
+  const queryClient = useQueryClient();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [currentEventSlug, setCurrentEventSlug] = useState<string | null>(null);
+
+  const { mutate, isPending, isSuccess, isError, error, data, reset } =
+    useApiMutation<CancelRegistrationResponse>({
+      // URL will be set dynamically via the cancel function
+      url: "/events/placeholder/registration",
+      baseURL: BACKEND_URL,
+      featureConfig: sharedFeatureConfig,
+      method: "delete",
+      apiConfig: { timeout: API_TIMEOUT },
+      bodyValidator: { bodySchema: EmptyBodySchema },
+      mutationOptions: {
+        retry: 0, // Don't retry cancellations
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["my-registrations"] });
+        },
+      },
+    });
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage(extractErrorMessage(error, "Failed to cancel registration"));
+    } else {
+      setErrorMessage(null);
+    }
+  }, [error]);
+
+  const cancel = useCallback(
+    (eventSlug: string) => {
+      setCurrentEventSlug(eventSlug);
+      // Override the URL for this specific mutation
+      mutate(
+        {},
+        {
+          // @ts-expect-error - wire-axon supports url override in mutate options
+          url: `/events/${eventSlug}/registration`,
+        }
+      );
+    },
+    [mutate]
+  );
+
+  const resetState = useCallback(() => {
+    setCurrentEventSlug(null);
+    setErrorMessage(null);
+    reset();
+  }, [reset]);
+
+  return {
+    cancel,
+    isCancelling: isPending,
+    isSuccess,
+    isError,
+    errorMessage,
+    cancelledEventSlug: currentEventSlug,
+    data: data?.data ?? null,
+    reset: resetState,
   };
 }

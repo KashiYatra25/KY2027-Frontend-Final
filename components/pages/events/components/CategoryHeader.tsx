@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { EventCategory } from "@/lib/api/helper/types";
 import { ArrowLeft, Sparkles, CalendarCheck } from "lucide-react";
+import { getCategoryIcon } from "./CategoryIcons";
 
 // ═══════════════════════════════════════════════════════════════════
 // CATEGORY HEADER COMPONENT - FESTIVE DESIGN
@@ -21,32 +22,10 @@ export const CategoryHeader = memo(function CategoryHeader({
   showBackButton = true,
 }: CategoryHeaderProps) {
   const openCount = category.subEvents.filter((e) => e.registrationOpen).length;
+  const IconComponent = getCategoryIcon(category.id || category.slug);
 
   return (
     <div className="relative mb-10 sm:mb-14">
-      {/* Back navigation - positioned with more margin to avoid navbar overlap */}
-      {showBackButton && (
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <Link
-            href="/events"
-            className="group mb-6 inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:gap-3"
-            style={{
-              background: `linear-gradient(135deg, ${category.color}20 0%, ${category.color}10 100%)`,
-              border: `1px solid ${category.color}40`,
-              color: category.color,
-              boxShadow: `0 0 20px ${category.color}15`,
-            }}
-          >
-            <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
-            <span>Back to Events</span>
-          </Link>
-        </motion.div>
-      )}
-
       {/* Main header card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -74,6 +53,30 @@ export const CategoryHeader = memo(function CategoryHeader({
             background: `linear-gradient(90deg, transparent, ${category.color}, transparent)`,
           }}
         />
+
+        {/* Back button - positioned at top right inside the card */}
+        {showBackButton && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="absolute top-4 right-4 z-20 sm:top-6 sm:right-6"
+          >
+            <Link
+              href="/events"
+              className="group inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 hover:gap-2.5 sm:text-sm"
+              style={{
+                background: `linear-gradient(135deg, ${category.color}25 0%, ${category.color}15 100%)`,
+                border: `1px solid ${category.color}50`,
+                color: category.color,
+              }}
+            >
+              <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Back to Events</span>
+              <span className="sm:hidden">Back</span>
+            </Link>
+          </motion.div>
+        )}
 
         {/* Corner ornaments */}
         {[
@@ -120,8 +123,15 @@ export const CategoryHeader = memo(function CategoryHeader({
                   boxShadow: `0 0 30px ${category.color}30`,
                 }}
               />
-              {/* Inner icon */}
-              <span className="relative z-10 text-5xl sm:text-6xl">{category.icon}</span>
+              {/* Inner icon - SVG or fallback to emoji */}
+              {IconComponent ? (
+                <IconComponent
+                  className="relative z-10 h-14 w-14 sm:h-16 sm:w-16"
+                  color={category.color}
+                />
+              ) : (
+                <span className="relative z-10 text-5xl sm:text-6xl">{category.icon}</span>
+              )}
             </motion.div>
 
             {/* Text content */}
