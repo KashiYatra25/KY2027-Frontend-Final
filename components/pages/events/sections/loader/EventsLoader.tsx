@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { COLORS, JAZZ_COLORS } from "../../constants/palette";
+import { COLORS, JAZZ_COLORS } from "@/components/pages/events/constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
 // EVENTS PAGE LOADER

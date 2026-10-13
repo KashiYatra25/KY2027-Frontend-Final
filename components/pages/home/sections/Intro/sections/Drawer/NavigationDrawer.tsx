@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useIntro } from "../../context/IntroContext";
+import { useIntro } from "@/components/pages/home/sections/Intro/context/IntroContext";
 import { useAnimationPolicy } from "@/hooks";
 
 /**

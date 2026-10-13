@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useIntro } from "../../context/IntroContext";
+import { useIntro } from "@/components/pages/home/sections/Intro/context/IntroContext";
 import { useAnimationPolicy } from "@/hooks";
 
 /**
@@ -49,7 +49,7 @@ export function StageBackground() {
           }}
         >
           <Image
-            src="/intro/stage.png"
+            src="/intro/Stage.png"
             alt="Concert Stage"
             fill
             className="object-cover object-center"

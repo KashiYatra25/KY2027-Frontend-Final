@@ -8,15 +8,7 @@ export { DecorativeElements, EventsLoader } from "./sections";
 export { CategoryCard, PageTitle, SubEventCard, CategoryHeader } from "./components";
 
 // Types
-export type {
-  SubEvent,
-  EventType,
-  EventCategory,
-  CategoryCardProps,
-  SubEventCardProps,
-  CategoryHeaderProps,
-  CategoryPageContentProps,
-} from "@/lib/api/helper/types";
+export type { SubEvent, EventCategory } from "@/lib/api/helper/types";
 
 // Config
 export { EVENT_CATEGORIES } from "./config/events.config";

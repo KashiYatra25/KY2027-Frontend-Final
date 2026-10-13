@@ -2,19 +2,32 @@
 
 import { memo } from "react";
 import Link from "next/link";
-import type { EventCategory } from "@/lib/api/helper/types";
-import { COLORS, JAZZ_COLORS } from "../constants/palette";
+import { COLORS, JAZZ_COLORS } from "@/components/pages/events/constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
 // CATEGORY CARD COMPONENT
 // ═══════════════════════════════════════════════════════════════════
 
+interface CategoryCardCategory {
+  id: string;
+  name: string;
+  slug: string;
+  tagline: string;
+  icon: string;
+  color: string;
+  eventCount?: number; // From API-based data
+  subEvents?: { id: string }[]; // Legacy from static config
+}
+
 interface CategoryCardProps {
-  category: EventCategory;
+  category: CategoryCardCategory;
   index: number;
 }
 
 export const CategoryCard = memo(function CategoryCard({ category, index }: CategoryCardProps) {
+  // Support both new eventCount and legacy subEvents.length
+  const eventCount = category.eventCount ?? category.subEvents?.length ?? 0;
+
   return (
     <Link
       href={`/events/${category.slug}`}
@@ -87,7 +100,7 @@ export const CategoryCard = memo(function CategoryCard({ category, index }: Cate
               color: category.color,
             }}
           >
-            <span>{category.subEvents.length} Events</span>
+            <span>{eventCount} Events</span>
             <svg
               className="h-3 w-3 transition-transform sm:group-hover:translate-x-1"
               fill="none"

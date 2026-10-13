@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useIntro } from "../../context/IntroContext";
+import { useIntro } from "@/components/pages/home/sections/Intro/context/IntroContext";
 import { useAnimationPolicy } from "@/hooks";
 
 /**

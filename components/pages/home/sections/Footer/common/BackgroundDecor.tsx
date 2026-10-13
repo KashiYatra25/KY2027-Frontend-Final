@@ -60,7 +60,7 @@ export const BackgroundDecor = memo(function BackgroundDecor() {
         }}
       >
         <Image
-          src={IMAGES.footer.etherealDancer}
+          src={IMAGES.footer.dancer}
           alt=""
           fill
           className="object-contain"

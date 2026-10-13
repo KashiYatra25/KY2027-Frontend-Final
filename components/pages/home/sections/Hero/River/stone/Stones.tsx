@@ -1,8 +1,8 @@
 "use client";
 
 import { memo } from "react";
-import { StonesMobile } from "./mobile";
-import { StonesDesktop } from "./desktop";
+import { StonesMobile } from "./mobile/StonesMobile";
+import { StonesDesktop } from "./desktop/StonesDesktop";
 
 /**
  * All stepping stones in the river

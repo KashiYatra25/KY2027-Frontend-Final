@@ -2,7 +2,7 @@
 export { apolloClient } from "./apollo";
 
 // ═══════════════════════════════════════════════════════════════════
-// QUERIES
+// QUERIES - User Account
 // ═══════════════════════════════════════════════════════════════════
 
 export {
@@ -13,7 +13,17 @@ export {
 } from "./queries/user.queries";
 
 // ═══════════════════════════════════════════════════════════════════
-// TYPES
+// QUERIES - Campus Ambassador (CA)
+// ═══════════════════════════════════════════════════════════════════
+
+export {
+  FULL_CA_INFO_QUERY,
+  CA_APPLICATION_STATUS_QUERY,
+  CA_PROFILE_QUERY,
+} from "./queries/ca.queries";
+
+// ═══════════════════════════════════════════════════════════════════
+// TYPES - User Account
 // ═══════════════════════════════════════════════════════════════════
 
 export type {
@@ -32,4 +42,24 @@ export type {
   // Account Access Status
   AccountAccessStatusQueryResponse,
   AccountAccessStatusData,
-} from "./queries/user.queries";
+} from "../helper/types";
+
+// ═══════════════════════════════════════════════════════════════════
+// TYPES - Campus Ambassador (CA)
+// ═══════════════════════════════════════════════════════════════════
+
+export type {
+  // Full CA Info
+  FullCaInfoQueryResponse,
+  FullCaInfo,
+  CaApplicationGql,
+  CaProfileGql,
+  // CA Application Status
+  CaApplicationStatusQueryResponse,
+  CaApplicationStatusInfo,
+  CaApplicationStatusOnly,
+  // CA Profile
+  CaProfileQueryResponse,
+  CaProfileInfo,
+  CaProfileOnly,
+} from "../helper/types";

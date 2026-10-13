@@ -1,26 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { LightNavbar } from "@/components/navbar/Navbar";
+import { ThemedNavbar } from "@/components/navbar";
 import { PageLoader } from "@/components/loader";
+import { AuthErrorToastHandler } from "@/components/auth";
 import { useSignIn } from "@/lib/api/hooks";
-import { ROYAL_COLORS } from "./constants";
-import { BackgroundEffects } from "./decors";
-import { MysticGateSection, LoginCard } from "./sections";
+import { ROYAL_COLORS } from "./constants/palette";
+import { MysticGateSection, LoginCard, BackgroundEffects } from "./sections";
 
 export function LoginContent() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { isSigningIn, handleSignIn } = useSignIn({
-    callbackUrl: "/?auth=success",
+    callbackUrl: "/profile?auth=success",
   });
 
-  // Redirect to home if already logged in
+  // Redirect to profile if already logged in
   useEffect(() => {
     if (status === "authenticated" && session) {
-      router.replace("/?info=already-logged-in");
+      router.replace("/profile?info=already-logged-in");
       router.refresh();
     }
   }, [status, session, router]);
@@ -32,12 +32,17 @@ export function LoginContent() {
 
   return (
     <>
+      {/* Auth error toast handler - handles error toasts on login page */}
+      <Suspense fallback={null}>
+        <AuthErrorToastHandler />
+      </Suspense>
+
       {/* Full page loader when signing in */}
       {isSigningIn && <PageLoader />}
 
       {/* Fixed navbar */}
       <div className="fixed inset-x-0 top-0 z-[200]">
-        <LightNavbar position="relative" topOffset={18} theme="main" />
+        <ThemedNavbar position="relative" topOffset={18} theme="main" />
       </div>
 
       <main
@@ -54,7 +59,7 @@ export function LoginContent() {
         <BackgroundEffects />
 
         {/* Main Content Container */}
-        <div className="relative mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
+        <div className="relative mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12 2xl:max-w-6xl">
           <MysticGateSection />
           <LoginCard onGoogleLogin={handleSignIn} />
         </div>

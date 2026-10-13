@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { IMAGES } from "@/lib/images";
-import { ROYAL_COLORS } from "@/components/pages/login/constants";
+import { ROYAL_COLORS } from "@/components/pages/login/constants/palette";
 
 export function MysticGateSection() {
   return (

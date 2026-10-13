@@ -56,13 +56,6 @@
     "institutionType": "IIT"
   },
   {
-    "id": "IIT-BHU",
-    "name": "Indian Institute of Technology (BHU) Varanasi",
-    "address": "Varanasi",
-    "district": "Varanasi",
-    "institutionType": "IIT"
-  },
-  {
     "id": "IIT-IND",
     "name": "Indian Institute of Technology Indore",
     "address": "Simrol, Indore",

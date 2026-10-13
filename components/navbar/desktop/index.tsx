@@ -3,12 +3,13 @@
 import { memo } from "react";
 import Link from "next/link";
 import { Spinner } from "@/components/ui/spinner";
-import { useNavbar } from "../config/NavbarContext";
-import { SpiritualIcon } from "./SpiritualIcon";
-import { ShineIcon } from "./ShineIcon";
-import { UserAvatarDropdown } from "../common/UserAvatarDropdown";
-import type { NavbarTheme } from "../types";
-import { THEME_CONFIG, THEME_LAYOUT } from "../config/desktop.config";
+import { useNavbar } from "@/components/navbar/config/NavbarContext";
+import { SpiritualIcon } from "@/components/navbar/desktop/SpiritualIcon";
+import { ShineIcon } from "@/components/navbar/desktop/ShineIcon";
+import { UserAvatarDropdown } from "@/components/navbar/common/UserAvatarDropdown";
+import type { NavbarTheme } from "@/components/navbar/types/navbar.types";
+import { THEME_CONFIG, THEME_LAYOUT } from "@/components/navbar/config/desktop.config";
+import { getActiveLinkGlow } from "@/components/navbar/constants/palette";
 
 /**
  * Theme-aware Desktop Navbar
@@ -87,9 +88,7 @@ export const NavbarDesktop = memo(function NavbarDesktop({
                 fontSize: "clamp(8px, 0.7vw, 12px)",
                 color: active ? linkStyle.activeColor : linkStyle.color,
                 textShadow: active ? linkStyle.activeTextShadow : linkStyle.inactiveTextShadow,
-                filter: active
-                  ? `drop-shadow(0 0 6px ${theme === "main" ? "rgba(255,120,50,0.6)" : theme === "about" ? "rgba(139,92,246,0.6)" : "rgba(74,222,128,0.6)"})`
-                  : undefined,
+                filter: active ? getActiveLinkGlow(theme) : undefined,
               }}
             >
               <SpiritualIcon

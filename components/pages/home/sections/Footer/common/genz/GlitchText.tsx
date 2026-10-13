@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useState, useEffect } from "react";
-import { FOOTER_COLORS } from "../constants";
+import { FOOTER_COLORS } from "@/components/pages/home/sections/Footer/common/constants";
 
 interface GlitchTextProps {
   text: string;

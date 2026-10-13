@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { FEST_DAYS } from "../config/campusMap.config";
+import { FEST_DAYS } from "@/components/pages/schedule/config/campusMap.config";
 import type { ScheduledEvent, Venue } from "@/lib/api/helper/types";
 import { CampusMap } from "./CampusMap";
 

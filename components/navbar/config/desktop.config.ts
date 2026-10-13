@@ -4,7 +4,7 @@ import type {
   ThemeVisualConfig,
   DesktopLayoutConfig,
   DimensionConstraints,
-} from "../types";
+} from "@/components/navbar/types/navbar.types";
 
 // ═══════════════════════════════════════════════════════════════════
 // DESKTOP NAVBAR CONFIGURATION
@@ -115,7 +115,7 @@ export const THEME_LAYOUT: Record<NavbarTheme, DesktopLayoutConfig> = {
     navbarOffsetY: "0px", // Entire navbar offset
     primaryLinksY: "8%", // Primary links offset
     secondaryLinksY: "11%", // Secondary links offset
-    primaryLeft: "22%",
+    primaryLeft: "26%",
     primaryRight: "26%",
     secondaryRight: "3.7%",
     secondaryRightAuth: "0.5%",
@@ -124,7 +124,7 @@ export const THEME_LAYOUT: Record<NavbarTheme, DesktopLayoutConfig> = {
     navbarOffsetY: "5px",
     primaryLinksY: "1%",
     secondaryLinksY: "1%",
-    primaryLeft: "22%",
+    primaryLeft: "28%",
     primaryRight: "28%",
     secondaryRight: "4%",
     secondaryRightAuth: "2%",
@@ -133,7 +133,7 @@ export const THEME_LAYOUT: Record<NavbarTheme, DesktopLayoutConfig> = {
     navbarOffsetY: "7px",
     primaryLinksY: "1%",
     secondaryLinksY: "1%",
-    primaryLeft: "22%",
+    primaryLeft: "28%",
     primaryRight: "28%",
     secondaryRight: "5%",
     secondaryRightAuth: "1%",

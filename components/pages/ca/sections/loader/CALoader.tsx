@@ -1,5 +1,7 @@
 "use client";
 
+import { COLORS, COLORS_RGBA, GRADIENTS } from "@/components/pages/ca/constants/palette";
+
 // ═══════════════════════════════════════════════════════════════════
 // CA LOADER
 // Ethereal cosmic spinner using the Campus Ambassador palette
@@ -26,11 +28,11 @@ export function CALoader({ text = "Loading…", size = "md" }: CALoaderProps) {
         <div
           className="absolute inset-0 rounded-full border-2 border-transparent"
           style={{
-            borderTopColor: "#ec4899",
-            borderRightColor: "#8b5cf6",
-            borderBottomColor: "#06b6d4",
+            borderTopColor: COLORS.PINK,
+            borderRightColor: COLORS.PURPLE,
+            borderBottomColor: COLORS.CYAN,
             animation: "caLoaderSpin 0.9s linear infinite",
-            boxShadow: "0 0 12px rgba(139, 92, 246, 0.5)",
+            boxShadow: `0 0 12px ${COLORS_RGBA.PURPLE_50}`,
           }}
         />
       </div>
@@ -39,7 +41,7 @@ export function CALoader({ text = "Loading…", size = "md" }: CALoaderProps) {
         <span
           className={sizeStyles.text}
           style={{
-            background: "linear-gradient(90deg, #ec4899, #8b5cf6, #06b6d4)",
+            background: GRADIENTS.TRI_90,
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             WebkitTextFillColor: "transparent",

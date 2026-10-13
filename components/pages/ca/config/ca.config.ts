@@ -10,7 +10,7 @@ export const CA_FORM_URL = "https://forms.google.com/your-ca-form";
 export const CA_LOGIN_CALLBACK = "/login?callbackUrl=/campus-ambassador";
 
 /** Path to the GLTF astronaut model rendered in the decor layer. */
-export const ASTRONAUT_MODEL_PATH = "/ca/astronaut_3d_model.glb";
+export const ASTRONAUT_MODEL_PATH = "/ca/AstronautModel.glb";
 
 // ============================================
 // ASTRONAUT 3D CONFIG - Adjust these values

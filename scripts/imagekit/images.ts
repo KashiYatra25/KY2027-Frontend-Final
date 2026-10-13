@@ -8,79 +8,84 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   // ============================================
   // PASSES
   // ============================================
-  { localFile: "passes/common/yatriPass.png", remoteName: "yatri-pass.png", folder: "/passes" },
-  { localFile: "passes/common/darbarPass.png", remoteName: "darbar-pass.png", folder: "/passes" },
-  { localFile: "passes/common/swarnimPass.png", remoteName: "swarnim-pass.png", folder: "/passes" },
+  { localFile: "passes/YatriPass.png", remoteName: "yatri-pass.png", folder: "/passes" },
+  { localFile: "passes/DarbarPass.png", remoteName: "darbar-pass.png", folder: "/passes" },
+  { localFile: "passes/SwarnimPass.png", remoteName: "swarnim-pass.png", folder: "/passes" },
 
   // ============================================
   // HERO SECTION - All common
   // ============================================
   {
-    localFile: "home/hero/common/kashiyatra.png",
+    localFile: "home/hero/KashiYatraLogo.png",
     remoteName: "kashiyatra-logo.png",
     folder: "/hero/common",
   },
   {
-    localFile: "home/hero/common/heroLogo.png",
+    localFile: "home/hero/HeroLogo.png",
     remoteName: "hero-logo.png",
     folder: "/hero/common",
   },
   {
-    localFile: "home/hero/common/ghatsDay.png",
+    localFile: "home/hero/GhatsDay.png",
     remoteName: "ghats-day.png",
     folder: "/hero/common",
   },
   {
-    localFile: "home/hero/common/ghatsNight.png",
+    localFile: "home/hero/GhatsNight.png",
     remoteName: "ghats-night.png",
     folder: "/hero/common",
   },
   {
-    localFile: "home/hero/common/kashivishwanath.png",
+    localFile: "home/hero/ModeChange.png",
+    remoteName: "mode-change.png",
+    folder: "/hero/common",
+  },
+  {
+    localFile: "home/hero/KashiVishwanathTemple.png",
     remoteName: "kashivishwanath-temple.png",
     folder: "/hero/common",
   },
   {
-    localFile: "home/hero/common/varanasiTownBG.png",
+    localFile: "home/hero/VaranasiTownBackground.png",
     remoteName: "varanasi-back.png",
     folder: "/hero/common",
   },
   {
-    localFile: "home/hero/common/stone.png",
+    localFile: "home/hero/Stone.png",
     remoteName: "stepping-stone.png",
     folder: "/hero/common",
   },
-  { localFile: "home/hero/common/kites.png", remoteName: "kites.png", folder: "/hero/common" },
+  { localFile: "home/hero/Kites.png", remoteName: "kites.png", folder: "/hero/common" },
 
   // ============================================
   // NAVBAR - Page-specific variants
   // ============================================
   // Main/Home navbar (golden/cream theme)
-  { localFile: "navbar/navMain/navBg.png", remoteName: "nav-bg.png", folder: "/navbar/main" },
+  { localFile: "navbar/MainBackground.png", remoteName: "nav-bg.png", folder: "/navbar/main" },
   {
-    localFile: "navbar/navMain/NavBadgeHome.png",
+    localFile: "navbar/MainBadge.png",
     remoteName: "nav-badge-home.png",
     folder: "/navbar/main",
   },
   // About page navbar (purple/blue concert theme)
   {
-    localFile: "navbar/navAbout/navbarAbout.png",
+    localFile: "navbar/AboutBackground.png",
     remoteName: "navbar-about.png",
     folder: "/navbar/about",
   },
   {
-    localFile: "navbar/navAbout/NavBadgeAbout.png",
+    localFile: "navbar/AboutBadge.png",
     remoteName: "nav-badge-about.png",
     folder: "/navbar/about",
   },
   // Sponsors page navbar (green/gold nature theme)
   {
-    localFile: "navbar/navSponsor/navSponsor.png",
+    localFile: "navbar/SponsorBackground.png",
     remoteName: "nav-sponsor.png",
     folder: "/navbar/sponsor",
   },
   {
-    localFile: "navbar/navSponsor/NavBadgeSponsor.png",
+    localFile: "navbar/SponsorBadge.png",
     remoteName: "nav-badge-sponsor.png",
     folder: "/navbar/sponsor",
   },
@@ -90,81 +95,91 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   // ============================================
   // Common
   {
-    localFile: "home/banarasiVibes/common/vibesBG.png",
+    localFile: "home/banarasiVibes/VibesBackground.png",
     remoteName: "vibes-bg.png",
     folder: "/vibes/common",
   },
   {
-    localFile: "home/BanarasiVibesBg.png",
+    localFile: "home/banarasiVibes/BanarasiVibesBg.png",
     remoteName: "banarasi-vibes-bg-dark.png",
     folder: "/vibes/common",
   },
   {
-    localFile: "home/banarasiVibes/common/mahamana.png",
+    localFile: "home/banarasiVibes/Mahamana.png",
     remoteName: "mahamana.png",
     folder: "/vibes/common",
   },
   {
-    localFile: "home/banarasiVibes/common/bhuGate.png",
+    localFile: "home/banarasiVibes/BhuGate.png",
     remoteName: "bhu-gate.png",
     folder: "/vibes/common",
   },
   {
-    localFile: "home/banarasiVibes/common/rickshaw.png",
+    localFile: "home/banarasiVibes/Rickshaw.png",
     remoteName: "rickshaw.png",
     folder: "/vibes/common",
   },
 
   // Desktop-only
   {
-    localFile: "home/banarasiVibes/desktop/mandala.png",
+    localFile: "home/banarasiVibes/Mandala.png",
     remoteName: "mandala.png",
     folder: "/vibes/desktop",
   },
   {
-    localFile: "home/banarasiVibes/desktop/gangaArtiSaint.png",
+    localFile: "home/banarasiVibes/GangaArtiSaint.png",
     remoteName: "ganga-aarti-saint.png",
     folder: "/vibes/desktop",
   },
   {
-    localFile: "home/banarasiVibes/desktop/bharatnatiyamDancer.png",
+    localFile: "home/banarasiVibes/BharatnatyamDancer.png",
     remoteName: "bharatnatyam-dancer.png",
+    folder: "/vibes/desktop",
+  },
+  {
+    localFile: "home/banarasiVibes/banaras_male_dancer.png",
+    remoteName: "banaras-male-dancer.png",
+    folder: "/vibes/desktop",
+  },
+  {
+    localFile: "home/banarasiVibes/banaras_female_dancer.png",
+    remoteName: "banaras-female-dancer.png",
     folder: "/vibes/desktop",
   },
 
   // Mobile-only
   {
-    localFile: "home/banarasiVibes/mobile/rangoliBg.png",
+    localFile: "home/banarasiVibes/RangoliBackground.png",
     remoteName: "rangoli-bg.png",
     folder: "/vibes/mobile",
   },
   {
-    localFile: "home/banarasiVibes/mobile/trishul.png",
+    localFile: "home/banarasiVibes/Trishul.png",
     remoteName: "trishul.png",
     folder: "/vibes/mobile",
   },
   {
-    localFile: "home/banarasiVibes/mobile/lotusPairs.png",
+    localFile: "home/banarasiVibes/LotusPairs.png",
     remoteName: "lotus-pairs.png",
     folder: "/vibes/mobile",
   },
   {
-    localFile: "home/banarasiVibes/mobile/etherealDancer.png",
+    localFile: "home/banarasiVibes/EtherealDancer.png",
     remoteName: "ethereal-dancer.png",
     folder: "/vibes/mobile",
   },
   {
-    localFile: "home/banarasiVibes/mobile/diyaPairs.png",
+    localFile: "home/banarasiVibes/DiyaPairs.png",
     remoteName: "diya-pairs.png",
     folder: "/vibes/mobile",
   },
   {
-    localFile: "home/banarasiVibes/mobile/conchShell.png",
+    localFile: "home/banarasiVibes/ConchShell.png",
     remoteName: "conch-shell.png",
     folder: "/vibes/mobile",
   },
   {
-    localFile: "home/banarasiVibes/mobile/varanasiSaloutte.png",
+    localFile: "home/banarasiVibes/VaranasiSilhouette.png",
     remoteName: "varanasi-silhouette.png",
     folder: "/vibes/mobile",
   },
@@ -173,12 +188,12 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   // FEST HIGHLIGHTS
   // ============================================
   {
-    localFile: "home/festiveHighlights/common/durga_temple.svg",
+    localFile: "home/festiveHighlights/DurgaTemple.svg",
     remoteName: "durga-temple.svg",
     folder: "/highlights/common",
   },
   {
-    localFile: "home/festiveHighlights/desktop/durga.svg",
+    localFile: "home/festiveHighlights/Durga.svg",
     remoteName: "durga.svg",
     folder: "/highlights/desktop",
   },
@@ -187,17 +202,17 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   // FESTIVAL VIBES / THE EXPERIENCE
   // ============================================
   {
-    localFile: "home/FestiveVibesBg.png",
+    localFile: "home/festiveHighlights/FestiveVibesBg.png",
     remoteName: "festive-vibes-bg.png",
     folder: "/festival-vibes/common",
   },
   {
-    localFile: "home/theExperience/common/baddie.png",
+    localFile: "home/theExperience/DjGirl.png",
     remoteName: "dj.png",
     folder: "/festival-vibes/common",
   },
   {
-    localFile: "home/theExperience/common/sareeDrape.png",
+    localFile: "home/theExperience/SareeDrape.png",
     remoteName: "saree-drape.png",
     folder: "/festival-vibes/common",
   },
@@ -206,22 +221,22 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   // PRO NITES
   // ============================================
   {
-    localFile: "home/proNites/common/proNiteDancingGirl.png",
+    localFile: "home/proNites/DancingGirl.png",
     remoteName: "dancing-girl.png",
     folder: "/pro-nites/common",
   },
   {
-    localFile: "home/proNites/common/moon.png",
+    localFile: "home/proNites/Moon.png",
     remoteName: "moon.png",
     folder: "/pro-nites/common",
   },
   {
-    localFile: "home/proNites/common/silhoutte.png",
+    localFile: "home/proNites/Silhouette.png",
     remoteName: "silhouette.png",
     folder: "/pro-nites/common",
   },
   {
-    localFile: "home/proNites/common/aerobics.png",
+    localFile: "home/proNites/Aerobics.png",
     remoteName: "aerobics.png",
     folder: "/pro-nites/common",
   },
@@ -230,52 +245,47 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   // FOOTER - Desktop decorative elements
   // ============================================
   {
-    localFile: "home/footer/desktop/dancer.png",
+    localFile: "home/footer/Dancer.png",
     remoteName: "ethereal-dancer.png",
     folder: "/footer/desktop",
   },
   {
-    localFile: "home/footer/desktop/floatingGarland.png",
+    localFile: "home/footer/FloatingGarland.png",
     remoteName: "floating-garland.png",
     folder: "/footer/desktop",
   },
   {
-    localFile: "home/footer/desktop/lampCluster.png",
-    remoteName: "lamp-cluster.png",
-    folder: "/footer/desktop",
-  },
-  {
-    localFile: "home/footer/desktop/silhoutteGhat.png",
+    localFile: "home/footer/GhatSilhouette.png",
     remoteName: "ghat-silhouette.png",
     folder: "/footer/desktop",
   },
   {
-    localFile: "home/footer/desktop/spiritualOrna.png",
+    localFile: "home/footer/SpiritualOrnament.png",
     remoteName: "spiritual-ornament.png",
     folder: "/footer/desktop",
   },
   {
-    localFile: "home/footer/desktop/standingPillar.png",
+    localFile: "home/footer/StandingPillar.png",
     remoteName: "temple-pillar.png",
     folder: "/footer/desktop",
   },
   {
-    localFile: "home/footer/desktop/subtleRangoli.png",
+    localFile: "home/footer/SubtleRangoli.png",
     remoteName: "subtle-rangoli.png",
     folder: "/footer/desktop",
   },
   {
-    localFile: "home/footer/floatingSpeaker.png",
+    localFile: "home/footer/FloatingSpeaker.png",
     remoteName: "floating-speaker.png",
     folder: "/footer/desktop",
   },
   {
-    localFile: "home/footer/desktop/concertFloor.png",
+    localFile: "home/footer/ConcertFloor.png",
     remoteName: "concert-floor.png",
     folder: "/footer/desktop",
   },
   {
-    localFile: "home/footer/footerDancer.png",
+    localFile: "home/footer/FooterDancer.png",
     remoteName: "footer-dancer.png",
     folder: "/footer/desktop",
   },
@@ -284,306 +294,402 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   // MISCELLANEOUS
   // ============================================
   {
-    localFile: "miscellaneous/common/lord_shiva.png",
+    localFile: "miscellaneous/LordShiva.png",
     remoteName: "lord-shiva.png",
     folder: "/misc",
   },
   {
-    localFile: "miscellaneous/common/welcomeFlag.png",
+    localFile: "miscellaneous/WelcomeFlag.png",
     remoteName: "welcome-flag.png",
+    folder: "/misc",
+  },
+  {
+    localFile: "miscellaneous/Lassi.png",
+    remoteName: "lassi.png",
+    folder: "/misc",
+  },
+  {
+    localFile: "miscellaneous/TablaSitar.png",
+    remoteName: "tabla-sitar.png",
+    folder: "/misc",
+  },
+  {
+    localFile: "miscellaneous/Malaiyo.png",
+    remoteName: "malaiyo.png",
+    folder: "/misc",
+  },
+  {
+    localFile: "miscellaneous/Paan.png",
+    remoteName: "paan.png",
     folder: "/misc",
   },
 
   // ============================================
   // ABOUT PAGE - All common
   // ============================================
-  { localFile: "about/aboutBG.png", remoteName: "about-bg.png", folder: "/about/common" },
+  { localFile: "about/AboutBackground.png", remoteName: "AboutBackground.png", folder: "/about" },
   {
-    localFile: "about/common/mandlaOrnament.png",
-    remoteName: "mandala-ornament.png",
-    folder: "/about/common",
+    localFile: "about/MandalaOrnament.png",
+    remoteName: "MandalaOrnament.png",
+    folder: "/about",
   },
   {
-    localFile: "about/common/peacock_nobg.png",
-    remoteName: "peacock.png",
-    folder: "/about/common",
+    localFile: "about/Peacock.png",
+    remoteName: "Peacock.png",
+    folder: "/about",
   },
-  { localFile: "about/common/omLotus.png", remoteName: "om-lotus.png", folder: "/about/common" },
+  { localFile: "about/OmLotus.png", remoteName: "OmLotus.png", folder: "/about" },
   {
-    localFile: "about/common/mysticDivider.png",
-    remoteName: "mystic-divider.png",
-    folder: "/about/common",
-  },
-  {
-    localFile: "about/common/diyaCluster.png",
-    remoteName: "diya-cluster.png",
-    folder: "/about/common",
+    localFile: "about/MysticDivider.png",
+    remoteName: "MysticDivider.png",
+    folder: "/about",
   },
   {
-    localFile: "about/common/cornerOrnament.png",
-    remoteName: "corner-ornament.png",
-    folder: "/about/common",
+    localFile: "about/DiyaCluster.png",
+    remoteName: "DiyaCluster.png",
+    folder: "/about",
   },
   {
-    localFile: "about/common/bhuRoyalGate.png",
-    remoteName: "bhu-royal-gate.png",
-    folder: "/about/common",
+    localFile: "about/CornerOrnament.png",
+    remoteName: "CornerOrnament.png",
+    folder: "/about",
   },
   {
-    localFile: "about/common/ghatSaloutte.png",
-    remoteName: "ghats-silhouette.png",
-    folder: "/about/common",
+    localFile: "about/BhuRoyalGate.png",
+    remoteName: "BhuRoyalGate.png",
+    folder: "/about",
   },
   {
-    localFile: "about/heroLeftAbout.png",
-    remoteName: "hero-left-about.png",
-    folder: "/about/common",
+    localFile: "about/GhatSilhouette.png",
+    remoteName: "GhatSilhouette.png",
+    folder: "/about",
   },
   {
-    localFile: "about/dancerGirlHeroAbout.png",
-    remoteName: "dancer-girl-hero-about.png",
-    folder: "/about/common",
+    localFile: "about/HeroLeftDecor.png",
+    remoteName: "HeroLeftDecor.png",
+    folder: "/about",
+  },
+  {
+    localFile: "about/DancerGirlHero.png",
+    remoteName: "DancerGirlHero.png",
+    folder: "/about",
   },
   // IIT BHU Stamps
-  { localFile: "about/stamps/mandir.png", remoteName: "mandir.png", folder: "/about/stamps" },
+  { localFile: "about/stamps/Mandir.png", remoteName: "Mandir.png", folder: "/about/stamps" },
   {
-    localFile: "about/stamps/mainBuilding.png",
-    remoteName: "main-building.png",
+    localFile: "about/stamps/MainBuilding.png",
+    remoteName: "MainBuilding.png",
     folder: "/about/stamps",
   },
-  { localFile: "about/stamps/library.png", remoteName: "library.png", folder: "/about/stamps" },
-  { localFile: "about/stamps/kyVenue.png", remoteName: "ky-venue.png", folder: "/about/stamps" },
+  { localFile: "about/stamps/Library.png", remoteName: "Library.png", folder: "/about/stamps" },
+  { localFile: "about/stamps/KyVenue.png", remoteName: "KyVenue.png", folder: "/about/stamps" },
   {
-    localFile: "about/stamps/heritageHostel.png",
-    remoteName: "heritage-hostel.png",
+    localFile: "about/stamps/HeritageHostel.png",
+    remoteName: "HeritageHostel.png",
     folder: "/about/stamps",
   },
   // Slider images - Left side
-  { localFile: "about/slider/left1.jpg", remoteName: "left1.jpg", folder: "/about/slider" },
-  { localFile: "about/slider/left2.jpg", remoteName: "left2.jpg", folder: "/about/slider" },
-  { localFile: "about/slider/left3.jpg", remoteName: "left3.jpg", folder: "/about/slider" },
-  { localFile: "about/slider/left4.jpg", remoteName: "left4.jpg", folder: "/about/slider" },
-  { localFile: "about/slider/left5.jpg", remoteName: "left5.jpg", folder: "/about/slider" },
-  { localFile: "about/slider/left6.jpg", remoteName: "left6.jpg", folder: "/about/slider" },
+  {
+    localFile: "about/slider/SliderLeft1.jpg",
+    remoteName: "SliderLeft1.jpg",
+    folder: "/about/slider",
+  },
+  {
+    localFile: "about/slider/SliderLeft2.jpg",
+    remoteName: "SliderLeft2.jpg",
+    folder: "/about/slider",
+  },
+  {
+    localFile: "about/slider/SliderLeft3.jpg",
+    remoteName: "SliderLeft3.jpg",
+    folder: "/about/slider",
+  },
+  {
+    localFile: "about/slider/SliderLeft4.jpg",
+    remoteName: "SliderLeft4.jpg",
+    folder: "/about/slider",
+  },
+  {
+    localFile: "about/slider/SliderLeft5.jpg",
+    remoteName: "SliderLeft5.jpg",
+    folder: "/about/slider",
+  },
+  {
+    localFile: "about/slider/SliderLeft6.jpg",
+    remoteName: "SliderLeft6.jpg",
+    folder: "/about/slider",
+  },
   // Slider images - Right side
-  { localFile: "about/slider/right1.jpg", remoteName: "right1.jpg", folder: "/about/slider" },
-  { localFile: "about/slider/right2.jpg", remoteName: "right2.jpg", folder: "/about/slider" },
-  { localFile: "about/slider/right3.jpg", remoteName: "right3.jpg", folder: "/about/slider" },
-  { localFile: "about/slider/right4.jpg", remoteName: "right4.jpg", folder: "/about/slider" },
-  { localFile: "about/slider/right5.jpg", remoteName: "right5.jpg", folder: "/about/slider" },
-  { localFile: "about/slider/right6.jpg", remoteName: "right6.jpg", folder: "/about/slider" },
+  {
+    localFile: "about/slider/SliderRight1.jpg",
+    remoteName: "SliderRight1.jpg",
+    folder: "/about/slider",
+  },
+  {
+    localFile: "about/slider/SliderRight2.jpg",
+    remoteName: "SliderRight2.jpg",
+    folder: "/about/slider",
+  },
+  {
+    localFile: "about/slider/SliderRight3.jpg",
+    remoteName: "SliderRight3.jpg",
+    folder: "/about/slider",
+  },
+  {
+    localFile: "about/slider/SliderRight4.jpg",
+    remoteName: "SliderRight4.jpg",
+    folder: "/about/slider",
+  },
+  {
+    localFile: "about/slider/SliderRight5.jpg",
+    remoteName: "SliderRight5.jpg",
+    folder: "/about/slider",
+  },
+  {
+    localFile: "about/slider/SliderRight6.jpg",
+    remoteName: "SliderRight6.jpg",
+    folder: "/about/slider",
+  },
 
   // ============================================
   // CONTACT PAGE - All common
   // ============================================
   {
-    localFile: "contact/common/envelopeScrolled.png",
-    remoteName: "envelope-scroll.png",
-    folder: "/contact/common",
+    localFile: "contact/EnvelopeScrolled.png",
+    remoteName: "EnvelopeScrolled.png",
+    folder: "/contact",
   },
-  { localFile: "contact/common/conch.png", remoteName: "conch.png", folder: "/contact/common" },
+  { localFile: "contact/Conch.png", remoteName: "Conch.png", folder: "/contact" },
   {
-    localFile: "contact/common/lotusMandla.png",
-    remoteName: "lotus-mandala.png",
-    folder: "/contact/common",
+    localFile: "contact/LotusMandala.png",
+    remoteName: "LotusMandala.png",
+    folder: "/contact",
   },
   {
-    localFile: "contact/common/floatingDiya.png",
-    remoteName: "floating-diya.png",
-    folder: "/contact/common",
+    localFile: "contact/FloatingDiya.png",
+    remoteName: "FloatingDiya.png",
+    folder: "/contact",
   },
 
   // ============================================
   // LOGIN PAGE - All common
   // ============================================
   {
-    localFile: "login/common/mysticGate.png",
-    remoteName: "mystic-gate.png",
-    folder: "/login/common",
+    localFile: "login/MysticGate.png",
+    remoteName: "MysticGate.png",
+    folder: "/login",
   },
 
   // ============================================
   // SINGERS / ARTISTS - Pro Nites
   // ============================================
-  { localFile: "singer/jubinNautiyal.webp", remoteName: "jubin-nautiyal.webp", folder: "/singers" },
-  { localFile: "singer/darshanRawal.webp", remoteName: "darshan-rawal.webp", folder: "/singers" },
-  { localFile: "singer/MohitChauhan.webp", remoteName: "mohit-chauhan.webp", folder: "/singers" },
   {
-    localFile: "singer/vishal-shekhar.webp",
+    localFile: "singers/JubinNautiyal.webp",
+    remoteName: "jubin-nautiyal.webp",
+    folder: "/singers",
+  },
+  { localFile: "singers/DarshanRawal.webp", remoteName: "darshan-rawal.webp", folder: "/singers" },
+  { localFile: "singers/MohitChauhan.webp", remoteName: "mohit-chauhan.webp", folder: "/singers" },
+  {
+    localFile: "singers/VishalShekhar.webp",
     remoteName: "vishal-shekhar.webp",
     folder: "/singers",
   },
-  { localFile: "singer/raftaar.jpeg", remoteName: "raftaar.jpeg", folder: "/singers" },
-  { localFile: "singer/ritviz.jpg", remoteName: "ritviz.jpg", folder: "/singers" },
-  { localFile: "singer/anubhav bassi.jpeg", remoteName: "anubhav-bassi.jpeg", folder: "/singers" },
-  { localFile: "singer/MJ5-group.jpeg", remoteName: "mj5-group.jpeg", folder: "/singers" },
+  { localFile: "singers/Raftaar.jpeg", remoteName: "raftaar.jpeg", folder: "/singers" },
+  { localFile: "singers/Ritviz.jpg", remoteName: "ritviz.jpg", folder: "/singers" },
+  { localFile: "singers/AnubhavBassi.jpeg", remoteName: "anubhav-bassi.jpeg", folder: "/singers" },
+  { localFile: "singers/Mj5Group.jpeg", remoteName: "mj5-group.jpeg", folder: "/singers" },
 
   // ============================================
   // SPONSORS
   // ============================================
   // Background
-  { localFile: "home/sponsorBG.png", remoteName: "sponsor-bg.png", folder: "/sponsors/common" },
   {
-    localFile: "sponsors/sponsorStamp.png",
+    localFile: "sponsors/common/SponsorBg.png",
+    remoteName: "sponsor-bg.png",
+    folder: "/sponsors/common",
+  },
+  {
+    localFile: "sponsors/SponsorStamp.png",
     remoteName: "sponsor-stamp.png",
     folder: "/sponsors/common",
   },
   {
-    localFile: "sponsors/standingGirl.png",
+    localFile: "sponsors/StandingGirl.png",
     remoteName: "standing-girl.png",
     folder: "/sponsors/common",
   },
   {
-    localFile: "sponsor/leftTreeBranch_nobg.png",
+    localFile: "sponsors/LeftTreeBranch.png",
     remoteName: "left-tree-branch.png",
     folder: "/sponsors/common",
   },
   {
-    localFile: "sponsors/sponsorPresentor.png",
+    localFile: "sponsors/SponsorPresentor.png",
     remoteName: "sponsor-presentor.png",
     folder: "/sponsors/common",
   },
 
   // Title & Co-Title
   {
-    localFile: "sponsor/title_sponsor.jpeg",
+    localFile: "sponsors/logos/TitleSponsor.jpeg",
     remoteName: "title-sponsor.jpeg",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Co-title partner.png",
+    localFile: "sponsors/logos/CoTitlePartner.png",
     remoteName: "co-title-partner.png",
     folder: "/sponsors",
   },
 
   // Powered By Partners
   {
-    localFile: "sponsor/Powered-by partner.jpg",
+    localFile: "sponsors/logos/PoweredByPartner.jpg",
     remoteName: "powered-by-partner.jpg",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Co-powered by partner.png",
+    localFile: "sponsors/logos/CoPoweredByPartner.png",
     remoteName: "co-powered-by-partner.png",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/adani Co-powered by partner.png",
+    localFile: "sponsors/logos/AdaniCoPoweredPartner.png",
     remoteName: "adani-co-powered-partner.png",
     folder: "/sponsors",
   },
 
   // Major & Event Sponsors
-  { localFile: "sponsor/Major sponsor.jpg", remoteName: "major-sponsor.jpg", folder: "/sponsors" },
   {
-    localFile: "sponsor/Event Title-Crosswindz.jpg",
+    localFile: "sponsors/logos/MajorSponsor.jpg",
+    remoteName: "major-sponsor.jpg",
+    folder: "/sponsors",
+  },
+  {
+    localFile: "sponsors/logos/EventTitleCrosswindz.jpg",
     remoteName: "event-title-crosswindz.jpg",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/title of Enquizta & Samvad.jpg",
+    localFile: "sponsors/logos/TitleEnquiztaSamvad.jpg",
     remoteName: "title-enquizta-samvad.jpg",
     folder: "/sponsors",
   },
 
   // Industry Partners
   {
-    localFile: "sponsor/Energy partner.png",
+    localFile: "sponsors/logos/EnergyPartner.png",
     remoteName: "energy-partner.png",
     folder: "/sponsors",
   },
-  { localFile: "sponsor/Steel partner.png", remoteName: "steel-partner.png", folder: "/sponsors" },
-  { localFile: "sponsor/Build partner.png", remoteName: "build-partner.png", folder: "/sponsors" },
   {
-    localFile: "sponsor/Construction partner.webp",
+    localFile: "sponsors/logos/SteelPartner.png",
+    remoteName: "steel-partner.png",
+    folder: "/sponsors",
+  },
+  {
+    localFile: "sponsors/logos/BuildPartner.png",
+    remoteName: "build-partner.png",
+    folder: "/sponsors",
+  },
+  {
+    localFile: "sponsors/logos/ConstructionPartner.webp",
     remoteName: "construction-partner.webp",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Infrastructure Partner.png",
+    localFile: "sponsors/logos/InfrastructurePartner.png",
     remoteName: "infrastructure-partner.png",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Real-estate partner.jpeg",
+    localFile: "sponsors/logos/RealEstatePartner.jpeg",
     remoteName: "real-estate-partner.jpeg",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Development partner.png",
+    localFile: "sponsors/logos/DevelopmentPartner.png",
     remoteName: "development-partner.png",
     folder: "/sponsors",
   },
 
   // Social & CSR Partners
   {
-    localFile: "sponsor/NMDC Sustainability partner.jpg",
+    localFile: "sponsors/logos/NmdcSustainabilityPartner.jpg",
     remoteName: "nmdc-sustainability-partner.jpg",
     folder: "/sponsors",
   },
-  { localFile: "sponsor/CSR Partner.png", remoteName: "csr-partner.png", folder: "/sponsors" },
   {
-    localFile: "sponsor/Social Welfare partner.png",
+    localFile: "sponsors/logos/CsrPartner.png",
+    remoteName: "csr-partner.png",
+    folder: "/sponsors",
+  },
+  {
+    localFile: "sponsors/logos/SocialWelfarePartner.png",
     remoteName: "social-welfare-partner.png",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Nation-Building Partner.png",
+    localFile: "sponsors/logos/NationBuildingPartner.png",
     remoteName: "nation-building-partner.png",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Community_Partner.png",
+    localFile: "sponsors/logos/CommunityPartner.png",
     remoteName: "community-partner.png",
     folder: "/sponsors",
   },
 
   // Hospitality & Lifestyle Partners
   {
-    localFile: "sponsor/Hospitatlity Partner.jpeg",
+    localFile: "sponsors/logos/HospitalityPartner.jpeg",
     remoteName: "hospitality-partner.jpeg",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Coffee partner.png",
+    localFile: "sponsors/logos/CoffeePartner.png",
     remoteName: "coffee-partner.png",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Chocolate partner.png",
+    localFile: "sponsors/logos/ChocolatePartner.png",
     remoteName: "chocolate-partner.png",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/fragnance partner.jpg",
+    localFile: "sponsors/logos/FragrancePartner.jpg",
     remoteName: "fragrance-partner.jpg",
     folder: "/sponsors",
   },
-  { localFile: "sponsor/Saree_partner.jpg", remoteName: "saree-partner.jpg", folder: "/sponsors" },
+  {
+    localFile: "sponsors/logos/SareePartner.jpg",
+    remoteName: "saree-partner.jpg",
+    folder: "/sponsors",
+  },
 
   // Media & Tech Partners
   {
-    localFile: "sponsor/Gaming Partner.png",
+    localFile: "sponsors/logos/GamingPartner.png",
     remoteName: "gaming-partner.png",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Official Music Streaming partner.webp",
+    localFile: "sponsors/logos/MusicStreamingPartner.webp",
     remoteName: "music-streaming-partner.webp",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Innovation Partner.webp",
+    localFile: "sponsors/logos/InnovationPartner.webp",
     remoteName: "innovation-partner.webp",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/Dalimss news, Official Partner.webp",
+    localFile: "sponsors/logos/DalimssNewsPartner.webp",
     remoteName: "dalimss-news-partner.webp",
     folder: "/sponsors",
   },
   {
-    localFile: "sponsor/the vibe official partner.png",
+    localFile: "sponsors/logos/TheVibePartner.png",
     remoteName: "the-vibe-partner.png",
     folder: "/sponsors",
   },
@@ -592,26 +698,26 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   // PROFILE PAGE - Decorative elements
   // ============================================
   {
-    localFile: "profile/common/profileDecorativeCorner.png",
-    remoteName: "decorative-corner.png",
-    folder: "/profile/common",
+    localFile: "profile/DecorativeCorner.png",
+    remoteName: "DecorativeCorner.png",
+    folder: "/profile",
   },
   {
-    localFile: "profile/common/profileDivider.png",
-    remoteName: "divider.png",
-    folder: "/profile/common",
+    localFile: "profile/Divider.png",
+    remoteName: "Divider.png",
+    folder: "/profile",
   },
 
   // ============================================
   // SPONSORS PAGE - Decorative elements
   // ============================================
   {
-    localFile: "sponsors/common/sponsorOrnamentalDivider.png",
+    localFile: "sponsors/OrnamentalDivider.png",
     remoteName: "ornamental-divider.png",
     folder: "/sponsors/decorative",
   },
   {
-    localFile: "sponsors/common/sponsorRectangularFrame.png",
+    localFile: "sponsors/RectangularFrame.png",
     remoteName: "rectangular-frame.png",
     folder: "/sponsors/decorative",
   },
@@ -619,14 +725,18 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   // ============================================
   // INTRO SECTION - Mascot and assets
   // ============================================
-  { localFile: "intro/cuteBoy.png", remoteName: "cute-boy-mascot.png", folder: "/intro/common" },
-  { localFile: "intro/introLogo.png", remoteName: "intro-logo.png", folder: "/intro/common" },
+  {
+    localFile: "intro/CuteBoyMascot.png",
+    remoteName: "cute-boy-mascot.png",
+    folder: "/intro/common",
+  },
+  { localFile: "intro/IntroLogo.png", remoteName: "intro-logo.png", folder: "/intro/common" },
 
   // ============================================
   // CAMPUS AMBASSADOR PAGE
   // ============================================
   {
-    localFile: "ca/cosmicBackground.png",
+    localFile: "ca/CosmicBackground.png",
     remoteName: "cosmic-background.png",
     folder: "/ca/common",
   },
@@ -636,22 +746,22 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     folder: "/ca/common",
   },
   {
-    localFile: "ca/ambassador-dj.png",
+    localFile: "ca/AmbassadorDj.png",
     remoteName: "ambassador-dj.png",
     folder: "/ca/common",
   },
   {
-    localFile: "ca/ambassador-dancing.png",
+    localFile: "ca/AmbassadorDancing.png",
     remoteName: "ambassador-dancing.png",
     folder: "/ca/common",
   },
   {
-    localFile: "ca/ambassador-pose.png",
+    localFile: "ca/AmbassadorPose.png",
     remoteName: "ambassador-pose.png",
     folder: "/ca/common",
   },
   {
-    localFile: "ca/ambassador-walking.png",
+    localFile: "ca/AmbassadorWalking.png",
     remoteName: "ambassador-walking.png",
     folder: "/ca/common",
   },

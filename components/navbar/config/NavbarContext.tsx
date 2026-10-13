@@ -13,7 +13,7 @@ export type NavbarTheme = "main" | "about" | "sponsor";
 
 // Link types derived from the config structure
 type PrimaryLink = { label: string; href: string };
-type SecondaryLink = { label: string; href: string; icon: "om" | "lotus" };
+type SecondaryLink = { label: string; href: string; icon: "lotus" };
 type AllLink = PrimaryLink | SecondaryLink;
 
 interface NavbarContextValue {

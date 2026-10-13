@@ -5,6 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { IMAGES } from "@/lib/images";
+import { COLORS, COLORS_RGBA } from "@/components/pages/ca/constants/palette";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -94,7 +95,7 @@ export function HeroSection() {
       </div>
 
       {/* Left-aligned content */}
-      <div className="relative z-30 ml-[5%] flex max-w-2xl flex-col items-start pt-16 text-left md:ml-[8%] lg:pt-24">
+      <div className="relative z-30 ml-[5%] flex max-w-2xl flex-col items-start pt-16 text-left md:ml-[8%] lg:pt-24 2xl:max-w-3xl">
         {/* Funky badges */}
         <div className="mb-8 flex flex-wrap justify-start gap-3">
           {["🔥 LIMITED SPOTS", "⚡ EXCLUSIVE PERKS", "🎯 LEAD YOUR CAMPUS"].map((badge, i) => (
@@ -104,13 +105,13 @@ export function HeroSection() {
               style={{
                 background:
                   i === 0
-                    ? "linear-gradient(135deg, rgba(236, 72, 153, 0.25) 0%, rgba(236, 72, 153, 0.1) 100%)"
+                    ? `linear-gradient(135deg, ${COLORS_RGBA.PINK_30} 0%, ${COLORS_RGBA.PINK_30} 100%)`
                     : i === 1
-                      ? "linear-gradient(135deg, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.1) 100%)"
-                      : "linear-gradient(135deg, rgba(6, 182, 212, 0.25) 0%, rgba(6, 182, 212, 0.1) 100%)",
-                border: `1px solid ${i === 0 ? "rgba(236, 72, 153, 0.4)" : i === 1 ? "rgba(139, 92, 246, 0.4)" : "rgba(6, 182, 212, 0.4)"}`,
-                color: i === 0 ? "#f472b6" : i === 1 ? "#a78bfa" : "#22d3ee",
-                boxShadow: `0 0 20px ${i === 0 ? "rgba(236, 72, 153, 0.2)" : i === 1 ? "rgba(139, 92, 246, 0.2)" : "rgba(6, 182, 212, 0.2)"}`,
+                      ? `linear-gradient(135deg, ${COLORS_RGBA.PURPLE_30} 0%, ${COLORS_RGBA.PURPLE_30} 100%)`
+                      : `linear-gradient(135deg, ${COLORS_RGBA.CYAN_30} 0%, ${COLORS_RGBA.CYAN_30} 100%)`,
+                border: `1px solid ${i === 0 ? COLORS_RGBA.PINK_30 : i === 1 ? COLORS_RGBA.PURPLE_30 : COLORS_RGBA.CYAN_30}`,
+                color: i === 0 ? COLORS.PINK : i === 1 ? COLORS.PURPLE : COLORS.CYAN,
+                boxShadow: `0 0 20px ${i === 0 ? COLORS_RGBA.PINK_30 : i === 1 ? COLORS_RGBA.PURPLE_30 : COLORS_RGBA.CYAN_30}`,
               }}
             >
               {badge}
@@ -135,8 +136,7 @@ export function HeroSection() {
           <div
             className="absolute inset-0"
             style={{
-              background:
-                "linear-gradient(90deg, transparent 0%, #ec4899 20%, #8b5cf6 50%, #06b6d4 80%, transparent 100%)",
+              background: `linear-gradient(90deg, transparent 0%, ${COLORS.PINK} 20%, ${COLORS.PURPLE} 50%, ${COLORS.CYAN} 80%, transparent 100%)`,
             }}
           />
           <div className="ca-shimmer absolute inset-0" />

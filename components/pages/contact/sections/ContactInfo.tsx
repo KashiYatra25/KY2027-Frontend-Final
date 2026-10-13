@@ -4,7 +4,7 @@ import Image from "next/image";
 import { memo, type ReactNode } from "react";
 import { IMAGES } from "@/lib/images";
 import { COLORS, JAZZ_COLORS } from "@/components/pages/contact/constants/palette";
-import { CornerOrnaments } from "@/components/pages/contact/decors";
+import { CornerOrnaments } from "./decor";
 
 // ═══════════════════════════════════════════════════════════════════
 // ROYAL GOLD LINE ICONS
@@ -83,7 +83,7 @@ export const ContactInfo = memo(function ContactInfo() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-5xl">
+      <div className="relative z-10 mx-auto max-w-5xl 2xl:max-w-6xl">
         <h2
           className="mb-10 text-center text-2xl font-bold sm:mb-12 sm:text-3xl md:text-4xl"
           style={{

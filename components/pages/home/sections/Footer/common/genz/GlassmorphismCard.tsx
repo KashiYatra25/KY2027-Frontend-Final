@@ -3,7 +3,7 @@
 import { memo, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useAnimationPolicy } from "@/hooks";
-import { FOOTER_COLORS } from "../constants";
+import { FOOTER_COLORS } from "@/components/pages/home/sections/Footer/common/constants";
 
 interface GlassmorphismCardProps {
   children: ReactNode;

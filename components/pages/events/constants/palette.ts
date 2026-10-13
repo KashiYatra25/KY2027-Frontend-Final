@@ -81,5 +81,3 @@ export const EVENT_TYPE_COLORS = {
     text: "#e6e6fa", // LAVENDER
   },
 } as const;
-
-export type EventType = keyof typeof EVENT_TYPE_COLORS;

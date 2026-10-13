@@ -1,26 +1,44 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
+
+/**
+ * Isomorphic layout effect.
+ *
+ * `useLayoutEffect` runs synchronously after DOM mutations but before the
+ * browser paints — ideal for reading viewport size without a visible flash.
+ * On the server it would warn, so we fall back to `useEffect` during SSR.
+ */
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
  * Hook to detect if viewport is below a breakpoint (mobile).
- * 
+ *
+ * Hydration note: the initial state is `false` so the client's first render
+ * matches the server-rendered HTML (where `window` is undefined), avoiding a
+ * React hydration mismatch. The real value is resolved via an isomorphic
+ * layout effect that runs before the browser paints, so there is no visible
+ * flash for mobile users.
+ *
  * @param breakpoint - Width threshold in pixels (default: 768 = md breakpoint)
  * @returns boolean - true if viewport width < breakpoint
- * 
+ *
  * @example
  * const isMobile = useIsMobile(); // < 768px
  * const isSmall = useIsMobile(640); // < 640px (sm breakpoint)
  */
 export function useIsMobile(breakpoint: number = 768): boolean {
+  // Must match the server render (window undefined -> false) to keep
+  // hydration consistent. Corrected before paint in the layout effect below.
   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    // Check immediately on mount
+  useIsomorphicLayoutEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < breakpoint);
+
+    // Resolve the real value before the first paint.
     checkMobile();
 
-    // Listen for resize
+    // Keep it in sync on resize.
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, [breakpoint]);

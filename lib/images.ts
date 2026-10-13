@@ -18,9 +18,9 @@ export const IMAGES = {
   // PASSES - All common (shown on both platforms)
   // ============================================
   passes: {
-    yatri: `${IMAGEKIT_BASE}/passes/yatri-pass.png`,
-    darbar: `${IMAGEKIT_BASE}/passes/darbar-pass.png`,
-    swarnim: `${IMAGEKIT_BASE}/passes/swarnim-pass.png`,
+    yatri: "/passes/YatriPass.png",
+    darbar: "/passes/DarbarPass.png",
+    swarnim: "/passes/SwarnimPass.png",
   },
 
   // ============================================
@@ -29,11 +29,13 @@ export const IMAGES = {
   hero: {
     logo: `${IMAGEKIT_BASE}/hero/common/kashiyatra-logo.png`,
     heroLogo: `${IMAGEKIT_BASE}/hero/common/hero-logo.png`,
-    ghatsDay: `${IMAGEKIT_BASE}/hero/common/ghats-day.png`,
-    ghatsNight: `${IMAGEKIT_BASE}/hero/common/ghats-night.png`,
+    ghatsDay: `${IMAGEKIT_BASE}/hero/common/ghats-day.png?v=2`,
+    ghatsNight: `${IMAGEKIT_BASE}/hero/common/ghats-night.png?v=3`,
+    modeChange: `${IMAGEKIT_BASE}/hero/common/mode-change.png`,
+    themePickerBox: "/home/hero/lotusChooseThemeBox.png",
     temple: `${IMAGEKIT_BASE}/hero/common/kashivishwanath-temple.png`,
     varanasiBack: `${IMAGEKIT_BASE}/hero/common/varanasi-back.png`,
-    steppingStone: "/home/hero/common/stepping-stone.webp",
+    steppingStone: "/home/hero/SteppingStone.webp",
     kites: `${IMAGEKIT_BASE}/hero/common/kites.png`,
   },
 
@@ -43,22 +45,19 @@ export const IMAGES = {
   navbar: {
     // Main/Home navbar (golden/cream theme)
     main: {
-      background: `${IMAGEKIT_BASE}/navbar/main/nav-bg.png`,
-      badge: `${IMAGEKIT_BASE}/navbar/main/nav-badge-home.png`,
+      background: "/navbar/MainBackground.png",
+      badge: "/navbar/MainBadge.png",
     },
     // About page navbar (purple/blue concert theme)
     about: {
-      background: `${IMAGEKIT_BASE}/navbar/about/navbar-about.png`,
-      badge: `${IMAGEKIT_BASE}/navbar/about/nav-badge-about.png`,
+      background: "/navbar/AboutBackground.png",
+      badge: "/navbar/AboutBadge.png",
     },
     // Sponsors page navbar (green/gold nature theme)
     sponsor: {
-      background: `${IMAGEKIT_BASE}/navbar/sponsor/nav-sponsor.png`,
-      badge: `${IMAGEKIT_BASE}/navbar/sponsor/nav-badge-sponsor.png`,
+      background: "/navbar/SponsorBackground.png",
+      badge: "/navbar/SponsorBadge.png",
     },
-    // Legacy aliases for backwards compatibility
-    background: `${IMAGEKIT_BASE}/navbar/main/nav-bg.png`,
-    badge: `${IMAGEKIT_BASE}/navbar/main/nav-badge-home.png`,
   },
 
   // ============================================
@@ -67,15 +66,17 @@ export const IMAGES = {
   vibes: {
     // Common (both platforms)
     background: `${IMAGEKIT_BASE}/vibes/common/vibes-bg.png`,
-    backgroundDark: "/home/banarasiVibes/banarasi-vibes-bg-dark.webp",
+    backgroundDark: "/home/banarasiVibes/BanarasiVibesBg.png",
     mahamana: `${IMAGEKIT_BASE}/vibes/common/mahamana.png`,
     bhuGate: `${IMAGEKIT_BASE}/vibes/common/bhu-gate.png`,
-    rickshaw: "/home/banarasiVibes/rickshaw.webp",
+    rickshaw: "/home/banarasiVibes/Rickshaw.webp",
 
     // Desktop-only decorative characters
     mandala: `${IMAGEKIT_BASE}/vibes/desktop/mandala.png`,
     gangaAartiSaint: `${IMAGEKIT_BASE}/vibes/desktop/ganga-aarti-saint.png`,
     bharatnatyamDancer: `${IMAGEKIT_BASE}/vibes/desktop/bharatnatyam-dancer.png`,
+    banarasMaleDancer: `${IMAGEKIT_BASE}/vibes/desktop/banaras-male-dancer.png`,
+    banarasFemaleDancer: `${IMAGEKIT_BASE}/vibes/desktop/banaras-female-dancer.png`,
 
     // Mobile-only decorative elements
     mobile: {
@@ -109,71 +110,78 @@ export const IMAGES = {
   // PRO NITES SECTION
   // ============================================
   proNites: {
-    dancingGirl: `${IMAGEKIT_BASE}/pro-nites/common/dancing-girl.png`,
-    moon: `${IMAGEKIT_BASE}/pro-nites/common/moon.png`,
-    silhouette: `${IMAGEKIT_BASE}/pro-nites/common/silhouette.png`,
-    aerobics: `${IMAGEKIT_BASE}/pro-nites/common/aerobics.png`,
+    crowdSilhouette: "/home/proNites/CrowdSilhouette.png",
+    aerobics: "/home/proNites/Aerobics.png",
+    moon: "/home/proNites/Moon.png",
+    dancingGirl: "/home/proNites/DancingGirl.png",
+    silhouette: "/home/proNites/Silhouette.png",
+    moonBackground: "/home/proNites/MoonBackground.png",
   },
 
   // ============================================
   // FOOTER SECTION - Desktop decorative elements
   // ============================================
   footer: {
-    etherealDancer: `${IMAGEKIT_BASE}/footer/desktop/ethereal-dancer.png?v=3`,
-    floatingGarland: `${IMAGEKIT_BASE}/footer/desktop/floating-garland.png`,
-    ghatSilhouette: `${IMAGEKIT_BASE}/footer/desktop/ghat-silhouette.png`,
-    subtleRangoli: `${IMAGEKIT_BASE}/footer/desktop/subtle-rangoli.png`,
-    floatingSpeaker: `${IMAGEKIT_BASE}/footer/desktop/floating-speaker.png`,
-    concertFloor: `${IMAGEKIT_BASE}/footer/desktop/concert-floor.png`,
-    footerDancer: `${IMAGEKIT_BASE}/footer/desktop/footer-dancer.png`,
+    footerDancer: "/home/footer/FooterDancer.png",
+    floatingSpeaker: "/home/footer/FloatingSpeaker.png",
+    concertFloor: "/home/footer/ConcertFloor.png",
+    dancer: "/home/footer/Dancer.png",
+    ghatSilhouette: "/home/footer/GhatSilhouette.png",
+    subtleRangoli: "/home/footer/SubtleRangoli.png",
+    spiritualOrnament: "/home/footer/SpiritualOrnament.png",
+    floatingGarland: "/home/footer/FloatingGarland.png",
+    standingPillar: "/home/footer/StandingPillar.png",
   },
 
   // ============================================
   // MISCELLANEOUS
   // ============================================
   misc: {
-    lordShiva: `${IMAGEKIT_BASE}/misc/lord-shiva.png`,
-    welcomeFlag: `${IMAGEKIT_BASE}/misc/welcome-flag.png`,
+    lordShiva: "/miscellaneous/LordShiva.png",
+    welcomeFlag: "/miscellaneous/WelcomeFlag.png",
+    lassi: "/miscellaneous/Lassi.png",
+    tablaSitar: "/miscellaneous/TablaSitar.png",
+    malaiyo: "/miscellaneous/Malaiyo.png",
+    paan: "/miscellaneous/Paan.png",
   },
 
   // ============================================
   // ABOUT PAGE - All common
   // ============================================
   about: {
-    background: `${IMAGEKIT_BASE}/about/common/about-bg.png`,
-    mandalaOrnament: `${IMAGEKIT_BASE}/about/common/mandala-ornament.png`,
-    peacock: `${IMAGEKIT_BASE}/about/common/peacock.png`,
-    omLotus: `${IMAGEKIT_BASE}/about/common/om-lotus.png`,
-    mysticDivider: `${IMAGEKIT_BASE}/about/common/mystic-divider.png`,
-    diyaCluster: `${IMAGEKIT_BASE}/about/common/diya-cluster.png`,
-    cornerOrnament: `${IMAGEKIT_BASE}/about/common/corner-ornament.png`,
-    bhuGate: `${IMAGEKIT_BASE}/about/common/bhu-royal-gate.png`,
-    ghatsSilhouette: `${IMAGEKIT_BASE}/about/common/ghats-silhouette.png`,
-    heroLeftAbout: `${IMAGEKIT_BASE}/about/common/hero-left-about.png`,
-    dancerGirlHeroAbout: `${IMAGEKIT_BASE}/about/common/dancer-girl-hero-about.png`,
+    background: `${IMAGEKIT_BASE}/about/AboutBackground.png`,
+    mandalaOrnament: `${IMAGEKIT_BASE}/about/MandalaOrnament.png`,
+    peacock: `${IMAGEKIT_BASE}/about/Peacock.png`,
+    mysticDivider: `${IMAGEKIT_BASE}/about/MysticDivider.png`,
+    diyaCluster: `${IMAGEKIT_BASE}/about/DiyaCluster.png`,
+    cornerOrnament: `${IMAGEKIT_BASE}/about/CornerOrnament.png`,
+    bhuGate: `${IMAGEKIT_BASE}/about/BhuRoyalGate.png`,
+    ghatsSilhouette: `${IMAGEKIT_BASE}/about/GhatSilhouette.png`,
+    heroLeftAbout: `${IMAGEKIT_BASE}/about/HeroLeftDecor.png`,
+    dancerGirlHeroAbout: `${IMAGEKIT_BASE}/about/DancerGirlHero.png`,
     // IIT BHU Stamps
     stamps: {
-      mandir: `${IMAGEKIT_BASE}/about/stamps/mandir.png`,
-      mainBuilding: `${IMAGEKIT_BASE}/about/stamps/main-building.png`,
-      library: `${IMAGEKIT_BASE}/about/stamps/library.png`,
-      kyVenue: `${IMAGEKIT_BASE}/about/stamps/ky-venue.png`,
-      heritageHostel: `${IMAGEKIT_BASE}/about/stamps/heritage-hostel.png`,
+      mandir: `${IMAGEKIT_BASE}/about/stamps/Mandir.png`,
+      mainBuilding: `${IMAGEKIT_BASE}/about/stamps/MainBuilding.png`,
+      library: `${IMAGEKIT_BASE}/about/stamps/Library.png`,
+      kyVenue: `${IMAGEKIT_BASE}/about/stamps/KyVenue.png`,
+      heritageHostel: `${IMAGEKIT_BASE}/about/stamps/HeritageHostel.png`,
     },
     // Slider images - Left row (moving left to right)
     slider: {
-      left1: `${IMAGEKIT_BASE}/about/slider/left1.jpg`,
-      left2: `${IMAGEKIT_BASE}/about/slider/left2.jpg`,
-      left3: `${IMAGEKIT_BASE}/about/slider/left3.jpg`,
-      left4: `${IMAGEKIT_BASE}/about/slider/left4.jpg`,
-      left5: `${IMAGEKIT_BASE}/about/slider/left5.jpg`,
-      left6: `${IMAGEKIT_BASE}/about/slider/left6.jpg`,
+      left1: `${IMAGEKIT_BASE}/about/slider/SliderLeft1.jpg`,
+      left2: `${IMAGEKIT_BASE}/about/slider/SliderLeft2.jpg`,
+      left3: `${IMAGEKIT_BASE}/about/slider/SliderLeft3.jpg`,
+      left4: `${IMAGEKIT_BASE}/about/slider/SliderLeft4.jpg`,
+      left5: `${IMAGEKIT_BASE}/about/slider/SliderLeft5.jpg`,
+      left6: `${IMAGEKIT_BASE}/about/slider/SliderLeft6.jpg`,
       // Right row (moving right to left)
-      right1: `${IMAGEKIT_BASE}/about/slider/right1.jpg`,
-      right2: `${IMAGEKIT_BASE}/about/slider/right2.jpg`,
-      right3: `${IMAGEKIT_BASE}/about/slider/right3.jpg`,
-      right4: `${IMAGEKIT_BASE}/about/slider/right4.jpg`,
-      right5: `${IMAGEKIT_BASE}/about/slider/right5.jpg`,
-      right6: `${IMAGEKIT_BASE}/about/slider/right6.jpg`,
+      right1: `${IMAGEKIT_BASE}/about/slider/SliderRight1.jpg`,
+      right2: `${IMAGEKIT_BASE}/about/slider/SliderRight2.jpg`,
+      right3: `${IMAGEKIT_BASE}/about/slider/SliderRight3.jpg`,
+      right4: `${IMAGEKIT_BASE}/about/slider/SliderRight4.jpg`,
+      right5: `${IMAGEKIT_BASE}/about/slider/SliderRight5.jpg`,
+      right6: `${IMAGEKIT_BASE}/about/slider/SliderRight6.jpg`,
     },
   },
 
@@ -182,112 +190,104 @@ export const IMAGES = {
   // ============================================
   contact: {
     // Contact-specific images
-    envelopeScroll: `${IMAGEKIT_BASE}/contact/common/envelope-scroll.png`,
-    conch: `${IMAGEKIT_BASE}/contact/common/conch.png`,
-    lotusMandala: `${IMAGEKIT_BASE}/contact/common/lotus-mandala.png`,
-    floatingDiya: `${IMAGEKIT_BASE}/contact/common/floating-diya.png`,
+    envelopeScroll: `${IMAGEKIT_BASE}/contact/EnvelopeScrolled.png`,
+    conch: `${IMAGEKIT_BASE}/contact/Conch.png`,
+    lotusMandala: `${IMAGEKIT_BASE}/contact/LotusMandala.png`,
+    floatingDiya: `${IMAGEKIT_BASE}/contact/FloatingDiya.png`,
     // Shared decorative images (reused from about)
-    mandalaOrnament: `${IMAGEKIT_BASE}/about/common/mandala-ornament.png`,
-    peacock: `${IMAGEKIT_BASE}/about/common/peacock.png`,
-    mysticDivider: `${IMAGEKIT_BASE}/about/common/mystic-divider.png`,
-    cornerOrnament: `${IMAGEKIT_BASE}/about/common/corner-ornament.png`,
+    mandalaOrnament: `${IMAGEKIT_BASE}/about/MandalaOrnament.png`,
+    peacock: `${IMAGEKIT_BASE}/about/Peacock.png`,
+    mysticDivider: `${IMAGEKIT_BASE}/about/MysticDivider.png`,
+    cornerOrnament: `${IMAGEKIT_BASE}/about/CornerOrnament.png`,
   },
 
   // ============================================
   // LOGIN PAGE - All common
   // ============================================
   login: {
-    mysticGate: `${IMAGEKIT_BASE}/login/common/mystic-gate.png`,
+    mysticGate: `${IMAGEKIT_BASE}/login/MysticGate.png`,
   },
 
   // ============================================
   // PROFILE PAGE - Decorative elements
   // ============================================
   profile: {
-    decorativeCorner: `${IMAGEKIT_BASE}/profile/common/decorative-corner.png`,
-    divider: `${IMAGEKIT_BASE}/profile/common/divider.png`,
+    decorativeCorner: `${IMAGEKIT_BASE}/profile/DecorativeCorner.png`,
+    divider: `${IMAGEKIT_BASE}/profile/Divider.png`,
   },
 
   // ============================================
   // SINGERS / ARTISTS - Pro Nites
   // ============================================
   singers: {
-    jubinNautiyal: `${IMAGEKIT_BASE}/singers/jubin-nautiyal.webp`,
-    darshanRawal: `${IMAGEKIT_BASE}/singers/darshan-rawal.webp`,
-    mohitChauhan: `${IMAGEKIT_BASE}/singers/mohit-chauhan.webp`,
-    vishalShekhar: `${IMAGEKIT_BASE}/singers/vishal-shekhar.webp`,
-    raftaar: `${IMAGEKIT_BASE}/singers/raftaar.jpeg`,
-    ritviz: `${IMAGEKIT_BASE}/singers/ritviz.jpg`,
-    anubhavBassi: `${IMAGEKIT_BASE}/singers/anubhav-bassi.jpeg`,
-    mj5: `${IMAGEKIT_BASE}/singers/mj5-group.jpeg`,
+    jubinNautiyal: "/singers/JubinNautiyal.webp",
+    darshanRawal: "/singers/DarshanRawal.webp",
+    mohitChauhan: "/singers/MohitChauhan.webp",
+    vishalShekhar: "/singers/VishalShekhar.webp",
+    raftaar: "/singers/Raftaar.jpeg",
+    ritviz: "/singers/Ritviz.jpg",
+    anubhavBassi: "/singers/AnubhavBassi.jpeg",
+    mj5: "/singers/Mj5Group.jpeg",
   },
 
   // ============================================
-  // SPONSORS
+  // SPONSORS - Logo images only
   // ============================================
   sponsors: {
-    // Background
-    background: `${IMAGEKIT_BASE}/sponsors/common/sponsor-bg.png`,
-
-    // Decorative elements
-    ornamentalDivider: `${IMAGEKIT_BASE}/sponsors/decorative/ornamental-divider.png`,
-    rectangularFrame: `${IMAGEKIT_BASE}/sponsors/decorative/rectangular-frame.png`,
-    sponsorStamp: `${IMAGEKIT_BASE}/sponsors/common/sponsor-stamp.png`,
-    standingGirl: `${IMAGEKIT_BASE}/sponsors/common/standing-girl.png`,
-    leftTreeBranch: `${IMAGEKIT_BASE}/sponsors/common/left-tree-branch.png`,
-    sponsorPresentor: `${IMAGEKIT_BASE}/sponsors/common/sponsor-presentor.png`,
-
     // Title & Co-Title
-    titleSponsor: `${IMAGEKIT_BASE}/sponsors/title-sponsor.jpeg`,
-    coTitlePartner: `${IMAGEKIT_BASE}/sponsors/co-title-partner.png`,
+    titleSponsor: "/sponsors/logos/TitleSponsor.jpeg",
+    coTitlePartner: "/sponsors/logos/CoTitlePartner.png",
 
     // Powered By Partners
-    poweredByPartner: `${IMAGEKIT_BASE}/sponsors/powered-by-partner.jpg`,
-    coPoweredByPartner: `${IMAGEKIT_BASE}/sponsors/co-powered-by-partner.png`,
-    adaniCoPoweredPartner: `${IMAGEKIT_BASE}/sponsors/adani-co-powered-partner.png`,
+    poweredByPartner: "/sponsors/logos/PoweredByPartner.jpg",
+    coPoweredByPartner: "/sponsors/logos/CoPoweredByPartner.png",
+    adaniCoPoweredPartner: "/sponsors/logos/AdaniCoPoweredPartner.png",
 
     // Major & Event Sponsors
-    majorSponsor: `${IMAGEKIT_BASE}/sponsors/major-sponsor.jpg`,
-    eventTitleCrosswindz: `${IMAGEKIT_BASE}/sponsors/event-title-crosswindz.jpg`,
-    titleEnquiztaSamvad: `${IMAGEKIT_BASE}/sponsors/title-enquizta-samvad.jpg`,
+    majorSponsor: "/sponsors/logos/MajorSponsor.jpg",
+    eventTitleCrosswindz: "/sponsors/logos/EventTitleCrosswindz.jpg",
+    titleEnquiztaSamvad: "/sponsors/logos/TitleEnquiztaSamvad.jpg",
 
     // Industry Partners
-    energyPartner: `${IMAGEKIT_BASE}/sponsors/energy-partner.png`,
-    steelPartner: `${IMAGEKIT_BASE}/sponsors/steel-partner.png`,
-    buildPartner: `${IMAGEKIT_BASE}/sponsors/build-partner.png`,
-    constructionPartner: `${IMAGEKIT_BASE}/sponsors/construction-partner.webp`,
-    infrastructurePartner: `${IMAGEKIT_BASE}/sponsors/infrastructure-partner.png`,
-    realEstatePartner: `${IMAGEKIT_BASE}/sponsors/real-estate-partner.jpeg`,
-    developmentPartner: `${IMAGEKIT_BASE}/sponsors/development-partner.png`,
+    energyPartner: "/sponsors/logos/EnergyPartner.png",
+    steelPartner: "/sponsors/logos/SteelPartner.png",
+    buildPartner: "/sponsors/logos/BuildPartner.png",
+    constructionPartner: "/sponsors/logos/ConstructionPartner.webp",
+    infrastructurePartner: "/sponsors/logos/InfrastructurePartner.png",
+    realEstatePartner: "/sponsors/logos/RealEstatePartner.jpeg",
+    developmentPartner: "/sponsors/logos/DevelopmentPartner.png",
 
     // Social & CSR Partners
-    nmdcSustainabilityPartner: `${IMAGEKIT_BASE}/sponsors/nmdc-sustainability-partner.jpg`,
-    csrPartner: `${IMAGEKIT_BASE}/sponsors/csr-partner.png`,
-    socialWelfarePartner: `${IMAGEKIT_BASE}/sponsors/social-welfare-partner.png`,
-    nationBuildingPartner: `${IMAGEKIT_BASE}/sponsors/nation-building-partner.png`,
-    communityPartner: `${IMAGEKIT_BASE}/sponsors/community-partner.png`,
+    nmdcSustainabilityPartner: "/sponsors/logos/NmdcSustainabilityPartner.jpg",
+    csrPartner: "/sponsors/logos/CsrPartner.png",
+    socialWelfarePartner: "/sponsors/logos/SocialWelfarePartner.png",
+    nationBuildingPartner: "/sponsors/logos/NationBuildingPartner.png",
+    communityPartner: "/sponsors/logos/CommunityPartner.png",
 
     // Hospitality & Lifestyle Partners
-    hospitalityPartner: `${IMAGEKIT_BASE}/sponsors/hospitality-partner.jpeg`,
-    coffeePartner: `${IMAGEKIT_BASE}/sponsors/coffee-partner.png`,
-    chocolatePartner: `${IMAGEKIT_BASE}/sponsors/chocolate-partner.png`,
-    fragrancePartner: `${IMAGEKIT_BASE}/sponsors/fragrance-partner.jpg`,
-    sareePartner: `${IMAGEKIT_BASE}/sponsors/saree-partner.jpg`,
+    hospitalityPartner: "/sponsors/logos/HospitalityPartner.jpeg",
+    coffeePartner: "/sponsors/logos/CoffeePartner.png",
+    chocolatePartner: "/sponsors/logos/ChocolatePartner.png",
+    fragrancePartner: "/sponsors/logos/FragrancePartner.jpg",
+    sareePartner: "/sponsors/logos/SareePartner.jpg",
 
     // Media & Tech Partners
-    gamingPartner: `${IMAGEKIT_BASE}/sponsors/gaming-partner.png`,
-    musicStreamingPartner: `${IMAGEKIT_BASE}/sponsors/music-streaming-partner.webp`,
-    innovationPartner: `${IMAGEKIT_BASE}/sponsors/innovation-partner.webp`,
-    dalimssNewsPartner: `${IMAGEKIT_BASE}/sponsors/dalimss-news-partner.webp`,
-    theVibePartner: `${IMAGEKIT_BASE}/sponsors/the-vibe-partner.png`,
+    gamingPartner: "/sponsors/logos/GamingPartner.png",
+    musicStreamingPartner: "/sponsors/logos/MusicStreamingPartner.webp",
+    innovationPartner: "/sponsors/logos/InnovationPartner.webp",
+    dalimssNewsPartner: "/sponsors/logos/DalimssNewsPartner.webp",
+    theVibePartner: "/sponsors/logos/TheVibePartner.png",
   },
 
   // ============================================
   // INTRO SECTION - Mascot and assets
   // ============================================
   intro: {
-    cuteBoyMascot: `${IMAGEKIT_BASE}/intro/common/cute-boy-mascot.png`,
-    logo: `${IMAGEKIT_BASE}/intro/common/intro-logo.png`,
+    cuteBoyMascot: "/intro/CuteBoyMascot.png",
+    logo: "/intro/IntroLogo.png",
+    stage: "/intro/Stage.png",
+    portalSong: "/intro/PortalSong.mp3",
+    concertStage: "/intro/ConcertStage.webm",
   },
 
   // ============================================

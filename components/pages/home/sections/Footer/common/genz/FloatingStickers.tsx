@@ -3,7 +3,7 @@
 import { memo } from "react";
 import { motion } from "framer-motion";
 import { useAnimationPolicy } from "@/hooks";
-import { FLOATING_STICKERS } from "../constants";
+import { FLOATING_STICKERS } from "@/components/pages/home/sections/Footer/common/constants";
 
 export const FloatingStickers = memo(function FloatingStickers() {
   const { shouldAnimate } = useAnimationPolicy();

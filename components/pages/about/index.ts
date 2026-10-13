@@ -1,4 +1,4 @@
-export { MysticDivider, CornerOrnaments } from "./decors";
+export { MysticDivider, CornerOrnaments } from "./sections/decor";
 export {
   HeroSection,
   LegacySection,

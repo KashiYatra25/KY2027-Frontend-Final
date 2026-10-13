@@ -2521,6 +2521,30 @@ body {
   mask-image: linear-gradient(180deg, transparent 0, #000 6%, #000 94%, transparent 100%);
 }
 
+/* Enable manual scrolling on hover */
+.whats-on-viewport.is-hovered {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(240, 181, 74, 0.3) transparent;
+}
+
+.whats-on-viewport.is-hovered::-webkit-scrollbar {
+  width: 4px;
+}
+
+.whats-on-viewport.is-hovered::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.whats-on-viewport.is-hovered::-webkit-scrollbar-thumb {
+  background: rgba(240, 181, 74, 0.3);
+  border-radius: 2px;
+}
+
+.whats-on-viewport.is-hovered::-webkit-scrollbar-thumb:hover {
+  background: rgba(240, 181, 74, 0.5);
+}
+
 .whats-on-track {
   display: flex;
   flex-direction: column;
@@ -2533,11 +2557,486 @@ body {
   animation-play-state: paused;
 }
 
+/* When hovered, disable animation completely for smooth scrolling */
+.whats-on-viewport.is-hovered .whats-on-track {
+  animation: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .whats-on-track {
     animation: none;
   }
   .whats-on-viewport {
     overflow-y: auto;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   GALLERY PAGE ANIMATIONS
+   Film reel scrolling, floating cards, sparkles, and spotlight beams
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Film reel scrolling animation */
+@keyframes galleryReelScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.film-track {
+  animation: galleryReelScroll var(--reel-duration, 46s) linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.film-track-reverse {
+  animation-direction: reverse;
+}
+
+/* Pause on hover (desktop only) */
+@media (hover: hover) {
+  .reel:hover .film-track,
+  .video-reel:hover .film-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Pause when any frame is focused */
+.reel:has(.photo-frame:focus-visible) .film-track,
+.video-reel:has(.video-frame:focus-visible) .film-track {
+  animation-play-state: paused;
+}
+
+/* Sprocket holes on film reels */
+.sprocket-holes {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  opacity: 0.85;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 6' preserveAspectRatio='none'%3E%3Crect x='8' width='12' height='6' rx='2' fill='%23f6ecdc'/%3E%3C/svg%3E")
+    repeat-x;
+  background-size: 28px 6px;
+}
+
+.sprocket-top {
+  top: -11px;
+}
+
+.sprocket-bottom {
+  bottom: -11px;
+}
+
+/* Photo frame height responsive */
+.gallery-reels {
+  --frame-height: clamp(170px, 24vw, 270px);
+}
+
+.video-reel {
+  --video-frame-height: clamp(120px, 16vw, 190px);
+}
+
+/* Camera bob animation */
+@keyframes cameraBob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(6px);
+  }
+}
+
+.camera-bob {
+  animation: cameraBob 5s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Lens glow pulse */
+@keyframes lensGlow {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lens-glow {
+  animation: lensGlow 3s ease-in-out infinite alternate;
+}
+
+/* Camera flash animation */
+@keyframes cameraFlash {
+  0%,
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  90% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+}
+
+.camera-flash {
+  transform-origin: center;
+  animation: cameraFlash 3.6s ease-in-out infinite;
+}
+
+/* Sparkle twinkle animation */
+@keyframes sparkleTwinkle {
+  0%,
+  100% {
+    opacity: 0.12;
+    transform: scale(0.55);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.1);
+  }
+}
+
+.sparkle-star {
+  animation: sparkleTwinkle var(--duration, 3s) ease-in-out infinite;
+}
+
+.sparkle-hot {
+  filter: drop-shadow(0 0 5px rgba(255, 214, 120, 0.9));
+}
+
+/* Special video card floating animation */
+@keyframes specialVideoFloat {
+  from {
+    transform: translate3d(0, -8px, 0) rotate(var(--float-tilt, 0deg));
+  }
+  to {
+    transform: translate3d(0, 10px, 0) rotate(calc(var(--float-tilt, 0deg) * -0.5));
+  }
+}
+
+.special-video-wrapper {
+  animation: specialVideoFloat var(--float-duration, 6s) ease-in-out infinite alternate;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Animated gradient ring for special videos */
+@keyframes ringSpin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.ring-spin {
+  animation: ringSpin 5s linear infinite;
+}
+
+/* Spotlight beam sway animation */
+@keyframes beamSway {
+  from {
+    transform: rotate(var(--sway-start, -14deg));
+  }
+  to {
+    transform: rotate(var(--sway-end, 10deg));
+  }
+}
+
+.beam-sway {
+  transform-origin: 50% 0;
+  animation: beamSway var(--sway-duration, 8s) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Blinking dot animation (for "Special" tags) */
+@keyframes blinkDot {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.blink-dot {
+  animation: blinkDot 1.2s ease-in-out infinite;
+}
+
+/* Performer card float animation */
+@keyframes performerCardFloat {
+  from {
+    transform: translate(-5px, -14px) rotate(var(--float-tilt, 0deg));
+  }
+  to {
+    transform: translate(6px, 16px) rotate(calc(var(--float-tilt, 0deg) * -0.6));
+  }
+}
+
+.performer-card {
+  animation: performerCardFloat var(--float-duration, 6s) ease-in-out infinite alternate;
+  animation-delay: var(--float-delay, 0s);
+  will-change: transform;
+}
+
+/* Lightbox pop-in animation */
+@keyframes lightboxPop {
+  from {
+    transform: scale(0.96);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.lightbox-media {
+  animation: lightboxPop 0.3s ease;
+}
+
+/* Desktop adjustments for gallery */
+@media (min-width: 701px) {
+  .gallery-reels {
+    --frame-height: clamp(170px, 20vw, 225px);
+  }
+  .video-reel {
+    --video-frame-height: clamp(120px, 13vw, 160px);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 560px) {
+  .gallery-reels {
+    --frame-height: 138px;
+  }
+  .video-reel {
+    --video-frame-height: 100px;
+  }
+}
+
+/* Reduced motion: disable gallery animations */
+@media (prefers-reduced-motion: reduce) {
+  .film-track {
+    animation: none;
+  }
+  .reel,
+  .video-reel {
+    overflow-x: auto;
+    transform: none;
+    width: 100%;
+    margin-left: 0;
+  }
+  .photo-frame[data-dup],
+  .video-frame[data-dup] {
+    display: none;
+  }
+  .sprocket-holes {
+    display: none;
+  }
+  .camera-bob,
+  .lens-glow,
+  .camera-flash,
+  .sparkle-star,
+  .special-video-wrapper,
+  .ring-spin,
+  .beam-sway,
+  .blink-dot,
+  .performer-card {
+    animation: none;
+  }
+  .sparkle-star {
+    opacity: 0.6;
+  }
+  .camera-flash {
+    opacity: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   GALLERY NAVBAR STYLES
+   Custom cinematic film/camera themed navbar for gallery page
+   ═══════════════════════════════════════════════════════════════════ */
+
+.nav-pill-gallery:hover {
+  background: rgba(246, 236, 220, 0.15) !important;
+  border-color: rgba(245, 166, 35, 0.4) !important;
+}
+
+.nav-pill-gallery:hover span:first-child {
+  box-shadow: 0 0 8px rgba(245, 166, 35, 0.8);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INTRO COUNTDOWN POSTER (ported from kashiyatra-countdown-clean)
+   Scoped under .ky-countdown-* so it cannot leak into other sections.
+   Un-layered on purpose: keyframes here animate `transform`, so do NOT
+   add Tailwind transform utilities (scale / translate) to these nodes.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Stage: sized like object-fit:cover so % overlays stay locked to the photo */
+.ky-countdown-stage {
+  width: min(200vw, max(100vw, calc(100vh * 1.7768331562167907)));
+  --ky-fx: 50%;
+  transform: translate(calc(-1 * var(--ky-fx)), -50%);
+}
+/* portrait phones: shift focus a little and fade the poster edges */
+@media (max-aspect-ratio: 9/10) {
+  .ky-countdown-stage {
+    --ky-fx: 52%;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 14%,
+      #000 88%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 88%, transparent 100%);
+  }
+}
+
+/* ENTER KASHIYATRA plate (lifted above the crowd) */
+.ky-countdown-plate__halo {
+  position: absolute;
+  left: -12%;
+  top: -45%;
+  width: 124%;
+  height: 190%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 200, 110, 0.4),
+    rgba(255, 170, 70, 0.15) 55%,
+    rgba(255, 170, 70, 0)
+  );
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  transform: scale(0.8);
+}
+.ky-countdown-plate__pw {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 48%;
+  transform: scale(0.8);
+  filter: drop-shadow(0 0 8px rgba(255, 190, 100, 0.6)) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
+  transition:
+    transform 0.2s ease-out,
+    filter 0.2s ease-out;
+}
+/* the plate artwork is cut to the badge outline so the canvas has no rectangular edge */
+.ky-countdown-plate__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  clip-path: polygon(
+    1.15% 47.24%,
+    3.83% 37.69%,
+    6.7% 25.13%,
+    8.29% 18.09%,
+    45.28% 18.09%,
+    47.51% 12.06%,
+    50.38% 4.52%,
+    53.25% 12.06%,
+    56.12% 18.09%,
+    91.84% 18.09%,
+    93.75% 25.13%,
+    96.62% 37.69%,
+    98.72% 47.24%,
+    96.62% 56.78%,
+    93.75% 69.35%,
+    91.84% 77.39%,
+    56.44% 77.39%,
+    53.25% 84.17%,
+    50.38% 94.22%,
+    47.51% 84.17%,
+    44.64% 77.39%,
+    8.29% 77.39%,
+    6.7% 69.35%,
+    3.83% 56.78%
+  );
+}
+.ky-countdown-plate[data-show="true"] .ky-countdown-plate__halo {
+  animation: kyCountdownHaloPulse 2.2s ease-in-out 0.8s infinite;
+}
+.ky-countdown-plate[data-show="true"] .ky-countdown-plate__pw {
+  animation:
+    kyCountdownPlatePop 0.95s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    kyCountdownPlateBeat 2.2s ease-in-out 1s infinite;
+}
+.ky-countdown-plate[data-show="true"][data-ready="true"]:hover .ky-countdown-plate__pw {
+  transform: scale(0.85);
+  filter: drop-shadow(0 0 24px rgba(255, 210, 120, 0.95))
+    drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
+}
+@keyframes kyCountdownPlatePop {
+  0% {
+    opacity: 0;
+    transform: translateY(34px) scale(0.4);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-10px) scale(0.96);
+  }
+  80% {
+    transform: translateY(1px) scale(0.78);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+}
+@keyframes kyCountdownPlateBeat {
+  0%,
+  100% {
+    transform: scale(0.8);
+    filter: drop-shadow(0 0 8px rgba(255, 190, 100, 0.5))
+      drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
+  }
+  50% {
+    transform: scale(0.85);
+    filter: drop-shadow(0 0 20px rgba(255, 210, 120, 0.95))
+      drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
+  }
+}
+@keyframes kyCountdownHaloPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.75);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(0.9);
+  }
+}
+
+/* Countdown seconds tick */
+.ky-countdown-tick {
+  animation: kyCountdownTick 1s ease-in-out infinite;
+}
+@keyframes kyCountdownTick {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ky-countdown-tick,
+  .ky-countdown-plate[data-show="true"] .ky-countdown-plate__pw {
+    animation: none;
+  }
+  .ky-countdown-plate[data-show="true"] .ky-countdown-plate__halo {
+    animation: none;
+    opacity: 0.5;
   }
 }

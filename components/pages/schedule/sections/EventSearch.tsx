@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
-import { SCHEDULED_EVENTS } from "../config/campusMap.config";
+import { SCHEDULED_EVENTS } from "@/components/pages/schedule/config/campusMap.config";
 
 // ═══════════════════════════════════════════════════════════════════
 // EVENT SEARCH OVERLAY

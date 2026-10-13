@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { toast } from "sonner";
 import {
   AuthSuccessToast,
@@ -48,23 +48,37 @@ const TOAST_IDS = {
 } as const;
 
 /**
- * Centralized auth toast handler for home page.
- * 
- * Uses 5 separate useEffects for each case:
- * 1. Sign-in success (?auth=success)
- * 2. Sign-in error (?auth=<error_code> or ?error=<code>)
- * 3. Sign-out success (?signout=success)
- * 4. Sign-out error (?signout=failure)
- * 5. Already logged in info (?info=already-logged-in)
- * 
- * Must be wrapped in Suspense when used in a page component.
+ * Auth toast handler - shows toasts and cleans URL params.
+ *
+ * Does NOT handle redirection. Redirection should be set via callbackUrl
+ * when calling signIn(). This component just:
+ * 1. Detects auth-related query params
+ * 2. Shows appropriate toast
+ * 3. Cleans URL (removes query params, stays on same page)
+ *
+ * Handles:
+ * - ?auth=success → Sign-in success toast
+ * - ?auth=<error> or ?error=<code> → Sign-in error toast  
+ * - ?signout=success → Sign-out success toast
+ * - ?signout=failure → Sign-out error toast
+ * - ?info=already-logged-in → Already logged in toast
+ *
+ * Usage: Add to any page where auth callbacks might land.
+ * Must be wrapped in Suspense.
  */
 export function AuthToastHandler() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  
+  const pathname = usePathname();
+
   // Track which toasts have been shown to prevent duplicates
   const shownToasts = useRef<Set<string>>(new Set());
+
+  // Clean URL - stay on current page, just remove query params
+  const cleanUrl = () => {
+    router.replace(pathname, { scroll: false });
+    router.refresh();
+  };
 
   // 1. Handle sign-in success
   useEffect(() => {
@@ -73,16 +87,15 @@ export function AuthToastHandler() {
     if (shownToasts.current.has(TOAST_IDS.AUTH_SUCCESS)) return;
 
     shownToasts.current.add(TOAST_IDS.AUTH_SUCCESS);
-    
+
     toast.custom(() => <AuthSuccessToast />, {
       duration: 4000,
       position: "bottom-right",
       id: TOAST_IDS.AUTH_SUCCESS,
     });
 
-    router.replace("/", { scroll: false });
-    router.refresh();
-  }, [searchParams, router]);
+    cleanUrl();
+  }, [searchParams, router, pathname]);
 
   // 2. Handle sign-in error (from ?auth=<error> or ?error=<code>)
   useEffect(() => {
@@ -90,7 +103,7 @@ export function AuthToastHandler() {
     const error = searchParams.get("error");
 
     if (auth === "success" || (!auth && !error)) return;
-    
+
     const errorCode = auth || error;
     if (!errorCode) return;
     if (shownToasts.current.has(TOAST_IDS.AUTH_ERROR)) return;
@@ -103,9 +116,8 @@ export function AuthToastHandler() {
       id: TOAST_IDS.AUTH_ERROR,
     });
 
-    router.replace("/", { scroll: false });
-    router.refresh();
-  }, [searchParams, router]);
+    cleanUrl();
+  }, [searchParams, router, pathname]);
 
   // 3. Handle sign-out success
   useEffect(() => {
@@ -121,9 +133,8 @@ export function AuthToastHandler() {
       id: TOAST_IDS.SIGNOUT_SUCCESS,
     });
 
-    router.replace("/", { scroll: false });
-    router.refresh();
-  }, [searchParams, router]);
+    cleanUrl();
+  }, [searchParams, router, pathname]);
 
   // 4. Handle sign-out error
   useEffect(() => {
@@ -139,9 +150,8 @@ export function AuthToastHandler() {
       id: TOAST_IDS.SIGNOUT_ERROR,
     });
 
-    router.replace("/", { scroll: false });
-    router.refresh();
-  }, [searchParams, router]);
+    cleanUrl();
+  }, [searchParams, router, pathname]);
 
   // 5. Handle already logged in info
   useEffect(() => {
@@ -157,9 +167,8 @@ export function AuthToastHandler() {
       id: TOAST_IDS.ALREADY_LOGGED_IN,
     });
 
-    router.replace("/", { scroll: false });
-    router.refresh();
-  }, [searchParams, router]);
+    cleanUrl();
+  }, [searchParams, router, pathname]);
 
   return null;
 }

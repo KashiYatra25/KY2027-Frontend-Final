@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { useIntro } from "../../context/IntroContext";
+import { useIntro } from "@/components/pages/home/sections/Intro/context/IntroContext";
 import { useAnimationPolicy } from "@/hooks";
 
 export function VideoPlayer() {
@@ -28,7 +28,7 @@ export function VideoPlayer() {
       <video
         ref={videoRef}
         className="h-full w-full object-cover"
-        src="/intro/concertStage.webm"
+        src="/intro/ConcertStage.webm"
         loop
         muted
         playsInline

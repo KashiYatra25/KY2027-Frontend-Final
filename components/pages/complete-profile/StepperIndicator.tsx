@@ -1,13 +1,6 @@
-import { Check, type LucideIcon } from "lucide-react";
+import { Check } from "lucide-react";
 import { COLORS } from "./constants/palette";
-import { STEPS } from "./config/data";
-
-interface StepConfig {
-  id: number;
-  title: string;
-  description: string;
-  icon: LucideIcon;
-}
+import { STEPS, type StepConfig } from "./config/data";
 
 // ═══════════════════════════════════════════════════════════════════
 // STEPPER INDICATOR COMPONENT
@@ -24,7 +17,7 @@ export function StepperIndicator({
   return (
     <div className="relative">
       {/* Desktop Stepper */}
-      <div className="hidden md:flex items-center justify-center gap-0">
+      <div className="hidden items-center justify-center gap-0 md:flex">
         {steps.map((step, index) => {
           const isCompleted = step.id < currentStep || index < completedSteps;
           const isCurrent = currentStep === step.id;
@@ -35,29 +28,21 @@ export function StepperIndicator({
               {/* Step Circle */}
               <div className="flex flex-col items-center">
                 <div
-                  className={`
-                    relative w-14 h-14 rounded-full flex items-center justify-center
-                    transition-all duration-500 ease-out
-                    ${isCurrent ? "scale-110" : ""}
-                  `}
+                  className={`relative flex h-14 w-14 items-center justify-center rounded-full transition-all duration-500 ease-out ${isCurrent ? "scale-110" : ""} `}
                   style={{
                     background: isCompleted
                       ? `linear-gradient(135deg, ${COLORS.SUCCESS}, #16a34a)`
                       : isCurrent
-                      ? `linear-gradient(135deg, ${COLORS.GOLD}, ${COLORS.GOLD_DARK})`
-                      : `${COLORS.BG_ROYAL}`,
+                        ? `linear-gradient(135deg, ${COLORS.GOLD}, ${COLORS.GOLD_DARK})`
+                        : `${COLORS.BG_ROYAL}`,
                     border: `2px solid ${
-                      isCompleted
-                        ? COLORS.SUCCESS
-                        : isCurrent
-                        ? COLORS.GOLD
-                        : `${COLORS.GOLD}30`
+                      isCompleted ? COLORS.SUCCESS : isCurrent ? COLORS.GOLD : `${COLORS.GOLD}30`
                     }`,
                     boxShadow: isCurrent
                       ? `0 0 30px ${COLORS.GOLD}50, 0 0 60px ${COLORS.GOLD}20`
                       : isCompleted
-                      ? `0 0 20px ${COLORS.SUCCESS}30`
-                      : "none",
+                        ? `0 0 20px ${COLORS.SUCCESS}30`
+                        : "none",
                   }}
                 >
                   {isCompleted ? (
@@ -72,7 +57,7 @@ export function StepperIndicator({
                   {/* Pulse animation for current step */}
                   {isCurrent && (
                     <div
-                      className="absolute inset-0 rounded-full animate-ping"
+                      className="absolute inset-0 animate-ping rounded-full"
                       style={{
                         background: `${COLORS.GOLD}20`,
                         animationDuration: "2s",
@@ -91,10 +76,7 @@ export function StepperIndicator({
                   >
                     {step.title}
                   </p>
-                  <p
-                    className="text-xs mt-0.5"
-                    style={{ color: `${COLORS.CREAM}40` }}
-                  >
+                  <p className="mt-0.5 text-xs" style={{ color: `${COLORS.CREAM}40` }}>
                     {step.description}
                   </p>
                 </div>
@@ -103,11 +85,11 @@ export function StepperIndicator({
               {/* Connector Line */}
               {!isLast && (
                 <div
-                  className="w-20 h-0.5 mx-2 -mt-8"
+                  className="mx-2 -mt-8 h-0.5 w-20"
                   style={{
                     background: isCompleted
                       ? `linear-gradient(90deg, ${COLORS.SUCCESS}, ${
-                          steps[index + 1].id < currentStep || (index + 1) < completedSteps
+                          steps[index + 1].id < currentStep || index + 1 < completedSteps
                             ? COLORS.SUCCESS
                             : `${COLORS.GOLD}30`
                         })`
@@ -122,7 +104,7 @@ export function StepperIndicator({
 
       {/* Mobile Stepper - Compact */}
       <div className="md:hidden">
-        <div className="flex items-center justify-center mb-4">
+        <div className="mb-4 flex items-center justify-center">
           {steps.map((step, index) => {
             const isCompleted = step.id < currentStep || index < completedSteps;
             const isCurrent = currentStep === step.id;
@@ -132,22 +114,15 @@ export function StepperIndicator({
               <div key={step.id} className="flex items-center">
                 {/* Step Circle */}
                 <div
-                  className={`
-                    w-10 h-10 rounded-full flex items-center justify-center shrink-0
-                    transition-all duration-300
-                  `}
+                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-300`}
                   style={{
                     background: isCompleted
                       ? `linear-gradient(135deg, ${COLORS.SUCCESS}, #16a34a)`
                       : isCurrent
-                      ? `linear-gradient(135deg, ${COLORS.GOLD}, ${COLORS.GOLD_DARK})`
-                      : `${COLORS.BG_ROYAL}`,
+                        ? `linear-gradient(135deg, ${COLORS.GOLD}, ${COLORS.GOLD_DARK})`
+                        : `${COLORS.BG_ROYAL}`,
                     border: `2px solid ${
-                      isCompleted
-                        ? COLORS.SUCCESS
-                        : isCurrent
-                        ? COLORS.GOLD
-                        : `${COLORS.GOLD}30`
+                      isCompleted ? COLORS.SUCCESS : isCurrent ? COLORS.GOLD : `${COLORS.GOLD}30`
                     }`,
                     boxShadow: isCurrent ? `0 0 20px ${COLORS.GOLD}40` : "none",
                   }}
@@ -169,11 +144,11 @@ export function StepperIndicator({
                 {/* Connector Line */}
                 {!isLast && (
                   <div
-                    className="w-16 sm:w-20 h-0.5 mx-2"
+                    className="mx-2 h-0.5 w-16 sm:w-20"
                     style={{
                       background: isCompleted
                         ? `linear-gradient(90deg, ${COLORS.SUCCESS}, ${
-                            steps[index + 1].id < currentStep || (index + 1) < completedSteps
+                            steps[index + 1].id < currentStep || index + 1 < completedSteps
                               ? COLORS.SUCCESS
                               : `${COLORS.GOLD}30`
                           })`

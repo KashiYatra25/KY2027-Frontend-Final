@@ -8,6 +8,7 @@ import GsapRegistration from "@/lib/GsapRegistration";
 import { SmoothScroll } from "@/lib/SmoothScroll";
 import { PageLoader } from "@/components/loader";
 import { AuthProvider, QueryProvider, ApolloProvider } from "@/components/providers";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -205,6 +206,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Toaster />
         <ApolloProvider>
           <QueryProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
             <AuthProvider>
               <GsapRegistration />
               <Suspense fallback={null}>

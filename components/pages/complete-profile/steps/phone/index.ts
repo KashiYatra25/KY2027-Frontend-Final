@@ -1,2 +1,3 @@
 export { PhoneVerificationStep } from "./PhoneVerificationStep";
-export { PhoneInput, VerificationError } from "./components";
+export { PhoneInput } from "./components/PhoneInput";
+export { VerificationError } from "./components/VerificationError";

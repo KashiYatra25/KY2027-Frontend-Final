@@ -11,10 +11,11 @@ import {
   CollegeDropdown,
   SelectedCollegeCard,
   ManualInput,
+  isIITBhuCollege,
 } from "./sections";
-import { useDebounce } from "@/lib/api/hooks/useDebounce";
-import { CollegeLoader } from "./loader";
-import { CollegeErrorState } from "./error";
+import { useDebounce } from "@/hooks/useDebounce";
+import { CollegeLoader } from "./loader/CollegeLoader";
+import { CollegeErrorState } from "./error/CollegeErrorState";
 
 // ═══════════════════════════════════════════════════════════════════
 // TYPES
@@ -33,6 +34,7 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCollege, setSelectedCollege] = useState<College | null>(null);
   const [manualCollege, setManualCollege] = useState("");
+  const [isManualInputValid, setIsManualInputValid] = useState(true);
 
   // If the person's college is not in our dataset , then he have to enter it manually.
   const [isManualMode, setIsManualMode] = useState(false);
@@ -101,12 +103,23 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
     setSelectedCollege(null);
     setSearchQuery("");
     setManualCollege("");
+    setIsManualInputValid(true);
+  }, []);
+
+  const handleManualValidationChange = useCallback((isValid: boolean) => {
+    setIsManualInputValid(isValid);
   }, []);
 
   const handleSubmit = useCallback(() => {
     const collegeName = isManualMode ? manualCollege : selectedCollege?.name || searchQuery;
 
     if (!collegeName.trim()) return;
+
+    // Double-check IIT BHU validation before submitting
+    if (isIITBhuCollege(collegeName)) {
+      setShowError(true);
+      return;
+    }
 
     updateCollege(
       { college: collegeName },
@@ -133,11 +146,18 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
     setSearchQuery("");
     setSelectedCollege(null);
     setManualCollege("");
+    setIsManualInputValid(true);
   }, []);
 
+  // Check if selected college from search is IIT BHU (shouldn't happen via normal search but safety check)
+  const isSearchCollegeValid = !selectedCollege || !isIITBhuCollege(selectedCollege.name);
+  const isSearchQueryValid = searchQuery.length < 3 || !isIITBhuCollege(searchQuery);
+
   const isValid = isManualMode
-    ? manualCollege.trim().length >= 3
-    : selectedCollege !== null || searchQuery.trim().length >= 3;
+    ? manualCollege.trim().length >= 3 && isManualInputValid
+    : (selectedCollege !== null || searchQuery.trim().length >= 3) &&
+      isSearchCollegeValid &&
+      isSearchQueryValid;
 
   // Show loader when updating
   if (isUpdating) {
@@ -208,7 +228,11 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
           {selectedCollege && <SelectedCollegeCard college={selectedCollege} />}
         </div>
       ) : (
-        <ManualInput value={manualCollege} onChange={setManualCollege} />
+        <ManualInput
+          value={manualCollege}
+          onChange={setManualCollege}
+          onValidationChange={handleManualValidationChange}
+        />
       )}
 
       {/* Action Button */}

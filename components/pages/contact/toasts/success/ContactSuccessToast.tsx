@@ -1,79 +1,11 @@
 "use client";
 
-function DiyaIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Flame */}
-      <path
-        d="M12 2C12 2 9 5 9 7.5C9 9.5 10.5 11 12 11C13.5 11 15 9.5 15 7.5C15 5 12 2 12 2Z"
-        fill="url(#flameGradientContactSuccess)"
-      />
-      {/* Inner flame */}
-      <path
-        d="M12 4C12 4 10.5 6 10.5 7.5C10.5 8.5 11.2 9.5 12 9.5C12.8 9.5 13.5 8.5 13.5 7.5C13.5 6 12 4 12 4Z"
-        fill="#FFF3B0"
-      />
-      {/* Diya bowl */}
-      <path
-        d="M6 14C6 12.5 8 11 12 11C16 11 18 12.5 18 14C18 15.5 16 17 12 17C8 17 6 15.5 6 14Z"
-        fill="url(#bowlGradientContactSuccess)"
-      />
-      {/* Base */}
-      <path
-        d="M8 17L7 20C7 21 9 22 12 22C15 22 17 21 17 20L16 17"
-        fill="url(#baseGradientContactSuccess)"
-      />
-
-      <defs>
-        <linearGradient
-          id="flameGradientContactSuccess"
-          x1="12"
-          y1="2"
-          x2="12"
-          y2="11"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#FFD700" />
-          <stop offset="0.5" stopColor="#FFA500" />
-          <stop offset="1" stopColor="#FF6B35" />
-        </linearGradient>
-        <linearGradient
-          id="bowlGradientContactSuccess"
-          x1="6"
-          y1="11"
-          x2="18"
-          y2="17"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#CD7F32" />
-          <stop offset="0.5" stopColor="#B8860B" />
-          <stop offset="1" stopColor="#8B6914" />
-        </linearGradient>
-        <linearGradient
-          id="baseGradientContactSuccess"
-          x1="7"
-          y1="17"
-          x2="17"
-          y2="22"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#CD7F32" />
-          <stop offset="1" stopColor="#8B6914" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
+import { DiyaIcon } from "@/components/pages/contact/sections/decor";
 
 export function ContactSuccessToast() {
   return (
     <div
-      className="flex items-start gap-3 sm:gap-4 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl w-[calc(100vw-32px)] sm:w-auto sm:min-w-[320px] sm:max-w-[420px] mx-auto"
+      className="mx-auto flex w-[calc(100vw-32px)] items-start gap-3 rounded-lg px-3 py-3 sm:w-auto sm:max-w-[420px] sm:min-w-[320px] sm:gap-4 sm:rounded-xl sm:px-5 sm:py-4"
       style={{
         background: `linear-gradient(135deg, #0a1a12 0%, #0a2d18 50%, #0a1a12 100%)`,
         border: `1px solid #22c55e`,
@@ -87,31 +19,27 @@ export function ContactSuccessToast() {
     >
       {/* Icon */}
       <div
-        className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center"
+        className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full sm:h-10 sm:w-10"
         style={{
           background: `linear-gradient(135deg, #22c55e 0%, #16a34a 100%)`,
           boxShadow: `0 0 15px rgba(34,197,94,0.4)`,
         }}
       >
         <svg
-          className="w-4 h-4 sm:w-5 sm:h-5 text-white"
+          className="h-4 w-4 text-white sm:h-5 sm:w-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
           strokeWidth={2.5}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M5 13l4 4L19 7"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
         </svg>
       </div>
 
       {/* Content */}
-      <div className="flex-1 min-w-0 pt-0.5">
+      <div className="min-w-0 flex-1 pt-0.5">
         <p
-          className="text-xs sm:text-sm font-semibold tracking-wide"
+          className="text-xs font-semibold tracking-wide sm:text-sm"
           style={{
             color: "#4ade80",
             textShadow: "0 0 10px rgba(74,222,128,0.3)",
@@ -120,7 +48,7 @@ export function ContactSuccessToast() {
           Message Sent!
         </p>
         <p
-          className="text-[11px] sm:text-xs mt-0.5 sm:mt-1 leading-relaxed"
+          className="mt-0.5 text-[11px] leading-relaxed sm:mt-1 sm:text-xs"
           style={{ color: "rgba(220,255,220,0.8)" }}
         >
           🙏 Thank you! Our team will reach out to you soon.
@@ -128,7 +56,10 @@ export function ContactSuccessToast() {
       </div>
 
       {/* Decorative diya - hidden on very small screens */}
-      <DiyaIcon className="hidden xs:block w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 opacity-70" />
+      <DiyaIcon
+        id="contact-success"
+        className="xs:block hidden h-5 w-5 flex-shrink-0 opacity-70 sm:h-6 sm:w-6"
+      />
     </div>
   );
 }

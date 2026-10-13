@@ -6,7 +6,6 @@ import { useState, useEffect, useRef } from "react";
  * This whole custom hook is being created for the purpose of customised navbar rendering based on mouse scroll.
  */
 
-
 // Config for mouse scrolls.
 export interface ScrollPosition {
   scrollY: number;
@@ -40,7 +39,11 @@ function getInitialPosition(): ScrollPosition {
   return { scrollY, viewportHeight, documentHeight, progress };
 }
 
-function getInitialVisibility(showAfterPercent: number, hideBeforeBottomPercent: number, hideBeforeBottomPercentMobile: number): boolean {
+function getInitialVisibility(
+  showAfterPercent: number,
+  hideBeforeBottomPercent: number,
+  hideBeforeBottomPercentMobile: number
+): boolean {
   if (typeof window === "undefined") return false;
   const scrollY = window.scrollY;
   const viewportHeight = window.innerHeight;
@@ -57,8 +60,8 @@ function getInitialVisibility(showAfterPercent: number, hideBeforeBottomPercent:
  * Uses percentage-based throttling - only updates when scroll changes meaningfully.
  */
 export function useScrollPosition(config?: ScrollVisibilityConfig) {
-  const { 
-    showAfterPercent = 0.85, 
+  const {
+    showAfterPercent = 0.85,
     hideBeforeBottomPercent = 1.5,
     hideBeforeBottomPercentMobile = 0.5,
     progressThreshold = 0.005,
@@ -66,10 +69,41 @@ export function useScrollPosition(config?: ScrollVisibilityConfig) {
 
   // Lazy initial state - runs only once, no useEffect needed
   const [position, setPosition] = useState<ScrollPosition>(getInitialPosition);
-  const [visible, setVisible] = useState(() => getInitialVisibility(showAfterPercent, hideBeforeBottomPercent, hideBeforeBottomPercentMobile));
-  
+  const [visible, setVisible] = useState(() =>
+    getInitialVisibility(showAfterPercent, hideBeforeBottomPercent, hideBeforeBottomPercentMobile)
+  );
+
+  // These refs hold the "last committed" values used as the throttle baseline
+  // for comparisons inside handleScroll.
+  //
+  // lastProgressRef: `progress` is derived purely from scroll/document geometry
+  //   and is INDEPENDENT of config. Its correct baseline is always the last
+  //   progress we committed to state, so it must NOT be reset when config deps
+  //   change — doing so would discard a valid baseline and could trigger a
+  //   redundant setState on the next scroll.
+  //
+  // lastVisibleRef: `shouldBeVisible` DOES depend on config. If config changes
+  //   while no scroll/resize event is pending, the returned `visible` would stay
+  //   stale until the next event. The sync effect below recomputes visibility
+  //   immediately on config change and keeps this ref aligned with the committed
+  //   state so the throttle baseline stays correct.
   const lastProgressRef = useRef(position.progress);
   const lastVisibleRef = useRef(visible);
+
+  // Recompute visibility immediately when config deps change, so a config update
+  // is reflected without waiting for the next scroll/resize event. Keeps
+  // lastVisibleRef in sync with the committed `visible` state.
+  useEffect(() => {
+    const shouldBeVisible = getInitialVisibility(
+      showAfterPercent,
+      hideBeforeBottomPercent,
+      hideBeforeBottomPercentMobile
+    );
+    if (shouldBeVisible !== lastVisibleRef.current) {
+      lastVisibleRef.current = shouldBeVisible;
+      setVisible(shouldBeVisible);
+    }
+  }, [showAfterPercent, hideBeforeBottomPercent, hideBeforeBottomPercentMobile]);
 
   // Scroll listener only
   useEffect(() => {
@@ -93,7 +127,7 @@ export function useScrollPosition(config?: ScrollVisibilityConfig) {
       if (progressChanged || visibilityChanged) {
         lastProgressRef.current = progress;
         lastVisibleRef.current = shouldBeVisible;
-        
+
         setPosition({ scrollY, viewportHeight, documentHeight, progress });
         setVisible(shouldBeVisible);
       }

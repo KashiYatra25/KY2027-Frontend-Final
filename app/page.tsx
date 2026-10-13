@@ -14,7 +14,7 @@ import {
   useIntro,
 } from "@/components/pages/home/sections";
 import { Navbar } from "@/components/navbar/Navbar";
-import { AuthToastHandler } from "@/components/auth";
+import { SignoutToastHandler } from "@/components/auth";
 
 export default function Home() {
   return (
@@ -29,9 +29,9 @@ function HomeContent() {
 
   return (
     <main>
-      {/* Centralized auth toast handler */}
+      {/* Signout toast handler */}
       <Suspense fallback={null}>
-        <AuthToastHandler />
+        <SignoutToastHandler />
       </Suspense>
 
       {/* Intro Section - renders until complete */}
@@ -53,7 +53,7 @@ function HomeContent() {
             <Navbar />
 
             {/* Hero Section - the beautiful river section */}
-            <div className="sticky top-0 h-screen z-0">
+            <div className="sticky top-0 z-0 h-screen">
               <HeroSection />
             </div>
 

@@ -2,7 +2,7 @@
 
 import { memo } from "react";
 import { motion } from "framer-motion";
-import { useAnimationPolicy } from "@/hooks";
+
 import {
   COLORS,
   GRADIENT_TEXT_GOLD,

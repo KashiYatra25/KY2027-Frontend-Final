@@ -7,6 +7,7 @@ import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ASTRONAUT_CONFIG, ASTRONAUT_MODEL_PATH } from "@/components/pages/ca/config/ca.config";
+import { COLORS } from "@/components/pages/ca/constants/palette";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -128,14 +129,14 @@ export const Astronaut3D = memo(function Astronaut3D() {
         <directionalLight
           position={[-5, 0, -5]}
           intensity={ASTRONAUT_CONFIG.rimLightIntensity}
-          color="#8b5cf6"
+          color={COLORS.PURPLE}
         />
 
         {/* Pink accent light from below */}
-        <pointLight position={[0, -3, 2]} intensity={0.5} color="#ec4899" distance={10} />
+        <pointLight position={[0, -3, 2]} intensity={0.5} color={COLORS.PINK} distance={10} />
 
         {/* Cyan accent light */}
-        <pointLight position={[3, 2, -2]} intensity={0.4} color="#06b6d4" distance={10} />
+        <pointLight position={[3, 2, -2]} intensity={0.4} color={COLORS.CYAN} distance={10} />
 
         <Suspense fallback={null}>
           <AstronautModel />

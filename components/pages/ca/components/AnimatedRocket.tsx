@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { COLORS, COLORS_RGBA } from "@/components/pages/ca/constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
 // CUSTOM ANIMATED ROCKET
@@ -74,7 +75,7 @@ export function AnimatedRocket({ className = "", size = 120 }: RocketProps) {
       width={size}
       height={size * 1.4}
       className={`${className}`}
-      style={{ filter: "drop-shadow(0 0 20px rgba(236, 72, 153, 0.5))" }}
+      style={{ filter: `drop-shadow(0 0 20px ${COLORS_RGBA.PINK_50})` }}
     >
       <defs>
         {/* Gradients */}
@@ -85,14 +86,14 @@ export function AnimatedRocket({ className = "", size = 120 }: RocketProps) {
         </linearGradient>
 
         <linearGradient id="rocketAccent" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#ec4899" />
-          <stop offset="50%" stopColor="#8b5cf6" />
-          <stop offset="100%" stopColor="#06b6d4" />
+          <stop offset="0%" stopColor={COLORS.PINK} />
+          <stop offset="50%" stopColor={COLORS.PURPLE} />
+          <stop offset="100%" stopColor={COLORS.CYAN} />
         </linearGradient>
 
         <linearGradient id="rocketWindow" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#06b6d4" />
-          <stop offset="50%" stopColor="#8b5cf6" />
+          <stop offset="0%" stopColor={COLORS.CYAN} />
+          <stop offset="50%" stopColor={COLORS.PURPLE} />
           <stop offset="100%" stopColor="#1e1b4b" />
         </linearGradient>
 
@@ -100,7 +101,7 @@ export function AnimatedRocket({ className = "", size = 120 }: RocketProps) {
           <stop offset="0%" stopColor="#fbbf24" />
           <stop offset="30%" stopColor="#f97316" />
           <stop offset="60%" stopColor="#ef4444" />
-          <stop offset="100%" stopColor="#ec4899" />
+          <stop offset="100%" stopColor={COLORS.PINK} />
         </linearGradient>
 
         <linearGradient id="flameInner" x1="0%" y1="0%" x2="0%" y2="100%">

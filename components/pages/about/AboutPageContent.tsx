@@ -1,6 +1,6 @@
 "use client";
 
-import { LightNavbar } from "@/components/navbar/Navbar";
+import { ThemedNavbar } from "@/components/navbar";
 import {
   HeroSection,
   LegacySection,
@@ -9,7 +9,7 @@ import {
   VisionSection,
   CTASection,
 } from ".";
-import { NeonGridBackground, LaserBeams } from "./decors";
+import { NeonGridBackground, LaserBeams } from "./sections/decor";
 
 // ═══════════════════════════════════════════════════════════════════
 // MAIN PAGE CONTENT - Clean minimal design
@@ -19,7 +19,7 @@ export function AboutPageContent() {
     <>
       {/* Fixed navbar - About theme (purple/blue concert) */}
       <div className="fixed inset-x-0 top-0 z-[200]">
-        <LightNavbar position="relative" topOffset={18} theme="about" />
+        <ThemedNavbar position="relative" topOffset={18} theme="about" />
       </div>
 
       {/* Subtle background */}

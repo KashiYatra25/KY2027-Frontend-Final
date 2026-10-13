@@ -1,1 +1,0 @@
-export { CollegeSuccessToast } from "./CollegeSuccessToast";

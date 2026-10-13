@@ -4,11 +4,11 @@ import Image from "next/image";
 import { memo, type FormEvent, useRef } from "react";
 import { IMAGES } from "@/lib/images";
 import { COLORS, JAZZ_COLORS } from "@/components/pages/contact/constants/palette";
-import { CornerOrnaments } from "@/components/pages/contact/decors";
+import { CornerOrnaments } from "./decor";
 import { useContact } from "@/lib/api/hooks";
-import { ContactSuccessToast } from "@/components/pages/contact/toasts/success";
-import { ContactErrorToast } from "@/components/pages/contact/toasts/error";
-import { DiyaLoader } from "@/components/pages/contact/loader";
+import { ContactSuccessToast } from "@/components/pages/contact/toasts/success/ContactSuccessToast";
+import { ContactErrorToast } from "@/components/pages/contact/toasts/error/ContactErrorToast";
+import { DiyaLoader } from "./loader/DiyaLoader";
 
 const fieldStyle = {
   background: "rgba(12,8,16,0.6)",
@@ -55,7 +55,7 @@ export const ContactForm = memo(function ContactForm() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-2xl">
+      <div className="relative z-10 mx-auto max-w-2xl 2xl:max-w-3xl">
         <div
           className="relative rounded-2xl p-6 sm:p-10"
           style={{

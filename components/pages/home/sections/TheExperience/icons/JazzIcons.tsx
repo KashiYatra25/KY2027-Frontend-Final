@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { JAZZ_COLORS } from "@/components/pages/home/constants/palette";
-import type { IconType } from "../data/experiences.config";
+import type { IconType } from "@/components/pages/home/sections/TheExperience/data/experiences.config";
 
 // ═══════════════════════════════════════════════════════════════════
 // CUSTOM SVG ICONS - Jazzy, ornate style
@@ -8,7 +8,7 @@ import type { IconType } from "../data/experiences.config";
 
 const CrowdIcon = memo(function CrowdIcon({ color }: { color: string }) {
   return (
-    <svg viewBox="0 0 64 64" className="w-full h-full">
+    <svg viewBox="0 0 64 64" className="h-full w-full">
       <defs>
         <linearGradient id="crowdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor={color} />
@@ -18,16 +18,8 @@ const CrowdIcon = memo(function CrowdIcon({ color }: { color: string }) {
       <circle cx="20" cy="18" r="8" fill="url(#crowdGrad)" opacity="0.9" />
       <circle cx="44" cy="18" r="8" fill="url(#crowdGrad)" opacity="0.9" />
       <circle cx="32" cy="22" r="9" fill="url(#crowdGrad)" />
-      <path
-        d="M8 54 Q20 35 32 38 Q44 35 56 54"
-        fill="url(#crowdGrad)"
-        opacity="0.7"
-      />
-      <path
-        d="M14 58 Q23 42 32 45 Q41 42 50 58"
-        fill="url(#crowdGrad)"
-        opacity="0.85"
-      />
+      <path d="M8 54 Q20 35 32 38 Q44 35 56 54" fill="url(#crowdGrad)" opacity="0.7" />
+      <path d="M14 58 Q23 42 32 45 Q41 42 50 58" fill="url(#crowdGrad)" opacity="0.85" />
       <path
         d="M18 30 L16 22 M22 28 L24 20 M42 28 L40 20 M46 30 L48 22"
         stroke={color}
@@ -41,7 +33,7 @@ const CrowdIcon = memo(function CrowdIcon({ color }: { color: string }) {
 
 const StageIcon = memo(function StageIcon({ color }: { color: string }) {
   return (
-    <svg viewBox="0 0 64 64" className="w-full h-full">
+    <svg viewBox="0 0 64 64" className="h-full w-full">
       <defs>
         <linearGradient id="stageGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor={JAZZ_COLORS.GOLD} />
@@ -63,41 +55,17 @@ const StageIcon = memo(function StageIcon({ color }: { color: string }) {
           opacity="0.4"
         />
       ))}
-      <path
-        d="M18 14 Q14 14 14 20"
-        stroke={color}
-        strokeWidth="2"
-        fill="none"
-        opacity="0.4"
-      />
-      <path
-        d="M12 10 Q6 14 6 24"
-        stroke={color}
-        strokeWidth="2"
-        fill="none"
-        opacity="0.3"
-      />
-      <path
-        d="M46 14 Q50 14 50 20"
-        stroke={color}
-        strokeWidth="2"
-        fill="none"
-        opacity="0.4"
-      />
-      <path
-        d="M52 10 Q58 14 58 24"
-        stroke={color}
-        strokeWidth="2"
-        fill="none"
-        opacity="0.3"
-      />
+      <path d="M18 14 Q14 14 14 20" stroke={color} strokeWidth="2" fill="none" opacity="0.4" />
+      <path d="M12 10 Q6 14 6 24" stroke={color} strokeWidth="2" fill="none" opacity="0.3" />
+      <path d="M46 14 Q50 14 50 20" stroke={color} strokeWidth="2" fill="none" opacity="0.4" />
+      <path d="M52 10 Q58 14 58 24" stroke={color} strokeWidth="2" fill="none" opacity="0.3" />
     </svg>
   );
 });
 
 const ArtistsIcon = memo(function ArtistsIcon({ color }: { color: string }) {
   return (
-    <svg viewBox="0 0 64 64" className="w-full h-full">
+    <svg viewBox="0 0 64 64" className="h-full w-full">
       <defs>
         <linearGradient id="guitarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor={JAZZ_COLORS.GOLD} />
@@ -128,17 +96,14 @@ const ArtistsIcon = memo(function ArtistsIcon({ color }: { color: string }) {
 
 const NightsIcon = memo(function NightsIcon({ color }: { color: string }) {
   return (
-    <svg viewBox="0 0 64 64" className="w-full h-full">
+    <svg viewBox="0 0 64 64" className="h-full w-full">
       <defs>
         <linearGradient id="moonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor={JAZZ_COLORS.GOLD} />
           <stop offset="100%" stopColor={color} />
         </linearGradient>
       </defs>
-      <path
-        d="M38 8 A20 20 0 1 1 38 56 A15 15 0 1 0 38 8"
-        fill="url(#moonGrad)"
-      />
+      <path d="M38 8 A20 20 0 1 1 38 56 A15 15 0 1 0 38 8" fill="url(#moonGrad)" />
       <polygon
         points="14,20 16,24 20,24 17,27 18,32 14,29 10,32 11,27 8,24 12,24"
         fill={JAZZ_COLORS.GOLD}
@@ -157,7 +122,7 @@ const NightsIcon = memo(function NightsIcon({ color }: { color: string }) {
 
 const EventsIcon = memo(function EventsIcon({ color }: { color: string }) {
   return (
-    <svg viewBox="0 0 64 64" className="w-full h-full">
+    <svg viewBox="0 0 64 64" className="h-full w-full">
       <defs>
         <linearGradient id="maskGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor={color} />
@@ -168,21 +133,11 @@ const EventsIcon = memo(function EventsIcon({ color }: { color: string }) {
       <ellipse cx="22" cy="28" rx="14" ry="18" fill="url(#maskGrad)" />
       <ellipse cx="16" cy="24" rx="3" ry="4" fill={JAZZ_COLORS.BG_DEEP} />
       <ellipse cx="28" cy="24" rx="3" ry="4" fill={JAZZ_COLORS.BG_DEEP} />
-      <path
-        d="M14 36 Q22 44 30 36"
-        stroke={JAZZ_COLORS.BG_DEEP}
-        strokeWidth="2.5"
-        fill="none"
-      />
+      <path d="M14 36 Q22 44 30 36" stroke={JAZZ_COLORS.BG_DEEP} strokeWidth="2.5" fill="none" />
       <ellipse cx="42" cy="36" rx="14" ry="18" fill={color} opacity="0.6" />
       <ellipse cx="36" cy="32" rx="3" ry="4" fill={JAZZ_COLORS.BG_DEEP} />
       <ellipse cx="48" cy="32" rx="3" ry="4" fill={JAZZ_COLORS.BG_DEEP} />
-      <path
-        d="M34 46 Q42 40 50 46"
-        stroke={JAZZ_COLORS.BG_DEEP}
-        strokeWidth="2"
-        fill="none"
-      />
+      <path d="M34 46 Q42 40 50 46" stroke={JAZZ_COLORS.BG_DEEP} strokeWidth="2" fill="none" />
       <path
         d="M8 50 Q12 45 18 48"
         stroke={JAZZ_COLORS.GOLD}
@@ -196,7 +151,7 @@ const EventsIcon = memo(function EventsIcon({ color }: { color: string }) {
 
 const FoodIcon = memo(function FoodIcon({ color }: { color: string }) {
   return (
-    <svg viewBox="0 0 64 64" className="w-full h-full">
+    <svg viewBox="0 0 64 64" className="h-full w-full">
       <defs>
         <linearGradient id="bowlGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor={JAZZ_COLORS.GOLD} />
@@ -205,30 +160,9 @@ const FoodIcon = memo(function FoodIcon({ color }: { color: string }) {
       </defs>
       <ellipse cx="32" cy="44" rx="22" ry="10" fill="url(#bowlGrad)" />
       <path d="M10 44 Q10 58 32 58 Q54 58 54 44" fill={color} />
-      <ellipse
-        cx="32"
-        cy="40"
-        rx="18"
-        ry="6"
-        fill={JAZZ_COLORS.AMBER}
-        opacity="0.8"
-      />
-      <line
-        x1="38"
-        y1="20"
-        x2="48"
-        y2="38"
-        stroke={JAZZ_COLORS.GOLD}
-        strokeWidth="2"
-      />
-      <line
-        x1="42"
-        y1="18"
-        x2="50"
-        y2="36"
-        stroke={JAZZ_COLORS.GOLD_DARK}
-        strokeWidth="2"
-      />
+      <ellipse cx="32" cy="40" rx="18" ry="6" fill={JAZZ_COLORS.AMBER} opacity="0.8" />
+      <line x1="38" y1="20" x2="48" y2="38" stroke={JAZZ_COLORS.GOLD} strokeWidth="2" />
+      <line x1="42" y1="18" x2="50" y2="36" stroke={JAZZ_COLORS.GOLD_DARK} strokeWidth="2" />
       <path
         d="M24 30 Q22 24 26 20 Q24 16 28 12"
         stroke={JAZZ_COLORS.CREAM}
@@ -271,13 +205,7 @@ const ICON_MAP: Record<IconType, React.FC<{ color: string }>> = {
   food: FoodIcon,
 };
 
-export const JazzIcon = memo(function JazzIcon({
-  type,
-  color,
-}: {
-  type: IconType;
-  color: string;
-}) {
+export const JazzIcon = memo(function JazzIcon({ type, color }: { type: IconType; color: string }) {
   const IconComponent = ICON_MAP[type];
   return <IconComponent color={color} />;
 });

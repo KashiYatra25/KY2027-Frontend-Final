@@ -7,4 +7,4 @@ export {
   BottomBorder,
   GridOverlay,
   CrowdSilhouette,
-} from "./decorative";
+} from "./decor";

@@ -1,33 +1,25 @@
 "use client";
 
 import { memo } from "react";
-import { CONCERT_COLORS } from "../constants";
+import { CONCERT_COLORS } from "@/components/pages/home/sections/ProNites/constants";
 import { EqualizerBars } from "./EqualizerBars";
 
 export const SectionTitle = memo(function SectionTitle() {
   return (
-    <div className="text-center mb-12 sm:mb-16">
+    <div className="mb-12 text-center sm:mb-16">
       {/* Eyebrow */}
-      <div className="flex items-center justify-center gap-4 mb-4">
-        <EqualizerBars
-          className="hidden sm:flex opacity-80"
-          color={CONCERT_COLORS.NEON_PINK}
-        />
-        <span
-          className="text-xs sm:text-sm uppercase tracking-[0.3em] font-bold text-[#FFD700] sm:text-[#FF1493] [text-shadow:0_1px_8px_rgba(0,0,0,0.95)] sm:[text-shadow:0_0_20px_#FF1493]"
-        >
+      <div className="mb-4 flex items-center justify-center gap-4">
+        <EqualizerBars className="hidden opacity-80 sm:flex" color={CONCERT_COLORS.NEON_PINK} />
+        <span className="text-xs font-bold tracking-[0.3em] text-[#FFD700] uppercase [text-shadow:0_1px_8px_rgba(0,0,0,0.95)] sm:text-sm sm:text-[#FF1493] sm:[text-shadow:0_0_20px_#FF1493]">
           Pro Nites 2027
         </span>
-        <EqualizerBars
-          className="hidden sm:flex opacity-80"
-          color={CONCERT_COLORS.NEON_PINK}
-        />
+        <EqualizerBars className="hidden opacity-80 sm:flex" color={CONCERT_COLORS.NEON_PINK} />
       </div>
 
       {/* Main title */}
       <h2 className="relative inline-block">
         <span
-          className="text-4xl sm:text-6xl font-black uppercase tracking-tight"
+          className="text-4xl font-black tracking-tight uppercase sm:text-6xl"
           style={{
             background: `linear-gradient(180deg, 
               #FFFFFF 0%, 
@@ -45,15 +37,14 @@ export const SectionTitle = memo(function SectionTitle() {
 
         {/* Reflection - desktop only */}
         <span
-          className="hidden sm:block absolute left-0 top-full w-full text-4xl sm:text-6xl font-black uppercase tracking-tight opacity-20 scale-y-[-1] origin-top"
+          className="absolute top-full left-0 hidden w-full origin-top scale-y-[-1] text-4xl font-black tracking-tight uppercase opacity-20 sm:block sm:text-6xl"
           style={{
             background: `linear-gradient(180deg, ${CONCERT_COLORS.NEON_CYAN} 0%, transparent 60%)`,
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
             maskImage: "linear-gradient(to bottom, black 0%, transparent 50%)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, black 0%, transparent 50%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 50%)",
           }}
           aria-hidden="true"
         >
@@ -62,9 +53,7 @@ export const SectionTitle = memo(function SectionTitle() {
       </h2>
 
       {/* Subtitle */}
-      <p
-        className="mt-6 text-sm sm:text-base max-w-lg mx-auto leading-relaxed font-semibold sm:font-normal text-stone-300 sm:text-white/50 [text-shadow:0_1px_8px_rgba(0,0,0,0.95)] sm:[text-shadow:none]"
-      >
+      <p className="mx-auto mt-6 max-w-lg text-sm leading-relaxed font-semibold text-stone-300 [text-shadow:0_1px_8px_rgba(0,0,0,0.95)] sm:text-base sm:font-normal sm:text-white/50 sm:[text-shadow:none]">
         Three nights. Unlimited energy. The biggest artists hit the stage.
       </p>
     </div>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { IMAGES } from "@/lib/images";
+import { COLORS_RGBA } from "@/components/pages/ca/constants/palette";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -122,13 +123,13 @@ export function GridBackground() {
           background: `conic-gradient(
             from 0deg,
             transparent 0deg,
-            rgba(236, 72, 153, 0.3) 30deg,
+            ${COLORS_RGBA.PINK_30} 30deg,
             transparent 60deg,
-            rgba(139, 92, 246, 0.3) 120deg,
+            ${COLORS_RGBA.PURPLE_30} 120deg,
             transparent 150deg,
-            rgba(6, 182, 212, 0.3) 210deg,
+            ${COLORS_RGBA.CYAN_30} 210deg,
             transparent 240deg,
-            rgba(236, 72, 153, 0.3) 300deg,
+            ${COLORS_RGBA.PINK_30} 300deg,
             transparent 330deg,
             transparent 360deg
           )`,

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { NavbarTheme } from "../types";
-import { THEME_CONFIG } from "../config/desktop.config";
-import { BADGE_STYLES } from "../config/badge.config";
+import type { NavbarTheme } from "@/components/navbar/types/navbar.types";
+import { THEME_CONFIG } from "@/components/navbar/config/desktop.config";
+import { BADGE_STYLES } from "@/components/navbar/config/badge.config";
 
 /**
  * Theme-aware IIT BHU Badge

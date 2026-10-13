@@ -40,7 +40,7 @@ const highlights = [
 
 // 3D Disco Ball Model Component - respects MotionZone pause state
 function DiscoBallModel() {
-  const { scene } = useGLTF("/home/discoBall.glb");
+  const { scene } = useGLTF("/models/DiscoBall.glb");
   const groupRef = useRef<THREE.Group>(null);
   const { isAnimating } = useMotionZone();
   const { invalidate } = useThree();
@@ -70,7 +70,7 @@ function DiscoBall3D() {
       className="relative mx-auto h-36 w-36 sm:h-44 sm:w-44"
       initial={{ y: -200, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ once: true }}
+      viewport={{ once: false }}
       transition={{
         type: "spring",
         stiffness: 60,
@@ -212,7 +212,7 @@ function DiscoBall3D() {
 }
 
 // Preload
-useGLTF.preload("/home/discoBall.glb");
+useGLTF.preload("/models/DiscoBall.glb");
 
 // Animated Laser Beams - Only 2 (extreme left and extreme right) - Desktop only
 function LaserBeams() {
@@ -308,7 +308,7 @@ function SilhouetteImage() {
         alt="Crowd silhouette"
         className="h-full w-full object-cover object-top"
         onError={(e) => {
-          (e.target as HTMLImageElement).src = "/home/proNites/common/silhoutte.png";
+          (e.target as HTMLImageElement).src = "/home/proNites/Silhouette.png";
         }}
       />
     </div>
@@ -701,7 +701,7 @@ function AnimatedHighlightCard({ item, index }: { item: (typeof highlights)[0]; 
       className="highlight-card group relative cursor-pointer overflow-hidden rounded-2xl p-4 sm:p-6"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: false }}
       transition={{ delay: index * 0.1 }}
       whileHover={{ scale: 1.05, y: -5 }}
     >
@@ -927,7 +927,7 @@ function FestHighlightsContent() {
           </div>
 
           {/* Highlight Cards - Static on mobile, animated on desktop */}
-          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 2xl:max-w-6xl">
             {highlights.map((item, i) =>
               isMobile ? (
                 <StaticHighlightCard key={i} item={item} index={i} />

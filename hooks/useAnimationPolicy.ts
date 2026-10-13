@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { useIsMobile } from "./useIsMobile";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 
@@ -51,9 +52,24 @@ export function useAnimationPolicy(): AnimationPolicy {
   const isMobile = useIsMobile(ANIMATION_MOBILE_BREAKPOINT);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  return {
-    shouldAnimate: !isMobile && !prefersReducedMotion,
-    isMobile,
-    prefersReducedMotion,
-  };
+  // Both useIsMobile and usePrefersReducedMotion default to `false` during SSR
+  // and the first client render. Without this guard, shouldAnimate would be
+  // `true` on first render (!false && !false), causing animations to start and
+  // then flip off once the client effects resolve the real values.
+  //
+  // We gate shouldAnimate on `mounted` so it stays `false` until the client has
+  // hydrated and the underlying hooks have measured the actual environment.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  return useMemo(
+    () => ({
+      shouldAnimate: mounted && !isMobile && !prefersReducedMotion,
+      isMobile,
+      prefersReducedMotion,
+    }),
+    [mounted, isMobile, prefersReducedMotion]
+  );
 }

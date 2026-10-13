@@ -6,20 +6,12 @@
  */
 
 // Z-Index constants
-export {
-  Z_NAVBAR,
-  Z_HERO,
-  Z_VIBES,
-  Z_HIGHLIGHTS,
-  Z_FOOTER,
-  Z_PAGE,
-} from "./z-index";
+export { Z_NAVBAR, Z_HERO, Z_VIBES, Z_HIGHLIGHTS, Z_FOOTER, Z_PAGE } from "./z-index";
 
 // Size constants
 export {
   SIZE_RIVER,
   SIZE_STONES,
-  SIZE_STONE_TEXT,
   SIZE_LOTUS,
   SIZE_DIYA,
   SIZE_BOATS,

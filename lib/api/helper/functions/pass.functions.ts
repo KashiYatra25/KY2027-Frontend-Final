@@ -7,6 +7,7 @@ import type { PassConfig } from "@/components/pages/passes/config/passes.config"
 export function toPassConfig(pass: Pass): PassConfig {
   return {
     id: pass.slug,
+    _id: pass._id, // MongoDB ObjectId for API calls
     name: pass.name,
     price: pass.price,
     image: pass.image,

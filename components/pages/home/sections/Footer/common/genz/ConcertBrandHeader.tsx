@@ -3,7 +3,19 @@
 import { memo } from "react";
 import { motion } from "framer-motion";
 import { useAnimationPolicy } from "@/hooks";
-import { FOOTER_COLORS } from "../constants";
+import { FOOTER_COLORS } from "@/components/pages/home/sections/Footer/common/constants";
+
+// ═══════════════════════════════════════════════════════════════════
+// Pinkish text palette (matches the "PRO NITES" accent in the hero).
+// Scoped to this header so the shared FOOTER_COLORS tokens (and the rest
+// of the footer) stay on their warm gold/saffron theme.
+// ═══════════════════════════════════════════════════════════════════
+const PINK = {
+  BRIGHT: "#FF4D8D", // vivid hot pink (primary)
+  SOFT: "#FF8FB3", // light rose (secondary)
+  DEEP: "#E0558A", // magenta/rose (tertiary)
+  GLOW: "#FF6FA5", // halo/glow tone
+} as const;
 
 export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
   return (
@@ -13,14 +25,14 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
         <div
           className="h-[2px] w-16 sm:w-24"
           style={{
-            background: `linear-gradient(90deg, transparent, ${FOOTER_COLORS.NEON_CYAN})`,
+            background: `linear-gradient(90deg, transparent, ${PINK.BRIGHT})`,
           }}
         />
         <span className="text-2xl">⚡</span>
         <div
           className="h-[2px] w-16 sm:w-24"
           style={{
-            background: `linear-gradient(90deg, ${FOOTER_COLORS.NEON_CYAN}, transparent)`,
+            background: `linear-gradient(90deg, ${PINK.BRIGHT}, transparent)`,
           }}
         />
       </div>
@@ -31,7 +43,7 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
         style={{
           fontFamily: "var(--font-ethereal), 'Cinzel Decorative', serif",
           color: "#FFFFFF",
-          textShadow: `0 0 10px ${FOOTER_COLORS.NEON_PINK}60, 0 0 30px ${FOOTER_COLORS.NEON_PINK}40, 0 0 60px ${FOOTER_COLORS.NEON_PURPLE}30`,
+          textShadow: `0 0 10px ${PINK.BRIGHT}70, 0 0 30px ${PINK.BRIGHT}50, 0 0 60px ${PINK.DEEP}35`,
           letterSpacing: "0.15em",
         }}
       >
@@ -43,15 +55,15 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
         <div
           className="h-[1px] w-12 sm:w-20"
           style={{
-            background: `linear-gradient(90deg, transparent, ${FOOTER_COLORS.NEON_PINK})`,
+            background: `linear-gradient(90deg, transparent, ${PINK.BRIGHT})`,
           }}
         />
         <span
           className="text-4xl font-black tracking-[0.4em] sm:text-5xl md:text-6xl"
           style={{
             fontFamily: "var(--font-ethereal), 'Cinzel Decorative', serif",
-            color: FOOTER_COLORS.NEON_PINK,
-            textShadow: `0 0 20px ${FOOTER_COLORS.NEON_PINK}80, 0 0 40px ${FOOTER_COLORS.NEON_PINK}40, 0 0 80px ${FOOTER_COLORS.NEON_PURPLE}30`,
+            color: PINK.BRIGHT,
+            textShadow: `0 0 20px ${PINK.BRIGHT}90, 0 0 40px ${PINK.GLOW}50, 0 0 80px ${PINK.DEEP}35`,
           }}
         >
           2027
@@ -59,7 +71,7 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
         <div
           className="h-[1px] w-12 sm:w-20"
           style={{
-            background: `linear-gradient(90deg, ${FOOTER_COLORS.NEON_PINK}, transparent)`,
+            background: `linear-gradient(90deg, ${PINK.BRIGHT}, transparent)`,
           }}
         />
       </div>
@@ -99,8 +111,8 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
           <span
             className="font-bold"
             style={{
-              color: FOOTER_COLORS.NEON_PINK,
-              textShadow: `0 0 20px ${FOOTER_COLORS.NEON_PINK}50`,
+              color: PINK.BRIGHT,
+              textShadow: `0 0 20px ${PINK.BRIGHT}55`,
             }}
           >
             biggest cultural fest
@@ -109,8 +121,8 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
           <span
             className="font-bold"
             style={{
-              color: FOOTER_COLORS.NEON_CYAN,
-              textShadow: `0 0 20px ${FOOTER_COLORS.NEON_CYAN}50`,
+              color: PINK.SOFT,
+              textShadow: `0 0 20px ${PINK.SOFT}55`,
             }}
           >
             IIT (BHU) Varanasi
@@ -127,14 +139,14 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
           <div
             className="h-[1px] w-12 sm:w-20"
             style={{
-              background: `linear-gradient(90deg, transparent, ${FOOTER_COLORS.NEON_PURPLE})`,
+              background: `linear-gradient(90deg, transparent, ${PINK.DEEP})`,
             }}
           />
           <span
             className="text-lg"
             style={{
-              color: FOOTER_COLORS.NEON_PURPLE,
-              filter: `drop-shadow(0 0 8px ${FOOTER_COLORS.NEON_PURPLE})`,
+              color: PINK.DEEP,
+              filter: `drop-shadow(0 0 8px ${PINK.DEEP})`,
             }}
           >
             ✦
@@ -142,7 +154,7 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
           <div
             className="h-[1px] w-12 sm:w-20"
             style={{
-              background: `linear-gradient(90deg, ${FOOTER_COLORS.NEON_PURPLE}, transparent)`,
+              background: `linear-gradient(90deg, ${PINK.DEEP}, transparent)`,
             }}
           />
         </motion.div>
@@ -159,8 +171,8 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
           <span
             className="font-semibold not-italic"
             style={{
-              color: FOOTER_COLORS.NEON_CYAN,
-              textShadow: `0 0 20px ${FOOTER_COLORS.NEON_CYAN}60`,
+              color: PINK.SOFT,
+              textShadow: `0 0 20px ${PINK.SOFT}60`,
             }}
           >
             tradition
@@ -188,9 +200,9 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
             className="inline-block text-lg font-bold tracking-wide sm:text-xl md:text-2xl"
             animate={{
               textShadow: [
-                `0 0 20px ${FOOTER_COLORS.NEON_PINK}60`,
-                `0 0 40px ${FOOTER_COLORS.NEON_PINK}80`,
-                `0 0 20px ${FOOTER_COLORS.NEON_PINK}60`,
+                `0 0 20px ${PINK.BRIGHT}60`,
+                `0 0 40px ${PINK.BRIGHT}85`,
+                `0 0 20px ${PINK.BRIGHT}60`,
               ],
             }}
             transition={{
@@ -199,7 +211,7 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
               ease: "easeInOut",
             }}
             style={{
-              color: FOOTER_COLORS.NEON_PINK,
+              color: PINK.BRIGHT,
             }}
           >
             Are you ready? 🔥

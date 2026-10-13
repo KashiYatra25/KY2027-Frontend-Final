@@ -1,1 +1,2 @@
-export { SponsorsPageContent } from "./sections";
+export { SponsorsPageContent } from "./SponsorsPageContent";
+export { default } from "./SponsorsPageContent";

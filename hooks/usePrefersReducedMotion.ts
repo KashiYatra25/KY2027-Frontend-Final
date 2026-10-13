@@ -30,13 +30,18 @@ const QUERY = "(prefers-reduced-motion: reduce)";
  * <motion.div animate={prefersReducedMotion ? {} : { y: [0, -10, 0] }} />
  */
 export function usePrefersReducedMotion(): boolean {
-  // Default to false on server, will update on client
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  // Lazy initializer: read the real value synchronously on the client so the
+  // first client render already reflects the user's preference (no one-render
+  // flash). Falls back to false on the server where `window` is undefined.
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState<boolean>(
+    () => typeof window !== "undefined" && window.matchMedia(QUERY).matches
+  );
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(QUERY);
-    
-    // Set initial value
+
+    // Re-sync in case the preference changed between the initial render and
+    // the effect running (e.g. during hydration).
     setPrefersReducedMotion(mediaQuery.matches);
 
     // Listen for changes (user might toggle setting while on page)

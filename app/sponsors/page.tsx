@@ -2,13 +2,22 @@ import { Metadata } from "next";
 import { SponsorsPageContent } from "@/components/pages/sponsors";
 
 export const metadata: Metadata = {
-  title: "Sponsors",
+  title: "Partner With Us | Kashiyatra 2027",
   description:
-    "Our valued sponsors & partners powering Kashi Yatra 2027. Join top brands supporting IIT BHU's biggest cultural festival.",
+    "Join the cultural movement. Partner with Kashiyatra - IIT BHU's biggest socio-cultural festival. Connect with 15,000+ students across 4 days of music, art, and performance.",
   openGraph: {
-    title: "Sponsors | Kashi Yatra 2027",
-    description: "Meet the brands powering IIT BHU's biggest cultural fest.",
+    title: "Partner With Us | Kashiyatra 2027",
+    description: "Your brand. Our stage. Partner with IIT BHU's biggest cultural festival.",
   },
+  keywords: [
+    "Kashiyatra sponsorship",
+    "IIT BHU fest sponsor",
+    "college fest partnership",
+    "brand activation",
+    "campus marketing",
+    "youth engagement",
+    "cultural festival sponsor",
+  ],
 };
 
 export default function SponsorsPage() {

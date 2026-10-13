@@ -1,6 +1,11 @@
 /**
  * Events Configuration
  * All event categories and their sub-events for Kashi Yatra 2027
+ *
+ * @deprecated This static config is only used by campusMap.config.ts for the schedule page.
+ * Events pages now fetch data from the backend API via useEvents/useEventsByCategory hooks.
+ * Once the backend has a schedule/events-venue-mapping API, this file can be removed.
+ * See: lib/api/hooks/events/useEvents.ts for the API-based approach.
  */
 
 import type { SubEvent, EventCategory } from "@/lib/api/helper/types";

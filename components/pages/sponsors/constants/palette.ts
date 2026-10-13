@@ -1,56 +1,77 @@
 // ═══════════════════════════════════════════════════════════════════
-// SPONSORS PAGE COLOR PALETTE
-// Gen-Z concert theme — greenish-white neon stage lights
-//
-// Self-contained color definitions for the Sponsors page. These mirror
-// the colors currently used inline in SponsorsPageContent.tsx so the
-// page does not depend on the home palette.
+// SPONSORS PAGE - KASHI AFTER DARK PALETTE
+// Bold Gen-Z poster theme — clean neon on dark
 // ═══════════════════════════════════════════════════════════════════
 
-export const COLORS = {
-  // Deep backgrounds
-  BG_DEEP: "#030308",
-  BG_PURPLE: "#050a08",
+export const PALETTE = {
+  // Neon accents
+  ACID_LIME: "#D7FF00",
+  ELECTRIC_VIOLET: "#8B5CF6",
+  HOT_PINK: "#FF3EA5",
+  NEON_CYAN: "#00E5FF",
+  FESTIVAL_GOLD: "#FFC247",
+  SIGNAL_ORANGE: "#FF6B35",
 
-  // Neon accent palette (green-forward concert theme)
-  NEON_CYAN: "#00FFAA", // Mint / teal green
-  NEON_PINK: "#00FF88", // Bright green (named pink for structural parity)
-  NEON_PURPLE: "#88FFCC", // Light mint
-  NEON_LIME: "#BFFF00", // Lime green
-  NEON_GREEN: "#00FF66", // Pure neon green
+  // Base tones
+  DEEP_INK: "#0A0A0F",
+  MIDNIGHT: "#111118",
+  PAPER_WHITE: "#F5F1E8",
 
-  // Supporting
-  GOLD: "#CCFFCC", // Pale green-white
-  WHITE: "#FFFFFF",
+  // Text
+  TEXT_PRIMARY: "#FFFFFF",
+  TEXT_SECONDARY: "rgba(255, 255, 255, 0.7)",
+  TEXT_MUTED: "rgba(255, 255, 255, 0.5)",
 } as const;
 
 // ═══════════════════════════════════════════════════════════════════
-// GRADIENTS - recurring background / headline gradients
+// GRADIENTS
 // ═══════════════════════════════════════════════════════════════════
 
 export const GRADIENTS = {
-  // Page background (top → middle → top)
-  PAGE_BG: `linear-gradient(180deg, ${COLORS.BG_DEEP} 0%, ${COLORS.BG_PURPLE} 50%, ${COLORS.BG_DEEP} 100%)`,
+  // Page background
+  PAGE_BG: `linear-gradient(180deg, ${PALETTE.DEEP_INK} 0%, ${PALETTE.MIDNIGHT} 50%, ${PALETTE.DEEP_INK} 100%)`,
 
-  // Multi-stop headline title gradient
-  TITLE: `linear-gradient(135deg, ${COLORS.WHITE} 0%, ${COLORS.NEON_CYAN} 25%, ${COLORS.WHITE} 50%, ${COLORS.NEON_PINK} 75%, ${COLORS.WHITE} 100%)`,
+  // Headline gradients
+  TITLE: `linear-gradient(135deg, ${PALETTE.ACID_LIME} 0%, ${PALETTE.NEON_CYAN} 50%, ${PALETTE.HOT_PINK} 100%)`,
+  GOLD_TITLE: `linear-gradient(135deg, ${PALETTE.FESTIVAL_GOLD} 0%, ${PALETTE.SIGNAL_ORANGE} 100%)`,
 
-  // Pink → purple accent used in inline text highlights
-  PINK_PURPLE: `linear-gradient(90deg, ${COLORS.NEON_PINK}, ${COLORS.NEON_PURPLE})`,
+  // Accent gradients
+  VIOLET_PINK: `linear-gradient(90deg, ${PALETTE.ELECTRIC_VIOLET}, ${PALETTE.HOT_PINK})`,
+  LIME_CYAN: `linear-gradient(90deg, ${PALETTE.ACID_LIME}, ${PALETTE.NEON_CYAN})`,
 
-  // Stage curtain (dark green drape)
-  CURTAIN: "linear-gradient(90deg, #004d33 0%, #002d1a 50%, #001a0d 100%)",
+  // Button
+  CTA_PRIMARY: `linear-gradient(135deg, ${PALETTE.HOT_PINK} 0%, ${PALETTE.ELECTRIC_VIOLET} 100%)`,
+  CTA_SECONDARY: `linear-gradient(135deg, ${PALETTE.ACID_LIME} 0%, ${PALETTE.NEON_CYAN} 100%)`,
 } as const;
 
 // ═══════════════════════════════════════════════════════════════════
-// SHADOWS / GLOWS - neon glow helpers
+// SHADOWS / GLOWS
 // ═══════════════════════════════════════════════════════════════════
 
 export const SHADOWS = {
-  LIGHT_FIXTURE: "0 4px 15px rgba(0,0,0,0.5)",
-  LOGO_CARD: "0 2px 8px rgba(0,0,0,0.15)",
-  TITLE_DROP: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))",
-  BRANCH_GLOW: "drop-shadow(0 0 15px rgba(0,255,100,0.3))",
+  CARD: "0 4px 30px rgba(0,0,0,0.5)",
+  LIME_GLOW: `0 0 30px ${PALETTE.ACID_LIME}40`,
+  PINK_GLOW: `0 0 30px ${PALETTE.HOT_PINK}40`,
+  VIOLET_GLOW: `0 0 30px ${PALETTE.ELECTRIC_VIOLET}40`,
+  CYAN_GLOW: `0 0 30px ${PALETTE.NEON_CYAN}40`,
+  GOLD_GLOW: `0 0 30px ${PALETTE.FESTIVAL_GOLD}40`,
 } as const;
 
-export type SponsorColor = keyof typeof COLORS;
+// Tier-specific styling (for potential future use)
+export const TIER_STYLES = {
+  title: {
+    color: PALETTE.FESTIVAL_GOLD,
+    glow: SHADOWS.GOLD_GLOW,
+    gradient: `linear-gradient(135deg, ${PALETTE.FESTIVAL_GOLD}15 0%, transparent 100%)`,
+  },
+  "powered-by": {
+    color: PALETTE.HOT_PINK,
+    glow: SHADOWS.PINK_GLOW,
+    gradient: `linear-gradient(135deg, ${PALETTE.HOT_PINK}15 0%, transparent 100%)`,
+  },
+  partner: {
+    color: PALETTE.NEON_CYAN,
+    glow: SHADOWS.CYAN_GLOW,
+    gradient: `linear-gradient(135deg, ${PALETTE.NEON_CYAN}15 0%, transparent 100%)`,
+  },
+} as const;

@@ -1,6 +1,5 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import type { Session } from "@auth/core/types";
 import { EnhancedSession } from "./helper/types/index";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
@@ -54,7 +53,26 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "google" && user.email) {
-        const slugName = user.email.split("@")[0] ?? user.email;
+        // ═══════════════════════════════════════════════════════════════
+        // SEC-001 FIX: Send Google ID token for server-side verification
+        //
+        // BEFORE (VULNERABLE):
+        // - Sent user.id, user.email from client
+        // - Backend trusted this data blindly
+        // - Attacker could spoof any user
+        //
+        // AFTER (SECURE):
+        // - Send account.id_token (Google-signed JWT)
+        // - Backend verifies with Google's servers
+        // - Extracts verified user data server-side
+        // ═══════════════════════════════════════════════════════════════
+
+        const idToken = account.id_token;
+
+        if (!idToken) {
+          console.error("No ID token received from Google");
+          return false;
+        }
 
         try {
           const response = await fetch(`${BACKEND_URL}/api/v1/user/auth`, {
@@ -63,17 +81,14 @@ export const authOptions: NextAuthOptions = {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              id: user.id,
-              email: user.email,
-              slugName,
-              googleAvatarUrl: user.image ?? undefined,
+              idToken, // Only send the Google ID token
             }),
           });
 
           if (response.ok || response.status === 409) {
-            const user = await response.json();
-            authenticatedUser.role = user.role;
-            authenticatedUser.accountStatus = user.accountStatus;
+            const userData = await response.json();
+            authenticatedUser.role = userData.role;
+            authenticatedUser.accountStatus = userData.accountStatus;
             return true;
           }
 

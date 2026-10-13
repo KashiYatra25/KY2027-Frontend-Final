@@ -1,4 +1,4 @@
-import type { NavbarTheme } from "../types";
+import type { NavbarTheme } from "@/components/navbar/types/navbar.types";
 
 /**
  * Theme-aware four-point sparkle that shines beside each nav link.

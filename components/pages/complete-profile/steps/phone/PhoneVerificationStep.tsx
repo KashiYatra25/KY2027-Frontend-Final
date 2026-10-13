@@ -7,7 +7,8 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import type { E164Number } from "libphonenumber-js/core";
 import { useUpdatePhone } from "@/lib/api/hooks";
 import { COLORS } from "@/components/pages/complete-profile/constants/palette";
-import { PhoneInput, VerificationError } from "./components";
+import { PhoneInput } from "./components/PhoneInput";
+import { VerificationError } from "./components/VerificationError";
 
 // ═══════════════════════════════════════════════════════════════════
 // TYPES

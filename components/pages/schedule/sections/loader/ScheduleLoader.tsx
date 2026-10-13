@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TONE_COLORS } from "../../constants";
+import { TONE_COLORS } from "@/components/pages/schedule/constants";
 
 // ═══════════════════════════════════════════════════════════════════
 // SCHEDULE PAGE LOADER

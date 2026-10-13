@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { COLORS } from "@/components/pages/ca/constants/palette";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -205,8 +206,8 @@ export function FloatingElements() {
         <polygon points="50,95 5,25 95,25" fill="none" stroke="url(#grad1)" strokeWidth="0.5" />
         <defs>
           <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#ec4899" />
-            <stop offset="100%" stopColor="#8b5cf6" />
+            <stop offset="0%" stopColor={COLORS.PINK} />
+            <stop offset="100%" stopColor={COLORS.PURPLE} />
           </linearGradient>
         </defs>
       </svg>
@@ -220,8 +221,8 @@ export function FloatingElements() {
         <circle cx="50" cy="50" r="15" fill="none" stroke="url(#grad2)" strokeWidth="0.5" />
         <defs>
           <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#06b6d4" />
-            <stop offset="100%" stopColor="#8b5cf6" />
+            <stop offset="0%" stopColor={COLORS.CYAN} />
+            <stop offset="100%" stopColor={COLORS.PURPLE} />
           </linearGradient>
         </defs>
       </svg>
@@ -246,7 +247,7 @@ export function FloatingElements() {
             width: p.size,
             height: p.size,
             background:
-              p.color === "pink" ? "#ec4899" : p.color === "purple" ? "#8b5cf6" : "#06b6d4",
+              p.color === "pink" ? COLORS.PINK : p.color === "purple" ? COLORS.PURPLE : COLORS.CYAN,
             boxShadow: `0 0 ${p.size * 3}px ${p.color === "pink" ? "rgba(236, 72, 153, 0.8)" : p.color === "purple" ? "rgba(139, 92, 246, 0.8)" : "rgba(6, 182, 212, 0.8)"}`,
             animation: `twinkle ${3 + i * 0.5}s ease-in-out infinite ${i * 0.3}s`,
           }}

@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemedNavbar, LightNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 
 /**
@@ -16,9 +16,6 @@ import { useScrollPosition } from "@/hooks/useScrollPosition";
  *   <ThemedNavbar position="fixed" topOffset={18} theme="main" />
  */
 
-// Re-export themed navbar
-export { ThemedNavbar, LightNavbar } from "@/components/navbar";
-
 /**
  * Navbar (Default)
  *
@@ -31,7 +28,7 @@ export { ThemedNavbar, LightNavbar } from "@/components/navbar";
  */
 export function Navbar() {
   const { visible } = useScrollPosition({
-    showAfterPercent: 3.7, // Show after scrolling ~4x viewport (when BanarasiVibes is in view)
+    showAfterPercent: 0.85, // Show after scrolling ~85% of viewport (when ProNites header visible)
     hideBeforeBottomPercent: 1.5, // Hide when 1.5x viewport from bottom (desktop)
     hideBeforeBottomPercentMobile: 0.5, // Hide when 0.5x viewport from bottom (mobile)
   });

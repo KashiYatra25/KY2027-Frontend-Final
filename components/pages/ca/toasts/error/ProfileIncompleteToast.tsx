@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { COLORS_RGBA, GRADIENTS } from "@/components/pages/ca/constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
 // PROFILE INCOMPLETE TOAST / MODAL
@@ -28,7 +29,7 @@ export function ProfileIncompleteToast({
         style={{
           background:
             "linear-gradient(135deg, rgba(15, 10, 26, 0.95) 0%, rgba(20, 15, 35, 0.95) 100%)",
-          border: "1px solid rgba(139, 92, 246, 0.3)",
+          border: `1px solid ${COLORS_RGBA.PURPLE_30}`,
           boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
         }}
       >
@@ -70,7 +71,7 @@ export function ProfileIncompleteToast({
               className="h-full rounded-full transition-all duration-500"
               style={{
                 width: `${completionPercentage}%`,
-                background: "linear-gradient(90deg, #ec4899, #8b5cf6)",
+                background: GRADIENTS.PINK_PURPLE,
               }}
             />
           </div>
@@ -81,7 +82,7 @@ export function ProfileIncompleteToast({
             href="/complete-profile"
             className="flex-1 rounded-lg px-6 py-3 text-center font-semibold text-white transition-all duration-300 hover:scale-[1.02]"
             style={{
-              background: "linear-gradient(135deg, #ec4899, #8b5cf6)",
+              background: GRADIENTS.PINK_PURPLE,
             }}
           >
             Complete Profile

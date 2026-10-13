@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client/react";
-import { LightNavbar } from "@/components/navbar/Navbar";
+import { ThemedNavbar } from "@/components/navbar";
 import {
   ACCOUNT_PROGRESS_WITH_STEPS_QUERY,
   type AccountProgressWithStepsQueryResponse,
@@ -12,8 +12,8 @@ import Footer from "./Footer";
 import { StepperIndicator } from "./StepperIndicator";
 import { STEPS } from "./config/data";
 import { COLORS } from "./constants/palette";
-import { ErrorState } from "./error";
-import { CompleteProfileLoader } from "./loader";
+import { ErrorState } from "./error/ErrorState";
+import { CompleteProfileLoader } from "./loader/CompleteProfileLoader";
 import { AadhaarUploadStep } from "./steps/adhaar/upload";
 import { AadhaarVerifyStep } from "./steps/adhaar/verify";
 import { CollegeDetailsStep } from "./steps/college/CollegeDetailsStep";
@@ -128,10 +128,10 @@ export function CompleteProfileContent() {
           />
 
           <div className="p-6 sm:p-10">
-            {/* Step Content */}
-            {currentStep === 1 && <AadhaarUploadStep refetchProgress={refetchProgress} />}
-            {currentStep === 2 && <AadhaarVerifyStep refetchProgress={refetchProgress} />}
-            {currentStep === 3 && <CollegeDetailsStep refetchProgress={refetchProgress} />}
+            {/* Step Content - Order: College (1) → Aadhaar Upload (2) → Aadhaar Verify (3) → Phone (4) */}
+            {currentStep === 1 && <CollegeDetailsStep refetchProgress={refetchProgress} />}
+            {currentStep === 2 && <AadhaarUploadStep refetchProgress={refetchProgress} />}
+            {currentStep === 3 && <AadhaarVerifyStep refetchProgress={refetchProgress} />}
             {currentStep === 4 && <PhoneVerificationStep refetchProgress={refetchProgress} />}
           </div>
         </div>
@@ -146,7 +146,7 @@ export function CompleteProfileContent() {
     <>
       {/* Fixed navbar */}
       <div className="fixed inset-x-0 top-0 z-[200]">
-        <LightNavbar position="relative" topOffset={18} theme="main" />
+        <ThemedNavbar position="relative" topOffset={18} theme="main" />
       </div>
 
       {/* Main content with background - always rendered */}
@@ -160,7 +160,7 @@ export function CompleteProfileContent() {
           `,
         }}
       >
-        <div className="mx-auto max-w-4xl">{renderContent()}</div>
+        <div className="mx-auto max-w-4xl lg:max-w-5xl 2xl:max-w-6xl">{renderContent()}</div>
       </main>
     </>
   );

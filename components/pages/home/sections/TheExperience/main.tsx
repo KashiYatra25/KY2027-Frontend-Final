@@ -6,15 +6,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { JAZZ_COLORS } from "@/components/pages/home/constants/palette";
 import { EXPERIENCES } from "./data/experiences.config";
 import { JazzTile } from "./tiles";
-import { SectionTitle } from "./decorations";
+import { SectionTitle } from "./decor";
 import { MotionZone } from "@/lib/motion";
 import { useAnimationPolicy } from "@/hooks";
-import { BackgroundDecor, BottomBorder } from "./desktop/BackgroundDecor";
+import { BackgroundDecor } from "./desktop/BackgroundDecor";
+import { BottomBorder } from "./desktop/BottomBorder";
 import { FloatingOrbs } from "./desktop/FloatingOrbs";
 import { SareeDrape } from "./desktop/SareeDrape";
 import { DesktopDJ } from "./desktop/DesktopDJ";
 import { ScrollingTextBG } from "./desktop/ScrollingTextBG";
-import { MobileDJ } from "./mobile";
+import { MobileDJ } from "./mobile/MobileDJ";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -144,7 +145,7 @@ export const TheExperience = memo(function TheExperience() {
         {/* DJ Character - Mobile only, static, lower z-index (no animation) */}
         <MobileDJ />
 
-        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 2xl:max-w-7xl">
           {/* Section Title */}
           <div ref={titleRef}>
             <SectionTitle />

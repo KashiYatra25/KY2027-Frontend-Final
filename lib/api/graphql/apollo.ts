@@ -20,4 +20,5 @@ export const apolloClient = new ApolloClient({
       },
     },
   }),
+  // DevTools are automatically enabled in development mode in Apollo Client v4
 });

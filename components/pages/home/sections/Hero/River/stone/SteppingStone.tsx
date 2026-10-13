@@ -47,25 +47,25 @@ export const SteppingStone = memo(function SteppingStone({
   const stone = (
     <span style={animStyle} className={`stone-responsive ${className}`}>
       {/* Outer wrapper with padding for larger hover target area */}
-      <span className="stone-interactive relative inline-block p-3 -m-3">
+      <span className="stone-interactive relative -m-3 inline-block p-3">
         {/* Ripple rings */}
         <span
           aria-hidden
-          className="stone-ripple absolute left-1/2 -translate-x-1/2 rounded-[50%] pointer-events-none"
+          className="stone-ripple pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-[50%]"
         />
         <span
           aria-hidden
-          className="stone-ripple stone-ripple-2 absolute left-1/2 -translate-x-1/2 rounded-[50%] pointer-events-none"
+          className="stone-ripple stone-ripple-2 pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-[50%]"
         />
         {/* Water-contact glow */}
         <span
           aria-hidden
-          className="stone-waterglow absolute left-1/2 -translate-x-1/2 rounded-[50%] pointer-events-none"
+          className="stone-waterglow pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-[50%]"
         />
         {/* Reflection */}
         <span
           aria-hidden
-          className="stone-reflection absolute left-1/2 pointer-events-none overflow-hidden"
+          className="stone-reflection pointer-events-none absolute left-1/2 overflow-hidden"
         >
           <Image
             src={IMAGES.hero.steppingStone}
@@ -79,20 +79,28 @@ export const SteppingStone = memo(function SteppingStone({
           src={IMAGES.hero.steppingStone}
           alt={label ? `${label} stone` : "stepping stone"}
           fill
-          className="stone-img object-contain select-none pointer-events-none relative"
+          className="stone-img pointer-events-none relative object-contain select-none"
           style={{ filter: "drop-shadow(0 6px 10px rgba(0,0,0,0.55))" }}
         />
         {/* Label or Loading Spinner */}
         {loadingSpinner ? (
-          <span className="absolute inset-0 flex items-center justify-center pb-1">
-            <Spinner className="size-4 sm:size-5 text-amber-100" style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.9))" }} />
+          <span
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ paddingBottom: "30%" }}
+          >
+            <Spinner
+              className="size-4 text-amber-100 sm:size-5"
+              style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.9))" }}
+            />
           </span>
         ) : label ? (
           <span
-            className="stone-label absolute inset-0 flex items-center justify-center text-center font-bold text-amber-100 uppercase text-[8px] sm:text-[15px] tracking-wide pb-1"
+            className="stone-label absolute inset-0 flex items-center justify-center text-center text-[7px] font-bold tracking-wide text-amber-100 uppercase sm:text-[12px]"
             style={{
               fontFamily: "var(--font-ethereal), serif",
               textShadow: "0 1px 4px rgba(0,0,0,0.95), 0 0 2px rgba(0,0,0,0.9)",
+              paddingBottom: "5%",
+              left: "8px",
             }}
           >
             {label}
@@ -112,10 +120,7 @@ export const SteppingStone = memo(function SteppingStone({
 
   if (onClick) {
     return (
-      <button
-        onClick={onClick}
-        style={{ background: "none", border: "none", padding: 0 }}
-      >
+      <button onClick={onClick} style={{ background: "none", border: "none", padding: 0 }}>
         {stone}
       </button>
     );

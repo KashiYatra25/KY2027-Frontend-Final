@@ -1,7 +1,7 @@
 "use client";
 
 import { PassesSection } from "@/components/pages/passes/sections/main";
-import { LightNavbar } from "@/components/navbar/Navbar";
+import { ThemedNavbar } from "@/components/navbar";
 
 export function PassesPageContent() {
   return (
@@ -23,7 +23,7 @@ export function PassesPageContent() {
     >
       {/* Fixed navbar - always visible on passes page */}
       <div className="fixed inset-x-0 top-0 z-[200]">
-        <LightNavbar position="relative" topOffset={18} theme="main" />
+        <ThemedNavbar position="relative" topOffset={18} theme="main" />
       </div>
 
       <PassesSection />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useAnimationPolicy } from "@/hooks";
-import { ReactNode, createContext, useContext, useEffect, useRef, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 /**
  * MotionZone Context
@@ -96,7 +96,7 @@ export function MotionZone({
 }: MotionZoneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { shouldAnimate, isMobile } = useAnimationPolicy();
-  const [isInView, setIsInView] = useState(true);
+  const [isInView, setIsInView] = useState(false);
 
   // Compute whether animations should run (policy + in-view)
   const isAnimating = shouldAnimate && isInView;
@@ -148,7 +148,7 @@ export function MotionZone({
   }, [isAnimating]);
 
   // Context value for framer-motion descendants
-  const contextValue = { isAnimating, isMobile };
+  const contextValue = useMemo(() => ({ isAnimating, isMobile }), [isAnimating, isMobile]);
 
   return (
     <MotionZoneContext.Provider value={contextValue}>

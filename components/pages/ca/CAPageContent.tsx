@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { LightNavbar } from "@/components/navbar/Navbar";
+import { ThemedNavbar } from "@/components/navbar";
 import {
   HeroSection,
   PerksSection,
@@ -15,6 +15,7 @@ import {
   GridBackground,
   Astronaut3D,
 } from "@/components/pages/ca/sections/decor";
+import { COLORS, COLORS_RGBA, GRADIENTS } from "@/components/pages/ca/constants/palette";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -68,10 +69,14 @@ export function CAPageContent() {
   }, []);
 
   return (
-    <div ref={mainRef} className="relative min-h-screen overflow-hidden bg-[#0a0612]">
+    <div
+      ref={mainRef}
+      className="relative min-h-screen overflow-hidden"
+      style={{ backgroundColor: COLORS.BG_DEEP }}
+    >
       {/* Fixed navbar */}
       <div className="fixed inset-x-0 top-0 z-[200]">
-        <LightNavbar position="relative" topOffset={18} theme="about" />
+        <ThemedNavbar position="relative" topOffset={18} theme="about" />
       </div>
 
       {/* Background effects */}
@@ -86,8 +91,7 @@ export function CAPageContent() {
         <div
           className="absolute inset-0"
           style={{
-            background:
-              "linear-gradient(135deg, rgba(236, 72, 153, 0.3) 0%, rgba(139, 92, 246, 0.3) 50%, rgba(6, 182, 212, 0.3) 100%)",
+            background: `linear-gradient(135deg, ${COLORS_RGBA.PINK_30} 0%, ${COLORS_RGBA.PURPLE_30} 50%, ${COLORS_RGBA.CYAN_30} 100%)`,
           }}
         />
       </div>
@@ -116,7 +120,7 @@ export function CAPageContent() {
         <div
           className="h-full origin-left"
           style={{
-            background: "linear-gradient(90deg, #ec4899, #8b5cf6, #06b6d4)",
+            background: GRADIENTS.TRI_90,
           }}
           ref={(el) => {
             if (el) {

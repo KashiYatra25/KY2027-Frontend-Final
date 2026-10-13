@@ -1,4 +1,4 @@
-import type { NavbarTheme, DropdownThemeConfig } from "../types";
+import type { NavbarTheme, DropdownThemeConfig } from "@/components/navbar/types/navbar.types";
 
 // ═══════════════════════════════════════════════════════════════════
 // DROPDOWN CONFIGURATION

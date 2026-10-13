@@ -1,6 +1,6 @@
 import Fuse from "fuse.js";
 import collegesData from "@/components/pages/complete-profile/steps/college/data/colleges.json";
-import type { College } from "@/components/pages/complete-profile/steps/college/data";
+import type { College } from "@/components/pages/complete-profile/steps/college/data/config";
 
 // ═══════════════════════════════════════════════════════════════════
 // DATA

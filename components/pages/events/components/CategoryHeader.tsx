@@ -3,7 +3,7 @@
 import { memo } from "react";
 import Link from "next/link";
 import type { EventCategory } from "@/lib/api/helper/types";
-import { COLORS, JAZZ_COLORS } from "../constants/palette";
+import { COLORS, JAZZ_COLORS } from "@/components/pages/events/constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
 // CATEGORY HEADER COMPONENT

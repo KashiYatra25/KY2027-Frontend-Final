@@ -1,7 +1,7 @@
 "use client";
 
 import { JAZZ_COLORS } from "@/components/pages/contact/constants/palette";
-import { LightNavbar } from "@/components/navbar/Navbar";
+import { ThemedNavbar } from "@/components/navbar";
 import { AmbientDecor, ContactHero, ContactForm, ContactInfo } from ".";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -12,7 +12,7 @@ export function ContactPageContent() {
     <>
       {/* Fixed navbar - always visible (matches events/passes/about internal pages) */}
       <div className="fixed inset-x-0 top-0 z-[200]">
-        <LightNavbar position="relative" topOffset={18} theme="main" />
+        <ThemedNavbar position="relative" topOffset={18} theme="main" />
       </div>
 
       <main

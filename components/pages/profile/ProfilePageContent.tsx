@@ -1,10 +1,19 @@
 "use client";
 
-import { LightNavbar } from "@/components/navbar/Navbar";
-import { ProfileLoader } from "./loader";
-import { useFullAccount, useSignOut } from "@/lib/api/hooks";
-import { ProfileHero, DetailedInfo, ProfileFooter } from "./sections";
-import { ErrorState } from "./error";
+import { Suspense } from "react";
+import { ThemedNavbar } from "@/components/navbar";
+import { AuthSuccessToastHandler } from "@/components/auth";
+import { useMyAccount, useSignOut, useCaInfo } from "@/lib/api/hooks";
+import {
+  ProfileHero,
+  DetailedInfo,
+  ProfileFooter,
+  ProfileLoader,
+  ErrorState,
+  MyTeamsSection,
+  MyRegistrationsSection,
+  CaStatusSection,
+} from "./sections";
 import { COLORS } from "./constants/palette";
 import { ProfileUser } from "@/lib/api/helper/types";
 
@@ -21,13 +30,29 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
   const { isSigningOut, handleSignOut } = useSignOut();
 
   // Fetch account data via GraphQL - returns profile + progress
-  const { profile: userData, progress, isLoading, isError } = useFullAccount();
+  const { profile: userData, progress, isLoading, isError } = useMyAccount("full");
+
+  // Fetch CA data via GraphQL - full info for profile page
+  const {
+    hasApplied: caHasApplied,
+    applicationStatus: caStatus,
+    appliedAt: caAppliedAt,
+    referralId: caReferralId,
+    numberOfReferrals: caReferrals,
+    isApproved: isCaApproved,
+    isLoading: caLoading,
+  } = useCaInfo("full");
 
   return (
     <>
+      {/* Auth success toast handler - handles success & already-logged-in toasts */}
+      <Suspense fallback={null}>
+        <AuthSuccessToastHandler />
+      </Suspense>
+
       {/* Fixed navbar */}
       <div className="fixed inset-x-0 top-0 z-[200]">
-        <LightNavbar position="relative" topOffset={18} theme="main" />
+        <ThemedNavbar position="relative" topOffset={18} theme="main" />
       </div>
 
       <main
@@ -40,18 +65,40 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
           `,
         }}
       >
-        <div className="mx-auto max-w-5xl">
-          {isLoading ? (
+        <div className="mx-auto max-w-5xl 2xl:max-w-6xl">
+          {isLoading || caLoading ? (
             <ProfileLoader />
           ) : isError ? (
             <ErrorState />
           ) : (
             <>
-              {/* Hero Section - Avatar, Name, Status */}
-              <ProfileHero userData={userData} user={user} progress={progress} />
+              {/* Hero Section - Avatar, Name, Status, CA Badge */}
+              <ProfileHero
+                userData={userData}
+                user={user}
+                progress={progress}
+                isApprovedCa={isCaApproved}
+              />
+
+              {/* CA Status Section - Only show if user has applied */}
+              {caHasApplied && (
+                <CaStatusSection
+                  hasApplied={caHasApplied}
+                  applicationStatus={caStatus}
+                  appliedAt={caAppliedAt}
+                  referralId={caReferralId}
+                  numberOfReferrals={caReferrals}
+                />
+              )}
 
               {/* Detailed Info Section - Cards & Verification */}
               <DetailedInfo userData={userData} user={user} progress={progress} />
+
+              {/* Teams & Registrations Grid */}
+              <div className="mt-8 grid gap-6 md:grid-cols-2">
+                <MyTeamsSection />
+                <MyRegistrationsSection />
+              </div>
 
               {/* Footer Section - Sign Out & Decorative */}
               <ProfileFooter isSigningOut={isSigningOut} handleSignOut={handleSignOut} />

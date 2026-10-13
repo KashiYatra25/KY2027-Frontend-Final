@@ -20,17 +20,11 @@ export const SIZE_RIVER = {
 
 /** Stepping stone sizes (width = height for square stones) */
 export const SIZE_STONES = {
-  SCHEDULE: { mobile: 70, desktop: 130 },
-  EVENTS: { mobile: 100, desktop: 130 },
-  REGISTER: { mobile: 85, desktop: 130 },
-  GALLERY: { mobile: 70, desktop: 120 },
-  ABOUT: { mobile: 65, desktop: 120 },
-} as const;
-
-/** Stepping stone label text sizes */
-export const SIZE_STONE_TEXT = {
-  mobile: "8px",
-  desktop: "15px",
+  SCHEDULE: { mobile: 120, desktop: 200 },
+  EVENTS: { mobile: 100, desktop: 160 },
+  REGISTER: { mobile: 94, desktop: 180 },
+  GALLERY: { mobile: 105, desktop: 180 },
+  ABOUT: { mobile: 95, desktop: 170 },
 } as const;
 
 /**

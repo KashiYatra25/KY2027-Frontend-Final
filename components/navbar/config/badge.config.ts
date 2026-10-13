@@ -1,4 +1,4 @@
-import type { NavbarTheme, BadgeStyleConfig } from "../types";
+import type { NavbarTheme, BadgeStyleConfig } from "@/components/navbar/types/navbar.types";
 
 // ═══════════════════════════════════════════════════════════════════
 // BADGE CONFIGURATION

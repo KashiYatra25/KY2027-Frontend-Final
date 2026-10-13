@@ -1,6 +1,6 @@
 "use client";
 
-import { JAZZ_COLORS } from "../../constants/palette";
+import { JAZZ_COLORS } from "@/components/pages/events/constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
 // EVENTS DECORATIVE ELEMENTS

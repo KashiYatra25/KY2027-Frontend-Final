@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useRef, useMemo } from "react";
-import { useIntro } from "../../context/IntroContext";
+import { useIntro } from "@/components/pages/home/sections/Intro/context/IntroContext";
 import { useAnimationPolicy } from "@/hooks";
 
 export function BlastEffect() {
@@ -12,8 +12,8 @@ export function BlastEffect() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      audioRef.current = new Audio("/audio/explosion.mp3");
-      audioRef.current.volume = 0.6;
+      audioRef.current = new Audio("/home/explosion.mp3");
+      audioRef.current.volume = 1.0; // Max volume (2x of previous 0.6)
     }
   }, []);
 

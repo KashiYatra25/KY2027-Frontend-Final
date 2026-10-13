@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { LAYERS } from "../constants";
+import { LAYERS } from "@/components/pages/schedule/constants";
 import type { MapLayers, Layer } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -18,19 +18,23 @@ interface MobileControlsProps {
 export function MobileControls({ layers, onLayerToggle, onSearchClick }: MobileControlsProps) {
   const [layersOpen, setLayersOpen] = useState(false);
 
+  const btnStyle = {
+    background: "rgba(15, 10, 25, 0.98)",
+    boxShadow:
+      "0 4px 20px rgba(0,0,0,0.5), 0 0 25px rgba(184, 134, 11, 0.5), 0 0 50px rgba(212, 168, 83, 0.3)",
+  };
+
   return (
     <div className="fixed top-4 right-4 z-[200] flex flex-col gap-2.5 lg:hidden">
       {/* Search button */}
       <button
         onClick={onSearchClick}
         aria-label="Search events"
-        className="flex h-[38px] w-[38px] cursor-pointer items-center justify-center rounded-lg border border-[rgba(100,120,180,0.3)] bg-[rgba(20,25,45,0.85)] text-[rgba(180,195,230,0.9)] backdrop-blur-md transition-all duration-300"
-        style={{
-          boxShadow: "0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
-        }}
+        className="flex h-[42px] w-[42px] cursor-pointer items-center justify-center rounded-xl border-2 border-[#B8860B] text-[#D4A853] backdrop-blur-md transition-all duration-300 hover:border-[#D4A853] hover:text-[#FFD700]"
+        style={btnStyle}
       >
         <svg
-          className="h-4 w-4"
+          className="h-5 w-5"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -49,13 +53,11 @@ export function MobileControls({ layers, onLayerToggle, onSearchClick }: MobileC
           onClick={() => setLayersOpen(!layersOpen)}
           aria-label="Map layers"
           aria-expanded={layersOpen}
-          className={`flex h-[38px] w-[38px] cursor-pointer items-center justify-center rounded-lg border border-[rgba(100,120,180,0.3)] bg-[rgba(20,25,45,0.85)] text-[rgba(180,195,230,0.9)] backdrop-blur-md transition-all duration-300 ${layersOpen ? "rounded-b-none" : ""}`}
-          style={{
-            boxShadow: "0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
-          }}
+          className={`flex h-[42px] w-[42px] cursor-pointer items-center justify-center rounded-xl border-2 border-[#B8860B] text-[#D4A853] backdrop-blur-md transition-all duration-300 hover:border-[#D4A853] hover:text-[#FFD700] ${layersOpen ? "rounded-b-none border-b-transparent" : ""}`}
+          style={btnStyle}
         >
           <svg
-            className="h-[18px] w-[18px]"
+            className="h-5 w-5"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -72,9 +74,10 @@ export function MobileControls({ layers, onLayerToggle, onSearchClick }: MobileC
         {/* Layers dropdown */}
         {layersOpen && (
           <div
-            className="absolute top-full right-0 flex flex-col gap-1 rounded-b-lg border border-t-0 border-[rgba(100,120,180,0.3)] bg-[rgba(20,25,45,0.95)] p-1.5 backdrop-blur-xl"
+            className="absolute top-full right-0 flex w-[42px] flex-col gap-1 rounded-b-xl border-2 border-t-0 border-[#B8860B] p-1.5 backdrop-blur-xl"
             style={{
-              boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+              background: "rgba(15, 10, 25, 0.98)",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.6), 0 0 15px rgba(184, 134, 11, 0.2)",
             }}
           >
             {LAYERS.filter((l) => l.key !== "labels").map(({ key, label, icon }) => (
@@ -82,14 +85,14 @@ export function MobileControls({ layers, onLayerToggle, onSearchClick }: MobileC
                 key={key}
                 type="button"
                 onClick={() => onLayerToggle(key)}
-                className={`flex items-center gap-2 rounded-md px-3 py-2 text-[11px] font-medium transition-all ${
+                title={label}
+                className={`flex h-8 w-full items-center justify-center rounded-lg text-lg transition-all ${
                   layers[key]
                     ? "bg-[rgba(80,110,180,0.35)] text-[rgba(220,230,255,1)]"
-                    : "text-[rgba(180,195,230,0.9)] hover:bg-[rgba(80,100,160,0.25)]"
+                    : "text-[#D4A853]/80 hover:bg-[#D4A853]/20 hover:text-[#FFD700]"
                 }`}
               >
                 <span>{icon}</span>
-                <span>{label}</span>
               </button>
             ))}
           </div>

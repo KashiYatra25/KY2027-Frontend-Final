@@ -62,7 +62,7 @@ const ConcertFloor = memo(function ConcertFloor() {
   return (
     <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[40%] overflow-hidden">
       <Image
-        src="/home/footer/desktop/concertFloor.png"
+        src="/home/footer/ConcertFloor.png"
         alt=""
         fill
         className="object-cover object-top"
@@ -171,7 +171,7 @@ const CrowdSilhouette = memo(function CrowdSilhouette() {
   return (
     <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-[5] h-[150px] sm:h-[180px]">
       <Image
-        src="/home/proNites/common/silhoutte.png"
+        src="/home/proNites/Silhouette.png"
         alt=""
         fill
         className="object-cover object-bottom"

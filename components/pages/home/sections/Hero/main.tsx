@@ -14,11 +14,11 @@ import { useAnimationPolicy } from "@/hooks";
 import { MotionZone } from "@/lib/motion";
 import { Z_HERO } from "@/components/pages/home/constants";
 import { IMAGES } from "@/lib/images";
-import { Kandeels } from "@/components/pages/home/sections/Hero/desktop";
-import { DriftingClouds } from "@/components/pages/home/sections/Hero/desktop";
-import { EmberField } from "@/components/pages/home/sections/Hero/desktop";
-import { MobileKite } from "@/components/pages/home/sections/Hero/mobile";
-import { Ghats } from "@/components/pages/home/sections/Hero/common";
+import { Kandeels } from "@/components/pages/home/sections/Hero/desktop/Kandeels";
+import { DriftingClouds } from "@/components/pages/home/sections/Hero/desktop/DriftingClouds";
+import { EmberField } from "@/components/pages/home/sections/Hero/desktop/EmberField";
+import { MobileKite } from "@/components/pages/home/sections/Hero/mobile/MobileKite";
+import { Ghats, ThemePicker } from "@/components/pages/home/sections/Hero/common";
 
 // Register plugin at module level (runs once when file is imported)
 gsap.registerPlugin(ScrollTrigger);
@@ -33,7 +33,19 @@ export function HeroSection() {
   const kitesRef = useRef<HTMLDivElement>(null);
 
   // Get current time-based sky configuration
-  const { gradient, showMoon, showStars, starsOpacity, timeOfDay } = useTimeOfDay();
+  const {
+    gradient,
+    showMoon,
+    showStars,
+    starsOpacity,
+    timeOfDay,
+    isPickerOpen,
+    isManualMode,
+    togglePicker,
+    closePicker,
+    setTheme,
+    resetToAuto,
+  } = useTimeOfDay();
   const { isMobile, shouldAnimate } = useAnimationPolicy();
 
   // Entry animation: Celestial body (Moon or Sun)
@@ -213,17 +225,12 @@ export function HeroSection() {
       className="relative h-screen max-w-[100vw] overflow-hidden"
       style={{
         background: gradient,
-        transition: "background 2s ease-in-out", // Smooth transition when time changes
+        transition: "background 1.5s ease-in-out",
       }}
     >
       {/* Cinematic Sky with stars, clouds, shooting stars - only visible at night/dusk */}
       {showStars && (
-        <div
-          style={{
-            opacity: starsOpacity,
-            transition: "opacity 2s ease-in-out",
-          }}
-        >
+        <div style={{ opacity: starsOpacity, transition: "opacity 1.5s ease-in-out" }}>
           <CinematicSky className="z-1" />
         </div>
       )}
@@ -273,6 +280,38 @@ export function HeroSection() {
       {/* Floating Kandeels (Sky Lanterns) - Desktop only */}
       <Kandeels />
 
+      {/* Theme Selection - Mode Change Button OR Theme Picker */}
+      {!isPickerOpen ? (
+        /* Mode Change Button - Top Right (shown when picker is closed) */
+        <button
+          onClick={togglePicker}
+          className="group absolute top-4 right-4 z-[100] h-12 w-12 cursor-pointer transition-transform duration-300 hover:scale-110 sm:top-6 sm:right-6 sm:h-14 sm:w-14 md:h-16 md:w-16"
+          aria-label="Open theme picker"
+          title="Choose theme"
+        >
+          <Image
+            src={IMAGES.hero.modeChange}
+            alt="Choose Theme"
+            width={64}
+            height={64}
+            className="h-full w-full object-contain drop-shadow-[0_0_10px_rgba(255,215,0,0.6)] transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]"
+            style={{
+              filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+            }}
+          />
+        </button>
+      ) : (
+        /* Theme Picker (shown when button is clicked) */
+        <ThemePicker
+          isOpen={isPickerOpen}
+          currentTheme={timeOfDay}
+          isManualMode={isManualMode}
+          onSelectTheme={setTheme}
+          onSelectAuto={resetToAuto}
+          onClose={closePicker}
+        />
+      )}
+
       {/* Flying Birds - Mobile optimized */}
       {/* Wrapped in MotionZone to pause SMIL animations when off-screen */}
       <MotionZone className="absolute top-[6%] left-0 z-30 h-10 w-full overflow-hidden sm:top-[8%] sm:h-14 md:h-18">
@@ -292,7 +331,7 @@ export function HeroSection() {
           showMoon
             ? "top-[2%] left-1/2 h-16 w-16 -translate-x-1/2 sm:top-[3%] sm:h-20 sm:w-20 md:h-28 md:w-28" // Moon - centered, high
             : timeOfDay === "dawn"
-              ? "top-[12%] right-[8%] h-12 w-12 sm:top-[8%] sm:right-[12%] sm:h-16 sm:w-16 md:h-20 md:w-20" // Dawn - right side, rising
+              ? "top-[12%] right-[8%] h-12 w-12 sm:top-[8%] sm:right-[25%] sm:h-16 sm:w-16 md:h-20 md:w-20" // Dawn - right side, rising
               : timeOfDay === "morning"
                 ? "top-[5%] left-1/2 h-14 w-14 -translate-x-1/2 sm:top-[6%] sm:h-18 sm:w-18 md:h-24 md:w-24" // Morning - centered, rising
                 : "top-[2%] left-1/2 h-16 w-16 -translate-x-1/2 sm:top-[3%] sm:h-20 sm:w-20 md:h-28 md:w-28" // Afternoon/evening - centered, high

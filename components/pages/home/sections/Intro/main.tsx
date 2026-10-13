@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useAnimationPolicy } from "@/hooks";
 import { useIntro } from "./context/IntroContext";
 import {
   StageBackground,
@@ -9,9 +8,8 @@ import {
   CursorTrail,
   EnterButton,
   BlastEffect,
-  VideoPlayer,
+  CountdownPoster,
   FirePot,
-  NavigationDrawer,
 } from "./sections";
 import "./styles/cursor.css";
 
@@ -24,22 +22,22 @@ export function IntroSection() {
 
   return (
     <section className={`relative h-screen w-full overflow-hidden bg-black ${cursorClass}`}>
-      {/* Cursor trail effect */}
+      {/* Cursor trail effect - z-index 100 but pointer-events-none */}
       <CursorTrail />
 
-      {/* Stage background with zoom effect */}
+      {/* Stage background with zoom effect - z-0 */}
       <StageBackground />
 
-      {/* Video player - shows after blast */}
-      <VideoPlayer />
+      {/* Countdown concert poster - shows after blast (replaces the old video) - z-0 */}
+      <CountdownPoster />
 
       {/* Audio-reactive fire pot - shows during video phase */}
       <FirePot />
 
-      {/* Blast effect overlay */}
+      {/* Blast effect overlay - z-100 but pointer-events-none */}
       <BlastEffect />
 
-      {/* Enter button with floating elements */}
+      {/* Enter button with floating elements - z-10 */}
       <AnimatePresence>
         {(phase === "idle" || phase === "loading") && (
           <motion.div
@@ -47,27 +45,24 @@ export function IntroSection() {
             exit={{ opacity: 0, scale: 1.5 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Floating diamond elements */}
+            {/* Floating diamond elements - pointer-events-none */}
             <FloatingElements />
 
             {/* Enter button - moved down slightly */}
-            <div className="mt-16">
+            <div className="relative z-20 mt-16">
               <EnterButton />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Hold to enter hint at bottom */}
+      {/* Hold to enter hint at bottom - z-20 */}
       <AnimatePresence>{phase === "idle" && <HoldHint />}</AnimatePresence>
 
-      {/* Skip button - only during idle and loading */}
+      {/* Skip button - only during idle and loading - z-50 */}
       <AnimatePresence>
         {(phase === "idle" || phase === "loading") && <SkipButton />}
       </AnimatePresence>
-
-      {/* Navigation drawer - shows during video phase */}
-      <NavigationDrawer />
     </section>
   );
 }
@@ -113,7 +108,7 @@ function SkipButton() {
   return (
     <motion.button
       onClick={skipIntro}
-      className="absolute right-8 bottom-8 z-30 cursor-pointer rounded-full border border-white/20 px-4 py-2 text-sm text-white/50 backdrop-blur-sm transition-colors hover:border-white/40 hover:text-white/80"
+      className="absolute right-8 bottom-8 z-50 cursor-pointer rounded-full border border-white/20 px-4 py-2 text-sm text-white/50 backdrop-blur-sm transition-colors hover:border-white/40 hover:text-white/80"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

@@ -1,5 +1,19 @@
 # Frontend Code Refactor Guidelines
 
+## ⚠️ GIT OPERATIONS - PERMISSION REQUIRED
+
+**NEVER commit or push to any repository without explicit user permission.**
+
+Before any `git commit` or `git push`:
+
+1. Show the user what files will be committed
+2. Ask for explicit permission to proceed
+3. Only commit/push after user confirms
+
+This applies to ALL repositories - admin-dashboard, ky-2026-frontend, ky-2027-backend, etc.
+
+---
+
 ## Command Trigger
 
 When user says: "full frontend code refactor" or "refactor this page/component"
@@ -232,6 +246,68 @@ const QUERY_DEFAULTS = {
 
 ---
 
+## API Response Format
+
+**Backend responses MUST NOT wrap payload fields in a `data: {}` object. Spread all response fields at the root level of the response body.**
+
+This keeps the response shape flat and predictable, so frontend hooks can read fields directly off the response without an extra `.data` indirection.
+
+### Rules
+
+1. **No `data: {}` wrapper** - Never nest the payload inside a `data` key.
+2. **Spread all fields at root level** - Every response field (plus any metadata like `info`) lives directly on the response object.
+3. **Consistency** - Apply this to ALL success responses across every controller.
+
+### Correct vs Incorrect
+
+```ts
+// ❌ Incorrect - payload nested inside a `data` wrapper
+return Ok(res, {
+  info: "Cart retrieved successfully",
+  data: {
+    items,
+    totalQuantity,
+  },
+});
+
+// ✅ Correct - all fields spread at root level
+return Ok(res, {
+  info: "Cart retrieved successfully",
+  items,
+  totalQuantity,
+});
+```
+
+### Frontend consumption
+
+Because fields are at the root, the typed response reads directly:
+
+```ts
+// ✅ Correct - response type is flat
+interface CartResponse {
+  info: string;
+  items: CartItem[];
+  totalQuantity: number;
+}
+
+const { data } = useApiQuery<CartResponse>({ ... });
+const items = data?.items; // no `data.data.items` indirection
+
+// ❌ Incorrect - forces nested access
+interface CartResponse {
+  info: string;
+  data: {
+    items: CartItem[];
+    totalQuantity: number;
+  };
+}
+const items = data?.data?.items; // avoid this
+```
+
+**Rule of thumb:** If you find yourself writing `data: {` in a controller response or `.data.data` on the frontend, flatten it. The response body is the payload — no wrapper needed.
+
+---
+
 ## Directory Structure Rules
 
 ### 1. Pages with Separate Mobile/Desktop Components
@@ -257,8 +333,12 @@ components/pages/{page-name}/
 │       ├── FloatingOrbs.tsx
 │       └── BackgroundGrid.tsx
 ├── toasts/
-│   ├── SuccessToast.tsx
-│   └── ErrorToast.tsx
+│   ├── success/                   # Success feedback toasts
+│   │   └── SuccessToast.tsx
+│   ├── error/                     # Error feedback toasts
+│   │   └── ErrorToast.tsx
+│   └── info/                      # Informational toasts (redirects, warnings)
+│       └── InfoToast.tsx
 ├── config/
 │   └── data.ts                    # Configuration objects
 ├── data/
@@ -283,8 +363,12 @@ components/pages/{page-name}/
 │   └── decor/                     # Decorative elements
 │       └── BackgroundEffects.tsx
 ├── toasts/
-│   ├── SuccessToast.tsx
-│   └── ErrorToast.tsx
+│   ├── success/                   # Success feedback toasts
+│   │   └── SuccessToast.tsx
+│   ├── error/                     # Error feedback toasts
+│   │   └── ErrorToast.tsx
+│   └── info/                      # Informational toasts (redirects, warnings)
+│       └── InfoToast.tsx
 ├── config/
 │   └── data.ts
 ├── data/
@@ -301,9 +385,44 @@ components/pages/{page-name}/
 ### File Organization
 
 1. **ONE COMPONENT PER FILE** - Never have 2+ components in the same file
-2. **Decorative elements go in `decor/`** - Background effects, floating elements, visual-only items
-3. **Loaders go in `loader/`** - All loading states and skeleton components
-4. **Toasts go in `toasts/`** - Separate success and error toasts
+
+2. **Large components with subcomponents go in a subfolder**
+   When breaking a big component into multiple smaller ones, create a subfolder:
+
+   ```
+   components/
+   ├── PassCard/                    # Folder for complex component
+   │   ├── PassCard.tsx             # Main component
+   │   ├── PassIcon.tsx             # Subcomponent
+   │   ├── AnimatedMandala.tsx      # Subcomponent
+   │   ├── RoyalPrice.tsx           # Subcomponent
+   │   ├── RoyalButton.tsx          # Subcomponent
+   │   └── index.ts                 # Export main + public subcomponents
+   ├── SimpleComponent.tsx          # Simple component stays as single file
+   ```
+
+   **Examples of components that need subfolders:**
+   - Cards with multiple internal pieces (PassCard, ArtistCard, SponsorCard)
+   - Modals with header/body/footer components
+   - Complex forms with field components
+   - Any component you split into 3+ subcomponents
+
+   ```tsx
+   // ✅ Good - complex card in its own folder
+   // components/PassCard/index.ts
+   export { PassCard } from "./PassCard";
+   export { PassIcon } from "./PassIcon"; // If needed externally
+
+   // ✅ Good - importing the complex card
+   import { PassCard } from "@/components/pages/passes/components/PassCard";
+
+   // ❌ Bad - all subcomponents in one file
+   // PassCard.tsx with PassIcon, AnimatedMandala, RoyalPrice all inside
+   ```
+
+3. **Decorative elements go in `decor/`** - Background effects, floating elements, visual-only items
+4. **Loaders go in `loader/`** - All loading states and skeleton components
+5. **Toasts go in `toasts/`** - Separate success and error toasts
 
 ### Imports
 
@@ -349,16 +468,30 @@ components/pages/{page-name}/
    - Reusable types → `lib/api/helper/types/`
    - Page-specific helpers stay in that page's folder
 
-5. **NO deprecated re-exports**
+5. **NO deprecated re-exports or backwards compatibility aliases**
+
+   When refactoring or creating new hooks/components, do NOT preserve old versions:
 
    ```tsx
-   // ❌ Bad - deprecated aliases
-   /** @deprecated Use useFullAccount */
-   export const useMyAccount = useFullAccount;
+   // ❌ Bad - deprecated aliases for backwards compatibility
+   /** @deprecated Use useMyAccount */
+   export const useFullAccount = useMyAccount;
+   export const useProfileCompletionStatus = (opts) => useMyAccount("navbar", opts);
 
-   // ✅ Good - just export the new name, update usages
-   export { useFullAccount } from "./useFullAccount";
+   // ❌ Bad - keeping old hook alongside new one
+   export { useFullAccount } from "./useFullAccount"; // OLD
+   export { useMyAccount } from "./useMyAccount"; // NEW
+
+   // ✅ Good - just create the new version, update all usages
+   export { useMyAccount } from "./useMyAccount";
+   // Then find & replace all useFullAccount → useMyAccount("full") in codebase
    ```
+
+   **Rule:** When creating a new unified hook/component that replaces multiple old ones:
+   1. Create the new version
+   2. Update ALL usages in the codebase to use new version
+   3. Delete the old files
+   4. Do NOT create aliases or re-exports for backwards compatibility
 
 6. **Index files (re-exports) - ONLY when 3+ exports**
    This applies to ALL folders: sections, components, loader, decor, toasts, constants, config, etc.
@@ -461,6 +594,77 @@ When refactoring a page, verify:
 - [ ] All REST queries have `staleTime` and `gcTime` configured
 - [ ] Mutations have proper `bodyValidator` with zod schema
 - [ ] Mutations have `toastConfig` for success/error feedback
+- [ ] **All `useApiMutation` hooks have BOTH successConfig AND errorConfig with customToast**
+
+---
+
+## useApiMutation Toast Requirements
+
+**Every `useApiMutation` hook MUST have both success and error toasts:**
+
+```tsx
+// ✅ Good - both success and error toasts defined
+export function useUpdateProfile(options?: UseUpdateProfileOptions) {
+  const { mutate, isPending, ... } = useApiMutation<ResponseType>({
+    url: "/endpoint",
+    method: "patch",
+    baseURL: BACKEND_URL,
+    featureConfig: sharedFeatureConfig,
+    toastConfig: {
+      successConfig: { customToast: options?.successToast ?? <DefaultSuccessToast /> },
+      errorConfig: { customToast: options?.errorToast ?? <DefaultErrorToast /> },
+    },
+    // ...
+  });
+}
+
+// ❌ Bad - missing error toast or success toast
+toastConfig: {
+  successConfig: { customToast: <SuccessToast /> },
+  // Missing errorConfig!
+}
+
+// ❌ Bad - only using message strings (use customToast components)
+toastConfig: {
+  successConfig: { message: "Success!" },
+  errorConfig: { message: "Failed!" },
+}
+```
+
+**Default toast pattern:**
+
+```tsx
+// Inside the hook file, define default toasts
+function DefaultSuccessToast() {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-500/20">
+        <CheckCircle className="h-5 w-5 text-green-400" />
+      </div>
+      <div>
+        <p className="font-semibold text-white">Action successful</p>
+        <p className="text-sm text-neutral-400">Your changes have been saved</p>
+      </div>
+    </div>
+  );
+}
+
+function DefaultErrorToast() {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-500/20">
+        <XCircle className="h-5 w-5 text-red-400" />
+      </div>
+      <div>
+        <p className="font-semibold text-white">Action failed</p>
+        <p className="text-sm text-neutral-400">Please try again later</p>
+      </div>
+    </div>
+  );
+}
+```
+
+**Note:** Hooks using customToast must be `.tsx` files, not `.ts`.
 
 ---
 

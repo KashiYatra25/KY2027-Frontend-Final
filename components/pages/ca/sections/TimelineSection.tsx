@@ -3,6 +3,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { COLORS_RGBA, GRADIENTS } from "@/components/pages/ca/constants/palette";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -92,14 +93,13 @@ export function TimelineSection() {
       </div>
 
       {/* Timeline - centered */}
-      <div className="timeline-container relative z-20 mx-auto max-w-3xl">
+      <div className="timeline-container relative z-20 mx-auto max-w-3xl 2xl:max-w-4xl">
         {/* Vertical line */}
         <div
           ref={lineRef}
           className="absolute top-0 bottom-0 left-1/2 hidden w-[2px] -translate-x-1/2 sm:block"
           style={{
-            background:
-              "linear-gradient(180deg, rgba(236, 72, 153, 0.5) 0%, rgba(139, 92, 246, 0.5) 50%, rgba(6, 182, 212, 0.5) 100%)",
+            background: `linear-gradient(180deg, ${COLORS_RGBA.PINK_50} 0%, ${COLORS_RGBA.PURPLE_50} 50%, ${COLORS_RGBA.CYAN_30} 100%)`,
           }}
         />
 
@@ -130,7 +130,7 @@ export function TimelineSection() {
                   <span
                     className="mb-2 inline-block text-sm font-bold tracking-wider"
                     style={{
-                      background: "linear-gradient(135deg, #ec4899, #8b5cf6)",
+                      background: GRADIENTS.PINK_PURPLE,
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                     }}
@@ -158,8 +158,8 @@ export function TimelineSection() {
                 <div
                   className="h-4 w-4 rounded-full"
                   style={{
-                    background: "linear-gradient(135deg, #ec4899, #8b5cf6)",
-                    boxShadow: "0 0 20px rgba(236, 72, 153, 0.5)",
+                    background: GRADIENTS.PINK_PURPLE,
+                    boxShadow: `0 0 20px ${COLORS_RGBA.PINK_50}`,
                   }}
                 />
               </div>

@@ -39,9 +39,3 @@ export interface LayerConfig {
   label: string;
   icon: string;
 }
-
-export interface NavigationLink {
-  href: string;
-  label: string;
-  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
-}

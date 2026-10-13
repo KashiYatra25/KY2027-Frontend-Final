@@ -24,7 +24,8 @@ export type PassDetailItem = PassDetail;
  * Derived from the backend Pass via `toPassConfig`.
  */
 export interface PassConfig {
-  id: string;
+  id: string; // slug (for display/URLs)
+  _id?: string; // MongoDB ObjectId (for API calls like cart) - optional for static config
   name: string;
   price: number;
   image: string;

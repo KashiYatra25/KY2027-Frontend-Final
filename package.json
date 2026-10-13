@@ -19,7 +19,8 @@
     "@radix-ui/react-dropdown-menu": "^2.1.24",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.1",
-    "@tanstack/react-query": "5.60.5",
+    "@tanstack/react-query": "5.104.1",
+    "@tanstack/react-query-devtools": "^5.104.1",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -42,7 +43,7 @@
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.186.1",
     "typed-graphqlify": "^3.1.6",
-    "wire-axon": "^2.0.2",
+    "wire-axon": "^2.0.5",
     "zod": "^4.6.5"
   },
   "devDependencies": {
@@ -56,6 +57,7 @@
     "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
+    "graphiql": "^5.4.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.9",

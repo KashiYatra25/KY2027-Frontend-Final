@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { IMAGES } from "@/lib/images";
 import { LogOut, Loader2 } from "lucide-react";
-import { COLORS } from "../constants/palette";
+import { COLORS } from "@/components/pages/profile/constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
 // PROFILE FOOTER SECTION
@@ -15,18 +15,15 @@ interface ProfileFooterProps {
   handleSignOut: () => void;
 }
 
-export function ProfileFooter({
-  isSigningOut,
-  handleSignOut,
-}: ProfileFooterProps) {
+export function ProfileFooter({ isSigningOut, handleSignOut }: ProfileFooterProps) {
   return (
     <>
       {/* Sign Out Button */}
-      <div className="flex justify-center mt-8">
+      <div className="mt-8 flex justify-center">
         <button
           onClick={handleSignOut}
           disabled={isSigningOut}
-          className="group relative flex items-center gap-3 px-10 py-4 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 overflow-hidden"
+          className="group relative flex items-center gap-3 overflow-hidden rounded-2xl px-10 py-4 font-semibold transition-all duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           style={{
             background: `linear-gradient(135deg, ${COLORS.ERROR}10 0%, ${COLORS.MAROON}30 100%)`,
             border: `1px solid ${COLORS.ERROR}30`,
@@ -36,7 +33,7 @@ export function ProfileFooter({
         >
           {/* Hover glow */}
           <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
             style={{
               background: `radial-gradient(circle at 50% 50%, ${COLORS.ERROR}15 0%, transparent 70%)`,
             }}
@@ -56,7 +53,7 @@ export function ProfileFooter({
       {/* Royal Footer */}
       <div className="mt-16 flex flex-col items-center">
         {/* Ornate divider */}
-        <div className="flex items-center justify-center gap-5 w-full max-w-lg">
+        <div className="flex w-full max-w-lg items-center justify-center gap-5">
           <div
             className="h-px flex-1"
             style={{
@@ -65,7 +62,7 @@ export function ProfileFooter({
           />
           <div className="flex items-center gap-4">
             <span className="text-xl opacity-60">✦</span>
-            <div className="w-10 h-10 relative">
+            <div className="relative h-10 w-10">
               <Image
                 src={IMAGES.contact.floatingDiya}
                 alt=""
@@ -85,15 +82,12 @@ export function ProfileFooter({
         </div>
 
         {/* Sanskrit blessing */}
-        <p
-          className="text-center text-sm mt-4 italic"
-          style={{ color: `${COLORS.GOLD}50` }}
-        >
-          ॐ असतो मा सद्गमय
+        <p className="mt-4 text-center text-sm italic" style={{ color: `${COLORS.GOLD}50` }}>
+          असतो मा सद्गमय
         </p>
 
         <p
-          className="text-center text-xs mt-2 tracking-[0.2em] uppercase"
+          className="mt-2 text-center text-xs tracking-[0.2em] uppercase"
           style={{ color: `${COLORS.GOLD}40` }}
         >
           Kashi Yatra 2027 • IIT BHU Varanasi

@@ -1,4 +1,4 @@
-import type { NavbarTheme, MobileThemeStyle } from "../types";
+import type { NavbarTheme, MobileThemeStyle } from "@/components/navbar/types/navbar.types";
 
 // ═══════════════════════════════════════════════════════════════════
 // MOBILE NAVBAR CONFIGURATION

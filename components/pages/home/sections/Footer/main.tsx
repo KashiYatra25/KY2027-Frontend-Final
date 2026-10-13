@@ -16,6 +16,9 @@ import {
 import { socialLinks, quickLinks } from "./common/data";
 import { IMAGES } from "@/lib/images";
 
+// Pinkish heading tone (matches the brand header + "PRO NITES" accent).
+const PINK_HEADING = "#FF4D8D";
+
 // ═══════════════════════════════════════════════════════════════════
 // MAIN FOOTER SECTION
 // ═══════════════════════════════════════════════════════════════════
@@ -52,7 +55,7 @@ export function FooterSection() {
             <ConcertBrandHeader />
 
             {/* Cards Grid */}
-            <div className="relative mx-auto mb-12 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8">
+            <div className="relative mx-auto mb-12 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8 2xl:max-w-5xl">
               {/* Mobile Dancer - Absolutely positioned beside Explore/Connect */}
               <div className="pointer-events-none absolute top-0 right-0 z-20 h-[400px] w-[180px] sm:hidden">
                 {/* Glow behind dancer */}
@@ -78,7 +81,7 @@ export function FooterSection() {
               <GlassmorphismCard accentColor={FOOTER_COLORS.NEON_CYAN}>
                 <h4
                   className="mb-4 text-lg font-bold tracking-wider"
-                  style={{ color: FOOTER_COLORS.NEON_CYAN }}
+                  style={{ color: PINK_HEADING }}
                 >
                   EXPLORE
                 </h4>
@@ -106,7 +109,7 @@ export function FooterSection() {
               <GlassmorphismCard accentColor={FOOTER_COLORS.NEON_PINK}>
                 <h4
                   className="mb-4 text-lg font-bold tracking-wider"
-                  style={{ color: FOOTER_COLORS.NEON_PINK }}
+                  style={{ color: PINK_HEADING }}
                 >
                   CONNECT
                 </h4>
