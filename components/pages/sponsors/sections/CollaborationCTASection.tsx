@@ -79,10 +79,10 @@ export const CollaborationCTASection = memo(function CollaborationCTASection() {
               backgroundClip: "text",
             }}
           >
-            Let's Talk
+            Let&apos;s Talk
           </h2>
           <p className="text-lg" style={{ color: PALETTE.TEXT_SECONDARY }}>
-            Interested in partnering? We'd love to hear from you.
+            Interested in partnering? We&apos;d love to hear from you.
           </p>
         </motion.div>
 
@@ -102,7 +102,7 @@ export const CollaborationCTASection = memo(function CollaborationCTASection() {
               Message Sent!
             </h3>
             <p style={{ color: PALETTE.TEXT_SECONDARY }}>
-              We'll get back to you within 24-48 hours.
+              We&apos;ll get back to you within 24-48 hours.
             </p>
             <button
               onClick={() => {

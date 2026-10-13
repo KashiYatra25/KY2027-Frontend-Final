@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Search, X } from "lucide-react";
-import { SCHEDULED_EVENTS } from "@/components/pages/schedule/config/campusMap.config";
+import type { ScheduledEvent } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════
 // EVENT SEARCH OVERLAY
@@ -14,18 +14,23 @@ import { SCHEDULED_EVENTS } from "@/components/pages/schedule/config/campusMap.c
 interface EventSearchOverlayProps {
   isOpen: boolean;
   onClose: () => void;
+  scheduledEvents: ScheduledEvent[];
 }
 
-export function EventSearchOverlay({ isOpen, onClose }: EventSearchOverlayProps) {
+export function EventSearchOverlay({ isOpen, onClose, scheduledEvents }: EventSearchOverlayProps) {
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   const q = query.trim().toLowerCase();
-  const results = q
-    ? SCHEDULED_EVENTS.filter(({ event, category, venue }) =>
+
+  const results = useMemo(() => {
+    if (!q) return [];
+    return scheduledEvents
+      .filter(({ event, category, venue }) =>
         [event.name, category.name, venue.name].some((s) => s.toLowerCase().includes(q))
-      ).slice(0, 8)
-    : [];
+      )
+      .slice(0, 8);
+  }, [q, scheduledEvents]);
 
   // Focus input when overlay opens
   useEffect(() => {
@@ -131,7 +136,7 @@ export function EventSearchOverlay({ isOpen, onClose }: EventSearchOverlayProps)
               ) : (
                 results.map(({ event, venue, day, category }) => (
                   <Link
-                    key={event.id}
+                    key={`${event.id}-${venue.slug}`}
                     href={`/schedule/${venue.slug}`}
                     onClick={onClose}
                     className="flex items-center justify-between gap-4 px-6 py-3 transition-colors hover:bg-[#D4A853]/10 focus:bg-[#D4A853]/10 focus:outline-none"

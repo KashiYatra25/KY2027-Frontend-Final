@@ -118,7 +118,7 @@ export const ImpactSection = memo(function ImpactSection() {
           className="mt-16 text-center text-lg"
           style={{ color: PALETTE.TEXT_SECONDARY }}
         >
-          North India's largest cultural festival — and your brand could be center stage.
+          North India&apos;s largest cultural festival — and your brand could be center stage.
         </motion.p>
       </div>
     </section>

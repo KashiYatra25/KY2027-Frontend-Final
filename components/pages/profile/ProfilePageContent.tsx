@@ -30,7 +30,7 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
   const { isSigningOut, handleSignOut } = useSignOut();
 
   // Fetch account data via GraphQL - returns profile + progress
-  const { profile: userData, progress, isLoading, isError } = useMyAccount("full");
+  const { profile: userData, progress, isLoading, isError, accountStatus } = useMyAccount("full");
 
   // Fetch CA data via GraphQL - full info for profile page
   const {
@@ -79,6 +79,28 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
                 progress={progress}
                 isApprovedCa={isCaApproved}
               />
+
+              {/* Account Suspension Warning */}
+              {accountStatus === "SUSPENDED" && (
+                <div
+                  className="mx-auto mb-8 max-w-2xl rounded-xl border p-4 text-center"
+                  style={{
+                    background: "rgba(239, 68, 68, 0.08)",
+                    borderColor: "rgba(239, 68, 68, 0.3)",
+                  }}
+                >
+                  <p className="text-sm font-medium text-red-300">
+                    ⚠️ Your account has been suspended
+                  </p>
+                  <p className="mt-1 text-xs text-red-400/70">
+                    Some features are restricted. Please{" "}
+                    <a href="/contact" className="underline hover:text-red-300">
+                      contact support
+                    </a>{" "}
+                    for assistance.
+                  </p>
+                </div>
+              )}
 
               {/* CA Status Section - Only show if user has applied */}
               {caHasApplied && (

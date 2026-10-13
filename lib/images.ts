@@ -301,6 +301,69 @@ export const IMAGES = {
     ambassadorPose: `${IMAGEKIT_BASE}/ca/common/ambassador-pose.png`,
     ambassadorWalking: `${IMAGEKIT_BASE}/ca/common/ambassador-walking.png`,
   },
+
+  // ============================================
+  // EVENTS PAGE - Category backgrounds and rangoli art
+  // ============================================
+  events: {
+    // Background images for event categories
+    bg: {
+      natraj: "/events/bg/natraj.webp",
+      enquizta: "/events/bg/enquizta.webp",
+      samwaad: "/events/bg/samwaad.webp",
+      abhinay: "/events/bg/abhinay.webp",
+      zaika: "/events/bg/zaika.webp",
+      crosswindz: "/events/bg/crosswindz.webp",
+      toolika: "/events/bg/toolika.webp",
+      mirage: "/events/bg/mirage.webp",
+      bandish: "/events/bg/bandish.webp",
+    },
+    // Rangoli art for event categories
+    rangoli: {
+      natraj: "/events/rangoli/natraj.webp",
+      enquizta: "/events/rangoli/enquizta.webp",
+      samwaad: "/events/rangoli/samwaad.webp",
+      abhinay: "/events/rangoli/abhinay.webp",
+      zaika: "/events/rangoli/zaika.webp",
+      crosswindz: "/events/rangoli/crosswindz.webp",
+      toolika: "/events/rangoli/toolika.webp",
+      mirage: "/events/rangoli/mirage.webp",
+      bandish: "/events/rangoli/bandish.webp",
+    },
+  },
+
+  // ============================================
+  // GALLERY PAGE - Photos and videos
+  // ============================================
+  gallery: {
+    // Photos
+    stageAtmosphere1: "/gallery/stage-atmosphere-1.jpg",
+    proniteCrowd1: "/gallery/pronite-crowd-1.jpg",
+    proniteCrowd2: "/gallery/pronite-crowd-2.jpg",
+    stageLights1: "/gallery/stage-lights-1.jpg",
+    festivalVibes1: "/gallery/festival-vibes-1.jpg",
+    crowdEnergy1: "/gallery/crowd-energy-1.jpg",
+    performance1: "/gallery/performance-1.jpg",
+    concertNight1: "/gallery/concert-night-1.jpg",
+    concertNight2: "/gallery/concert-night-2.jpg",
+    concertNight3: "/gallery/concert-night-3.jpg",
+    grandFinale1: "/gallery/grand-finale-1.jpg",
+    // Videos
+    crowdMoments: "/gallery/crowd-moments.mp4",
+    festivalAftermovie: "/gallery/festival-aftermovie.mp4",
+    proniteHighlights: "/gallery/pronite-highlights.mp4",
+  },
+
+  // ============================================
+  // SCHEDULE MAP - Campus images and clouds
+  // ============================================
+  scheduleMap: {
+    campusDay: "/scheduleMap/CampusDay.jpg",
+    campusNight: "/scheduleMap/CampusNight.jpg",
+    cloud1: "/scheduleMap/Cloud1.png",
+    cloud2: "/scheduleMap/Cloud2.png",
+    cloud3: "/scheduleMap/Cloud3.png",
+  },
 } as const;
 
 /**

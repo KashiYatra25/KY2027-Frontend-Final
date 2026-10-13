@@ -13,6 +13,7 @@ import {
   useClearMyCart,
   useUpdateCartQuantity,
   usePasses,
+  useAccountStatus,
 } from "@/lib/api/hooks";
 import { ProfileIncompleteCard } from "./components/ProfileIncompleteCard";
 import { EmptyCart } from "./sections/EmptyCart";
@@ -50,6 +51,9 @@ export function CartPageContent() {
     steps,
     isLoading: isAccountLoading,
   } = useMyAccount("progress");
+
+  // Account status (suspension check)
+  const { isSuspended, canPerformAction } = useAccountStatus();
 
   // Cart data
   const { items, totalQuantity, isEmpty, isLoading: isCartLoading, refetch } = useGetMyCart();
@@ -123,6 +127,10 @@ export function CartPageContent() {
   };
 
   const handleCheckout = () => {
+    if (!canPerformAction) {
+      // Suspended users cannot checkout
+      return;
+    }
     // TODO: Implement checkout flow
     router.push("/checkout");
   };
@@ -308,6 +316,7 @@ export function CartPageContent() {
                   onClearCart={handleClearCart}
                   onCheckout={handleCheckout}
                   isClearing={isClearing}
+                  isSuspended={isSuspended}
                 />
               </div>
             </motion.div>

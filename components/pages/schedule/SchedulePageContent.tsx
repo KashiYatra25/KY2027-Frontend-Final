@@ -1,9 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { CampusMap, EventSearchOverlay, WhatsOnSidebar, DecorativeElements } from "./sections";
+import {
+  CampusMap,
+  EventSearchOverlay,
+  WhatsOnSidebar,
+  DecorativeElements,
+  ScheduleLoader,
+} from "./sections";
 import { Navigation, MobileControls, MobileLogo } from "./components";
 import { DEFAULT_LAYERS } from "./constants";
+import { useSchedule } from "@/lib/api/hooks";
 import type { MapLayers, Layer } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -18,9 +25,38 @@ export function SchedulePageContent() {
   const [navOpen, setNavOpen] = useState(false);
   const [layers, setLayers] = useState<MapLayers>(DEFAULT_LAYERS);
 
+  // Fetch schedule data from backend
+  const { scheduledEvents, venues, festDays, eventsByVenue, isLoading, isError, errorMessage } =
+    useSchedule();
+
   const toggleLayer = (key: Layer) => {
     setLayers((prev) => ({ ...prev, [key]: !prev[key] }));
   };
+
+  // Show unified loader while data is loading
+  if (isLoading) {
+    return (
+      <>
+        <div className="fixed inset-0 -z-10" style={{ background: "#0c1220" }} />
+        <main className="relative flex min-h-[100dvh] items-center justify-center text-white">
+          <ScheduleLoader />
+        </main>
+      </>
+    );
+  }
+
+  // Show error state
+  if (isError) {
+    return (
+      <>
+        <div className="fixed inset-0 -z-10" style={{ background: "#0c1220" }} />
+        <main className="relative flex min-h-[100dvh] flex-col items-center justify-center gap-4 text-white">
+          <p className="text-xl text-red-400">Failed to load schedule</p>
+          <p className="text-sm text-white/60">{errorMessage}</p>
+        </main>
+      </>
+    );
+  }
 
   return (
     <>
@@ -35,7 +71,7 @@ export function SchedulePageContent() {
           opacity: navOpen ? 0.5 : 1,
         }}
       >
-        <WhatsOnSidebar className="h-full" />
+        <WhatsOnSidebar className="h-full" scheduledEvents={scheduledEvents} />
       </div>
 
       {/* Mobile Logo */}
@@ -56,6 +92,8 @@ export function SchedulePageContent() {
               edgeFade
               fill
               layers={layers}
+              venues={venues}
+              eventsByVenue={eventsByVenue}
               onLayerToggle={toggleLayer}
               onSearchClick={() => setSearchOpen(true)}
               className="[&>div:last-child]:hidden [&>div:last-child]:lg:flex"
@@ -78,7 +116,11 @@ export function SchedulePageContent() {
       </main>
 
       {/* Full-screen search overlay */}
-      <EventSearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      <EventSearchOverlay
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        scheduledEvents={scheduledEvents}
+      />
 
       {/* Animations */}
       <style jsx global>{`
