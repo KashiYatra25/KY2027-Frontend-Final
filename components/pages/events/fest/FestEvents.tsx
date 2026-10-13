@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { Cormorant_Garamond, Hind } from "next/font/google";
-import { ThemedNavbar } from "@/components/navbar";
 import { DEF, EVENTS } from "./events";
 import { CLIPS, TEXTURES } from "./shapes";
 import { replay, useViewport } from "./hooks";
@@ -88,18 +87,35 @@ export default function FestEvents() {
 
   const { W, H } = stage,
     nar = view.narrow;
-  const D = nar ? 360 : Math.min(H * 0.92, 880);
-  const Rn = nar ? 190 : Math.min(D / 2 + 40, W - 110);
-  const cx = nar ? W / 2 : 0,
-    cy = nar ? H + 30 : H / 2;
   const T = EVENTS[shown.cur],
     x = T.s[shown.sub],
     n = T.s.length;
-  const step = Math.min(26, (nar ? 100 : 110) / (n - 1));
+  const NW = nar ? (W < 360 ? 72 : 84) : 138,
+    NH = nar ? (W < 360 ? 52 : 58) : 90;
+  const GAP = 40; // space between the rangoli edge and the nodes
+  let D: number, Rn: number, cx: number, cy: number, step: number;
+  if (nar) {
+    // Phones: rangoli centred in the stage, nodes form a crown around its top half
+    const spread = Math.min(150, 40 * (n - 1));
+    const half = ((spread / 2) * Math.PI) / 180;
+    Rn = Math.min(150, (W / 2 - 12 - NW / 2) / Math.max(Math.sin(half), 0.5));
+    D = 2 * (Rn - NH / 2 - 24);
+    cx = W / 2;
+    cy = Rn + NH / 2 + 14;
+    step = spread / (n - 1);
+  } else {
+    // Desktop: nodes sit fully outside the rangoli and stay inside the stage
+    D = Math.min(H * 0.92, 880, 2 * (W - NW - GAP - 16));
+    Rn = D / 2 + NW / 2 + GAP;
+    cx = 0;
+    cy = H / 2;
+    const maxHalf = (Math.asin(Math.min(1, (H / 2 - NH / 2 - 8) / Rn)) * 180) / Math.PI;
+    step = Math.min(26, 110 / (n - 1), (2 * maxHalf) / (n - 1));
+  }
   const stageVars = {
     "--D": D + "px",
-    "--NW": (nar ? 90 : 138) + "px",
-    "--NH": (nar ? 62 : 90) + "px",
+    "--NW": NW + "px",
+    "--NH": NH + "px",
   } as CSSProperties;
   const glow = { stopColor: "hsl(calc(var(--h) + var(--dh)) 90% 55%)" };
 
@@ -108,9 +124,6 @@ export default function FestEvents() {
       className={`fest ${serif.variable} ${sans.variable}`}
       style={{ "--h": EVENTS[cur].h, "--dh": dh } as CSSProperties}
     >
-      <div className="fixed inset-x-0 top-0 z-[200]">
-        <ThemedNavbar position="relative" topOffset={18} theme="main" />
-      </div>
       <div id="pat" ref={pat} data-t={cur} />
       <Backdrop cur={cur} view={view} />
       <Glyphs hue={hue} glyph={EVENTS[cur].g} motion={EVENTS[cur].mo} />
