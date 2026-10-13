@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { ThemedNavbar } from "@/components/navbar";
 import FestEvents from "@/components/pages/events/fest/FestEvents";
 
 export const metadata: Metadata = {
@@ -20,5 +21,13 @@ export const metadata: Metadata = {
 };
 
 export default function EventsPage() {
-  return <FestEvents />;
+  return (
+    <>
+      {/* Rendered outside the explorer so its fonts/styles don't leak into the navbar */}
+      <div className="fixed inset-x-0 top-0 z-[200]">
+        <ThemedNavbar position="relative" topOffset={18} theme="main" />
+      </div>
+      <FestEvents />
+    </>
+  );
 }
