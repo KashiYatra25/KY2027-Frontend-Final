@@ -2,6 +2,7 @@ export { HeadlinerCard, FeaturingCard } from "./ArtistCard";
 export {
   DancingGirlFestiveVibes,
   GlowingMoon,
+  GlowingMoon3D,
   TopBorder,
   BottomBorder,
   GridOverlay,

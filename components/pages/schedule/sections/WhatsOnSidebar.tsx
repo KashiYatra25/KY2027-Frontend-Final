@@ -70,18 +70,17 @@ export function WhatsOnSidebar({ className = "", scheduledEvents }: WhatsOnSideb
           {feed.map((item) => (
             <EventCard key={`${item.event.id}-${item.venue.slug}`} item={item} />
           ))}
-          {/* Duplicate for a seamless loop (hidden from assistive tech) - only when not hovered */}
-          {!isHovered && (
-            <div aria-hidden className="flex flex-col gap-2">
-              {feed.map((item) => (
-                <EventCard
-                  key={`dup-${item.event.id}-${item.venue.slug}`}
-                  item={item}
-                  tabIndex={-1}
-                />
-              ))}
-            </div>
-          )}
+          {/* Duplicate for a seamless loop (hidden from assistive tech) */}
+          {/* Always present - CSS handles pausing animation on hover */}
+          <div aria-hidden className="flex flex-col gap-2">
+            {feed.map((item) => (
+              <EventCard
+                key={`dup-${item.event.id}-${item.venue.slug}`}
+                item={item}
+                tabIndex={-1}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </aside>
