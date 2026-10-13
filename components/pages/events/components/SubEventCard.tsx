@@ -1,24 +1,49 @@
 "use client";
 
 import { memo, useState, useCallback, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import type { SubEvent } from "@/lib/api/helper/types";
-import { COLORS, EVENT_TYPE_COLORS } from "@/components/pages/events/constants/palette";
 import { useEventRegisterIndividual } from "@/lib/api/hooks";
 import { TeamSelectorModal } from "./TeamSelectorModal";
-import { Loader2, Check } from "lucide-react";
+import { Loader2, Check, Users, Clock, Sparkles, ChevronRight } from "lucide-react";
 
 // ═══════════════════════════════════════════════════════════════════
-// SUB-EVENT CARD COMPONENT
+// TYPE BADGE CONFIG
+// ═══════════════════════════════════════════════════════════════════
+
+const TYPE_CONFIG = {
+  individual: {
+    label: "Individual",
+    gradient: "linear-gradient(135deg, #FF1493 0%, #DB2777 100%)",
+    glow: "rgba(255, 20, 147, 0.4)",
+    textColor: "#FDF6E3",
+  },
+  duo: {
+    label: "Duo",
+    gradient: "linear-gradient(135deg, #00D4FF 0%, #0EA5E9 100%)",
+    glow: "rgba(0, 212, 255, 0.4)",
+    textColor: "#FDF6E3",
+  },
+  team: {
+    label: "Team",
+    gradient: "linear-gradient(135deg, #A855F7 0%, #7C3AED 100%)",
+    glow: "rgba(168, 85, 247, 0.4)",
+    textColor: "#FDF6E3",
+  },
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// SUB-EVENT CARD COMPONENT - FESTIVE DESIGN
 // ═══════════════════════════════════════════════════════════════════
 
 interface SubEventCardProps {
   event: SubEvent;
   categoryColor: string;
   index: number;
-  eventSlug?: string; // Optional override for API slug
-  isRegistered?: boolean; // Passed from parent (to avoid multiple fetches)
-  onRegistrationSuccess?: () => void; // Callback to refetch registrations
-  canRegister?: boolean; // Whether user can register (has paid)
+  eventSlug?: string;
+  isRegistered?: boolean;
+  onRegistrationSuccess?: () => void;
+  canRegister?: boolean;
 }
 
 export const SubEventCard = memo(function SubEventCard({
@@ -30,19 +55,13 @@ export const SubEventCard = memo(function SubEventCard({
   onRegistrationSuccess,
   canRegister = true,
 }: SubEventCardProps) {
-  const typeConfig =
-    EVENT_TYPE_COLORS[event.type as keyof typeof EVENT_TYPE_COLORS] || EVENT_TYPE_COLORS.individual;
+  const typeConfig = TYPE_CONFIG[event.type as keyof typeof TYPE_CONFIG] || TYPE_CONFIG.individual;
 
-  // Team selector modal state
   const [showTeamModal, setShowTeamModal] = useState(false);
-
-  // Track if we've already called onRegistrationSuccess for this registration
   const hasCalledSuccessRef = useRef(false);
 
-  // Use event slug if available (from API), otherwise fall back to eventSlug prop or id
   const slug = event.slug ?? eventSlug ?? event.id;
 
-  // Individual registration hook
   const {
     register: registerIndividual,
     isRegistering,
@@ -52,7 +71,6 @@ export const SubEventCard = memo(function SubEventCard({
     reset,
   } = useEventRegisterIndividual(slug);
 
-  // Handle successful registration - only call once per success
   useEffect(() => {
     if (isSuccess && !hasCalledSuccessRef.current) {
       hasCalledSuccessRef.current = true;
@@ -60,7 +78,6 @@ export const SubEventCard = memo(function SubEventCard({
     }
   }, [isSuccess, onRegistrationSuccess]);
 
-  // Reset the ref when the component resets (e.g., after error dismiss)
   useEffect(() => {
     if (!isSuccess) {
       hasCalledSuccessRef.current = false;
@@ -70,110 +87,91 @@ export const SubEventCard = memo(function SubEventCard({
   const handleRegisterClick = useCallback(() => {
     if (!event.registrationOpen || isRegistered || !canRegister) return;
 
-    // For team/duo events, show team selector modal
     if (event.type === "team" || event.type === "duo") {
       setShowTeamModal(true);
       return;
     }
 
-    // For individual events, register directly
     registerIndividual();
   }, [event.registrationOpen, event.type, isRegistered, canRegister, registerIndividual]);
 
-  // Handle successful team registration
   const handleTeamRegisterSuccess = useCallback(() => {
     setShowTeamModal(false);
     onRegistrationSuccess?.();
   }, [onRegistrationSuccess]);
 
-  // Determine if registered (from prop or just succeeded)
   const showAsRegistered = isRegistered || isSuccess;
-
-  // Button state
-  const getButtonContent = () => {
-    if (showAsRegistered) {
-      return (
-        <>
-          <Check className="mr-2 inline-block h-4 w-4" />
-          Registered
-        </>
-      );
-    }
-    if (isRegistering) {
-      return (
-        <>
-          <Loader2 className="mr-2 inline-block h-4 w-4 animate-spin" />
-          Registering...
-        </>
-      );
-    }
-    if (!event.registrationOpen) {
-      return "Coming Soon";
-    }
-    if (!canRegister) {
-      return "Buy Pass to Register";
-    }
-    return "Register Now";
-  };
-
-  const getButtonStyle = () => {
-    if (showAsRegistered) {
-      return {
-        background: "linear-gradient(135deg, #22C55E 0%, #16A34A 100%)",
-        color: "#FFFFFF",
-        border: "1px solid #22C55E",
-        cursor: "default" as const,
-      };
-    }
-    if (!event.registrationOpen || !canRegister) {
-      return {
-        background: "rgba(255,255,255,0.1)",
-        color: "rgba(255,255,255,0.4)",
-        border: "1px solid rgba(255,255,255,0.2)",
-        cursor: "not-allowed" as const,
-      };
-    }
-    return {
-      background: `linear-gradient(135deg, ${categoryColor}90 0%, ${categoryColor}70 100%)`,
-      color: COLORS.CREAM,
-      border: `1px solid ${categoryColor}`,
-      cursor: "pointer" as const,
-    };
-  };
 
   return (
     <>
-      <div className="group relative" style={{ animationDelay: `${index * 0.1}s` }}>
-        {/* Card Container */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+        className="group relative flex h-full flex-col"
+      >
+        {/* Card Container - uses flex to maintain equal heights */}
         <div
-          className="relative h-full overflow-hidden rounded-xl transition-all duration-300 sm:hover:-translate-y-1 sm:hover:scale-[1.02]"
+          className="relative flex flex-1 flex-col overflow-hidden rounded-2xl transition-all duration-500 sm:hover:-translate-y-2 sm:hover:scale-[1.02]"
           style={{
             background: `linear-gradient(160deg, 
-              ${categoryColor}08 0%, 
-              #0a0612 30%,
-              #1a0a1e90 100%
+              hsl(from ${categoryColor} h s 12% / 0.95) 0%,
+              hsl(from ${categoryColor} h s 6% / 0.98) 40%,
+              hsl(from ${categoryColor} h s 8% / 0.95) 100%
             )`,
-            border: `1px solid ${categoryColor}25`,
-            boxShadow: `0 4px 20px rgba(0,0,0,0.3)`,
+            border: `2px solid ${categoryColor}35`,
+            boxShadow: `
+              0 10px 40px rgba(0,0,0,0.4),
+              0 0 0 1px ${categoryColor}10,
+              inset 0 1px 0 ${categoryColor}15
+            `,
           }}
         >
-          {/* Top accent line */}
+          {/* Ornate top border */}
           <div
-            className="absolute top-0 right-0 left-0 h-0.5"
+            className="absolute top-0 right-0 left-0 h-1"
             style={{
-              background: `linear-gradient(90deg, transparent, ${categoryColor}80, transparent)`,
+              background: `linear-gradient(90deg, transparent 10%, ${categoryColor} 50%, transparent 90%)`,
             }}
           />
 
-          {/* Content */}
-          <div className="p-5 sm:p-6">
-            {/* Header with type badge */}
+          {/* Hover glow effect */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            style={{
+              background: `radial-gradient(ellipse at 50% 0%, ${categoryColor}25 0%, transparent 60%)`,
+            }}
+          />
+
+          {/* Corner ornaments */}
+          <div
+            className="absolute top-2.5 left-2.5 h-4 w-4 rounded-tl border-t-2 border-l-2"
+            style={{ borderColor: `${categoryColor}50` }}
+          />
+          <div
+            className="absolute top-2.5 right-2.5 h-4 w-4 rounded-tr border-t-2 border-r-2"
+            style={{ borderColor: `${categoryColor}50` }}
+          />
+          <div
+            className="absolute bottom-2.5 left-2.5 h-4 w-4 rounded-bl border-b-2 border-l-2"
+            style={{ borderColor: `${categoryColor}50` }}
+          />
+          <div
+            className="absolute right-2.5 bottom-2.5 h-4 w-4 rounded-br border-r-2 border-b-2"
+            style={{ borderColor: `${categoryColor}50` }}
+          />
+
+          {/* Content - flex-1 to fill available space */}
+          <div className="relative z-10 flex flex-1 flex-col p-5 sm:p-6">
+            {/* Header */}
             <div className="mb-4 flex items-start justify-between gap-3">
+              {/* Event name */}
               <h3
-                className="text-lg font-bold sm:text-xl"
+                className="text-xl font-bold italic sm:text-2xl"
                 style={{
-                  color: COLORS.CREAM,
                   fontFamily: "Georgia, serif",
+                  color: "#FDF6E3",
+                  textShadow: `0 0 20px ${categoryColor}40, 0 2px 4px rgba(0,0,0,0.3)`,
                 }}
               >
                 {event.name}
@@ -181,84 +179,180 @@ export const SubEventCard = memo(function SubEventCard({
 
               {/* Type badge */}
               <span
-                className="flex-shrink-0 rounded-full px-2 py-1 text-xs font-semibold tracking-wider uppercase"
+                className="flex-shrink-0 rounded-full px-3 py-1.5 text-xs font-bold tracking-wider uppercase"
                 style={{
-                  background: typeConfig.bg,
-                  color: typeConfig.text,
-                  border: `1px solid ${typeConfig.text}30`,
+                  background: typeConfig.gradient,
+                  color: typeConfig.textColor,
+                  boxShadow: `0 0 15px ${typeConfig.glow}`,
                 }}
               >
-                {event.type}
+                {typeConfig.label}
               </span>
             </div>
 
+            {/* Decorative divider */}
+            <div className="mb-4 flex items-center gap-2">
+              <div
+                className="h-px flex-1"
+                style={{ background: `linear-gradient(90deg, ${categoryColor}60, transparent)` }}
+              />
+              <Sparkles className="h-3.5 w-3.5" style={{ color: `${categoryColor}80` }} />
+              <div
+                className="h-px flex-1"
+                style={{ background: `linear-gradient(90deg, transparent, ${categoryColor}60)` }}
+              />
+            </div>
+
             {/* Tagline */}
-            <p className="mb-3 text-sm font-medium" style={{ color: categoryColor }}>
+            <p
+              className="mb-3 text-sm font-semibold italic"
+              style={{
+                fontFamily: "Georgia, serif",
+                color: categoryColor,
+                textShadow: `0 0 15px ${categoryColor}30`,
+              }}
+            >
               {event.tagline}
             </p>
 
-            {/* Description */}
+            {/* Description - flex-1 to push button to bottom */}
             <p
-              className="line-clamp-3 text-sm leading-relaxed sm:line-clamp-4"
-              style={{ color: "rgba(255,255,255,0.65)" }}
+              className="mb-4 flex-1 text-sm leading-relaxed"
+              style={{ color: "rgba(255,255,255,0.7)" }}
             >
               {event.description}
             </p>
 
-            {/* Team size if applicable */}
+            {/* Team size badge - positioned above button */}
             {event.teamSize && (
               <div
-                className="mt-4 inline-flex items-center gap-2 text-xs"
-                style={{ color: "rgba(255,255,255,0.5)" }}
+                className="mb-4 inline-flex items-center gap-2 self-start rounded-lg px-3 py-2"
+                style={{
+                  background: `${categoryColor}15`,
+                  border: `1px solid ${categoryColor}30`,
+                }}
               >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <span>Team Size: {event.teamSize}</span>
+                <Users className="h-4 w-4" style={{ color: categoryColor }} />
+                <span className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.8)" }}>
+                  Team Size: <span style={{ color: categoryColor }}>{event.teamSize}</span>
+                </span>
               </div>
             )}
 
             {/* Error message */}
             {isError && (
-              <p className="mt-3 text-xs text-red-400">
+              <div
+                className="mb-4 rounded-lg px-3 py-2 text-xs"
+                style={{
+                  background: "rgba(239, 68, 68, 0.15)",
+                  border: "1px solid rgba(239, 68, 68, 0.3)",
+                  color: "#fca5a5",
+                }}
+              >
                 {errorMessage}
-                <button onClick={() => reset()} className="ml-2 underline hover:text-red-300">
+                <button
+                  onClick={() => reset()}
+                  className="ml-2 underline transition-colors hover:text-white"
+                >
                   Dismiss
                 </button>
-              </p>
+              </div>
             )}
 
-            {/* Register button */}
-            <div className="mt-6">
-              <button
-                onClick={handleRegisterClick}
-                className="w-full rounded-lg py-2.5 text-sm font-semibold transition-all duration-300 sm:hover:scale-[1.02]"
-                style={getButtonStyle()}
-                disabled={
-                  !event.registrationOpen || isRegistering || showAsRegistered || !canRegister
-                }
-              >
-                {getButtonContent()}
-              </button>
-            </div>
+            {/* Register button - always at bottom due to flex */}
+            <motion.button
+              whileHover={
+                !showAsRegistered && event.registrationOpen && canRegister
+                  ? { scale: 1.02 }
+                  : undefined
+              }
+              whileTap={
+                !showAsRegistered && event.registrationOpen && canRegister
+                  ? { scale: 0.98 }
+                  : undefined
+              }
+              onClick={handleRegisterClick}
+              disabled={
+                !event.registrationOpen || isRegistering || showAsRegistered || !canRegister
+              }
+              className="group/btn relative mt-auto w-full overflow-hidden rounded-xl py-3.5 text-sm font-bold tracking-wider uppercase transition-all duration-300"
+              style={{
+                background: showAsRegistered
+                  ? "linear-gradient(135deg, #22C55E 0%, #16A34A 100%)"
+                  : !event.registrationOpen || !canRegister
+                    ? "linear-gradient(135deg, rgba(100,100,100,0.3) 0%, rgba(60,60,60,0.3) 100%)"
+                    : `linear-gradient(135deg, ${categoryColor} 0%, hsl(from ${categoryColor} h s 30%) 100%)`,
+                border: showAsRegistered
+                  ? "2px solid #22C55E"
+                  : !event.registrationOpen || !canRegister
+                    ? "2px solid rgba(100,100,100,0.3)"
+                    : `2px solid ${categoryColor}`,
+                color:
+                  showAsRegistered || (event.registrationOpen && canRegister)
+                    ? "#FDF6E3"
+                    : "rgba(255,255,255,0.4)",
+                boxShadow: showAsRegistered
+                  ? "0 0 25px rgba(34, 197, 94, 0.4)"
+                  : event.registrationOpen && canRegister
+                    ? `0 0 25px ${categoryColor}40`
+                    : "none",
+                cursor:
+                  !event.registrationOpen || showAsRegistered || !canRegister
+                    ? "not-allowed"
+                    : "pointer",
+              }}
+            >
+              {/* Shimmer effect */}
+              {event.registrationOpen && canRegister && !showAsRegistered && !isRegistering && (
+                <div
+                  className="absolute inset-0 -translate-x-full transition-transform duration-700 group-hover/btn:translate-x-full"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                  }}
+                />
+              )}
+
+              {/* Button content */}
+              <span className="relative flex items-center justify-center gap-2">
+                {showAsRegistered ? (
+                  <>
+                    <Check className="h-5 w-5" />
+                    Registered
+                  </>
+                ) : isRegistering ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Registering...
+                  </>
+                ) : !event.registrationOpen ? (
+                  <>
+                    <Clock className="h-5 w-5" />
+                    Coming Soon
+                  </>
+                ) : !canRegister ? (
+                  "Buy Pass to Register"
+                ) : (
+                  <>
+                    Register Now
+                    <ChevronRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
+                  </>
+                )}
+              </span>
+            </motion.button>
           </div>
 
-          {/* Hover glow - desktop only */}
+          {/* Bottom ornate line */}
           <div
-            className="pointer-events-none absolute inset-0 hidden opacity-0 transition-opacity duration-500 group-hover:opacity-100 sm:block"
+            className="absolute right-0 bottom-0 left-0 h-px"
             style={{
-              background: `radial-gradient(ellipse at center, ${categoryColor}10 0%, transparent 70%)`,
+              background: `linear-gradient(90deg, transparent, ${categoryColor}30, transparent)`,
             }}
           />
         </div>
-      </div>
+      </motion.div>
 
-      {/* Team Selector Modal for team/duo events */}
+      {/* Team Selector Modal */}
       {showTeamModal && (
         <TeamSelectorModal
           isOpen={showTeamModal}

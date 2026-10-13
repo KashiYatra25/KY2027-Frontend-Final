@@ -35,7 +35,6 @@ export function CartSummary({
   onCheckout,
   isClearing,
   isSuspended,
-  isSuspended,
 }: CartSummaryProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
@@ -349,18 +348,10 @@ export function CartSummary({
         <motion.button
           whileHover={!isSuspended ? { scale: 1.01 } : undefined}
           whileTap={!isSuspended ? { scale: 0.99 } : undefined}
-          whileHover={!isSuspended ? { scale: 1.01 } : undefined}
-          whileTap={!isSuspended ? { scale: 0.99 } : undefined}
-          onClick={onCheckout}
-          disabled={isSuspended}
-          className="group relative mb-4 w-full overflow-hidden rounded-xl py-4 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+          onClick={() => onCheckout(appliedCoupon?.code)}
           disabled={isSuspended}
           className="group relative mb-4 w-full overflow-hidden rounded-xl py-4 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
           style={{
-            background: isSuspended
-              ? "linear-gradient(135deg, #666, #444)"
-              : `linear-gradient(135deg, ${COLORS.GOLD}, ${COLORS.DARK_GOLD})`,
-            boxShadow: isSuspended ? "none" : `0 4px 20px ${COLORS.GOLD}30`,
             background: isSuspended
               ? "linear-gradient(135deg, #666, #444)"
               : `linear-gradient(135deg, ${COLORS.GOLD}, ${COLORS.DARK_GOLD})`,
@@ -379,43 +370,13 @@ export function CartSummary({
               }}
             />
           )}
-          {!isSuspended && (
-            <motion.div
-              className="absolute inset-0"
-              animate={{ x: ["-100%", "200%"] }}
-              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
-                width: "50%",
-              }}
-            />
-          )}
           <span className="relative flex items-center justify-center gap-2">
-            {isSuspended ? "Account Suspended" : "Proceed to Checkout"}
-            {!isSuspended && (
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
-            )}
             {isSuspended ? "Account Suspended" : "Proceed to Checkout"}
             {!isSuspended && (
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
             )}
           </span>
         </motion.button>
-
-        {/* Suspended warning */}
-        {isSuspended && (
-          <div
-            className="mb-4 rounded-lg p-3 text-center text-xs"
-            style={{
-              background: "rgba(239, 68, 68, 0.1)",
-              border: "1px solid rgba(239, 68, 68, 0.25)",
-              color: "#fca5a5",
-            }}
-          >
-            Your account is suspended. Please contact support to continue.
-          </div>
-        )}
 
         {/* Suspended warning */}
         {isSuspended && (

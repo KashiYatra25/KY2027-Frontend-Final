@@ -2,11 +2,13 @@
 
 import { memo } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import type { EventCategory } from "@/lib/api/helper/types";
-import { COLORS, JAZZ_COLORS } from "@/components/pages/events/constants/palette";
+import { ArrowLeft, Sparkles, CalendarCheck } from "lucide-react";
 
 // ═══════════════════════════════════════════════════════════════════
-// CATEGORY HEADER COMPONENT
+// CATEGORY HEADER COMPONENT - FESTIVE DESIGN
+// Matches the FestEvents aesthetic with ornate borders and glows
 // ═══════════════════════════════════════════════════════════════════
 
 interface CategoryHeaderProps {
@@ -14,89 +16,232 @@ interface CategoryHeaderProps {
 }
 
 export const CategoryHeader = memo(function CategoryHeader({ category }: CategoryHeaderProps) {
-  return (
-    <div className="mb-12 sm:mb-16">
-      {/* Back button */}
-      <Link
-        href="/events"
-        className="mb-8 inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-80"
-        style={{ color: "rgba(255,255,255,0.6)" }}
-      >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        All Categories
-      </Link>
+  const openCount = category.subEvents.filter((e) => e.registrationOpen).length;
 
-      {/* Category icon and title */}
-      <div className="mb-6 flex items-center gap-4 sm:gap-6">
-        <div
-          className="flex h-16 w-16 items-center justify-center rounded-2xl text-4xl sm:h-20 sm:w-20 sm:text-5xl"
+  return (
+    <div className="relative mb-10 sm:mb-14">
+      {/* Back navigation - positioned with more margin to avoid navbar overlap */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <Link
+          href="/events"
+          className="group mb-6 inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:gap-3"
           style={{
             background: `linear-gradient(135deg, ${category.color}20 0%, ${category.color}10 100%)`,
-            border: `2px solid ${category.color}40`,
+            border: `1px solid ${category.color}40`,
+            color: category.color,
+            boxShadow: `0 0 20px ${category.color}15`,
           }}
         >
-          {category.icon}
-        </div>
+          <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
+          <span>Back to Events</span>
+        </Link>
+      </motion.div>
 
-        <div>
-          <h1
-            className="text-3xl font-black italic sm:text-4xl"
-            style={{
-              fontFamily: "Georgia, serif",
-              color: COLORS.CREAM,
-              textShadow: `0 2px 20px ${category.color}40`,
-            }}
-          >
-            {category.name}
-          </h1>
-          <p className="mt-1 text-sm sm:text-base" style={{ color: category.color }}>
-            {category.tagline}
-          </p>
-        </div>
-      </div>
-
-      {/* Description */}
-      <p
-        className="max-w-3xl text-base leading-relaxed sm:text-lg"
-        style={{ color: "rgba(255,255,255,0.7)" }}
+      {/* Main header card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative overflow-hidden rounded-2xl"
+        style={{
+          background: `linear-gradient(135deg, 
+            hsl(from ${category.color} h s 8% / 0.9) 0%,
+            hsl(from ${category.color} h s 5% / 0.95) 50%,
+            hsl(from ${category.color} h s 10% / 0.9) 100%
+          )`,
+          border: `2px solid ${category.color}40`,
+          boxShadow: `
+            0 0 60px ${category.color}15,
+            inset 0 1px 0 ${category.color}20,
+            inset 0 -1px 0 rgba(0,0,0,0.3)
+          `,
+        }}
       >
-        {category.description}
-      </p>
-
-      {/* Stats bar */}
-      <div className="mt-8 flex flex-wrap gap-4 sm:gap-6">
+        {/* Ornate top border line */}
         <div
-          className="rounded-lg px-4 py-2"
+          className="absolute top-0 right-0 left-0 h-1"
           style={{
-            background: `${category.color}15`,
-            border: `1px solid ${category.color}30`,
+            background: `linear-gradient(90deg, transparent, ${category.color}, transparent)`,
           }}
-        >
-          <span className="text-2xl font-bold" style={{ color: category.color }}>
-            {category.subEvents.length}
-          </span>
-          <span className="ml-2 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-            Events
-          </span>
+        />
+
+        {/* Corner ornaments */}
+        {[
+          "top-3 left-3",
+          "top-3 right-3 rotate-90",
+          "bottom-3 left-3 -rotate-90",
+          "bottom-3 right-3 rotate-180",
+        ].map((pos, i) => (
+          <div
+            key={i}
+            className={`absolute h-6 w-6 ${pos}`}
+            style={{ borderColor: `${category.color}60` }}
+          >
+            <svg viewBox="0 0 24 24" fill="none" className="h-full w-full">
+              <path d="M0 0 L12 0 L12 2 L2 2 L2 12 L0 12 Z" fill={`${category.color}60`} />
+            </svg>
+          </div>
+        ))}
+
+        {/* Background glow */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse at 30% 20%, ${category.color}20 0%, transparent 50%)`,
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 px-6 py-8 sm:px-10 sm:py-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
+            {/* Icon container */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="relative flex h-24 w-24 flex-shrink-0 items-center justify-center self-center sm:h-28 sm:w-28 sm:self-start"
+            >
+              {/* Glowing ring */}
+              <div
+                className="absolute inset-0 animate-pulse rounded-2xl"
+                style={{
+                  background: `linear-gradient(135deg, ${category.color}30, transparent)`,
+                  border: `2px solid ${category.color}50`,
+                  boxShadow: `0 0 30px ${category.color}30`,
+                }}
+              />
+              {/* Inner icon */}
+              <span className="relative z-10 text-5xl sm:text-6xl">{category.icon}</span>
+            </motion.div>
+
+            {/* Text content */}
+            <div className="flex-1 text-center sm:text-left">
+              {/* Category name */}
+              <motion.h1
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="mb-2 text-4xl font-black italic sm:text-5xl lg:text-6xl"
+                style={{
+                  fontFamily: "Georgia, serif",
+                  color: "#FDF6E3",
+                  textShadow: `0 0 40px ${category.color}60, 0 2px 10px rgba(0,0,0,0.5)`,
+                }}
+              >
+                {category.name}
+              </motion.h1>
+
+              {/* Tagline with decorative elements */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="mb-4 flex items-center justify-center gap-3 sm:justify-start"
+              >
+                <span
+                  className="h-px w-8 sm:w-12"
+                  style={{ background: `linear-gradient(90deg, transparent, ${category.color})` }}
+                />
+                <p
+                  className="text-lg font-semibold italic sm:text-xl"
+                  style={{
+                    fontFamily: "Georgia, serif",
+                    color: category.color,
+                    textShadow: `0 0 20px ${category.color}40`,
+                  }}
+                >
+                  {category.tagline}
+                </p>
+                <span
+                  className="h-px w-8 sm:w-12"
+                  style={{ background: `linear-gradient(90deg, ${category.color}, transparent)` }}
+                />
+              </motion.div>
+
+              {/* Description */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="max-w-2xl text-sm leading-relaxed sm:text-base"
+                style={{ color: "rgba(255,255,255,0.75)" }}
+              >
+                {category.description}
+              </motion.p>
+            </div>
+          </div>
+
+          {/* Stats row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:justify-start"
+          >
+            {/* Total events */}
+            <div
+              className="flex items-center gap-3 rounded-xl px-5 py-3"
+              style={{
+                background: `linear-gradient(135deg, ${category.color}20, ${category.color}10)`,
+                border: `1px solid ${category.color}40`,
+                boxShadow: `0 0 20px ${category.color}15`,
+              }}
+            >
+              <Sparkles className="h-5 w-5" style={{ color: category.color }} />
+              <div>
+                <span
+                  className="text-2xl font-bold"
+                  style={{
+                    color: category.color,
+                    textShadow: `0 0 15px ${category.color}50`,
+                  }}
+                >
+                  {category.subEvents.length}
+                </span>
+                <span className="ml-2 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
+                  Events
+                </span>
+              </div>
+            </div>
+
+            {/* Open for registration */}
+            <div
+              className="flex items-center gap-3 rounded-xl px-5 py-3"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1))",
+                border: "1px solid rgba(34, 197, 94, 0.4)",
+                boxShadow: "0 0 20px rgba(34, 197, 94, 0.15)",
+              }}
+            >
+              <CalendarCheck className="h-5 w-5 text-green-400" />
+              <div>
+                <span
+                  className="text-2xl font-bold text-green-400"
+                  style={{ textShadow: "0 0 15px rgba(34, 197, 94, 0.5)" }}
+                >
+                  {openCount}
+                </span>
+                <span className="ml-2 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
+                  Open Now
+                </span>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
+        {/* Bottom decorative line */}
         <div
-          className="rounded-lg px-4 py-2"
+          className="absolute right-0 bottom-0 left-0 h-px"
           style={{
-            background: `${JAZZ_COLORS.ELECTRIC_BLUE}15`,
-            border: `1px solid ${JAZZ_COLORS.ELECTRIC_BLUE}30`,
+            background: `linear-gradient(90deg, transparent, ${category.color}40, transparent)`,
           }}
-        >
-          <span className="text-2xl font-bold" style={{ color: JAZZ_COLORS.ELECTRIC_BLUE }}>
-            {category.subEvents.filter((e) => e.registrationOpen).length}
-          </span>
-          <span className="ml-2 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-            Open for Registration
-          </span>
-        </div>
-      </div>
+        />
+      </motion.div>
     </div>
   );
 });

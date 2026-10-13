@@ -3,3 +3,12 @@ export { PageTitle } from "./PageTitle";
 export { SubEventCard } from "./SubEventCard";
 export { CategoryHeader } from "./CategoryHeader";
 export { TeamSelectorModal } from "./TeamSelectorModal";
+export {
+  BackgroundDecorations,
+  PaisleyDecor,
+  LotusDecor,
+  MandalaCorner,
+  DiyaDecor,
+  RangoliStar,
+  SwirlDecor,
+} from "./CategoryDecorations";

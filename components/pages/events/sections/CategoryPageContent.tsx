@@ -8,9 +8,9 @@ import {
   usePaymentStatus,
   CATEGORY_METADATA,
 } from "@/lib/api/hooks";
-import { COLORS, JAZZ_COLORS } from "@/components/pages/events/constants/palette";
 import { SubEventCard, CategoryHeader } from "@/components/pages/events/components";
-import { AlertCircle, RefreshCw } from "lucide-react";
+import { BackgroundDecorations } from "@/components/pages/events/components/CategoryDecorations";
+import { AlertCircle, RefreshCw, Sparkles, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -31,7 +31,7 @@ const SLUG_TO_CATEGORY: Record<string, EventCategorySlug> = {
 };
 
 // ═══════════════════════════════════════════════════════════════════
-// EVENT CARD SKELETON
+// EVENT CARD SKELETON - FESTIVE STYLE
 // ═══════════════════════════════════════════════════════════════════
 
 function EventCardSkeleton({ index, color }: { index: number; color: string }) {
@@ -39,65 +39,77 @@ function EventCardSkeleton({ index, color }: { index: number; color: string }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, duration: 0.3 }}
-      className="relative overflow-hidden rounded-2xl"
+      transition={{ delay: index * 0.08, duration: 0.4 }}
+      className="relative flex flex-col overflow-hidden rounded-2xl"
       style={{
-        background: `linear-gradient(180deg, 
-          ${color}10 0%, 
-          ${JAZZ_COLORS.BG_DEEP} 30%,
-          ${JAZZ_COLORS.BG_ROYAL} 70%,
-          ${color}15 100%
+        background: `linear-gradient(160deg, 
+          hsl(from ${color} h s 12% / 0.95) 0%,
+          hsl(from ${color} h s 6% / 0.98) 40%,
+          hsl(from ${color} h s 8% / 0.95) 100%
         )`,
-        border: `1px solid ${color}30`,
-        height: "340px",
+        border: `2px solid ${color}25`,
+        minHeight: "380px",
       }}
     >
-      {/* Image skeleton */}
+      {/* Top border */}
       <div
-        className="h-36 w-full animate-pulse"
-        style={{ background: `linear-gradient(135deg, ${color}15, ${color}05)` }}
+        className="absolute top-0 right-0 left-0 h-1"
+        style={{ background: `linear-gradient(90deg, transparent, ${color}50, transparent)` }}
       />
 
-      <div className="p-4">
+      <div className="flex flex-1 flex-col p-6">
         {/* Title skeleton */}
-        <div
-          className="mb-2 h-5 w-3/4 animate-pulse rounded"
-          style={{ background: "rgba(255,255,255,0.1)" }}
-        />
-
-        {/* Tagline skeleton */}
-        <div
-          className="mb-3 h-3 w-full animate-pulse rounded"
-          style={{ background: "rgba(255,255,255,0.05)" }}
-        />
-        <div
-          className="mb-4 h-3 w-2/3 animate-pulse rounded"
-          style={{ background: "rgba(255,255,255,0.05)" }}
-        />
-
-        {/* Type badge skeleton */}
-        <div className="flex gap-2">
+        <div className="mb-4 flex items-start justify-between">
           <div
-            className="h-6 w-16 animate-pulse rounded-full"
+            className="h-7 w-2/3 animate-pulse rounded-lg"
             style={{ background: `${color}20` }}
           />
           <div
-            className="h-6 w-20 animate-pulse rounded-full"
+            className="h-7 w-20 animate-pulse rounded-full"
             style={{ background: `${color}15` }}
           />
         </div>
+
+        {/* Divider */}
+        <div className="mb-4 h-px" style={{ background: `${color}20` }} />
+
+        {/* Tagline skeleton */}
+        <div
+          className="mb-3 h-4 w-1/2 animate-pulse rounded"
+          style={{ background: `${color}15` }}
+        />
+
+        {/* Description skeleton */}
+        <div
+          className="mb-2 h-3 w-full animate-pulse rounded"
+          style={{ background: "rgba(255,255,255,0.08)" }}
+        />
+        <div
+          className="mb-2 h-3 w-5/6 animate-pulse rounded"
+          style={{ background: "rgba(255,255,255,0.06)" }}
+        />
+        <div
+          className="mb-6 h-3 w-4/6 flex-1 animate-pulse rounded"
+          style={{ background: "rgba(255,255,255,0.04)" }}
+        />
+
+        {/* Button skeleton */}
+        <div
+          className="mt-auto h-12 w-full animate-pulse rounded-xl"
+          style={{ background: `${color}20` }}
+        />
       </div>
     </motion.div>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// INLINE LOADER (6 skeleton cards in grid)
+// GRID LOADER
 // ═══════════════════════════════════════════════════════════════════
 
 function EventsGridLoader({ color }: { color: string }) {
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-8">
+    <div className="grid auto-rows-fr grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
       {Array.from({ length: 6 }).map((_, index) => (
         <EventCardSkeleton key={index} index={index} color={color} />
       ))}
@@ -106,7 +118,7 @@ function EventsGridLoader({ color }: { color: string }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// ERROR STATE
+// ERROR STATE - FESTIVE STYLE
 // ═══════════════════════════════════════════════════════════════════
 
 function EventsError({
@@ -119,82 +131,151 @@ function EventsError({
   color: string;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center py-20">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="flex flex-col items-center justify-center py-20"
+    >
       <div
-        className="mb-4 flex h-16 w-16 items-center justify-center rounded-full"
-        style={{ background: "rgba(239, 68, 68, 0.1)" }}
-      >
-        <AlertCircle className="h-8 w-8 text-red-400" />
-      </div>
-      <h3 className="mb-2 text-lg font-semibold text-white">Failed to load events</h3>
-      <p className="mb-6 text-sm text-gray-400">{message}</p>
-      <button
-        onClick={onRetry}
-        className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+        className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl"
         style={{
-          background: color,
-          color: "#000",
+          background: "rgba(239, 68, 68, 0.15)",
+          border: "2px solid rgba(239, 68, 68, 0.3)",
+          boxShadow: "0 0 30px rgba(239, 68, 68, 0.2)",
+        }}
+      >
+        <AlertCircle className="h-10 w-10 text-red-400" />
+      </div>
+      <h3
+        className="mb-2 text-xl font-bold italic"
+        style={{ fontFamily: "Georgia, serif", color: "#FDF6E3" }}
+      >
+        Failed to load events
+      </h3>
+      <p className="mb-8 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
+        {message}
+      </p>
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={onRetry}
+        className="flex items-center gap-2 rounded-xl px-6 py-3 font-semibold transition-all"
+        style={{
+          background: `linear-gradient(135deg, ${color} 0%, hsl(from ${color} h s 30%) 100%)`,
+          border: `2px solid ${color}`,
+          color: "#FDF6E3",
+          boxShadow: `0 0 20px ${color}40`,
         }}
       >
         <RefreshCw className="h-4 w-4" />
         Try Again
-      </button>
-    </div>
+      </motion.button>
+    </motion.div>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// EMPTY STATE
+// EMPTY STATE - FESTIVE STYLE
 // ═══════════════════════════════════════════════════════════════════
 
 function EmptyEvents({ categoryName, color }: { categoryName: string; color: string }) {
   return (
-    <div className="flex flex-col items-center justify-center py-20">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="flex flex-col items-center justify-center py-20"
+    >
       <div
-        className="mb-4 flex h-16 w-16 items-center justify-center rounded-full"
-        style={{ background: `${color}20` }}
+        className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl"
+        style={{
+          background: `${color}20`,
+          border: `2px solid ${color}40`,
+          boxShadow: `0 0 30px ${color}20`,
+        }}
       >
-        <span className="text-2xl">🎭</span>
+        <Sparkles className="h-10 w-10" style={{ color }} />
       </div>
-      <h3 className="mb-2 text-lg font-semibold text-white">No events yet</h3>
-      <p className="text-sm text-gray-400">Events for {categoryName} will be announced soon!</p>
-    </div>
+      <h3
+        className="mb-2 text-xl font-bold italic"
+        style={{ fontFamily: "Georgia, serif", color: "#FDF6E3" }}
+      >
+        Coming Soon
+      </h3>
+      <p className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
+        Events for {categoryName} will be announced soon!
+      </p>
+    </motion.div>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// CATEGORY PAGE CONTENT
-// Individual category page showing all sub-events
+// PAYMENT REQUIRED BANNER
+// ═══════════════════════════════════════════════════════════════════
+
+function PaymentRequiredBanner({ color }: { color: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mb-8 overflow-hidden rounded-xl"
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.08) 100%)",
+        border: "2px solid rgba(239, 68, 68, 0.35)",
+        boxShadow: "0 0 30px rgba(239, 68, 68, 0.15)",
+      }}
+    >
+      <div className="flex flex-col items-center justify-between gap-4 px-6 py-5 sm:flex-row">
+        <div className="flex items-center gap-4 text-center sm:text-left">
+          <div
+            className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl"
+            style={{ background: "rgba(239, 68, 68, 0.2)" }}
+          >
+            <AlertCircle className="h-6 w-6 text-red-400" />
+          </div>
+          <div>
+            <p className="font-semibold text-red-300">Pass Required</p>
+            <p className="text-sm text-red-200/70">Purchase a pass to register for events</p>
+          </div>
+        </div>
+        <Link
+          href="/passes"
+          className="group flex items-center gap-2 rounded-xl bg-red-500 px-6 py-3 font-semibold text-white transition-all hover:bg-red-600 hover:shadow-lg"
+          style={{ boxShadow: "0 0 20px rgba(239, 68, 68, 0.4)" }}
+        >
+          Buy Pass
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </Link>
+      </div>
+    </motion.div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CATEGORY PAGE CONTENT - FESTIVE DESIGN
 // ═══════════════════════════════════════════════════════════════════
 
 interface CategoryPageContentProps {
-  category?: EventCategory; // Legacy prop (from static config)
-  categorySlug?: string; // New prop (for API-based fetching)
+  category?: EventCategory;
+  categorySlug?: string;
 }
 
 export function CategoryPageContent({
   category: legacyCategory,
   categorySlug,
 }: CategoryPageContentProps) {
-  // Determine which category to use
   const slug = categorySlug ?? legacyCategory?.slug;
   const categoryKey = slug ? SLUG_TO_CATEGORY[slug.toLowerCase()] : null;
-
-  // Get category metadata first (this is synchronous)
   const categoryMeta = categoryKey ? CATEGORY_METADATA[categoryKey] : null;
 
-  // Fetch events from API if we have a valid category key
   const { events, isLoading, isError, errorMessage, refetch } = useEventsByCategory(
-    categoryKey ?? "NATRAJ" // Fallback to prevent hook error, but we check categoryKey below
+    categoryKey ?? "NATRAJ"
   );
 
-  // Fetch registrations once at parent level
   const { isRegisteredFor, refetch: refetchRegistrations } = useMyRegistrations();
-
-  // Check payment status
   const { hasPaid } = usePaymentStatus();
 
-  // If no valid category slug provided - show 404 layout
+  // 404 state
   if (!categoryKey || !categoryMeta) {
     return (
       <>
@@ -203,15 +284,23 @@ export function CategoryPageContent({
         </div>
         <main
           className="flex min-h-screen items-center justify-center px-4 pt-28 pb-20"
-          style={{ background: JAZZ_COLORS.BG_DEEP }}
+          style={{
+            background: "linear-gradient(180deg, #0c0810 0%, #150a14 50%, #0c0810 100%)",
+          }}
         >
-          <div className="text-center text-white">
-            <h2 className="text-2xl font-bold">Category not found</h2>
-            <p className="mt-2 text-gray-400">The category &quot;{slug}&quot; does not exist.</p>
+          <div className="text-center">
+            <h2
+              className="mb-3 text-3xl font-bold italic"
+              style={{ fontFamily: "Georgia, serif", color: "#FDF6E3" }}
+            >
+              Category not found
+            </h2>
+            <p className="mb-6" style={{ color: "rgba(255,255,255,0.6)" }}>
+              The category &quot;{slug}&quot; does not exist.
+            </p>
             <Link
               href="/events"
-              className="mt-4 inline-block rounded-lg px-4 py-2 text-sm font-medium"
-              style={{ background: COLORS.BRIGHT_GOLD, color: "#000" }}
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-3 font-semibold text-white transition-transform hover:scale-105"
             >
               Back to Events
             </Link>
@@ -221,7 +310,6 @@ export function CategoryPageContent({
     );
   }
 
-  // Build category header data from metadata
   const categoryForHeader = legacyCategory ?? {
     id: categoryKey,
     name: categoryMeta.name,
@@ -230,10 +318,9 @@ export function CategoryPageContent({
     description: categoryMeta.description,
     icon: categoryMeta.icon,
     color: categoryMeta.color,
-    subEvents: [], // Will be populated when loaded
+    subEvents: [],
   };
 
-  // Build full category with events (only when loaded)
   const subEvents =
     legacyCategory?.subEvents ??
     events.map((e) => ({
@@ -252,6 +339,12 @@ export function CategoryPageContent({
       prizePool: e.prizePool ?? undefined,
     }));
 
+  // Update category with loaded events for header stats
+  const categoryWithEvents = {
+    ...categoryForHeader,
+    subEvents,
+  };
+
   return (
     <>
       {/* Fixed navbar */}
@@ -260,56 +353,97 @@ export function CategoryPageContent({
       </div>
 
       <main
-        className="min-h-screen px-4 pt-28 pb-20 sm:px-6 sm:pt-32"
+        className="relative min-h-screen overflow-hidden px-4 pt-28 pb-20 sm:px-6 sm:pt-32"
         style={{
           background: `linear-gradient(180deg, 
-            ${JAZZ_COLORS.BG_DEEP} 0%, 
-            ${JAZZ_COLORS.BG_ROYAL} 30%,
-            ${categoryMeta.color}08 50%,
-            ${JAZZ_COLORS.BG_ROYAL} 70%,
-            ${JAZZ_COLORS.BG_DEEP} 100%
+            #0c0810 0%,
+            hsl(from ${categoryMeta.color} h 45% 7%) 20%,
+            hsl(from ${categoryMeta.color} h 50% 10%) 50%,
+            hsl(from ${categoryMeta.color} h 45% 7%) 80%,
+            #0c0810 100%
           )`,
         }}
       >
-        {/* Background glow for category color */}
+        {/* ═══════════════════════════════════════════════════════════════════
+            BACKGROUND DECORATIVE ELEMENTS
+        ═══════════════════════════════════════════════════════════════════ */}
+
+        {/* Custom SVG decorations */}
+        <BackgroundDecorations color={categoryMeta.color} />
+
+        {/* Radial glow */}
         <div
-          className="pointer-events-none fixed inset-0 opacity-[0.05]"
+          className="pointer-events-none fixed inset-0"
           style={{
             backgroundImage: `
-              radial-gradient(circle at 50% 30%, ${categoryMeta.color} 0%, transparent 60%)
+              radial-gradient(ellipse at 30% 20%, ${categoryMeta.color}15 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, ${categoryMeta.color}10 0%, transparent 40%)
             `,
           }}
         />
 
+        {/* Animated floating particles */}
+        <div className="pointer-events-none fixed inset-0 overflow-hidden">
+          {Array.from({ length: 15 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute h-1 w-1 rounded-full"
+              style={{
+                background: categoryMeta.color,
+                left: `${10 + Math.random() * 80}%`,
+                top: `${10 + Math.random() * 80}%`,
+                opacity: 0.3,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.2, 0.5, 0.2],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Subtle grid pattern overlay */}
+        <div
+          className="pointer-events-none fixed inset-0 opacity-20"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at 50% 50%, transparent 0%, #0c0810 100%),
+              repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 60px,
+                ${categoryMeta.color}05 60px,
+                ${categoryMeta.color}05 61px
+              ),
+              repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 60px,
+                ${categoryMeta.color}03 60px,
+                ${categoryMeta.color}03 61px
+              )
+            `,
+          }}
+        />
+
+        {/* ═══════════════════════════════════════════════════════════════════
+            MAIN CONTENT
+        ═══════════════════════════════════════════════════════════════════ */}
+
         <div className="relative z-10 mx-auto max-w-6xl 2xl:max-w-7xl">
-          {/* Category header (always shown - metadata is synchronous) */}
-          <CategoryHeader category={categoryForHeader} />
+          {/* Category header */}
+          <CategoryHeader category={categoryWithEvents} />
 
           {/* Payment required banner */}
-          {!hasPaid && (
-            <div
-              className="mb-6 flex flex-col items-center justify-between gap-3 rounded-xl border px-5 py-4 sm:flex-row"
-              style={{
-                background: "rgba(239, 68, 68, 0.1)",
-                borderColor: "rgba(239, 68, 68, 0.3)",
-              }}
-            >
-              <div className="flex items-center gap-3 text-center sm:text-left">
-                <AlertCircle className="h-5 w-5 flex-shrink-0 text-red-400" />
-                <p className="text-sm text-red-200">
-                  You need to purchase a pass to register for events
-                </p>
-              </div>
-              <Link
-                href="/passes"
-                className="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600"
-              >
-                Buy Pass
-              </Link>
-            </div>
-          )}
+          {!hasPaid && <PaymentRequiredBanner color={categoryMeta.color} />}
 
-          {/* Sub-events grid with inline states */}
+          {/* Events grid - using auto-rows-fr for equal height */}
           {isLoading && !legacyCategory ? (
             <EventsGridLoader color={categoryMeta.color} />
           ) : isError && !legacyCategory ? (
@@ -321,7 +455,7 @@ export function CategoryPageContent({
           ) : subEvents.length === 0 ? (
             <EmptyEvents categoryName={categoryMeta.name} color={categoryMeta.color} />
           ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-8">
+            <div className="grid auto-rows-fr grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
               {subEvents.map((event, index) => (
                 <SubEventCard
                   key={event.id}
@@ -334,6 +468,30 @@ export function CategoryPageContent({
                 />
               ))}
             </div>
+          )}
+
+          {/* Bottom decorative element */}
+          {!isLoading && !isError && subEvents.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="mt-16 flex items-center justify-center gap-4"
+            >
+              <div
+                className="h-px w-16"
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${categoryMeta.color}50)`,
+                }}
+              />
+              <Sparkles className="h-5 w-5" style={{ color: `${categoryMeta.color}60` }} />
+              <div
+                className="h-px w-16"
+                style={{
+                  background: `linear-gradient(90deg, ${categoryMeta.color}50, transparent)`,
+                }}
+              />
+            </motion.div>
           )}
         </div>
       </main>

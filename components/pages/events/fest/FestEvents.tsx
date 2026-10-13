@@ -242,7 +242,7 @@ export default function FestEvents() {
             <b>Contact:</b> <span>{x.ct || T.ct || DEF.ct}</span>
           </p>
           <Link className="reg" href={`/events/${T.slug}`}>
-            REGISTER NOW
+            VIEW ALL EVENTS
           </Link>
         </section>
       </div>

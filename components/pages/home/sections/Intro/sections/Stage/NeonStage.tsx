@@ -46,7 +46,7 @@ const rng = (seed: number) => () => ((seed = (seed * 16807) % 2147483647) - 1) /
  * The camera zooms into the stage during the blast phase.
  */
 export function NeonStage() {
-  const { phase, startLoading, cancelLoading, startBlast, setLoadProgress, skipIntro } = useIntro();
+  const { phase, startLoading, cancelLoading, startBlast, setLoadProgress } = useIntro();
   const [p, setP] = useState(0);
   const [hr, setHr] = useState(0);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -244,11 +244,6 @@ export function NeonStage() {
       <p className={s.hint}>
         HOLD TO ENTER<span>↑</span>
       </p>
-      {active && (
-        <button className={s.skip} onClick={skipIntro}>
-          Skip Intro
-        </button>
-      )}
     </div>
   );
 }

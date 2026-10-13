@@ -38,7 +38,7 @@ export function useGetMyCart() {
   }, [error]);
 
   return {
-    items: data?.items ?? [],
+    items: (data?.items ?? []).filter((item) => item.passId),
     totalQuantity: data?.totalQuantity ?? 0,
     isEmpty: (data?.items?.length ?? 0) === 0,
     isLoading: isAuthenticated && isLoading,

@@ -220,8 +220,14 @@ export function CartItem({
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          onClick={() => onRemove(item.passId)}
-          disabled={isRemoving}
+          onClick={() => {
+            if (item.passId) {
+              onRemove(item.passId);
+            } else {
+              console.error("Cannot remove item: passId is undefined", item);
+            }
+          }}
+          disabled={isRemoving || !item.passId}
           className="absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full text-gray-400 transition-all hover:bg-red-500/20 hover:text-red-400 disabled:cursor-not-allowed disabled:opacity-50"
           style={{
             background: "rgba(0,0,0,0.3)",

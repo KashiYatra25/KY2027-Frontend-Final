@@ -14,7 +14,6 @@ import {
   useUpdateCartQuantity,
   usePasses,
   useAccountStatus,
-  useAccountStatus,
 } from "@/lib/api/hooks";
 import { useCheckout } from "@/lib/api/hooks/cart";
 import { ProfileIncompleteCard } from "./components/ProfileIncompleteCard";
@@ -53,9 +52,6 @@ export function CartPageContent() {
     steps,
     isLoading: isAccountLoading,
   } = useMyAccount("progress");
-
-  // Account status (suspension check)
-  const { isSuspended, canPerformAction } = useAccountStatus();
 
   // Account status (suspension check)
   const { isSuspended, canPerformAction } = useAccountStatus();
