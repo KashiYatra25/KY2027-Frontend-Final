@@ -40,7 +40,7 @@ interface RegistrationsApiResponse {
   statusCode: number;
   message: string;
   info: string;
-  data: Registration[];
+  registrations: Registration[];
   count: number;
 }
 
@@ -93,8 +93,8 @@ export function useMyRegistrations() {
 
   // Create a Set of registered event slugs for quick lookup
   const registeredEventSlugs = useMemo(() => {
-    if (!data?.data) return new Set<string>();
-    return new Set(data.data.map((r) => r.eventSlug));
+    if (!data?.registrations) return new Set<string>();
+    return new Set(data.registrations.map((r) => r.eventSlug));
   }, [data]);
 
   // Check if user is registered for a specific event
@@ -105,12 +105,12 @@ export function useMyRegistrations() {
 
   // Get registration for a specific event (if exists)
   const getRegistrationFor = useCallback(
-    (eventSlug: string) => data?.data?.find((r) => r.eventSlug === eventSlug) ?? null,
+    (eventSlug: string) => data?.registrations?.find((r) => r.eventSlug === eventSlug) ?? null,
     [data]
   );
 
   return {
-    registrations: data?.data ?? [],
+    registrations: data?.registrations ?? [],
     count: data?.count ?? 0,
     registeredEventSlugs,
     isRegisteredFor,
