@@ -4,7 +4,7 @@ import { memo, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
-import type { PassConfig } from "@/components/pages/passes/config/passes.config";
+import type { PassConfig } from "@/lib/api/helper/types";
 import { ANIMATION } from "@/components/pages/passes/config/passes.config";
 import { useAnimationPolicy } from "@/hooks";
 import { useMyAccount, useAddToMyCart } from "@/lib/api/hooks";

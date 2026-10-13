@@ -16,7 +16,8 @@ import {
 import { PassesLoader } from "@/components/pages/passes/sections/loader";
 import { PassesError } from "@/components/pages/passes/sections/error/PassesError";
 import { toPassConfig } from "@/lib/api/helper/functions";
-import { ANIMATION, type PassConfig } from "@/components/pages/passes/config/passes.config";
+import { ANIMATION } from "@/components/pages/passes/config/passes.config";
+import type { PassConfig } from "@/lib/api/helper/types";
 import { usePasses, useMyAccount, useGetMyCart } from "@/lib/api/hooks";
 import { Z_INDEX } from "@/components/pages/passes/constants/palette";
 import { useAnimationPolicy } from "@/hooks";

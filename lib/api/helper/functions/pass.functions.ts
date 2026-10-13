@@ -1,5 +1,4 @@
-import type { Pass } from "@/lib/api/hooks";
-import type { PassConfig } from "@/components/pages/passes/config/passes.config";
+import type { Pass, PassConfig } from "@/lib/api/helper/types";
 
 /**
  * Converts backend Pass (from MongoDB) to frontend PassConfig

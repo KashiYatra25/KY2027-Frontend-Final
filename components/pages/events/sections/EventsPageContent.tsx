@@ -1,10 +1,13 @@
 "use client";
 
-import { ThemedNavbar } from "@/components/navbar";
 import { useEvents, CATEGORY_METADATA } from "@/lib/api/hooks/events/useEvents";
 import type { EventCategorySlug } from "@/lib/api/helper/types";
 import { COLORS, JAZZ_COLORS } from "@/components/pages/events/constants/palette";
-import { CategoryCard, PageTitle } from "@/components/pages/events/components";
+import {
+  CategoryCard,
+  PageTitle,
+  EventsCategoryNavbar,
+} from "@/components/pages/events/components";
 import { DecorativeElements } from "./decor/DecorativeElements";
 import { motion } from "framer-motion";
 import { AlertCircle, RefreshCw } from "lucide-react";
@@ -139,13 +142,11 @@ export function EventsPageContent() {
 
   return (
     <>
-      {/* Fixed navbar */}
-      <div className="fixed inset-x-0 top-0 z-[200]">
-        <ThemedNavbar position="relative" topOffset={18} theme="main" />
-      </div>
+      {/* Custom Events Category Navbar */}
+      <EventsCategoryNavbar activeCategory="NATRAJ" />
 
       <main
-        className="min-h-screen px-4 pt-28 pb-20 sm:px-6 sm:pt-32"
+        className="min-h-screen px-4 pb-20 sm:px-6"
         style={{
           background: `linear-gradient(180deg, 
             ${JAZZ_COLORS.BG_DEEP} 0%, 

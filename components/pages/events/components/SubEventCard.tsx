@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import type { SubEvent } from "@/lib/api/helper/types";
 import { useEventRegisterIndividual } from "@/lib/api/hooks";
 import { TeamSelectorModal } from "./TeamSelectorModal";
-import { Loader2, Check, Users, Clock, Sparkles, ChevronRight } from "lucide-react";
+import { Loader2, Users, Clock, Sparkles, ChevronRight } from "lucide-react";
 
 // ═══════════════════════════════════════════════════════════════════
 // TYPE BADGE CONFIG
@@ -278,21 +278,22 @@ export const SubEventCard = memo(function SubEventCard({
               className="group/btn relative mt-auto w-full overflow-hidden rounded-xl py-3.5 text-sm font-bold tracking-wider uppercase transition-all duration-300"
               style={{
                 background: showAsRegistered
-                  ? "linear-gradient(135deg, #22C55E 0%, #16A34A 100%)"
+                  ? "transparent"
                   : !event.registrationOpen || !canRegister
                     ? "linear-gradient(135deg, rgba(100,100,100,0.3) 0%, rgba(60,60,60,0.3) 100%)"
                     : `linear-gradient(135deg, ${categoryColor} 0%, hsl(from ${categoryColor} h s 30%) 100%)`,
                 border: showAsRegistered
-                  ? "2px solid #22C55E"
+                  ? "2px solid #166534"
                   : !event.registrationOpen || !canRegister
                     ? "2px solid rgba(100,100,100,0.3)"
                     : `2px solid ${categoryColor}`,
-                color:
-                  showAsRegistered || (event.registrationOpen && canRegister)
+                color: showAsRegistered
+                  ? "#22c55e"
+                  : event.registrationOpen && canRegister
                     ? "#FDF6E3"
                     : "rgba(255,255,255,0.4)",
                 boxShadow: showAsRegistered
-                  ? "0 0 25px rgba(34, 197, 94, 0.4)"
+                  ? "none"
                   : event.registrationOpen && canRegister
                     ? `0 0 25px ${categoryColor}40`
                     : "none",
@@ -317,7 +318,18 @@ export const SubEventCard = memo(function SubEventCard({
               <span className="relative flex items-center justify-center gap-2">
                 {showAsRegistered ? (
                   <>
-                    <Check className="h-5 w-5" />
+                    {/* Custom checkmark SVG */}
+                    <svg
+                      className="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
                     Registered
                   </>
                 ) : isRegistering ? (

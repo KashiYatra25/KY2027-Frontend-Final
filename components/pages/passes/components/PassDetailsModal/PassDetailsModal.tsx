@@ -2,7 +2,7 @@
 
 import { memo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { PassConfig } from "@/components/pages/passes/config/passes.config";
+import type { PassConfig } from "@/lib/api/helper/types";
 import { COLORS } from "@/components/pages/passes/constants/palette";
 import { TornEdgeTop } from "./TornEdgeTop";
 import { TornEdgeBottom } from "./TornEdgeBottom";
