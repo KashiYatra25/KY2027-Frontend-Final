@@ -4,27 +4,38 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 import { useIntro } from "@/components/pages/home/sections/Intro/context/IntroContext";
 import s from "./NeonStage.module.css";
 
-// Scene geometry (matches /intro/NeonStage.webp at 1672x941 viewBox units)
-const W = 1672,
-  H = 941,
-  HX = 834.6,
-  HY = 470.2,
-  HR = 146.5;
+// Scene geometry (matches /intro/NeonStage.webp at 1556x1011 viewBox units)
+const W = 1556,
+  H = 1011,
+  HX = 779,
+  HY = 526,
+  HR = 130;
 const HOLD_MS = 3500, // same hold time as the old Enter button
   DROP_MS = 700;
 // Moving-head light fixtures along the top truss
 const FIX: [number, number][] = [
-  [98, 128],
-  [318, 128],
-  [512, 116],
-  [679, 118],
-  [836, 130],
-  [996, 130],
-  [1159, 130],
-  [1353, 132],
-  [1572, 132],
+  [94, 124],
+  [296, 126],
+  [476, 122],
+  [632, 124],
+  [780, 118],
+  [931, 124],
+  [1084, 120],
+  [1269, 120],
+  [1471, 124],
 ];
-const TINT = ["url(#bA)", "url(#bB)", "url(#bC)"];
+// Beam / lens colour per fixture, matching the lights in the photo
+const COL = [
+  "#ffb030",
+  "#c040ff",
+  "#ffc030",
+  "#30a8ff",
+  "#ff48d8",
+  "#ffa030",
+  "#a850ff",
+  "#ffc040",
+  "#ff9a40",
+];
 
 const rng = (seed: number) => () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
 
@@ -97,7 +108,7 @@ export function NeonStage() {
       out: { x: number; y: number; d: number; l: number }[] = [];
     while (out.length < 70) {
       const x = r() * W,
-        y = 340 + r() * 250;
+        y = 440 + r() * 130;
       if (Math.hypot(x - HX, y - HY) > HR + 25) out.push({ x, y, d: 1.2 + r() * 2.6, l: r() * 4 });
     }
     return out;
@@ -129,31 +140,22 @@ export function NeonStage() {
           aria-hidden="true"
         >
           <defs>
-            {[
-              ["bA", "#e0a526"],
-              ["bB", "#ffd700"],
-              ["bC", "#fff1c1"],
-            ].map(([id, c]) => (
-              <linearGradient key={id} id={id} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor={c} stopOpacity=".9" />
-                <stop offset=".55" stopColor={c} stopOpacity=".28" />
-                <stop offset="1" stopColor={c} stopOpacity="0" />
+            {COL.map((col, i) => (
+              <linearGradient key={i} id={`b${i}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stopColor={col} stopOpacity=".85" />
+                <stop offset=".55" stopColor={col} stopOpacity=".25" />
+                <stop offset="1" stopColor={col} stopOpacity="0" />
               </linearGradient>
             ))}
-            {/* Recolour the blue line-art stage to the intro's gold */}
-            <filter id="gold" colorInterpolationFilters="sRGB">
-              <feColorMatrix
-                type="matrix"
-                values="0.25 0.35 0.6 0 0  0.2 0.27 0.47 0 0  0.08 0.1 0.18 0 0  0 0 0 1 0"
-              />
-            </filter>
-            <radialGradient id="lens">
-              <stop offset="0" stopColor="#fff8dc" />
-              <stop offset=".35" stopColor="#ffc94d" stopOpacity=".8" />
-              <stop offset="1" stopColor="#b8860b" stopOpacity="0" />
-            </radialGradient>
+            {COL.map((col, i) => (
+              <radialGradient key={i} id={`l${i}`}>
+                <stop offset="0" stopColor="#fff" />
+                <stop offset=".35" stopColor={col} stopOpacity=".8" />
+                <stop offset="1" stopColor={col} stopOpacity="0" />
+              </radialGradient>
+            ))}
           </defs>
-          <image href="/intro/NeonStage.webp" width={W} height={H} filter="url(#gold)" />
+          <image href="/intro/NeonStage.webp" width={W} height={H} />
           <g className={s.beams}>
             {FIX.flatMap(([x, y], i) =>
               [-1, 1].map((side) => {
@@ -173,13 +175,14 @@ export function NeonStage() {
                     }
                   >
                     <polygon
-                      points={`${x - 5},${y} ${x + 5},${y} ${x + 55},${y + 250} ${x - 55},${y + 250}`}
-                      fill={TINT[k % 3]}
-                      opacity=".55"
+                      points={`${x - 5},${y} ${x + 5},${y} ${x + 70},${y + 330} ${x - 70},${y + 330}`}
+                      fill={`url(#b${i})`}
+                      opacity=".4"
                     />
                     <polygon
-                      points={`${x - 2},${y} ${x + 2},${y} ${x + 16},${y + 230} ${x - 16},${y + 230}`}
-                      fill={TINT[(k + 2) % 3]}
+                      points={`${x - 2},${y} ${x + 2},${y} ${x + 20},${y + 300} ${x - 20},${y + 300}`}
+                      fill={`url(#b${i})`}
+                      opacity=".7"
                     />
                   </g>
                 );
@@ -192,8 +195,8 @@ export function NeonStage() {
               className={s.lens}
               cx={x}
               cy={y - 4}
-              r="22"
-              fill="url(#lens)"
+              r="24"
+              fill={`url(#l${i})`}
               style={{ "--l": `${-i * 0.37}s` } as CSSProperties}
             />
           ))}

@@ -61,7 +61,7 @@
   }
 }
 .tw {
-  fill: #fff1c1;
+  fill: #ffe8d0;
   animation: blink var(--d) ease-in-out var(--l) infinite;
 }
 @keyframes blink {
