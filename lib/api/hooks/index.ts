@@ -39,6 +39,18 @@ export { useSignIn } from "./profile/useGoogleSignIn";
 export { useSignOut } from "./profile/useSessionSignOut";
 
 // ═══════════════════════════════════════════════════════════════════
+// ACCOUNT STATUS - Suspension checking and role-based access
+// ═══════════════════════════════════════════════════════════════════
+
+export {
+  useAccountStatus,
+  SuspendedAccountBanner,
+  type AccountStatus,
+  type UserRole,
+  type UseAccountStatusReturn,
+} from "./profile/useAccountStatus";
+
+// ═══════════════════════════════════════════════════════════════════
 // GRAPHQL HOOKS - Account & Profile Queries
 // ═══════════════════════════════════════════════════════════════════
 
@@ -134,3 +146,26 @@ export type {
   RemoveFromCartRequest,
   CartItemWithDetails,
 } from "@/lib/api/helper/types/cart.types";
+
+// ═══════════════════════════════════════════════════════════════════
+// SCHEDULE
+// ═══════════════════════════════════════════════════════════════════
+
+export {
+  useSchedule,
+  useVenues,
+  useFestDays,
+  useVenueSchedule,
+  getCategoryMeta,
+  SCHEDULE_CATEGORY_METADATA,
+} from "./schedule";
+export type {
+  ScheduledEvent,
+  Venue,
+  FestDaysMap,
+  ScheduleQueryParams,
+  ScheduledEventData,
+  ScheduledEventCategory,
+  MapLayers,
+  Layer,
+} from "@/lib/api/helper/types/schedule.types";

@@ -1,6 +1,7 @@
-// @ts-nocheck — vendored canvas FX module ported verbatim from kashiyatra-countdown-clean.
-// Kept as-is (it relied on noImplicitAny:false upstream); typing the dense per-frame math
-// would risk altering behaviour. Scope is limited to this self-contained engine module.
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Canvas FX module ported from kashiyatra-countdown-clean.
+// Concert lights, beams, crowd phone-lights, lanterns, fireworks.
+// Note: This file uses dynamic animation structures that are difficult to type strictly.
 import { clamp } from "./utils";
 import type { IntroCtx } from "./types";
 
@@ -263,14 +264,14 @@ export function initConcertLights(ctx: IntroCtx) {
     T = 0,
     nextBurst = 1.2,
     nextFin = 18,
-    ft,
+    ft: ReturnType<typeof setTimeout> | undefined,
     CROWD: any[] = [],
     STRB: any[] = [],
     SP: Record<string, HTMLCanvasElement> = {};
   const PT: any[] = [],
     RK: any[] = [],
     GL: any[] = [];
-  const rr = (a, b) => a + Math.random() * (b - a);
+  const rr = (a: number, b: number) => a + Math.random() * (b - a);
   const PAL = [
     [255, 196, 92],
     [255, 140, 50],
@@ -288,7 +289,7 @@ export function initConcertLights(ctx: IntroCtx) {
     [90, 200, 255],
     [255, 220, 140],
   ];
-  function pc(i, spd = 0.22) {
+  function pc(i: number, spd = 0.22) {
     const n = LP.length,
       p = (((T * spd + i * 0.41) % n) + n) % n,
       f0 = Math.floor(p),
@@ -304,7 +305,7 @@ export function initConcertLights(ctx: IntroCtx) {
       Math.round(a[2] + (b[2] - a[2]) * s)
     );
   }
-  function sprite(rgb) {
+  function sprite(rgb: string) {
     const s = document.createElement("canvas");
     s.width = s.height = 64;
     const g = s.getContext("2d")!,
@@ -383,7 +384,7 @@ export function initConcertLights(ctx: IntroCtx) {
   }
 
   /* ---- moving searchlight beams from the stage truss ---- */
-  function beams(k) {
+  function beams(k: number) {
     for (let i = 0; i < 6; i++) {
       const ox = (0.55 + i * 0.034) * FW,
         oy = 0.565 * FH;
@@ -424,7 +425,7 @@ export function initConcertLights(ctx: IntroCtx) {
     }
   }
   /* ---- truss lights, stage wash, LED screens, haze ---- */
-  function stageLights(k) {
+  function stageLights(k: number) {
     for (let i = 0; i < 7; i++) {
       const x = (0.545 + i * 0.03) * FW,
         y = 0.565 * FH,
@@ -468,7 +469,7 @@ export function initConcertLights(ctx: IntroCtx) {
     }
   }
   /* ---- realistic crowd: shimmer on the photo's own phone-lights & bulbs (no fake blobs) ---- */
-  function crowd(k) {
+  function crowd(k: number) {
     for (const d of CROWD) {
       // phone torches
       let a = 0.5 + 0.5 * Math.sin(T * d.sp + d.ph);
@@ -518,15 +519,15 @@ export function initConcertLights(ctx: IntroCtx) {
       Math.max(0.02, -r.top / r.height),
     ];
   }
-  function inTitle(x, y) {
+  function inTitle(x: number, y: number) {
     const a = (x - 0.5) / 0.26,
       b = (y - 0.245) / 0.21;
     return a * a + b * b < 1;
   }
   function pickTarget() {
     const [vl, vr, vt] = visSpan();
-    let x,
-      y,
+    let x = rr(vl + 0.02, Math.max(vl + 0.03, vr - 0.02)),
+      y = rr(Math.max(0.06, vt + 0.04), 0.45),
       s = 1;
     for (let i = 0; i < 16; i++) {
       x = rr(vl + 0.02, Math.max(vl + 0.03, vr - 0.02));
@@ -539,8 +540,8 @@ export function initConcertLights(ctx: IntroCtx) {
     }
     return { x: x * FW, y: y * FH, s };
   }
-  function launch(delay = 0, t?: any) {
-    t = t || pickTarget();
+  function launch(delay = 0, t?: { x: number; y: number; s?: number }) {
+    const target = t || pickTarget();
     const sx = rr(0.44, 0.62) * FW,
       sy = 0.6 * FH;
     RK.push({
@@ -548,14 +549,14 @@ export function initConcertLights(ctx: IntroCtx) {
       sy,
       x: sx,
       y: sy,
-      tx: t.x,
-      ty: t.y,
-      s: t.s || 1,
+      tx: target.x,
+      ty: target.y,
+      s: target.s || 1,
       t: -delay,
       dur: rr(0.85, 1.25),
     });
   }
-  function burst(x, y, s) {
+  function burst(x: number, y: number, s: number) {
     const col = PAL[(Math.random() * PAL.length) | 0],
       col2 = PAL[(Math.random() * PAL.length) | 0];
     const type = (Math.random() * 5) | 0,
@@ -632,7 +633,7 @@ export function initConcertLights(ctx: IntroCtx) {
     }
     GL.push({ x, y, r: rr(230, 330) * k, c: col.join(","), t: 0, max: 0.9 });
   }
-  function fireworks(dt) {
+  function fireworks(dt: number) {
     for (let i = RK.length - 1; i >= 0; i--) {
       const k = RK[i];
       k.t += dt;
@@ -737,7 +738,7 @@ export function initConcertLights(ctx: IntroCtx) {
     c.fillRect(-r, -r, 2 * r, 2 * r);
     c.restore();
   }
-  function loop(now) {
+  function loop(now: number) {
     if (!ctx.alive) return;
     const dt = Math.min(0.05, (now - lastT) / 1000);
     lastT = now;
@@ -781,7 +782,7 @@ export function initConcertLights(ctx: IntroCtx) {
     clearTimeout(ft);
     ft = setTimeout(() => running && size(), 150);
   });
-  ctx.on(document, "pointerdown", (e: PointerEvent) => {
+  ctx.on(document, "pointerdown", ((e: PointerEvent) => {
     // tap the sky → fire a cracker there
     if (!running || !FIREWORKS || (e.target as Element).closest("[data-ui]")) return;
     const r = stage.getBoundingClientRect();
@@ -790,5 +791,5 @@ export function initConcertLights(ctx: IntroCtx) {
       y: Math.min((e.clientY - r.top) / r.height, 0.5) * FH,
       s: 1,
     });
-  });
+  }) as EventListener);
 }

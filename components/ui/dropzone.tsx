@@ -48,7 +48,7 @@ function Dropzone({
       data-drag-reject={isDragReject || undefined}
       style={style}
       className={cn(
-        "relative rounded-lg border-2 border-dashed transition-all duration-200 cursor-pointer",
+        "relative cursor-pointer rounded-lg border-2 border-dashed transition-all duration-200",
         "border-muted-foreground/25 hover:border-muted-foreground/50",
         "data-[drag-active]:border-primary data-[drag-active]:bg-primary/5",
         "data-[drag-accept]:border-green-500 data-[drag-accept]:bg-green-500/5",
@@ -70,17 +70,39 @@ function useDropzoneState() {
 
   const handleFilesSelected = React.useCallback((files: File[]) => {
     const selectedFile = files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      setError(null);
+    if (!selectedFile) return;
 
-      // Generate base64 preview
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setPreview(e.target?.result as string);
-      };
-      reader.readAsDataURL(selectedFile);
+    // Reject empty / unreadable files. A 0-byte File with a valid MIME type
+    // makes readAsDataURL emit "data:image/jpeg;base64," with no payload,
+    // which renders as a broken <img>. Fail loudly instead.
+    if (selectedFile.size === 0) {
+      setFile(null);
+      setPreview(null);
+      setError("That file appears to be empty. Please choose another image.");
+      return;
     }
+
+    setFile(selectedFile);
+    setError(null);
+
+    // Generate base64 preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result;
+      // Guard against an empty data URL (prefix only, no base64 payload).
+      const hasPayload = typeof result === "string" && /^data:.*;base64,.+/.test(result);
+      if (hasPayload) {
+        setPreview(result);
+      } else {
+        setPreview(null);
+        setError("Couldn't read that image. Please try a different file.");
+      }
+    };
+    reader.onerror = () => {
+      setPreview(null);
+      setError("Couldn't read that image. Please try a different file.");
+    };
+    reader.readAsDataURL(selectedFile);
   }, []);
 
   const handleFilesRejected = React.useCallback((rejections: FileRejection[]) => {

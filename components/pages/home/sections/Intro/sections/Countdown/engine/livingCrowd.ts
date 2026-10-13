@@ -1,6 +1,7 @@
-// @ts-nocheck — vendored canvas FX module ported verbatim from kashiyatra-countdown-clean.
-// Kept as-is (it relied on noImplicitAny:false upstream); typing the dense per-frame math
-// would risk altering behaviour. Scope is limited to this self-contained engine module.
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Canvas FX module ported from kashiyatra-countdown-clean.
+// Living crowd: the photo's own crowd sliced into strips that bounce on the beat.
+// Note: This file uses dynamic animation structures that are difficult to type strictly.
 import type { IntroCtx } from "./types";
 
 /** Living crowd: the photo's own crowd is sliced into strips that bounce on the beat, plus silhouettes that wave and jump. */
@@ -10,13 +11,13 @@ export function initLivingCrowd(ctx: IntroCtx) {
 
   if (RM) return;
   const PI2 = Math.PI * 2,
-    R = (a, b) => a + Math.random() * (b - a),
+    R = (a: number, b: number) => a + Math.random() * (b - a),
     per = 60 / 124;
-  const hash = (i) => {
+  const hash = (i: number) => {
     const x = Math.sin(i * 127.1 + 311.7) * 43758.5453;
     return x - Math.floor(x);
   };
-  const neon = (hu, l = 60, a = 1) => `hsla(${((hu % 360) + 360) % 360},100%,${l}%,${a})`;
+  const neon = (hu: number, l = 60, a = 1) => `hsla(${((hu % 360) + 360) % 360},100%,${l}%,${a})`;
   const mv = refs.mv;
   const m = mv.getContext("2d")!,
     tc = document.createElement("canvas"),
@@ -86,7 +87,7 @@ export function initLivingCrowd(ctx: IntroCtx) {
       x1: 0.74,
     },
   ];
-  const smoothS = (a, b, x) => {
+  const smoothS = (a: number, b: number, x: number) => {
     const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
     return t * t * (3 - 2 * t);
   };
@@ -157,7 +158,7 @@ export function initLivingCrowd(ctx: IntroCtx) {
     STD.sort((a, b) => a.y - b.y);
   }
 
-  function warp(L, tt, k, E) {
+  function warp(L: any, tt: number, k: number, E: number) {
     const bh = (L.y1 - L.y0) * FH,
       mg = 0.03 * FH,
       th = bh + mg * 2,
@@ -212,7 +213,17 @@ export function initLivingCrowd(ctx: IntroCtx) {
   }
 
   /* silhouette person: head, shoulders, raised waving arms, optional phone light / glow-stick */
-  function person(p, t, k, E, jump, rimHue, rimA, col, hasLegs) {
+  function person(
+    p: any,
+    t: number,
+    k: number,
+    E: number,
+    jump: number,
+    rimHue: number,
+    rimA: number,
+    col: string,
+    hasLegs: boolean
+  ) {
     const u = p.u;
 
     // Only apply the downward grounding offset if they have legs
@@ -451,7 +462,7 @@ export function initLivingCrowd(ctx: IntroCtx) {
     }
   }
 
-  function loop(now) {
+  function loop(now: number) {
     if (!ctx.alive) return;
     requestAnimationFrame(loop);
     if (!FW) return;
@@ -497,7 +508,7 @@ export function initLivingCrowd(ctx: IntroCtx) {
   };
   if (base.complete && base.naturalWidth) start();
   else ctx.on(base, "load", start);
-  let rz;
+  let rz: ReturnType<typeof setTimeout> | undefined;
   ctx.on(window, "resize", () => {
     clearTimeout(rz);
     rz = setTimeout(size, 200);

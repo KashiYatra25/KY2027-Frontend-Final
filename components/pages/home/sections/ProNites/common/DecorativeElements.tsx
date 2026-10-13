@@ -3,6 +3,7 @@
 export {
   DancingGirlFestiveVibes,
   GlowingMoon,
+  GlowingMoon3D,
   TopBorder,
   BottomBorder,
   GridOverlay,
