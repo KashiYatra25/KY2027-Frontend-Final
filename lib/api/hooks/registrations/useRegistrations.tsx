@@ -44,19 +44,29 @@ interface RegistrationsApiResponse {
   count: number;
 }
 
-interface RegisterResponse {
+// Response for individual registration
+interface RegisterIndividualResponse {
   statusCode: number;
   message: string;
   info: string;
-  data: {
-    registrationId: string;
-    eventSlug: string;
-    eventName: string;
-    status: string;
-    teamId?: string;
-    teamName?: string;
-    memberCount?: number;
-  };
+  registrationId: string;
+  eventSlug: string;
+  eventName: string;
+  status: string;
+}
+
+// Response for team registration
+interface RegisterTeamResponse {
+  statusCode: number;
+  message: string;
+  info: string;
+  registrationId: string;
+  eventSlug: string;
+  eventName: string;
+  status: string;
+  teamId: string;
+  teamName: string;
+  memberCount: number;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -131,7 +141,7 @@ export function useEventRegisterIndividual(eventSlug: string) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { mutate, isPending, isSuccess, isError, error, data, reset } =
-    useApiMutation<RegisterResponse>({
+    useApiMutation<RegisterIndividualResponse>({
       url: `/events/${eventSlug}/register`,
       baseURL: BACKEND_URL,
       featureConfig: sharedFeatureConfig,
@@ -164,7 +174,7 @@ export function useEventRegisterIndividual(eventSlug: string) {
     isSuccess,
     isError,
     errorMessage,
-    data: data?.data?.data ?? null,
+    data: data?.data ?? null,
     reset,
   };
 }
@@ -178,7 +188,7 @@ export function useEventRegisterTeam(eventSlug: string) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { mutate, isPending, isSuccess, isError, error, data, reset } =
-    useApiMutation<RegisterResponse>({
+    useApiMutation<RegisterTeamResponse>({
       url: `/events/${eventSlug}/register`,
       baseURL: BACKEND_URL,
       featureConfig: sharedFeatureConfig,
@@ -215,7 +225,7 @@ export function useEventRegisterTeam(eventSlug: string) {
     isSuccess,
     isError,
     errorMessage,
-    data: data?.data?.data ?? null,
+    data: data?.data ?? null,
     reset,
   };
 }
