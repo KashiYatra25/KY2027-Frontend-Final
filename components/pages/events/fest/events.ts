@@ -31,7 +31,7 @@ export type MainEvent = {
 const TY = { I: "Individual Event", T: "Team Event", D: "Duo Event" } as const;
 
 export const DEF = {
-  dt: "Feb 13, 2026 | 6:00 PM onwards",
+  dt: "Feb 13, 2027 | 6:00 PM onwards",
   v: "Open Air Theater (OAT)",
   ct: "Alex Carter (+91 98765 43210)",
 };

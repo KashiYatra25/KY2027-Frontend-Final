@@ -17,7 +17,7 @@ import { motion, type Variants } from "framer-motion";
 import { usePrefersReducedMotion } from "@/hooks";
 import { COLORS, SHADOWS } from "@/components/pages/zonals/constants/palette";
 
-const EVENT_ID = "ZN-2026-#0417";
+const EVENT_ID = "ZN-2027-#0417";
 
 // Barcode rendered as a run of bars with pseudo-random widths. Static
 // array keeps SSR/CSR output deterministic.

@@ -227,8 +227,8 @@
 }
 .skip {
   position: absolute;
+  top: 24px;
   right: 24px;
-  bottom: 24px;
   padding: 10px 20px;
   border-radius: 999px;
   border: 1px solid rgba(143, 196, 255, 0.4);
@@ -239,6 +239,8 @@
     sans-serif;
   cursor: pointer;
   backdrop-filter: blur(6px);
+  z-index: 100;
+  transition: all 0.2s ease;
 }
 .skip:hover {
   border-color: #8fc4ff;

@@ -96,7 +96,7 @@ export const CARD_SIZES = {
 };
 
 // Previous edition sponsors data - Using ImageKit CDN
-export const SPONSORS_2026: Sponsor[] = [
+export const SPONSORS_2027: Sponsor[] = [
   // Title Tier
   {
     name: "Title Sponsor",

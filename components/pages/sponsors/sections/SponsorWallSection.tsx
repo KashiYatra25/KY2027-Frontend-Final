@@ -3,7 +3,7 @@
 import { memo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { SPONSORS_2026 } from "@/components/pages/sponsors/config/sponsors.config";
+import { SPONSORS_2027 } from "@/components/pages/sponsors/config/sponsors.config";
 import { PALETTE, GRADIENTS } from "@/components/pages/sponsors/constants/palette";
 import { Starburst, Spiral } from "./decor/VectorDecorations";
 
@@ -15,7 +15,7 @@ export const SponsorWallSection = memo(function SponsorWallSection() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const allSponsors = SPONSORS_2026;
+  const allSponsors = SPONSORS_2027;
 
   return (
     <section
@@ -58,7 +58,7 @@ export const SponsorWallSection = memo(function SponsorWallSection() {
             Past Partners
           </h2>
           <p className="text-lg" style={{ color: PALETTE.TEXT_SECONDARY }}>
-            Brands that made Kashiyatra 2026 unforgettable.
+            Brands that made Kashiyatra 2027 unforgettable.
           </p>
         </motion.div>
       </div>

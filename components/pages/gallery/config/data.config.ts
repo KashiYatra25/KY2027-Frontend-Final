@@ -19,7 +19,7 @@ import type {
 // optional caption (title, sub) and optional w/h for aspect ratio.
 // ═══════════════════════════════════════════════════════════════════
 export const PHOTOS: PhotoItem[] = [
-  // Gallery photos from Kashi Yatra 2026
+  // Gallery photos from Kashi Yatra 2027
   { src: "/gallery/grand-finale-1.jpg", title: "Grand Finale", sub: "Pro Nite" },
   { src: "/gallery/concert-night-1.jpg", title: "Concert Night", sub: "Main Stage" },
   { src: "/gallery/concert-night-2.jpg", title: "Live Performance", sub: "Day 3" },
@@ -30,13 +30,13 @@ export const PHOTOS: PhotoItem[] = [
   { src: "/gallery/stage-atmosphere-1.jpg", title: "Stage Atmosphere", sub: "Night Show" },
   { src: "/gallery/performance-1.jpg", title: "Live Show", sub: "Day 2" },
   { src: "/gallery/festival-vibes-1.jpg", title: "Festival Vibes", sub: "Campus" },
-  { src: "/gallery/crowd-energy-1.jpg", title: "Celebrations", sub: "KY 2026" },
+  { src: "/gallery/crowd-energy-1.jpg", title: "Celebrations", sub: "KY 2027" },
   // Additional slider images
   { src: "/about/slider/SliderLeft1.jpg", title: "Opening Ceremony", sub: "Day 1" },
   { src: "/about/slider/SliderRight1.jpg", title: "Cultural Night", sub: "Day 2" },
   { src: "/about/slider/SliderLeft2.jpg", title: "Dance Performance", sub: "Natraj" },
   { src: "/about/slider/SliderRight2.jpg", title: "Artists Live", sub: "Day 3" },
-  { src: "/about/slider/SliderLeft3.jpg", title: "Memories", sub: "KY 2026" },
+  { src: "/about/slider/SliderLeft3.jpg", title: "Memories", sub: "KY 2027" },
 ];
 
 // ═══════════════════════════════════════════════════════════════════
@@ -102,7 +102,7 @@ export const SPECIAL_VIDEOS: SpecialVideoItem[] = [
 // Golden polaroid-style cards with floating animation
 // ═══════════════════════════════════════════════════════════════════
 export const PERFORMERS: PerformerItem[] = [
-  { src: "/singers/Ritviz.jpg", name: "Ritviz", subtitle: "Pro Nite 2026" },
+  { src: "/singers/Ritviz.jpg", name: "Ritviz", subtitle: "Pro Nite 2027" },
   { src: "/singers/Raftaar.jpeg", name: "Raftaar", subtitle: "EDM Night" },
   { src: "/singers/JubinNautiyal.webp", name: "Jubin Nautiyal", subtitle: "Day 2" },
   { src: "/singers/MohitChauhan.webp", name: "Mohit Chauhan", subtitle: "Sufi Night" },
@@ -115,7 +115,7 @@ export const PERFORMERS: PerformerItem[] = [
 // ═══════════════════════════════════════════════════════════════════
 export const TEAM_PHOTO: TeamPhotoItem | null = {
   src: "/gallery/grand-finale-1.jpg",
-  title: "Kashi Yatra 2026 Team",
+  title: "Kashi Yatra 2027 Team",
   aspectRatio: 1.6,
 };
 

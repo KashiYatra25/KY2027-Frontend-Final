@@ -19,7 +19,7 @@ import { motion, type Variants } from "framer-motion";
 import { usePrefersReducedMotion } from "@/hooks";
 import { COLORS, GRADIENTS } from "@/components/pages/zonals/constants/palette";
 
-const PASS_ID = "ZN-2026-#ALL";
+const PASS_ID = "ZN-2027-#ALL";
 
 const stampVariants: Variants = {
   rest: { rotate: -14, scale: 1 },
