@@ -101,7 +101,7 @@ export function PurchasesPageContent() {
       </div>
 
       <main
-        className="min-h-screen px-4 pt-28 pb-12 sm:pt-32"
+        className="min-h-screen px-4 pt-36 pb-12 sm:pt-40"
         style={{
           background: `
             radial-gradient(ellipse at 20% 0%, rgba(212,168,83,0.08) 0%, transparent 50%),

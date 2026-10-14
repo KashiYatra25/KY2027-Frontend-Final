@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState, useCallback } from "react";
+import { Suspense, useEffect, useState, useRef, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { CheckCircle, XCircle, Loader2, Sparkles } from "lucide-react";
@@ -79,14 +79,25 @@ function PaymentReturnContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [status, setStatus] = useState<PaymentStatus>("loading");
-  const [pollCount, setPollCount] = useState(0);
+
+  // Use refs to track state without causing re-renders
+  const statusRef = useRef<PaymentStatus>("loading");
+  const pollCountRef = useRef(0);
+  const hasShownToastRef = useRef(false);
 
   const orderId = searchParams.get("order_id");
 
-  const checkPaymentStatus = useCallback(async () => {
+  const checkPaymentStatus = useCallback(async (): Promise<boolean> => {
+    // Return true if we should stop polling
     if (!orderId) {
       setStatus("failed");
-      return;
+      statusRef.current = "failed";
+      return true;
+    }
+
+    // Already resolved - don't check again
+    if (statusRef.current === "success" || statusRef.current === "failed") {
+      return true;
     }
 
     try {
@@ -109,54 +120,87 @@ function PaymentReturnContent() {
       if (thisPurchase) {
         if (thisPurchase.status === "PAID") {
           setStatus("success");
-          toast.custom(() => <PaymentSuccessToast />);
+          statusRef.current = "success";
+
+          // Only show toast once
+          if (!hasShownToastRef.current) {
+            hasShownToastRef.current = true;
+            toast.custom(() => <PaymentSuccessToast />);
+          }
+
           // Redirect to purchases after short delay
           setTimeout(() => {
             router.push("/purchases");
           }, 2000);
+          return true; // Stop polling
         } else if (thisPurchase.status === "FAILED" || thisPurchase.status === "EXPIRED") {
           setStatus("failed");
-          toast.custom(() => <PaymentFailedToast />);
+          statusRef.current = "failed";
+
+          // Only show toast once
+          if (!hasShownToastRef.current) {
+            hasShownToastRef.current = true;
+            toast.custom(() => <PaymentFailedToast />);
+          }
+
           setTimeout(() => {
             router.push("/cart");
           }, 3000);
+          return true; // Stop polling
         } else {
           // Still pending - keep polling
           setStatus("pending");
+          statusRef.current = "pending";
+          return false;
         }
       } else {
         // Order not found yet - might still be processing
         setStatus("pending");
+        statusRef.current = "pending";
+        return false;
       }
     } catch (error) {
       console.error("Error checking payment status:", error);
-      // On error, still try to redirect - the webhook might have processed it
-      setStatus("pending");
+      // On error, keep trying
+      return false;
     }
   }, [orderId, router]);
 
   useEffect(() => {
-    // Initial check
-    checkPaymentStatus();
+    let intervalId: NodeJS.Timeout | null = null;
+    let isMounted = true;
 
-    // Poll every 2 seconds for up to 30 seconds (15 attempts)
-    const interval = setInterval(() => {
-      setPollCount((prev) => {
-        if (prev >= 15) {
-          clearInterval(interval);
-          // After max polls, redirect to purchases anyway
+    const startPolling = async () => {
+      // Initial check
+      const shouldStop = await checkPaymentStatus();
+      if (shouldStop || !isMounted) return;
+
+      // Start polling every 2 seconds
+      intervalId = setInterval(async () => {
+        pollCountRef.current += 1;
+
+        // Stop after 15 attempts (30 seconds)
+        if (pollCountRef.current >= 15) {
+          if (intervalId) clearInterval(intervalId);
+          // Redirect to purchases anyway
           router.push("/purchases");
-          return prev;
+          return;
         }
-        if (status !== "success" && status !== "failed") {
-          checkPaymentStatus();
-        }
-        return prev + 1;
-      });
-    }, 2000);
 
-    return () => clearInterval(interval);
-  }, [checkPaymentStatus, router, status]);
+        const shouldStop = await checkPaymentStatus();
+        if (shouldStop && intervalId) {
+          clearInterval(intervalId);
+        }
+      }, 2000);
+    };
+
+    startPolling();
+
+    return () => {
+      isMounted = false;
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [checkPaymentStatus, router]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950">
