@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState, useRef } from "react";
+import { Suspense, useEffect, useState, useRef, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { CheckCircle, XCircle, Loader2, Sparkles } from "lucide-react";
@@ -12,13 +12,10 @@ import { toast } from "sonner";
 
 type PaymentStatus = "loading" | "success" | "failed" | "pending";
 
-// Exponential backoff delays (in ms): 5 requests over ~30 seconds
-// Attempt 1: immediate (0s)
-// Attempt 2: after 2s  (total: 2s)
-// Attempt 3: after 5s  (total: 7s)
-// Attempt 4: after 10s (total: 17s)
-// Attempt 5: after 13s (total: 30s)
-const POLL_DELAYS = [0, 2000, 5000, 10000, 13000];
+// Exponential backoff config
+const INITIAL_DELAY_MS = 1000; // Start with 1s
+const MAX_BACKOFF_MS = 30000; // Max 30s between retries
+const FAILURE_TIMEOUT_MS = 20000; // Redirect after 20s if still pending
 
 // ═══════════════════════════════════════════════════════════════════
 // TOAST COMPONENTS
@@ -64,6 +61,26 @@ function PaymentFailedToast() {
   );
 }
 
+function PaymentPendingToast() {
+  return (
+    <div className="flex items-center gap-3 rounded-xl border border-amber-500/30 bg-gradient-to-r from-amber-950/95 to-stone-900/95 px-5 py-4 shadow-2xl backdrop-blur-sm">
+      <div
+        className="flex h-10 w-10 items-center justify-center rounded-full"
+        style={{
+          background: "linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.3))",
+          boxShadow: "0 0 20px rgba(245, 158, 11, 0.2)",
+        }}
+      >
+        <Loader2 className="h-5 w-5 animate-spin text-amber-400" />
+      </div>
+      <div>
+        <p className="font-semibold text-amber-100">Payment Processing</p>
+        <p className="text-sm text-amber-300/70">Check status in My Purchases</p>
+      </div>
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════════
 // LOADING FALLBACK
 // ═══════════════════════════════════════════════════════════════════
@@ -87,131 +104,164 @@ function PaymentReturnContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [status, setStatus] = useState<PaymentStatus>("loading");
+  const [attemptCount, setAttemptCount] = useState(0);
 
   const orderId = searchParams.get("order_id");
 
-  // Refs to prevent duplicate operations
-  const hasStartedRef = useRef(false);
-  const hasShownToastRef = useRef(false);
+  // Refs to track state across renders
+  const isPollingRef = useRef(false);
+  const isResolvedRef = useRef(false);
+  const startTimeRef = useRef<number>(0);
+  const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
+  const failureTimeoutIdRef = useRef<NodeJS.Timeout | null>(null);
+
+  const checkPaymentStatus = useCallback(async (): Promise<"success" | "failed" | "pending"> => {
+    try {
+      console.log(`[Payment] Checking status for order: ${orderId}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/user/purchases`, {
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        console.error(`[Payment] API returned ${response.status}`);
+        return "pending";
+      }
+
+      const data = await response.json();
+      const purchases = data.purchases || [];
+
+      const thisPurchase = purchases.find(
+        (p: { orderId: string; status: string }) => p.orderId === orderId
+      );
+
+      if (thisPurchase) {
+        console.log(`[Payment] Found order with status: ${thisPurchase.status}`);
+        if (thisPurchase.status === "PAID") {
+          return "success";
+        } else if (thisPurchase.status === "FAILED" || thisPurchase.status === "EXPIRED") {
+          return "failed";
+        }
+      } else {
+        console.log(`[Payment] Order not found in purchases yet`);
+      }
+      return "pending";
+    } catch (error) {
+      console.error("[Payment] Error checking status:", error);
+      return "pending";
+    }
+  }, [orderId]);
+
+  const handleResolved = useCallback(
+    (result: "success" | "failed" | "pending") => {
+      if (isResolvedRef.current) return;
+      isResolvedRef.current = true;
+      isPollingRef.current = false;
+
+      // Clear all timers
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+        timeoutIdRef.current = null;
+      }
+      if (failureTimeoutIdRef.current) {
+        clearTimeout(failureTimeoutIdRef.current);
+        failureTimeoutIdRef.current = null;
+      }
+
+      if (result === "success") {
+        setStatus("success");
+        toast.custom(() => <PaymentSuccessToast />);
+        setTimeout(() => router.push("/purchases"), 2000);
+      } else if (result === "failed") {
+        setStatus("failed");
+        toast.custom(() => <PaymentFailedToast />);
+        setTimeout(() => router.push("/cart"), 3000);
+      } else {
+        // Pending - timeout reached
+        setStatus("pending");
+        toast.custom(() => <PaymentPendingToast />);
+        router.push("/purchases");
+      }
+    },
+    [router]
+  );
 
   useEffect(() => {
-    // Prevent running twice (React Strict Mode)
-    if (hasStartedRef.current) return;
-    hasStartedRef.current = true;
+    // Prevent double initialization
+    if (isPollingRef.current) {
+      console.log("[Payment] Polling already started, skipping");
+      return;
+    }
 
     if (!orderId) {
+      console.log("[Payment] No order ID");
       setStatus("failed");
       return;
     }
 
-    let timeoutId: NodeJS.Timeout | null = null;
-    let isAborted = false;
+    isPollingRef.current = true;
+    startTimeRef.current = Date.now();
+    console.log(`[Payment] Starting polling for order: ${orderId}`);
 
-    const checkPaymentStatus = async (): Promise<"success" | "failed" | "pending"> => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/user/purchases`,
-          { credentials: "include" }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch purchases");
-        }
-
-        const data = await response.json();
-        const purchases = data.purchases || [];
-
-        const thisPurchase = purchases.find(
-          (p: { orderId: string; status: string }) => p.orderId === orderId
-        );
-
-        if (thisPurchase) {
-          if (thisPurchase.status === "PAID") {
-            return "success";
-          } else if (thisPurchase.status === "FAILED" || thisPurchase.status === "EXPIRED") {
-            return "failed";
-          }
-        }
-        return "pending";
-      } catch (error) {
-        console.error("Error checking payment status:", error);
-        return "pending";
+    // Set up hard failure timeout - redirect after 20s no matter what
+    failureTimeoutIdRef.current = setTimeout(() => {
+      console.log("[Payment] 20s timeout reached, redirecting to purchases");
+      if (!isResolvedRef.current) {
+        handleResolved("pending");
       }
-    };
+    }, FAILURE_TIMEOUT_MS);
 
-    const handleResult = (result: "success" | "failed" | "pending", isLastAttempt: boolean) => {
-      if (isAborted) return;
-
-      if (result === "success") {
-        setStatus("success");
-        if (!hasShownToastRef.current) {
-          hasShownToastRef.current = true;
-          toast.custom(() => <PaymentSuccessToast />);
-        }
-        setTimeout(() => router.push("/purchases"), 2000);
-        return true; // Stop polling
-      }
-
-      if (result === "failed") {
-        setStatus("failed");
-        if (!hasShownToastRef.current) {
-          hasShownToastRef.current = true;
-          toast.custom(() => <PaymentFailedToast />);
-        }
-        setTimeout(() => router.push("/cart"), 3000);
-        return true; // Stop polling
-      }
-
-      // Still pending
-      setStatus("pending");
-
-      if (isLastAttempt) {
-        // After all retries, redirect to purchases - user can check status there
-        // Webhook will update it eventually
-        router.push("/purchases");
-        return true;
-      }
-
-      return false; // Continue polling
-    };
-
-    // Recursive polling with exponential backoff
-    const poll = async (attemptIndex: number) => {
-      if (isAborted || attemptIndex >= POLL_DELAYS.length) {
-        if (!isAborted) {
-          router.push("/purchases");
-        }
+    // Exponential backoff polling
+    const poll = async (attempt: number, delay: number) => {
+      if (isResolvedRef.current) {
+        console.log("[Payment] Already resolved, stopping poll");
         return;
       }
 
-      const delay = POLL_DELAYS[attemptIndex];
-      const isLastAttempt = attemptIndex === POLL_DELAYS.length - 1;
+      const elapsed = Date.now() - startTimeRef.current;
+      console.log(
+        `[Payment] Poll attempt ${attempt + 1}, elapsed: ${elapsed}ms, delay: ${delay}ms`
+      );
 
-      // Wait for delay (0 for first attempt)
-      if (delay > 0) {
-        await new Promise<void>((resolve) => {
-          timeoutId = setTimeout(resolve, delay);
-        });
+      // Check if we've exceeded max time
+      if (elapsed >= MAX_BACKOFF_MS) {
+        console.log("[Payment] Max backoff time reached");
+        handleResolved("pending");
+        return;
       }
 
-      if (isAborted) return;
-
+      setAttemptCount(attempt + 1);
       const result = await checkPaymentStatus();
-      const shouldStop = handleResult(result, isLastAttempt);
 
-      if (!shouldStop && !isAborted) {
-        poll(attemptIndex + 1);
+      if (result === "success" || result === "failed") {
+        handleResolved(result);
+        return;
+      }
+
+      // Still pending - schedule next poll with exponential backoff
+      const nextDelay = Math.min(delay * 2, MAX_BACKOFF_MS - elapsed);
+
+      if (nextDelay > 0 && !isResolvedRef.current) {
+        console.log(`[Payment] Scheduling next poll in ${nextDelay}ms`);
+        timeoutIdRef.current = setTimeout(() => {
+          poll(attempt + 1, delay * 2);
+        }, nextDelay);
       }
     };
 
-    poll(0);
+    // Start immediately with first check
+    poll(0, INITIAL_DELAY_MS);
 
+    // Cleanup
     return () => {
-      isAborted = true;
-      if (timeoutId) clearTimeout(timeoutId);
+      console.log("[Payment] Cleanup called");
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+      }
+      if (failureTimeoutIdRef.current) {
+        clearTimeout(failureTimeoutIdRef.current);
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [orderId, checkPaymentStatus, handleResolved]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950">
@@ -304,7 +354,9 @@ function PaymentReturnContent() {
             <>
               Please wait while we confirm your payment
               <br />
-              <span className="text-sm text-gray-500">This may take a few seconds...</span>
+              <span className="text-sm text-gray-500">
+                Checking status... (attempt {attemptCount})
+              </span>
             </>
           ) : status === "success" ? (
             <>

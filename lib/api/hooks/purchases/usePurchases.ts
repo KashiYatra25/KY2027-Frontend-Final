@@ -19,7 +19,7 @@ export interface PurchaseItem {
 export interface Purchase {
   id: string;
   orderId: string;
-  status: "PENDING" | "PAID" | "FAILED" | "EXPIRED";
+  status: "PENDING" | "PAID" | "FAILED" | "EXPIRED" | "TIMEOUT";
   items: PurchaseItem[];
   subtotal: number;
   discount: number;
