@@ -7,10 +7,13 @@ import { CheckCircle, XCircle, Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 // ═══════════════════════════════════════════════════════════════════
-// TYPES
+// TYPES & CONSTANTS
 // ═══════════════════════════════════════════════════════════════════
 
 type PaymentStatus = "loading" | "success" | "failed" | "pending";
+
+// Exponential backoff delays (in ms): immediate, 3s, 6s, 10s = max 4 requests over ~19s
+const POLL_DELAYS = [0, 3000, 6000, 10000];
 
 // ═══════════════════════════════════════════════════════════════════
 // TOAST COMPONENTS
@@ -85,7 +88,6 @@ function PaymentReturnContent() {
   // Refs to prevent duplicate operations
   const hasStartedRef = useRef(false);
   const hasShownToastRef = useRef(false);
-  const isResolvedRef = useRef(false);
 
   useEffect(() => {
     // Prevent running twice (React Strict Mode)
@@ -97,13 +99,10 @@ function PaymentReturnContent() {
       return;
     }
 
-    let intervalId: NodeJS.Timeout | null = null;
-    let pollCount = 0;
+    let timeoutId: NodeJS.Timeout | null = null;
+    let isAborted = false;
 
-    const checkPaymentStatus = async (): Promise<boolean> => {
-      // Already resolved - don't check again
-      if (isResolvedRef.current) return true;
-
+    const checkPaymentStatus = async (): Promise<"success" | "failed" | "pending"> => {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/user/purchases`,
@@ -123,69 +122,91 @@ function PaymentReturnContent() {
 
         if (thisPurchase) {
           if (thisPurchase.status === "PAID") {
-            isResolvedRef.current = true;
-            setStatus("success");
-
-            if (!hasShownToastRef.current) {
-              hasShownToastRef.current = true;
-              toast.custom(() => <PaymentSuccessToast />);
-            }
-
-            setTimeout(() => router.push("/purchases"), 2000);
-            return true;
+            return "success";
           } else if (thisPurchase.status === "FAILED" || thisPurchase.status === "EXPIRED") {
-            isResolvedRef.current = true;
-            setStatus("failed");
-
-            if (!hasShownToastRef.current) {
-              hasShownToastRef.current = true;
-              toast.custom(() => <PaymentFailedToast />);
-            }
-
-            setTimeout(() => router.push("/cart"), 3000);
-            return true;
-          } else {
-            setStatus("pending");
-            return false;
+            return "failed";
           }
-        } else {
-          setStatus("pending");
-          return false;
         }
+        return "pending";
       } catch (error) {
         console.error("Error checking payment status:", error);
-        return false;
+        return "pending";
       }
     };
 
-    // Start polling
-    const startPolling = async () => {
-      const shouldStop = await checkPaymentStatus();
-      if (shouldStop) return;
+    const handleResult = (result: "success" | "failed" | "pending", isLastAttempt: boolean) => {
+      if (isAborted) return;
 
-      intervalId = setInterval(async () => {
-        pollCount += 1;
-
-        if (pollCount >= 15) {
-          if (intervalId) clearInterval(intervalId);
-          router.push("/purchases");
-          return;
+      if (result === "success") {
+        setStatus("success");
+        if (!hasShownToastRef.current) {
+          hasShownToastRef.current = true;
+          toast.custom(() => <PaymentSuccessToast />);
         }
+        setTimeout(() => router.push("/purchases"), 2000);
+        return true; // Stop polling
+      }
 
-        const shouldStop = await checkPaymentStatus();
-        if (shouldStop && intervalId) {
-          clearInterval(intervalId);
+      if (result === "failed") {
+        setStatus("failed");
+        if (!hasShownToastRef.current) {
+          hasShownToastRef.current = true;
+          toast.custom(() => <PaymentFailedToast />);
         }
-      }, 2000);
+        setTimeout(() => router.push("/cart"), 3000);
+        return true; // Stop polling
+      }
+
+      // Still pending
+      setStatus("pending");
+
+      if (isLastAttempt) {
+        // After all retries, redirect to purchases - user can check status there
+        // Webhook will update it eventually
+        router.push("/purchases");
+        return true;
+      }
+
+      return false; // Continue polling
     };
 
-    startPolling();
+    // Recursive polling with exponential backoff
+    const poll = async (attemptIndex: number) => {
+      if (isAborted || attemptIndex >= POLL_DELAYS.length) {
+        if (!isAborted) {
+          router.push("/purchases");
+        }
+        return;
+      }
+
+      const delay = POLL_DELAYS[attemptIndex];
+      const isLastAttempt = attemptIndex === POLL_DELAYS.length - 1;
+
+      // Wait for delay (0 for first attempt)
+      if (delay > 0) {
+        await new Promise<void>((resolve) => {
+          timeoutId = setTimeout(resolve, delay);
+        });
+      }
+
+      if (isAborted) return;
+
+      const result = await checkPaymentStatus();
+      const shouldStop = handleResult(result, isLastAttempt);
+
+      if (!shouldStop && !isAborted) {
+        poll(attemptIndex + 1);
+      }
+    };
+
+    poll(0);
 
     return () => {
-      if (intervalId) clearInterval(intervalId);
+      isAborted = true;
+      if (timeoutId) clearTimeout(timeoutId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty deps - run once on mount
+  }, []);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950">
