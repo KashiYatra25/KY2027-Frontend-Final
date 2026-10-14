@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState, useRef, useCallback } from "react";
+import { Suspense, useEffect, useState, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { CheckCircle, XCircle, Loader2, Sparkles } from "lucide-react";
@@ -80,109 +80,94 @@ function PaymentReturnContent() {
   const router = useRouter();
   const [status, setStatus] = useState<PaymentStatus>("loading");
 
-  // Use refs to track state without causing re-renders
-  const statusRef = useRef<PaymentStatus>("loading");
-  const pollCountRef = useRef(0);
-  const hasShownToastRef = useRef(false);
-
   const orderId = searchParams.get("order_id");
 
-  const checkPaymentStatus = useCallback(async (): Promise<boolean> => {
-    // Return true if we should stop polling
-    if (!orderId) {
-      setStatus("failed");
-      statusRef.current = "failed";
-      return true;
-    }
-
-    // Already resolved - don't check again
-    if (statusRef.current === "success" || statusRef.current === "failed") {
-      return true;
-    }
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/user/purchases`, {
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch purchases");
-      }
-
-      const data = await response.json();
-      const purchases = data.purchases || [];
-
-      // Check if this order exists and is paid
-      const thisPurchase = purchases.find(
-        (p: { orderId: string; status: string }) => p.orderId === orderId
-      );
-
-      if (thisPurchase) {
-        if (thisPurchase.status === "PAID") {
-          setStatus("success");
-          statusRef.current = "success";
-
-          // Only show toast once
-          if (!hasShownToastRef.current) {
-            hasShownToastRef.current = true;
-            toast.custom(() => <PaymentSuccessToast />);
-          }
-
-          // Redirect to purchases after short delay
-          setTimeout(() => {
-            router.push("/purchases");
-          }, 2000);
-          return true; // Stop polling
-        } else if (thisPurchase.status === "FAILED" || thisPurchase.status === "EXPIRED") {
-          setStatus("failed");
-          statusRef.current = "failed";
-
-          // Only show toast once
-          if (!hasShownToastRef.current) {
-            hasShownToastRef.current = true;
-            toast.custom(() => <PaymentFailedToast />);
-          }
-
-          setTimeout(() => {
-            router.push("/cart");
-          }, 3000);
-          return true; // Stop polling
-        } else {
-          // Still pending - keep polling
-          setStatus("pending");
-          statusRef.current = "pending";
-          return false;
-        }
-      } else {
-        // Order not found yet - might still be processing
-        setStatus("pending");
-        statusRef.current = "pending";
-        return false;
-      }
-    } catch (error) {
-      console.error("Error checking payment status:", error);
-      // On error, keep trying
-      return false;
-    }
-  }, [orderId, router]);
+  // Refs to prevent duplicate operations
+  const hasStartedRef = useRef(false);
+  const hasShownToastRef = useRef(false);
+  const isResolvedRef = useRef(false);
 
   useEffect(() => {
+    // Prevent running twice (React Strict Mode)
+    if (hasStartedRef.current) return;
+    hasStartedRef.current = true;
+
+    if (!orderId) {
+      setStatus("failed");
+      return;
+    }
+
     let intervalId: NodeJS.Timeout | null = null;
-    let isMounted = true;
+    let pollCount = 0;
 
+    const checkPaymentStatus = async (): Promise<boolean> => {
+      // Already resolved - don't check again
+      if (isResolvedRef.current) return true;
+
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/user/purchases`,
+          { credentials: "include" }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch purchases");
+        }
+
+        const data = await response.json();
+        const purchases = data.purchases || [];
+
+        const thisPurchase = purchases.find(
+          (p: { orderId: string; status: string }) => p.orderId === orderId
+        );
+
+        if (thisPurchase) {
+          if (thisPurchase.status === "PAID") {
+            isResolvedRef.current = true;
+            setStatus("success");
+
+            if (!hasShownToastRef.current) {
+              hasShownToastRef.current = true;
+              toast.custom(() => <PaymentSuccessToast />);
+            }
+
+            setTimeout(() => router.push("/purchases"), 2000);
+            return true;
+          } else if (thisPurchase.status === "FAILED" || thisPurchase.status === "EXPIRED") {
+            isResolvedRef.current = true;
+            setStatus("failed");
+
+            if (!hasShownToastRef.current) {
+              hasShownToastRef.current = true;
+              toast.custom(() => <PaymentFailedToast />);
+            }
+
+            setTimeout(() => router.push("/cart"), 3000);
+            return true;
+          } else {
+            setStatus("pending");
+            return false;
+          }
+        } else {
+          setStatus("pending");
+          return false;
+        }
+      } catch (error) {
+        console.error("Error checking payment status:", error);
+        return false;
+      }
+    };
+
+    // Start polling
     const startPolling = async () => {
-      // Initial check
       const shouldStop = await checkPaymentStatus();
-      if (shouldStop || !isMounted) return;
+      if (shouldStop) return;
 
-      // Start polling every 2 seconds
       intervalId = setInterval(async () => {
-        pollCountRef.current += 1;
+        pollCount += 1;
 
-        // Stop after 15 attempts (30 seconds)
-        if (pollCountRef.current >= 15) {
+        if (pollCount >= 15) {
           if (intervalId) clearInterval(intervalId);
-          // Redirect to purchases anyway
           router.push("/purchases");
           return;
         }
@@ -197,10 +182,10 @@ function PaymentReturnContent() {
     startPolling();
 
     return () => {
-      isMounted = false;
       if (intervalId) clearInterval(intervalId);
     };
-  }, [checkPaymentStatus, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Empty deps - run once on mount
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950">
