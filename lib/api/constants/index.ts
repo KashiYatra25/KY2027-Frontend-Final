@@ -8,7 +8,7 @@ export const BACKEND_URL = `${BASE_URL}/api/v1`;
 export const API_TIMEOUT = 7000;
 
 // Maximum retry attempts for network errors
-const MAX_NETWORK_RETRIES = 3;
+const MAX_NETWORK_RETRIES = 2;
 
 /**
  * Type guard for Axios errors (without importing axios directly to avoid SSR issues)
