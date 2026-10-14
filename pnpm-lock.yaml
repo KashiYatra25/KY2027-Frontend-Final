@@ -102,8 +102,8 @@ importers:
         specifier: ^3.1.6
         version: 3.1.6
       wire-axon:
-        specifier: ^2.0.5
-        version: 2.0.5(@tanstack/react-query@5.104.1(react@19.2.8))(react@19.2.8)(sonner@2.0.8(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
+        specifier: 2.1.0
+        version: 2.1.0(@tanstack/react-query@5.104.1(react@19.2.8))(react@19.2.8)(sonner@2.0.8(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
       zod:
         specifier: ^4.6.5
         version: 4.6.5
@@ -3831,8 +3831,8 @@ packages:
     engines: {node: '>= 8'}
     hasBin: true
 
-  wire-axon@2.0.5:
-    resolution: {integrity: sha512-aFMtREUP57K58dhQGFFjmTIcalfGoekQYhwDAuMMQY9wg6D4XdG8soWKzL2n9AKRSitQh1DjFQNwO72JN1D8qA==}
+  wire-axon@2.1.0:
+    resolution: {integrity: sha512-B7IZ/+aynpkXAxdlSa3JxBSbEca30bCF2vzolxUh26VZTM9E3nMvM/W+wmQjZW5TR7Oiy4bgKfQsj4gFdIr6bA==}
     peerDependencies:
       '@tanstack/react-query': '>=5.0.0'
       react: '>=18.0.0'
@@ -7787,7 +7787,7 @@ snapshots:
     dependencies:
       isexe: 2.0.0
 
-  wire-axon@2.0.5(@tanstack/react-query@5.104.1(react@19.2.8))(react@19.2.8)(sonner@2.0.8(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)):
+  wire-axon@2.1.0(@tanstack/react-query@5.104.1(react@19.2.8))(react@19.2.8)(sonner@2.0.8(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)):
     dependencies:
       axios: 1.20.0
       zod: 4.6.5
