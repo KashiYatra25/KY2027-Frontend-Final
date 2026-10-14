@@ -12,8 +12,13 @@ import { toast } from "sonner";
 
 type PaymentStatus = "loading" | "success" | "failed" | "pending";
 
-// Exponential backoff delays (in ms): immediate, 3s, 6s, 10s = max 4 requests over ~19s
-const POLL_DELAYS = [0, 3000, 6000, 10000];
+// Exponential backoff delays (in ms): 5 requests over ~30 seconds
+// Attempt 1: immediate (0s)
+// Attempt 2: after 2s  (total: 2s)
+// Attempt 3: after 5s  (total: 7s)
+// Attempt 4: after 10s (total: 17s)
+// Attempt 5: after 13s (total: 30s)
+const POLL_DELAYS = [0, 2000, 5000, 10000, 13000];
 
 // ═══════════════════════════════════════════════════════════════════
 // TOAST COMPONENTS
