@@ -1,8 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, CheckCircle2, Clock, XCircle, AlertCircle, Package, Ticket } from "lucide-react";
+import {
+  Calendar,
+  CheckCircle2,
+  Clock,
+  XCircle,
+  AlertCircle,
+  Package,
+  Ticket,
+  RefreshCw,
+  Phone,
+} from "lucide-react";
 import type { Purchase } from "@/lib/api/hooks";
+import { useCheckOrderStatus } from "@/lib/api/hooks/purchases";
 
 // ═══════════════════════════════════════════════════════════════════
 // STATUS CONFIG
@@ -39,6 +50,9 @@ const STATUS_CONFIG = {
   },
 } as const;
 
+// Support phone number
+const SUPPORT_PHONE = "+91 9876543210"; // Replace with actual support number
+
 // ═══════════════════════════════════════════════════════════════════
 // PURCHASE CARD COMPONENT
 // ═══════════════════════════════════════════════════════════════════
@@ -51,6 +65,10 @@ interface PurchaseCardProps {
 export function PurchaseCard({ purchase, index }: PurchaseCardProps) {
   const statusConfig = STATUS_CONFIG[purchase.status];
   const StatusIcon = statusConfig.icon;
+  const { checkStatus, isCheckingOrder } = useCheckOrderStatus();
+
+  const isChecking = isCheckingOrder(purchase.orderId);
+  const isPending = purchase.status === "PENDING";
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) return "—";
@@ -64,6 +82,10 @@ export function PurchaseCard({ purchase, index }: PurchaseCardProps) {
   };
 
   const totalItems = purchase.items.reduce((sum, item) => sum + item.quantity, 0);
+
+  const handleCheckStatus = () => {
+    checkStatus(purchase.orderId);
+  };
 
   return (
     <motion.div
@@ -156,6 +178,35 @@ export function PurchaseCard({ purchase, index }: PurchaseCardProps) {
             {purchase.paymentMethod.toLowerCase().replace("_", " ")}
           </span>
         </div>
+
+        {/* Pending Order Actions */}
+        {isPending && (
+          <div className="mt-4 flex flex-col gap-3 border-t border-amber-500/20 pt-4">
+            <p className="text-xs text-amber-300/70">
+              Payment still processing? Check status or contact our team.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {/* Check Status Button */}
+              <button
+                onClick={handleCheckStatus}
+                disabled={isChecking}
+                className="inline-flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-300 transition-all hover:bg-amber-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <RefreshCw className={`h-4 w-4 ${isChecking ? "animate-spin" : ""}`} />
+                {isChecking ? "Checking..." : "Check Status"}
+              </button>
+
+              {/* Contact Support Button */}
+              <a
+                href={`tel:${SUPPORT_PHONE.replace(/\s/g, "")}`}
+                className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-gray-300 transition-all hover:bg-white/10"
+              >
+                <Phone className="h-4 w-4" />
+                Talk to Executive
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </motion.div>
   );
