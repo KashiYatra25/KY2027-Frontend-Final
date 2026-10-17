@@ -5,8 +5,9 @@ import { authOptions } from "@/lib/api/auth";
 import { CartPageContent } from "@/components/pages/cart";
 
 export const metadata: Metadata = {
-  title: "Cart | Kashi Yatra 2027",
-  description: "Review your selected passes and proceed to checkout for Kashi Yatra 2027.",
+  title: "Buy Passes | Kashi Yatra 2027",
+  description:
+    "Purchase your festival passes for Kashi Yatra 2027 through our official ticketing partner KonfHub.",
 };
 
 export default async function CartPage() {

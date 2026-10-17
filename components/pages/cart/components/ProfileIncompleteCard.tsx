@@ -2,24 +2,15 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  Upload,
-  ShieldCheck,
-  GraduationCap,
-  Phone,
-  Check,
-  Sparkles,
-  ArrowRight,
-} from "lucide-react";
+import { ShieldCheck, GraduationCap, Phone, Check, Sparkles, ArrowRight } from "lucide-react";
 import { COLORS, SHADOWS } from "@/components/pages/cart/constants/palette";
 
 interface ProfileIncompleteCardProps {
   completionPercentage: number;
   displayName?: string | null;
   steps?: {
-    aadhaarUploaded: boolean;
-    aadhaarVerified: boolean;
     college: boolean;
+    identity: boolean;
     phone: boolean;
   };
 }
@@ -33,7 +24,7 @@ export function ProfileIncompleteCard({
   displayName,
   steps,
 }: ProfileIncompleteCardProps) {
-  // Order: College → Aadhaar Upload → Aadhaar Verify → Phone
+  // Order: College → Identity → Phone (3 steps)
   const stepsList = [
     {
       key: "college",
@@ -42,16 +33,10 @@ export function ProfileIncompleteCard({
       completed: steps?.college ?? false,
     },
     {
-      key: "aadhaarUploaded",
-      label: "Upload Aadhaar",
-      icon: Upload,
-      completed: steps?.aadhaarUploaded ?? false,
-    },
-    {
-      key: "aadhaarVerified",
-      label: "Verify Aadhaar",
+      key: "identity",
+      label: "Identity Verification",
       icon: ShieldCheck,
-      completed: steps?.aadhaarVerified ?? false,
+      completed: steps?.identity ?? false,
     },
     {
       key: "phone",
@@ -150,39 +135,39 @@ export function ProfileIncompleteCard({
           <div className="text-left">
             <p className="text-sm text-gray-400">Profile Status</p>
             <p className="text-lg font-semibold" style={{ color: COLORS.WARNING }}>
-              {completedCount}/4 Steps Done
+              {completedCount}/3 Steps Done
             </p>
           </div>
         </div>
 
-        {/* Steps Grid */}
-        <div className="mb-6 grid grid-cols-2 gap-2">
+        {/* Steps List */}
+        <div className="mb-6 space-y-2">
           {stepsList.map((step, index) => (
             <motion.div
               key={step.key}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 * index }}
-              className="flex items-center gap-2 rounded-lg px-3 py-2"
+              className="flex items-center gap-3 rounded-lg px-4 py-3"
               style={{
                 background: step.completed ? `${COLORS.SUCCESS}12` : `${COLORS.ERROR}08`,
                 border: `1px solid ${step.completed ? COLORS.SUCCESS : COLORS.ERROR}30`,
               }}
             >
               <div
-                className="flex h-6 w-6 items-center justify-center rounded-full"
+                className="flex h-7 w-7 items-center justify-center rounded-full"
                 style={{
                   background: step.completed ? `${COLORS.SUCCESS}25` : `${COLORS.ERROR}15`,
                 }}
               >
                 {step.completed ? (
-                  <Check className="h-3.5 w-3.5" style={{ color: COLORS.SUCCESS }} />
+                  <Check className="h-4 w-4" style={{ color: COLORS.SUCCESS }} />
                 ) : (
-                  <step.icon className="h-3.5 w-3.5" style={{ color: `${COLORS.ERROR}cc` }} />
+                  <step.icon className="h-4 w-4" style={{ color: `${COLORS.ERROR}cc` }} />
                 )}
               </div>
               <span
-                className="text-xs font-medium"
+                className="text-sm font-medium"
                 style={{ color: step.completed ? COLORS.SUCCESS : `${COLORS.ERROR}cc` }}
               >
                 {step.label}

@@ -1,25 +1,14 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { ShoppingBag, Sparkles, Crown } from "lucide-react";
+import { Ticket, Sparkles, Crown, Info } from "lucide-react";
 import { ThemedNavbar } from "@/components/navbar";
-import {
-  useMyAccount,
-  useGetMyCart,
-  useRemoveFromMyCart,
-  useClearMyCart,
-  useUpdateCartQuantity,
-  usePasses,
-  useAccountStatus,
-} from "@/lib/api/hooks";
-import { useCheckout } from "@/lib/api/hooks/cart";
+import { useMyAccount } from "@/lib/api/hooks";
 import { ProfileIncompleteCard } from "./components/ProfileIncompleteCard";
-import { EmptyCart } from "./sections/EmptyCart";
-import { CartSection } from "./sections/CartSection";
-import { CartSummary } from "./sections/CartSummary";
+import { KonfHubIntegration } from "../passes/KonfHubIntegration";
 import { CartLoader } from "./sections/loader/CartLoader";
 import {
   FloatingMandalas,
@@ -32,49 +21,26 @@ import {
   GridOverlay,
 } from "./sections/decor";
 import { LoginRequiredToast } from "./toasts/info/LoginRequiredToast";
-import { ItemRemovedToast } from "./toasts/success/ItemRemovedToast";
-import { CartClearedToast } from "./toasts/success/CartClearedToast";
 import { COLORS } from "./constants/palette";
-import type { CartItemWithDetails } from "@/lib/api/helper/types";
+
+// ═══════════════════════════════════════════════════════════════════
+// BUY PASSES PAGE (formerly Cart Page)
+// Now redirects to KonfHub for actual purchase
+// ═══════════════════════════════════════════════════════════════════
 
 export function CartPageContent() {
   const router = useRouter();
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const [showLoginToast, setShowLoginToast] = useState(false);
-  const [removingId, setRemovingId] = useState<string | null>(null);
-  const [updatingQuantityId, setUpdatingQuantityId] = useState<string | null>(null);
 
-  // Auth & profile state
-  const {
-    isProfileComplete,
-    completionPercentage,
-    displayName,
-    steps,
-    isLoading: isAccountLoading,
-  } = useMyAccount("progress");
+  // Auth & profile state - use "full" to get kyId from profile
+  const { profile, progress, isLoading: isAccountLoading } = useMyAccount("full");
 
-  // Account status (suspension check)
-  const { isSuspended } = useAccountStatus();
-
-  // Cart data
-  const { items, totalQuantity, isEmpty, isLoading: isCartLoading } = useGetMyCart();
-
-  // Passes data (to enrich cart items)
-  const { passes } = usePasses();
-
-  // Mutations with toasts
-  const { removeFromCart, isPending: isRemoving } = useRemoveFromMyCart({
-    successToast: <ItemRemovedToast />,
-  });
-
-  const { clearCart, isPending: isClearing } = useClearMyCart({
-    successToast: <CartClearedToast />,
-  });
-
-  const { mutate: updateQuantity, isPending: isUpdatingQuantity } = useUpdateCartQuantity();
-
-  // Checkout
-  const { checkout, isLoading: isCheckingOut } = useCheckout();
+  const isProfileComplete = progress?.isProfileComplete ?? false;
+  const completionPercentage = progress?.completionPercentage ?? 0;
+  const displayName = profile?.firstName ?? session?.user?.name ?? null;
+  const steps = progress?.steps;
+  const kyId = profile?.kyId; // The short KY-2027-XXXXXXXX ID
 
   const isAuthenticated = status === "authenticated";
   const isAuthLoading = status === "loading";
@@ -89,50 +55,6 @@ export function CartPageContent() {
       return () => clearTimeout(timer);
     }
   }, [isAuthLoading, isAuthenticated, router]);
-
-  // Enrich cart items with pass details
-  const enrichedItems: CartItemWithDetails[] = useMemo(() => {
-    return items.map((item) => {
-      const pass = passes.find((p) => p._id === item.passId);
-      return {
-        ...item,
-        name: pass?.name ?? "Unknown Pass",
-        price: pass?.price ?? 0,
-        image: pass?.image ?? "/passes/YatriPass.png",
-        tagline: pass?.tagline ?? "",
-        accentColor: pass?.accentColor ?? COLORS.GOLD,
-      };
-    });
-  }, [items, passes]);
-
-  // Calculate totals
-  const totalAmount = useMemo(() => {
-    return enrichedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  }, [enrichedItems]);
-
-  // Handlers
-  const handleRemove = (passId: string) => {
-    setRemovingId(passId);
-    removeFromCart({ passId });
-  };
-
-  const handleUpdateQuantity = (passId: string, quantity: number) => {
-    setUpdatingQuantityId(passId);
-    updateQuantity(
-      { passId, quantity },
-      {
-        onSettled: () => setUpdatingQuantityId(null),
-      }
-    );
-  };
-
-  const handleClearCart = () => {
-    clearCart();
-  };
-
-  const handleCheckout = (couponCode?: string) => {
-    checkout({ couponCode });
-  };
 
   // Show loading while checking auth
   if (isAuthLoading) {
@@ -162,8 +84,7 @@ export function CartPageContent() {
     );
   }
 
-  // Loading account or cart
-  const isLoading = isAccountLoading || isCartLoading;
+  const isLoading = isAccountLoading;
 
   return (
     <>
@@ -194,7 +115,7 @@ export function CartPageContent() {
           }}
         />
 
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 2xl:max-w-7xl">
+        <div className="relative mx-auto max-w-2xl px-4 sm:px-6">
           {/* Page Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -230,7 +151,7 @@ export function CartPageContent() {
                   boxShadow: `0 0 30px ${COLORS.GOLD}20, inset 0 0 20px ${COLORS.GOLD}10`,
                 }}
               >
-                <ShoppingBag className="h-7 w-7" style={{ color: COLORS.GOLD }} />
+                <Ticket className="h-7 w-7" style={{ color: COLORS.GOLD }} />
               </motion.div>
               <h1
                 className="text-3xl font-bold sm:text-4xl lg:text-5xl"
@@ -240,7 +161,7 @@ export function CartPageContent() {
                   textShadow: `0 0 40px ${COLORS.GOLD}50, 0 2px 10px rgba(0,0,0,0.5)`,
                 }}
               >
-                Your Cart
+                Buy Passes
               </h1>
             </div>
 
@@ -263,18 +184,14 @@ export function CartPageContent() {
             </div>
 
             {/* Subtitle */}
-            {!isLoading && !isEmpty && isProfileComplete && (
+            {!isLoading && isProfileComplete && (
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
                 className="mt-4 text-gray-400"
               >
-                You have{" "}
-                <span className="font-semibold" style={{ color: COLORS.GOLD }}>
-                  {totalQuantity} {totalQuantity === 1 ? "item" : "items"}
-                </span>{" "}
-                in your cart
+                Purchase your festival pass through our official ticketing partner
               </motion.p>
             )}
           </motion.div>
@@ -289,36 +206,37 @@ export function CartPageContent() {
                 steps={steps ?? undefined}
               />
             </motion.div>
-          ) : isEmpty ? (
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
-              <EmptyCart />
-            </motion.div>
           ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="grid items-start gap-8 lg:grid-cols-3"
-            >
-              <div className="lg:col-span-2">
-                <CartSection
-                  items={enrichedItems}
-                  onRemove={handleRemove}
-                  onUpdateQuantity={handleUpdateQuantity}
-                  removingId={isRemoving ? removingId : null}
-                  updatingQuantityId={isUpdatingQuantity ? updatingQuantityId : null}
-                />
-              </div>
-              <div className="lg:sticky lg:top-36 lg:self-start">
-                <CartSummary
-                  totalItems={totalQuantity}
-                  totalAmount={totalAmount}
-                  onClearCart={handleClearCart}
-                  onCheckout={handleCheckout}
-                  isClearing={isClearing}
-                  isCheckingOut={isCheckingOut}
-                  isSuspended={isSuspended}
-                />
-              </div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+              <KonfHubIntegration
+                kyId={kyId ?? ""}
+                userEmail={profile?.email ?? session?.user?.email ?? ""}
+                userName={displayName ?? "User"}
+              />
+
+              {/* Pass Info Section */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="mt-8 rounded-xl border border-white/10 bg-white/5 p-5"
+              >
+                <div className="mb-3 flex items-center gap-2">
+                  <Info className="h-4 w-4 text-blue-400" />
+                  <h3 className="font-medium text-white">Need to see pass options?</h3>
+                </div>
+                <p className="mb-4 text-sm text-gray-400">
+                  Visit our passes page to compare different pass tiers and their benefits before
+                  making a purchase.
+                </p>
+                <a
+                  href="/passes"
+                  className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/20"
+                >
+                  <Ticket className="h-4 w-4" />
+                  View Pass Options
+                </a>
+              </motion.div>
             </motion.div>
           )}
         </div>

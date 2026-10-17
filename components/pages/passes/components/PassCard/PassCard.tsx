@@ -2,15 +2,15 @@
 
 import { memo, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
 import type { PassConfig } from "@/lib/api/helper/types";
 import { ANIMATION } from "@/components/pages/passes/config/passes.config";
 import { useAnimationPolicy } from "@/hooks";
-import { useMyAccount, useAddToMyCart } from "@/lib/api/hooks";
+import { useMyAccount } from "@/lib/api/hooks";
 import { ProfileIncompleteToast } from "@/components/pages/passes/toasts/error/ProfileIncompleteToast";
 import { LoginRequiredToast } from "@/components/pages/passes/toasts/error/LoginRequiredToast";
-import { ItemAddedToast } from "@/components/pages/cart/toasts/success/ItemAddedToast";
 import {
   COLORS,
   SHADOWS,
@@ -38,7 +38,13 @@ interface PassCardProps {
 // ============================================
 // Main PassCard Component
 // ============================================
-export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: PassCardProps) {
+export const PassCard = memo(function PassCard({
+  pass,
+  index,
+  onSelect,
+  onDetailsClick,
+}: PassCardProps) {
+  const router = useRouter();
   const [isFlipped, setIsFlipped] = useState(false);
   const [showToast, setShowToast] = useState<"profile" | "login" | null>(null);
   const { isMobile } = useAnimationPolicy();
@@ -47,24 +53,19 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
   const { status } = useSession();
   const { progress, isLoading: isProfileLoading } = useMyAccount("access");
 
-  // Add to cart mutation
-  const { addToCart, isPending: isAddingToCart } = useAddToMyCart({
-    successToast: <ItemAddedToast passName={pass.name} />,
-  });
-
   const isAuthenticated = status === "authenticated";
   const isSessionLoading = status === "loading";
   const isProfileComplete = progress?.isProfileComplete ?? false;
 
   // Combined loading state
-  const isLoading = isSessionLoading || (isAuthenticated && isProfileLoading) || isAddingToCart;
+  const isLoading = isSessionLoading || (isAuthenticated && isProfileLoading);
 
   const handleMouseEnter = () => setIsFlipped(true);
   const handleMouseLeave = () => setIsFlipped(false);
   const floatDelay = index * 0.4;
 
-  // Handle checkout button click
-  const handleCheckoutClick = (e: React.MouseEvent) => {
+  // Handle buy button click - redirect to cart/buy page
+  const handleBuyClick = (e: React.MouseEvent) => {
     e.stopPropagation();
 
     if (!isAuthenticated) {
@@ -77,14 +78,8 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
       return;
     }
 
-    // Ensure pass has MongoDB _id (required for cart API)
-    if (!pass._id) {
-      console.error("Pass is missing _id, cannot add to cart");
-      return;
-    }
-
-    // Profile is complete, add to cart
-    addToCart({ passId: pass._id, quantity: 1 });
+    // Profile is complete, redirect to buy page (KonfHub integration)
+    router.push("/cart");
   };
 
   // Auto-hide toast after 5 seconds
@@ -150,12 +145,11 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                   style={{
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",
-                    transform: "rotateY(0deg)", // Explicit transform for Safari
+                    transform: "rotateY(0deg)",
                     zIndex: isFlipped ? 0 : 1,
                   }}
                 >
                   {isMobile ? (
-                    /* Static on mobile */
                     <div className="relative">
                       <div
                         className="absolute inset-0 blur-2xl"
@@ -165,11 +159,7 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                           opacity: 0.6,
                         }}
                       />
-                      <div
-                        style={{
-                          filter: `drop-shadow(0 0 20px ${pass.glowColor})`,
-                        }}
-                      >
+                      <div style={{ filter: `drop-shadow(0 0 20px ${pass.glowColor})` }}>
                         <Image
                           src={pass.image}
                           alt={pass.name}
@@ -181,7 +171,6 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                       </div>
                     </div>
                   ) : (
-                    /* Animated on desktop */
                     <motion.div
                       animate={{ y: [0, -8, 0] }}
                       transition={{ ...ANIMATION.float, delay: floatDelay }}
@@ -203,11 +192,7 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                             `drop-shadow(0 0 20px ${pass.glowColor})`,
                           ],
                         }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                       >
                         <Image
                           src={pass.image}
@@ -222,7 +207,7 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                   )}
                 </div>
 
-                {/* ===== BACK: Glamorous Benefits with Mandala ===== */}
+                {/* ===== BACK: Benefits ===== */}
                 <div
                   className="absolute inset-0 flex flex-col overflow-hidden rounded-lg"
                   style={{
@@ -232,24 +217,16 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                     zIndex: isFlipped ? 1 : 0,
                   }}
                 >
-                  {/* Rich gradient background */}
                   <div
                     className="absolute inset-0"
                     style={{
                       background: `
-                      radial-gradient(ellipse at 50% 0%, rgba(${hexToRgb(COLORS.GOLD)}, 0.15) 0%, transparent 50%),
-                      radial-gradient(ellipse at 50% 100%, rgba(139, 69, 19, 0.2) 0%, transparent 50%),
-                      linear-gradient(180deg, 
-                        rgba(45, 22, 55, 0.98) 0%, 
-                        rgba(35, 15, 45, 0.99) 30%,
-                        rgba(28, 12, 38, 1) 60%,
-                        rgba(22, 8, 30, 1) 100%
-                      )
-                    `,
+                        radial-gradient(ellipse at 50% 0%, rgba(${hexToRgb(COLORS.GOLD)}, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 100%, rgba(139, 69, 19, 0.2) 0%, transparent 50%),
+                        linear-gradient(180deg, rgba(45, 22, 55, 0.98) 0%, rgba(35, 15, 45, 0.99) 30%, rgba(28, 12, 38, 1) 60%, rgba(22, 8, 30, 1) 100%)
+                      `,
                     }}
                   />
-
-                  {/* Animated Mandala Background - only animate when flipped and not on mobile */}
                   <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
                     <AnimatedMandala
                       color={pass.accentColor}
@@ -257,8 +234,6 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                       isAnimating={isFlipped && !isMobile}
                     />
                   </div>
-
-                  {/* Gold border glow */}
                   <div
                     className="pointer-events-none absolute inset-0 rounded-lg"
                     style={{
@@ -266,10 +241,7 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                       boxShadow: `inset 0 0 30px rgba(${hexToRgb(COLORS.GOLD)}, 0.1)`,
                     }}
                   />
-
-                  {/* Content */}
                   <div className="relative z-10 flex h-full flex-col p-4">
-                    {/* Header with decorative lines */}
                     <div className="mb-3 text-center">
                       <div className="mb-1 flex items-center justify-center gap-2">
                         <span
@@ -290,17 +262,14 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                           WebkitBackgroundClip: "text",
                           WebkitTextFillColor: "transparent",
                           backgroundClip: "text",
-                          textShadow: `0 0 30px ${pass.glowColor}`,
                         }}
                       >
                         {pass.name.split(" ")[0]} Benefits
                       </h3>
                     </div>
-
-                    {/* Benefits list with royal styling */}
                     <ul className="flex-1 space-y-2.5 overflow-y-auto px-1">
-                      {pass.benefits.map((benefit, i) =>
-                        isMobile ? (
+                      {pass.benefits.map(
+                        (benefit: { text: string; highlight?: boolean }, i: number) => (
                           <li
                             key={i}
                             className={`flex items-start gap-2.5 text-sm ${benefit.highlight ? "text-yellow-200" : "text-gray-200"}`}
@@ -310,78 +279,11 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                             </span>
                             <span className="leading-tight">{benefit.text}</span>
                           </li>
-                        ) : (
-                          <motion.li
-                            key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                            className={`flex items-start gap-2.5 text-sm ${benefit.highlight ? "text-yellow-200" : "text-gray-200"}`}
-                          >
-                            <motion.span
-                              animate={{
-                                scale: [1, 1.3, 1],
-                                rotate: [0, 180, 360],
-                              }}
-                              transition={{
-                                duration: 3,
-                                repeat: Infinity,
-                                delay: i * 0.2,
-                              }}
-                              style={{ color: COLORS.BRIGHT_GOLD }}
-                              className="mt-0.5"
-                            >
-                              ✦
-                            </motion.span>
-                            <span className="leading-tight">{benefit.text}</span>
-                          </motion.li>
                         )
                       )}
                     </ul>
-
-                    {/* QR with ornate frame */}
-                    <div className="my-3 flex justify-center">
-                      <div
-                        className="relative flex h-16 w-16 items-center justify-center rounded"
-                        style={{
-                          background: `linear-gradient(135deg, rgba(${hexToRgb(COLORS.GOLD)}, 0.1) 0%, rgba(0,0,0,0.3) 100%)`,
-                          border: `2px solid rgba(${hexToRgb(COLORS.GOLD)}, 0.5)`,
-                          boxShadow: SHADOWS.QR_FRAME,
-                        }}
-                      >
-                        <svg
-                          width="30"
-                          height="30"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke={COLORS.GOLD}
-                          strokeWidth="1.5"
-                        >
-                          <rect x="3" y="3" width="7" height="7" rx="1" />
-                          <rect x="14" y="3" width="7" height="7" rx="1" />
-                          <rect x="3" y="14" width="7" height="7" rx="1" />
-                          <rect x="14" y="14" width="3" height="3" />
-                          <rect x="18" y="14" width="3" height="3" />
-                          <rect x="14" y="18" width="3" height="3" />
-                          <rect x="18" y="18" width="3" height="3" />
-                        </svg>
-                      </div>
-                    </div>
-
-                    {/* Flip back hint */}
-                    <p className="flex items-center justify-center gap-1 text-center text-xs text-gray-400">
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                        <path d="M3 3v5h5" />
-                      </svg>
-                      {isMobile ? "Tap to flip back" : "Click to flip back"}
+                    <p className="mt-3 flex items-center justify-center gap-1 text-center text-xs text-gray-400">
+                      {isMobile ? "Tap to flip back" : "Hover to flip back"}
                     </p>
                   </div>
                 </div>
@@ -413,23 +315,20 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                 Click for detailed info
               </button>
 
-              {/* Conditional checkout button based on auth and profile status */}
               {!isAuthenticated && !isSessionLoading ? (
                 <DisabledCheckoutButton passName={pass.name.split(" ")[0]} />
               ) : (
                 <RoyalButton
-                  onClick={handleCheckoutClick}
+                  onClick={handleBuyClick}
                   icon={<PassIcon passId={pass.id} isMobile={isMobile} />}
                   loading={isLoading}
                   disabled={!isProfileComplete && isAuthenticated && !isLoading}
                 >
-                  {isAddingToCart
-                    ? "Adding..."
-                    : isSessionLoading || isProfileLoading
-                      ? "Loading..."
-                      : isAuthenticated && !isProfileComplete
-                        ? "Complete Profile First"
-                        : "Add to Cart"}
+                  {isSessionLoading || isProfileLoading
+                    ? "Loading..."
+                    : isAuthenticated && !isProfileComplete
+                      ? "Complete Profile First"
+                      : "Buy Now"}
                 </RoyalButton>
               )}
             </div>
@@ -437,7 +336,6 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
         </RoyalFrame>
       </motion.div>
 
-      {/* Toast notifications */}
       <AnimatePresence>
         {showToast && (
           <div className="fixed right-6 bottom-6 z-50">

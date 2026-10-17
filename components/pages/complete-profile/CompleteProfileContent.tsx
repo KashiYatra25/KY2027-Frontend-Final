@@ -14,9 +14,8 @@ import { STEPS } from "./config/data";
 import { COLORS } from "./constants/palette";
 import { ErrorState } from "./error/ErrorState";
 import { CompleteProfileLoader } from "./loader/CompleteProfileLoader";
-import { AadhaarUploadStep } from "./steps/adhaar/upload";
-import { AadhaarVerifyStep } from "./steps/adhaar/verify";
 import { CollegeDetailsStep } from "./steps/college/CollegeDetailsStep";
+import { IdentityVerificationStep } from "./steps/identity";
 import { PhoneVerificationStep } from "./steps/phone/PhoneVerificationStep";
 import { CongratulationsPage, hasWelcomeBeenShown } from "./CongratulationsPage";
 
@@ -24,7 +23,7 @@ import { CongratulationsPage, hasWelcomeBeenShown } from "./CongratulationsPage"
 // CONSTANTS
 // ═══════════════════════════════════════════════════════════════════
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 3;
 
 // ═══════════════════════════════════════════════════════════════════
 // MAIN COMPONENT
@@ -128,11 +127,10 @@ export function CompleteProfileContent() {
           />
 
           <div className="p-6 sm:p-10">
-            {/* Step Content - Order: College (1) → Aadhaar Upload (2) → Aadhaar Verify (3) → Phone (4) */}
+            {/* Step Content - 3 Steps: College (1) → Identity (2) → Phone (3) */}
             {currentStep === 1 && <CollegeDetailsStep refetchProgress={refetchProgress} />}
-            {currentStep === 2 && <AadhaarUploadStep refetchProgress={refetchProgress} />}
-            {currentStep === 3 && <AadhaarVerifyStep refetchProgress={refetchProgress} />}
-            {currentStep === 4 && <PhoneVerificationStep refetchProgress={refetchProgress} />}
+            {currentStep === 2 && <IdentityVerificationStep refetchProgress={refetchProgress} />}
+            {currentStep === 3 && <PhoneVerificationStep refetchProgress={refetchProgress} />}
           </div>
         </div>
 

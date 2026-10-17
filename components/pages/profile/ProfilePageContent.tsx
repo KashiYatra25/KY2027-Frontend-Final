@@ -32,7 +32,9 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
   // Fetch account data via GraphQL - returns profile + progress
   const { profile: userData, progress, isLoading, isError, accountStatus } = useMyAccount("full");
 
-  // Fetch CA data via GraphQL - full info for profile page
+  // Only fetch CA info if profile is complete (CA features require complete profile)
+  const isProfileComplete = progress?.isProfileComplete ?? false;
+
   const {
     hasApplied: caHasApplied,
     applicationStatus: caStatus,
@@ -41,7 +43,7 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
     numberOfReferrals: caReferrals,
     isApproved: isCaApproved,
     isLoading: caLoading,
-  } = useCaInfo("full");
+  } = useCaInfo("full", { skip: !isProfileComplete });
 
   return (
     <>
@@ -66,7 +68,7 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
         }}
       >
         <div className="mx-auto max-w-5xl 2xl:max-w-6xl">
-          {isLoading || caLoading ? (
+          {isLoading ? (
             <ProfileLoader />
           ) : isError ? (
             <ErrorState />
@@ -102,8 +104,8 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
                 </div>
               )}
 
-              {/* CA Status Section - Only show if user has applied */}
-              {caHasApplied && (
+              {/* CA Status Section - Only show if user has applied and profile is complete */}
+              {isProfileComplete && caHasApplied && !caLoading && (
                 <CaStatusSection
                   hasApplied={caHasApplied}
                   applicationStatus={caStatus}

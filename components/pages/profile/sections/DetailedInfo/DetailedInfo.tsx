@@ -74,7 +74,7 @@ export function DetailedInfo({ userData, user, progress }: DetailedInfoProps) {
             icon={Shield}
             label="Aadhaar (Last 4)"
             value={userData?.aadhaarNumber ? `XXXX XXXX ${userData.aadhaarNumber.slice(-4)}` : null}
-            isVerified={progress?.steps.aadhaarVerified}
+            isVerified={progress?.steps.identity}
           />
           <InfoCard
             icon={Calendar}
@@ -135,18 +135,20 @@ export function DetailedInfo({ userData, user, progress }: DetailedInfoProps) {
 
           <div className="relative space-y-3">
             <VerificationStep
-              icon={Shield}
-              label="Aadhaar Verified"
-              isCompleted={progress?.steps.aadhaarVerified || false}
-              description={
-                progress?.steps.aadhaarVerified ? "Identity confirmed" : "Upload your Aadhaar"
-              }
-            />
-            <VerificationStep
               icon={GraduationCap}
               label="College Details"
               isCompleted={progress?.steps.college || false}
               description={progress?.steps.college ? "Institution verified" : "Add your college"}
+            />
+            <VerificationStep
+              icon={Shield}
+              label="Identity Verified"
+              isCompleted={progress?.steps.identity || false}
+              description={
+                progress?.steps.identity
+                  ? "Identity confirmed"
+                  : "Verify via Aadhaar or manual entry"
+              }
             />
             <VerificationStep
               icon={Phone}

@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Spinner } from "@/components/ui/spinner";
-import { User, LogOut, Loader2, ShoppingCart, Mail } from "lucide-react";
+import { User, LogOut, Loader2, Ticket, Mail } from "lucide-react";
 import { COLORS } from "../constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -338,8 +338,8 @@ function GalleryUserDropdown({
             className="flex cursor-pointer items-center gap-2 px-3 py-2"
             style={{ color: COLORS.PAPER }}
           >
-            <ShoppingCart className="h-4 w-4" style={{ color: COLORS.MARIGOLD }} />
-            <span>My Cart</span>
+            <Ticket className="h-4 w-4" style={{ color: COLORS.MARIGOLD }} />
+            <span>Buy Passes</span>
           </Link>
         </DropdownMenuItem>
 
@@ -590,8 +590,8 @@ function MobilePanel({
                 className="flex items-center gap-3 rounded-lg px-3 py-2.5"
                 style={{ color: COLORS.PAPER }}
               >
-                <ShoppingCart className="h-4 w-4" style={{ color: COLORS.MARIGOLD }} />
-                <span className="text-sm font-semibold tracking-wider uppercase">My Cart</span>
+                <Ticket className="h-4 w-4" style={{ color: COLORS.MARIGOLD }} />
+                <span className="text-sm font-semibold tracking-wider uppercase">Buy Passes</span>
               </Link>
               <Link
                 href="/contact"

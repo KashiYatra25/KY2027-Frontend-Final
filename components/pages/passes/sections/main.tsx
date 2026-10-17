@@ -2,10 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { useSession } from "next-auth/react";
 import gsap from "gsap";
 import { PassCard, PassesHeading, PassDetailsModal } from "@/components/pages/passes/components";
-import { FloatingCartBar } from "@/components/pages/passes/components/FloatingCartBar";
 import {
   BanarasiPatternAnimated,
   GeometricPattern,
@@ -18,7 +16,7 @@ import { PassesError } from "@/components/pages/passes/sections/error/PassesErro
 import { toPassConfig } from "@/lib/api/helper/functions";
 import { ANIMATION } from "@/components/pages/passes/config/passes.config";
 import type { PassConfig } from "@/lib/api/helper/types";
-import { usePasses, useMyAccount, useGetMyCart } from "@/lib/api/hooks";
+import { usePasses } from "@/lib/api/hooks";
 import { Z_INDEX } from "@/components/pages/passes/constants/palette";
 import { useAnimationPolicy } from "@/hooks";
 import { COLORS, GRADIENT_BORDER_ORNATE } from "@/components/pages/passes/constants/palette";
@@ -35,18 +33,9 @@ export function PassesSection() {
   const [selectedPass, setSelectedPass] = useState<PassConfig | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Auth & profile status - to conditionally fetch cart
-  const { status } = useSession();
-  const { isProfileComplete } = useMyAccount("access");
-  const isAuthenticated = status === "authenticated";
-  const shouldFetchCart = isAuthenticated && isProfileComplete;
-
   // Fetch passes from backend
   const { passes, isLoading, isError, refetch } = usePasses();
   const passConfigs = passes.map(toPassConfig);
-
-  // Fetch cart only if authenticated AND profile complete
-  const { totalQuantity } = useGetMyCart();
 
   const { isMobile, shouldAnimate } = useAnimationPolicy();
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
@@ -244,9 +233,6 @@ export function PassesSection() {
 
       {/* Pass Details Modal */}
       <PassDetailsModal pass={selectedPass} isOpen={isModalOpen} onClose={handleCloseModal} />
-
-      {/* Floating Cart Bar - only show when authenticated, profile complete, and cart has items */}
-      <FloatingCartBar itemCount={totalQuantity} show={shouldFetchCart} />
     </section>
   );
 }

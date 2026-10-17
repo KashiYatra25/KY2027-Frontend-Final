@@ -25,15 +25,15 @@ export const fullAccountQueryDef = query("GetFullAccount", {
       aadhaarNumber: optional(types.string),
       isFromIITBhu: types.boolean,
       isPaidUser: types.boolean,
+      kyId: optional(types.string),
       role: optional({
         level: types.constant<"MASTER_ADMIN" | "MANAGER" | "OPERATOR" | "USER">("USER"),
       }),
     },
     progress: {
       steps: {
-        aadhaarUploaded: types.boolean,
-        aadhaarVerified: types.boolean,
         college: types.boolean,
+        identity: types.boolean,
         phone: types.boolean,
       },
       completedSteps: types.number,
@@ -41,6 +41,7 @@ export const fullAccountQueryDef = query("GetFullAccount", {
       completionPercentage: types.number,
       currentStep: types.number,
       isProfileComplete: types.boolean,
+      identityVerificationMethod: optional(types.constant<"aadhaar" | "manual">("aadhaar")),
       accountStatus: types.constant<"ACTIVE" | "SUSPENDED">("ACTIVE"),
     },
   }),
@@ -56,9 +57,8 @@ export const accountProgressWithStepsQueryDef = query("GetAccountProgressWithSte
   myAccount: optional({
     progress: {
       steps: {
-        aadhaarUploaded: types.boolean,
-        aadhaarVerified: types.boolean,
         college: types.boolean,
+        identity: types.boolean,
         phone: types.boolean,
       },
       currentStep: types.number,
@@ -66,6 +66,7 @@ export const accountProgressWithStepsQueryDef = query("GetAccountProgressWithSte
       totalSteps: types.number,
       completionPercentage: types.number,
       isProfileComplete: types.boolean,
+      identityVerificationMethod: optional(types.constant<"aadhaar" | "manual">("aadhaar")),
       accountStatus: types.constant<"ACTIVE" | "SUSPENDED">("ACTIVE"),
     },
   }),
@@ -85,6 +86,7 @@ export const userNavbarDisplayQueryDef = query("GetUserNavbarDisplay", {
       lastName: optional(types.string),
       candidatePhotoUrl: optional(types.string),
       googleAvatarUrl: optional(types.string),
+      kyId: optional(types.string),
     },
     progress: {
       isProfileComplete: types.boolean,

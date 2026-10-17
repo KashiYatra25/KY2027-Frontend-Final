@@ -7,7 +7,6 @@ import {
   Sparkles,
   ArrowRight,
   Crown,
-  Upload,
   ShieldCheck,
   GraduationCap,
   Phone,
@@ -210,9 +209,9 @@ export function AvatarSection({ userData, user, progress, initials }: AvatarSect
       </div>
 
       {/* All steps chips - green for completed, red for pending */}
-      {/* Order: College → Aadhaar Upload → Aadhaar Verify → Phone */}
+      {/* Order: College → Identity → Phone (3 steps) */}
       {progress && (
-        <div className="mt-3 grid grid-cols-2 gap-1.5">
+        <div className="mt-3 flex flex-wrap justify-center gap-1.5">
           {/* College */}
           <span
             className="flex items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium"
@@ -226,34 +225,17 @@ export function AvatarSection({ userData, user, progress, initials }: AvatarSect
             College
           </span>
 
-          {/* Aadhaar Upload */}
+          {/* Identity */}
           <span
             className="flex items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium"
             style={{
-              background: progress.steps.aadhaarUploaded
-                ? `${COLORS.SUCCESS}15`
-                : `${COLORS.ERROR}15`,
-              color: progress.steps.aadhaarUploaded ? `${COLORS.SUCCESS}` : `${COLORS.ERROR}cc`,
-              border: `1px solid ${progress.steps.aadhaarUploaded ? COLORS.SUCCESS : COLORS.ERROR}25`,
-            }}
-          >
-            <Upload className="h-3 w-3" />
-            Upload Aadhaar
-          </span>
-
-          {/* Aadhaar Verify */}
-          <span
-            className="flex items-center justify-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium"
-            style={{
-              background: progress.steps.aadhaarVerified
-                ? `${COLORS.SUCCESS}15`
-                : `${COLORS.ERROR}15`,
-              color: progress.steps.aadhaarVerified ? `${COLORS.SUCCESS}` : `${COLORS.ERROR}cc`,
-              border: `1px solid ${progress.steps.aadhaarVerified ? COLORS.SUCCESS : COLORS.ERROR}25`,
+              background: progress.steps.identity ? `${COLORS.SUCCESS}15` : `${COLORS.ERROR}15`,
+              color: progress.steps.identity ? `${COLORS.SUCCESS}` : `${COLORS.ERROR}cc`,
+              border: `1px solid ${progress.steps.identity ? COLORS.SUCCESS : COLORS.ERROR}25`,
             }}
           >
             <ShieldCheck className="h-3 w-3" />
-            Verify
+            Identity
           </span>
 
           {/* Phone */}
