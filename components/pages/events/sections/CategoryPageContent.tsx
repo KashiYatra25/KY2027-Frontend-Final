@@ -3,7 +3,12 @@
 import { useSession } from "next-auth/react";
 import { ThemedNavbar } from "@/components/navbar";
 import type { EventCategory, EventCategorySlug } from "@/lib/api/helper/types";
-import { useEventsByCategory, useMyRegistrations, CATEGORY_METADATA } from "@/lib/api/hooks";
+import {
+  useEventsByCategory,
+  useMyRegistrations,
+  useMyAccount,
+  CATEGORY_METADATA,
+} from "@/lib/api/hooks";
 import { SubEventCard, CategoryHeader } from "@/components/pages/events/components";
 import { BackgroundDecorations } from "@/components/pages/events/components/CategoryDecorations";
 import { AlertCircle, RefreshCw, Sparkles, ArrowRight } from "lucide-react";
@@ -270,7 +275,9 @@ export function CategoryPageContent({
 
   const { isRegisteredFor, refetch: refetchRegistrations } = useMyRegistrations();
   const { data: session } = useSession();
-  const isPaidUser = session?.user?.isPaidUser ?? false;
+  const { profile } = useMyAccount("full");
+  // Use fresh profile data instead of stale session
+  const isPaidUser = profile?.isPaidUser ?? false;
 
   // 404 state - still use basic navbar
   if (!categoryKey || !categoryMeta) {
@@ -457,6 +464,7 @@ export function CategoryPageContent({
                 <SubEventCard
                   key={event.id}
                   event={event}
+                  eventSlug={event.slug ?? event.id}
                   categoryColor={categoryMeta.color}
                   index={index}
                   isRegistered={isRegisteredFor(event.slug ?? event.id)}

@@ -361,56 +361,51 @@ export function useCancelRegistration() {
   const queryClient = useQueryClient();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentEventSlug, setCurrentEventSlug] = useState<string | null>(null);
-
-  const { mutate, isPending, isSuccess, isError, error, data, reset } =
-    useApiMutation<CancelRegistrationResponse>({
-      // URL will be set dynamically via the cancel function
-      url: "/events/placeholder/registration",
-      baseURL: BACKEND_URL,
-      featureConfig: sharedFeatureConfig,
-      method: "delete",
-      apiConfig: { timeout: API_TIMEOUT },
-      bodyValidator: { bodySchema: EmptyBodySchema },
-      toastConfig: {
-        successConfig: { customToast: <CancelSuccessToast /> },
-        errorConfig: { customToast: <CancelErrorToast /> },
-      },
-      mutationOptions: {
-        retry: 0, // Don't retry cancellations
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ["my-registrations"] });
-        },
-      },
-    });
-
-  useEffect(() => {
-    if (error) {
-      setErrorMessage(extractErrorMessage(error, "Failed to cancel registration"));
-    } else {
-      setErrorMessage(null);
-    }
-  }, [error]);
+  const [isPending, setIsPending] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const cancel = useCallback(
-    (eventSlug: string) => {
+    async (eventSlug: string) => {
       setCurrentEventSlug(eventSlug);
-      // Override the URL for this specific mutation
-      mutate(
-        {},
-        {
-          // @ts-expect-error - wire-axon supports url override in mutate options
-          url: `/events/${eventSlug}/registration`,
+      setIsPending(true);
+      setIsError(false);
+      setIsSuccess(false);
+      setErrorMessage(null);
+
+      try {
+        const response = await fetch(`${BACKEND_URL}/events/${eventSlug}/registration`, {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.info || data.message || "Failed to cancel registration");
         }
-      );
+
+        setIsSuccess(true);
+        queryClient.invalidateQueries({ queryKey: ["my-registrations"] });
+      } catch (err) {
+        setIsError(true);
+        setErrorMessage(err instanceof Error ? err.message : "Failed to cancel registration");
+      } finally {
+        setIsPending(false);
+      }
     },
-    [mutate]
+    [queryClient]
   );
 
   const resetState = useCallback(() => {
     setCurrentEventSlug(null);
     setErrorMessage(null);
-    reset();
-  }, [reset]);
+    setIsSuccess(false);
+    setIsError(false);
+  }, []);
 
   return {
     cancel,
@@ -419,7 +414,7 @@ export function useCancelRegistration() {
     isError,
     errorMessage,
     cancelledEventSlug: currentEventSlug,
-    data: data?.data ?? null,
+    data: null,
     reset: resetState,
   };
 }

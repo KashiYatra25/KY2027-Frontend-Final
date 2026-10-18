@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
-import { ArrowRight, Ticket, Copy, Check, Hash } from "lucide-react";
+import { ArrowRight, Ticket, Copy, Check, Hash, AlertCircle } from "lucide-react";
 import { COLORS } from "@/components/pages/profile/constants/palette";
 import { UserProfile, UserAccountProgress, ProfileUser } from "@/lib/api/helper/types";
 import { AdminRoleBadge } from "./AdminRoleBadge";
@@ -63,9 +63,10 @@ export function UserInfoSection({ userData, user, progress, isApprovedCa }: User
         {userData?.firstName || user.name || "Traveler"}
       </h1>
 
-      {/* KY ID Display - Only show if profile is complete and kyId exists */}
-      {isProfileComplete && kyId && (
-        <div className="mb-4 flex items-center justify-center gap-2 lg:justify-start">
+      {/* KY ID Section - Always visible */}
+      <div className="mb-4 flex items-center justify-center gap-2 lg:justify-start">
+        {isProfileComplete && kyId ? (
+          /* Profile complete - show KY ID with copy button */
           <div
             className="flex items-center gap-2 rounded-lg px-3 py-1.5"
             style={{
@@ -92,8 +93,28 @@ export function UserInfoSection({ userData, user, progress, isApprovedCa }: User
               )}
             </button>
           </div>
-        </div>
-      )}
+        ) : (
+          /* Profile incomplete - show message to complete profile */
+          <Link href="/complete-profile">
+            <div
+              className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 transition-all hover:scale-[1.02]"
+              style={{
+                background: `linear-gradient(135deg, ${COLORS.GOLD}05, transparent)`,
+                border: `1px dashed ${COLORS.GOLD}40`,
+              }}
+            >
+              <AlertCircle className="h-4 w-4 text-amber-400" />
+              <div className="flex flex-col items-start">
+                <span className="text-xs font-medium text-amber-400">KY ID unavailable</span>
+                <span className="text-[10px]" style={{ color: `${COLORS.CREAM}60` }}>
+                  Complete your profile to get your KY ID
+                </span>
+              </div>
+              <ArrowRight className="h-3.5 w-3.5 text-amber-400/60" />
+            </div>
+          </Link>
+        )}
+      </div>
 
       {/* Badges Row */}
       <div className="mb-4 flex flex-wrap items-center justify-center gap-2 lg:justify-start">

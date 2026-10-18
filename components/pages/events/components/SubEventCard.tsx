@@ -1,11 +1,11 @@
 "use client";
 
 import { memo, useState, useCallback, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import type { SubEvent } from "@/lib/api/helper/types";
-import { useEventRegisterIndividual } from "@/lib/api/hooks";
+import { useEventRegisterIndividual, useCancelRegistration } from "@/lib/api/hooks";
 import { TeamSelectorModal } from "./TeamSelectorModal";
-import { Loader2, Users, Clock, Sparkles, ChevronRight } from "lucide-react";
+import { Loader2, Users, Clock, Sparkles, ChevronRight, X, AlertTriangle } from "lucide-react";
 
 // ═══════════════════════════════════════════════════════════════════
 // TYPE BADGE CONFIG
@@ -58,7 +58,16 @@ export const SubEventCard = memo(function SubEventCard({
   const typeConfig = TYPE_CONFIG[event.type as keyof typeof TYPE_CONFIG] || TYPE_CONFIG.individual;
 
   const [showTeamModal, setShowTeamModal] = useState(false);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const hasCalledSuccessRef = useRef(false);
+
+  // Debug: log what we're receiving
+  console.log("SubEventCard event:", {
+    id: event.id,
+    slug: event.slug,
+    eventSlugProp: eventSlug,
+    name: event.name,
+  });
 
   const slug = event.slug ?? eventSlug ?? event.id;
 
@@ -70,6 +79,15 @@ export const SubEventCard = memo(function SubEventCard({
     errorMessage,
     reset,
   } = useEventRegisterIndividual(slug);
+
+  const {
+    cancel,
+    isCancelling,
+    isSuccess: isCancelSuccess,
+    isError: isCancelError,
+    errorMessage: cancelErrorMessage,
+    reset: resetCancel,
+  } = useCancelRegistration();
 
   useEffect(() => {
     if (isSuccess && !hasCalledSuccessRef.current) {
@@ -83,6 +101,14 @@ export const SubEventCard = memo(function SubEventCard({
       hasCalledSuccessRef.current = false;
     }
   }, [isSuccess]);
+
+  // Handle cancel success - refetch registrations
+  useEffect(() => {
+    if (isCancelSuccess) {
+      setShowCancelConfirm(false);
+      onRegistrationSuccess?.(); // This will refetch registrations
+    }
+  }, [isCancelSuccess, onRegistrationSuccess]);
 
   const handleRegisterClick = useCallback(() => {
     if (!event.registrationOpen || isRegistered || !canRegister) return;
@@ -99,6 +125,21 @@ export const SubEventCard = memo(function SubEventCard({
     setShowTeamModal(false);
     onRegistrationSuccess?.();
   }, [onRegistrationSuccess]);
+
+  const handleRegisteredClick = useCallback(() => {
+    if (isRegistered) {
+      setShowCancelConfirm(true);
+    }
+  }, [isRegistered]);
+
+  const handleConfirmCancel = useCallback(() => {
+    cancel(slug);
+  }, [cancel, slug]);
+
+  const handleDismissCancel = useCallback(() => {
+    setShowCancelConfirm(false);
+    resetCancel();
+  }, [resetCancel]);
 
   const showAsRegistered = isRegistered || isSuccess;
 
@@ -284,21 +325,84 @@ export const SubEventCard = memo(function SubEventCard({
               </div>
             )}
 
+            {/* Cancel confirmation dialog */}
+            <AnimatePresence>
+              {showCancelConfirm && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-4 overflow-hidden rounded-lg"
+                  style={{
+                    background: "rgba(239, 68, 68, 0.1)",
+                    border: "1px solid rgba(239, 68, 68, 0.3)",
+                  }}
+                >
+                  <div className="p-3">
+                    <div className="flex items-start gap-2">
+                      <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-400" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-amber-200">Cancel registration?</p>
+                        <p className="mt-1 text-xs text-amber-200/70">
+                          This will remove your registration from {event.name}.
+                        </p>
+                        {isCancelError && (
+                          <p className="mt-2 text-xs text-red-400">{cancelErrorMessage}</p>
+                        )}
+                        <div className="mt-3 flex gap-2">
+                          <button
+                            onClick={handleConfirmCancel}
+                            disabled={isCancelling}
+                            className="flex items-center gap-1.5 rounded-md bg-red-500/20 px-3 py-1.5 text-xs font-medium text-red-400 transition-colors hover:bg-red-500/30 disabled:opacity-50"
+                          >
+                            {isCancelling ? (
+                              <>
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                                Cancelling...
+                              </>
+                            ) : (
+                              <>
+                                <X className="h-3 w-3" />
+                                Yes, cancel
+                              </>
+                            )}
+                          </button>
+                          <button
+                            onClick={handleDismissCancel}
+                            disabled={isCancelling}
+                            className="rounded-md bg-white/10 px-3 py-1.5 text-xs font-medium text-white/70 transition-colors hover:bg-white/20 disabled:opacity-50"
+                          >
+                            Keep registration
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Register button - always at bottom due to flex */}
             <motion.button
               whileHover={
                 !showAsRegistered && event.registrationOpen && canRegister
                   ? { scale: 1.02 }
-                  : undefined
+                  : showAsRegistered
+                    ? { scale: 1.01 }
+                    : undefined
               }
               whileTap={
                 !showAsRegistered && event.registrationOpen && canRegister
                   ? { scale: 0.98 }
-                  : undefined
+                  : showAsRegistered
+                    ? { scale: 0.98 }
+                    : undefined
               }
-              onClick={handleRegisterClick}
+              onClick={showAsRegistered ? handleRegisteredClick : handleRegisterClick}
               disabled={
-                !event.registrationOpen || isRegistering || showAsRegistered || !canRegister
+                (!event.registrationOpen && !showAsRegistered) ||
+                isRegistering ||
+                (!canRegister && !showAsRegistered)
               }
               className="group/btn relative mt-auto w-full overflow-hidden rounded-xl py-3.5 text-sm font-bold tracking-wider uppercase transition-all duration-300"
               style={{
@@ -316,9 +420,12 @@ export const SubEventCard = memo(function SubEventCard({
                 boxShadow:
                   event.registrationOpen && canRegister && !showAsRegistered
                     ? `0 0 20px ${categoryColor}25`
-                    : "none",
-                cursor:
-                  !event.registrationOpen || showAsRegistered || !canRegister
+                    : showAsRegistered
+                      ? "0 0 15px rgba(34, 197, 94, 0.15)"
+                      : "none",
+                cursor: showAsRegistered
+                  ? "pointer"
+                  : !event.registrationOpen || !canRegister
                     ? "not-allowed"
                     : "pointer",
               }}
@@ -337,21 +444,27 @@ export const SubEventCard = memo(function SubEventCard({
               {/* Button content */}
               <span className="relative flex items-center justify-center gap-2">
                 {showAsRegistered ? (
-                  <>
-                    {/* Custom checkmark SVG */}
-                    <svg
-                      className="h-5 w-5"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M20 6L9 17l-5-5" />
-                    </svg>
-                    Registered
-                  </>
+                  <span className="flex items-center gap-2">
+                    {/* Show checkmark normally, X on hover */}
+                    <span className="flex items-center gap-2 group-hover/btn:hidden">
+                      <svg
+                        className="h-5 w-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
+                      Registered
+                    </span>
+                    <span className="hidden items-center gap-2 text-red-400 group-hover/btn:flex">
+                      <X className="h-5 w-5" />
+                      Cancel Registration
+                    </span>
+                  </span>
                 ) : isRegistering ? (
                   <>
                     <Loader2 className="h-5 w-5 animate-spin" />

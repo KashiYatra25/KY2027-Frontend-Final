@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { ThemedNavbar } from "@/components/navbar";
-import { useMyTeams } from "@/lib/api/hooks";
+import { useMyTeams, useMyAccount } from "@/lib/api/hooks";
 import { TEAMS_COLORS } from "./constants/palette";
 import { TeamCard } from "./components/TeamCard";
 import { CreateTeamModal } from "./components/CreateTeamModal";
@@ -19,7 +19,9 @@ import { Users, Plus, ShoppingCart } from "lucide-react";
 
 export function TeamsPageContent() {
   const { data: session } = useSession();
-  const isPaidUser = session?.user?.isPaidUser ?? false;
+  const { profile } = useMyAccount("full");
+  // Use fresh profile data instead of stale session
+  const isPaidUser = profile?.isPaidUser ?? false;
   const { teams, count, isLoading, isError, errorMessage, refetch } = useMyTeams();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
