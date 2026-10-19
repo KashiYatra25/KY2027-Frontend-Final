@@ -6,6 +6,7 @@ import { MapControls } from "./MapControls";
 import { LAMPS } from "@/components/pages/schedule/config/campusMap.config";
 import { TONE_COLORS } from "@/components/pages/schedule/constants/palette";
 import { DEFAULT_LAYERS } from "@/components/pages/schedule/constants/layers";
+import { IMAGES } from "@/lib/images";
 import type { Layer, MapLayers, Venue, ScheduledEvent } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -228,7 +229,7 @@ export function CampusMap({
         {/* Day image */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/scheduleMap/CampusDay.jpg"
+          src={IMAGES.scheduleMap.campusDay}
           alt="Map of the IIT (BHU) campus"
           draggable={false}
           loading="eager"
@@ -239,7 +240,7 @@ export function CampusMap({
         {/* Night image */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/scheduleMap/CampusNight.jpg"
+          src={IMAGES.scheduleMap.campusNight}
           alt=""
           draggable={false}
           loading="lazy"

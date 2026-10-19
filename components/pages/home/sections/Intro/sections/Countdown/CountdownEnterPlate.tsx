@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import { cn } from "@/lib/utils";
+import { IMAGES } from "@/lib/images";
 
 // Where the ENTER KASHIYATRA plate sits inside the 1672×941 poster (px)
 const IMG_W = 1672;
@@ -39,7 +40,7 @@ export function CountdownEnterPlate({ stageRef, show, ready, onActivate }: Props
       c.height = img.naturalHeight;
       c.getContext("2d")?.drawImage(img, 0, 0);
     };
-    img.src = "/intro/countdown/plate.png";
+    img.src = IMAGES.intro.countdownPlate;
   }, []);
 
   // follow the stage while it is visible

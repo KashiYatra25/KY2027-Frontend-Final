@@ -45,7 +45,7 @@ const cormorant = Cormorant_Garamond({
 const siteUrl = "https://kashiyatra.in";
 const siteName = "Kashi Yatra 2027";
 const siteDescription =
-  "Kashi Yatra 2027 - The biggest cultural fest of IIT (BHU) Varanasi. 4 days, 50+ events, Pro Nites with top artists. Experience where tradition meets the future.";
+  "Kashi Yatra 2027 - The biggest cultural fest of IIT (BHU) Varanasi. 4 days, 80+ events, Pro Nites with top artists. Experience where tradition meets the future.";
 
 export const metadata: Metadata = {
   // Basic

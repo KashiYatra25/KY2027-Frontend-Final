@@ -284,7 +284,7 @@ export const HeroSection = memo(function HeroSection() {
             {[
               { value: "15+", label: "YEARS" },
               { value: "90K+", label: "FOOTFALL" },
-              { value: "50+", label: "EVENTS" },
+              { value: "80+", label: "EVENTS" },
             ].map((stat, i) => (
               <div
                 key={i}
@@ -317,7 +317,7 @@ export const HeroSection = memo(function HeroSection() {
             {[
               { value: "15+", label: "YEARS OF LEGACY", icon: "🎭" },
               { value: "90K+", label: "FOOTFALL", icon: "🔥" },
-              { value: "50+", label: "EPIC EVENTS", icon: "🎪" },
+              { value: "80+", label: "EPIC EVENTS", icon: "🎪" },
             ].map((stat, i) => (
               <motion.div
                 key={i}

@@ -13,30 +13,34 @@
 const IMAGEKIT_BASE =
   process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || "https://ik.imagekit.io/bi3ktgt58";
 
+/**
+ * Cache-busting version for ImageKit URLs.
+ * ImageKit (and browsers) cache by URL, so bump this whenever the underlying
+ * image files are re-uploaded/optimized to force clients to fetch fresh copies.
+ */
+const CACHE_VERSION = "20261019";
+const v = (url: string): string => `${url}?v=${CACHE_VERSION}`;
+
 export const IMAGES = {
   // ============================================
   // PASSES - All common (shown on both platforms)
   // ============================================
   passes: {
-    yatri: "/passes/YatriPass.png",
-    darbar: "/passes/DarbarPass.png",
-    swarnim: "/passes/SwarnimPass.png",
+    yatri: v(`${IMAGEKIT_BASE}/passes/yatri-pass.png`),
   },
 
   // ============================================
   // HERO SECTION - All common
   // ============================================
   hero: {
-    logo: `${IMAGEKIT_BASE}/hero/common/kashiyatra-logo.png`,
-    heroLogo: `${IMAGEKIT_BASE}/hero/common/hero-logo.png`,
-    ghatsDay: `${IMAGEKIT_BASE}/hero/common/ghats-day.png?v=2`,
-    ghatsNight: `${IMAGEKIT_BASE}/hero/common/ghats-night.png?v=3`,
-    modeChange: `${IMAGEKIT_BASE}/hero/common/mode-change.png`,
-    themePickerBox: "/home/hero/lotusChooseThemeBox.png",
-    temple: `${IMAGEKIT_BASE}/hero/common/kashivishwanath-temple.png`,
-    varanasiBack: `${IMAGEKIT_BASE}/hero/common/varanasi-back.png`,
-    steppingStone: "/home/hero/SteppingStone.webp",
-    kites: `${IMAGEKIT_BASE}/hero/common/kites.png`,
+    ghatsDay: v(`${IMAGEKIT_BASE}/hero/common/ghats-day.png`),
+    ghatsNight: v(`${IMAGEKIT_BASE}/hero/common/ghats-night.png`),
+    modeChange: v(`${IMAGEKIT_BASE}/hero/common/mode-change.png`),
+    themePickerBox: v(`${IMAGEKIT_BASE}/hero/common/lotus-choose-theme-box.png`),
+    temple: v(`${IMAGEKIT_BASE}/hero/common/kashivishwanath-temple.png`),
+    varanasiBack: v(`${IMAGEKIT_BASE}/hero/common/varanasi-back.png`),
+    steppingStone: v(`${IMAGEKIT_BASE}/hero/common/stepping-stone.webp`),
+    kites: v(`${IMAGEKIT_BASE}/hero/common/kites.png`),
   },
 
   // ============================================
@@ -45,18 +49,17 @@ export const IMAGES = {
   navbar: {
     // Main/Home navbar (golden/cream theme)
     main: {
-      background: "/navbar/MainBackground.png",
-      badge: "/navbar/MainBadge.png",
+      background: v(`${IMAGEKIT_BASE}/navbar/main/nav-bg.png`),
+      badge: v(`${IMAGEKIT_BASE}/navbar/main/nav-badge-home.png`),
     },
     // About page navbar (purple/blue concert theme)
     about: {
-      background: "/navbar/AboutBackground.png",
-      badge: "/navbar/AboutBadge.png",
+      background: v(`${IMAGEKIT_BASE}/navbar/about/navbar-about.png`),
+      badge: v(`${IMAGEKIT_BASE}/navbar/about/nav-badge-about.png`),
     },
     // Sponsors page navbar (green/gold nature theme)
     sponsor: {
-      background: "/navbar/SponsorBackground.png",
-      badge: "/navbar/SponsorBadge.png",
+      background: v(`${IMAGEKIT_BASE}/navbar/sponsor/nav-sponsor.png`),
     },
   },
 
@@ -65,123 +68,90 @@ export const IMAGES = {
   // ============================================
   vibes: {
     // Common (both platforms)
-    background: `${IMAGEKIT_BASE}/vibes/common/vibes-bg.png`,
-    backgroundDark: "/home/banarasiVibes/BanarasiVibesBg.png",
-    mahamana: `${IMAGEKIT_BASE}/vibes/common/mahamana.png`,
-    bhuGate: `${IMAGEKIT_BASE}/vibes/common/bhu-gate.png`,
-    rickshaw: "/home/banarasiVibes/Rickshaw.webp",
+    background: v(`${IMAGEKIT_BASE}/vibes/common/vibes-bg.png`),
+    backgroundDark: v(`${IMAGEKIT_BASE}/vibes/common/banarasi-vibes-bg-dark.png`),
+    mahamana: v(`${IMAGEKIT_BASE}/vibes/common/mahamana.png`),
+    bhuGate: v(`${IMAGEKIT_BASE}/vibes/common/bhu-gate.png`),
+    rickshaw: v(`${IMAGEKIT_BASE}/vibes/common/rickshaw.webp`),
 
     // Desktop-only decorative characters
-    mandala: `${IMAGEKIT_BASE}/vibes/desktop/mandala.png`,
-    gangaAartiSaint: `${IMAGEKIT_BASE}/vibes/desktop/ganga-aarti-saint.png`,
-    bharatnatyamDancer: `${IMAGEKIT_BASE}/vibes/desktop/bharatnatyam-dancer.png`,
-    banarasMaleDancer: `${IMAGEKIT_BASE}/vibes/desktop/banaras-male-dancer.png`,
-    banarasFemaleDancer: `${IMAGEKIT_BASE}/vibes/desktop/banaras-female-dancer.png`,
+    mandala: v(`${IMAGEKIT_BASE}/vibes/desktop/mandala.png`),
+    banarasMaleDancer: v(`${IMAGEKIT_BASE}/vibes/desktop/banaras-male-dancer.png`),
+    banarasFemaleDancer: v(`${IMAGEKIT_BASE}/vibes/desktop/banaras-female-dancer.png`),
 
     // Mobile-only decorative elements
     mobile: {
-      rangoliBg: `${IMAGEKIT_BASE}/vibes/mobile/rangoli-bg.png`,
-      trishul: `${IMAGEKIT_BASE}/vibes/mobile/trishul.png`,
-      lotusPairs: `${IMAGEKIT_BASE}/vibes/mobile/lotus-pairs.png`,
-      etherealDancer: `${IMAGEKIT_BASE}/vibes/mobile/ethereal-dancer.png`,
-      diyaPairs: `${IMAGEKIT_BASE}/vibes/mobile/diya-pairs.png`,
-      conchShell: `${IMAGEKIT_BASE}/vibes/mobile/conch-shell.png`,
-      varanasiSilhouette: `${IMAGEKIT_BASE}/vibes/mobile/varanasi-silhouette.png`,
+      rangoliBg: v(`${IMAGEKIT_BASE}/vibes/mobile/rangoli-bg.png`),
+      trishul: v(`${IMAGEKIT_BASE}/vibes/mobile/trishul.png`),
+      lotusPairs: v(`${IMAGEKIT_BASE}/vibes/mobile/lotus-pairs.png`),
+      etherealDancer: v(`${IMAGEKIT_BASE}/vibes/mobile/ethereal-dancer.png`),
+      diyaPairs: v(`${IMAGEKIT_BASE}/vibes/mobile/diya-pairs.png`),
+      conchShell: v(`${IMAGEKIT_BASE}/vibes/mobile/conch-shell.png`),
     },
-  },
-
-  // ============================================
-  // FEST HIGHLIGHTS SECTION
-  // ============================================
-  highlights: {
-    // Common
-    background: `${IMAGEKIT_BASE}/festival-vibes/common/festive-vibes-bg.png`,
   },
 
   // ============================================
   // FESTIVAL VIBES / THE EXPERIENCE SECTION
   // ============================================
   festivalVibes: {
-    dj: `${IMAGEKIT_BASE}/festival-vibes/common/dj.png`,
-    sareeDrape: `${IMAGEKIT_BASE}/festival-vibes/common/saree-drape.png`,
+    dj: v(`${IMAGEKIT_BASE}/festival-vibes/common/dj.png`),
+    sareeDrape: v(`${IMAGEKIT_BASE}/festival-vibes/common/saree-drape.png`),
   },
 
   // ============================================
   // PRO NITES SECTION
   // ============================================
   proNites: {
-    crowdSilhouette: "/home/proNites/CrowdSilhouette.png",
-    aerobics: "/home/proNites/Aerobics.png",
-    moon: "/home/proNites/Moon.png",
-    dancingGirl: "/home/proNites/DancingGirl.png",
-    silhouette: "/home/proNites/Silhouette.png",
-    moonBackground: "/home/proNites/MoonBackground.png",
+    aerobics: v(`${IMAGEKIT_BASE}/pro-nites/common/aerobics.png`),
+    moon: v(`${IMAGEKIT_BASE}/pro-nites/common/moon.png`),
+    silhouette: v(`${IMAGEKIT_BASE}/pro-nites/common/silhouette.png`),
   },
 
   // ============================================
   // FOOTER SECTION - Desktop decorative elements
   // ============================================
   footer: {
-    footerDancer: "/home/footer/FooterDancer.png",
-    floatingSpeaker: "/home/footer/FloatingSpeaker.png",
-    concertFloor: "/home/footer/ConcertFloor.png",
-    dancer: "/home/footer/Dancer.png",
-    ghatSilhouette: "/home/footer/GhatSilhouette.png",
-    subtleRangoli: "/home/footer/SubtleRangoli.png",
-    spiritualOrnament: "/home/footer/SpiritualOrnament.png",
-    floatingGarland: "/home/footer/FloatingGarland.png",
-    standingPillar: "/home/footer/StandingPillar.png",
-  },
-
-  // ============================================
-  // MISCELLANEOUS
-  // ============================================
-  misc: {
-    lordShiva: "/miscellaneous/LordShiva.png",
-    welcomeFlag: "/miscellaneous/WelcomeFlag.png",
-    lassi: "/miscellaneous/Lassi.png",
-    tablaSitar: "/miscellaneous/TablaSitar.png",
-    malaiyo: "/miscellaneous/Malaiyo.png",
-    paan: "/miscellaneous/Paan.png",
+    footerDancer: v(`${IMAGEKIT_BASE}/footer/desktop/footer-dancer.png`),
+    concertFloor: v(`${IMAGEKIT_BASE}/footer/desktop/concert-floor.png`),
+    dancer: v(`${IMAGEKIT_BASE}/footer/desktop/ethereal-dancer.png`),
+    ghatSilhouette: v(`${IMAGEKIT_BASE}/footer/desktop/ghat-silhouette.png`),
+    subtleRangoli: v(`${IMAGEKIT_BASE}/footer/desktop/subtle-rangoli.png`),
+    floatingGarland: v(`${IMAGEKIT_BASE}/footer/desktop/floating-garland.png`),
   },
 
   // ============================================
   // ABOUT PAGE - All common
   // ============================================
   about: {
-    background: `${IMAGEKIT_BASE}/about/AboutBackground.png`,
-    mandalaOrnament: `${IMAGEKIT_BASE}/about/MandalaOrnament.png`,
-    peacock: `${IMAGEKIT_BASE}/about/Peacock.png`,
-    mysticDivider: `${IMAGEKIT_BASE}/about/MysticDivider.png`,
-    diyaCluster: `${IMAGEKIT_BASE}/about/DiyaCluster.png`,
-    cornerOrnament: `${IMAGEKIT_BASE}/about/CornerOrnament.png`,
-    bhuGate: `${IMAGEKIT_BASE}/about/BhuRoyalGate.png`,
-    ghatsSilhouette: `${IMAGEKIT_BASE}/about/GhatSilhouette.png`,
-    heroLeftAbout: `${IMAGEKIT_BASE}/about/HeroLeftDecor.png`,
-    dancerGirlHeroAbout: `${IMAGEKIT_BASE}/about/DancerGirlHero.png`,
+    background: v(`${IMAGEKIT_BASE}/about/AboutBackground.png`),
+    mysticDivider: v(`${IMAGEKIT_BASE}/about/MysticDivider.png`),
+    cornerOrnament: v(`${IMAGEKIT_BASE}/about/CornerOrnament.png`),
+    bhuGate: v(`${IMAGEKIT_BASE}/about/BhuRoyalGate.png`),
+    heroLeftAbout: v(`${IMAGEKIT_BASE}/about/HeroLeftDecor.png`),
+    dancerGirlHeroAbout: v(`${IMAGEKIT_BASE}/about/DancerGirlHero.png`),
     // IIT BHU Stamps
     stamps: {
-      mandir: `${IMAGEKIT_BASE}/about/stamps/Mandir.png`,
-      mainBuilding: `${IMAGEKIT_BASE}/about/stamps/MainBuilding.png`,
-      library: `${IMAGEKIT_BASE}/about/stamps/Library.png`,
-      kyVenue: `${IMAGEKIT_BASE}/about/stamps/KyVenue.png`,
-      heritageHostel: `${IMAGEKIT_BASE}/about/stamps/HeritageHostel.png`,
+      mandir: v(`${IMAGEKIT_BASE}/about/stamps/Mandir.png`),
+      mainBuilding: v(`${IMAGEKIT_BASE}/about/stamps/MainBuilding.png`),
+      library: v(`${IMAGEKIT_BASE}/about/stamps/Library.png`),
+      kyVenue: v(`${IMAGEKIT_BASE}/about/stamps/KyVenue.png`),
+      heritageHostel: v(`${IMAGEKIT_BASE}/about/stamps/HeritageHostel.png`),
     },
     // Slider images - Left row (moving left to right)
     slider: {
-      left1: `${IMAGEKIT_BASE}/about/slider/SliderLeft1.jpg`,
-      left2: `${IMAGEKIT_BASE}/about/slider/SliderLeft2.jpg`,
-      left3: `${IMAGEKIT_BASE}/about/slider/SliderLeft3.jpg`,
-      left4: `${IMAGEKIT_BASE}/about/slider/SliderLeft4.jpg`,
-      left5: `${IMAGEKIT_BASE}/about/slider/SliderLeft5.jpg`,
-      left6: `${IMAGEKIT_BASE}/about/slider/SliderLeft6.jpg`,
+      left1: v(`${IMAGEKIT_BASE}/about/slider/SliderLeft1.jpg`),
+      left2: v(`${IMAGEKIT_BASE}/about/slider/SliderLeft2.jpg`),
+      left3: v(`${IMAGEKIT_BASE}/about/slider/SliderLeft3.jpg`),
+      left4: v(`${IMAGEKIT_BASE}/about/slider/SliderLeft4.jpg`),
+      left5: v(`${IMAGEKIT_BASE}/about/slider/SliderLeft5.jpg`),
+      left6: v(`${IMAGEKIT_BASE}/about/slider/SliderLeft6.jpg`),
       // Right row (moving right to left)
-      right1: `${IMAGEKIT_BASE}/about/slider/SliderRight1.jpg`,
-      right2: `${IMAGEKIT_BASE}/about/slider/SliderRight2.jpg`,
-      right3: `${IMAGEKIT_BASE}/about/slider/SliderRight3.jpg`,
-      right4: `${IMAGEKIT_BASE}/about/slider/SliderRight4.jpg`,
-      right5: `${IMAGEKIT_BASE}/about/slider/SliderRight5.jpg`,
-      right6: `${IMAGEKIT_BASE}/about/slider/SliderRight6.jpg`,
+      right1: v(`${IMAGEKIT_BASE}/about/slider/SliderRight1.jpg`),
+      right2: v(`${IMAGEKIT_BASE}/about/slider/SliderRight2.jpg`),
+      right3: v(`${IMAGEKIT_BASE}/about/slider/SliderRight3.jpg`),
+      right4: v(`${IMAGEKIT_BASE}/about/slider/SliderRight4.jpg`),
+      right5: v(`${IMAGEKIT_BASE}/about/slider/SliderRight5.jpg`),
+      right6: v(`${IMAGEKIT_BASE}/about/slider/SliderRight6.jpg`),
     },
   },
 
@@ -190,44 +160,36 @@ export const IMAGES = {
   // ============================================
   contact: {
     // Contact-specific images
-    envelopeScroll: `${IMAGEKIT_BASE}/contact/EnvelopeScrolled.png`,
-    conch: `${IMAGEKIT_BASE}/contact/Conch.png`,
-    lotusMandala: `${IMAGEKIT_BASE}/contact/LotusMandala.png`,
-    floatingDiya: `${IMAGEKIT_BASE}/contact/FloatingDiya.png`,
+    envelopeScroll: v(`${IMAGEKIT_BASE}/contact/EnvelopeScrolled.png`),
+    conch: v(`${IMAGEKIT_BASE}/contact/Conch.png`),
+    lotusMandala: v(`${IMAGEKIT_BASE}/contact/LotusMandala.png`),
+    floatingDiya: v(`${IMAGEKIT_BASE}/contact/FloatingDiya.png`),
     // Shared decorative images (reused from about)
-    mandalaOrnament: `${IMAGEKIT_BASE}/about/MandalaOrnament.png`,
-    peacock: `${IMAGEKIT_BASE}/about/Peacock.png`,
-    mysticDivider: `${IMAGEKIT_BASE}/about/MysticDivider.png`,
-    cornerOrnament: `${IMAGEKIT_BASE}/about/CornerOrnament.png`,
+    mandalaOrnament: v(`${IMAGEKIT_BASE}/about/MandalaOrnament.png`),
+    peacock: v(`${IMAGEKIT_BASE}/about/Peacock.png`),
+    mysticDivider: v(`${IMAGEKIT_BASE}/about/MysticDivider.png`),
+    cornerOrnament: v(`${IMAGEKIT_BASE}/about/CornerOrnament.png`),
   },
 
   // ============================================
   // LOGIN PAGE - All common
   // ============================================
   login: {
-    mysticGate: `${IMAGEKIT_BASE}/login/MysticGate.png`,
-  },
-
-  // ============================================
-  // PROFILE PAGE - Decorative elements
-  // ============================================
-  profile: {
-    decorativeCorner: `${IMAGEKIT_BASE}/profile/DecorativeCorner.png`,
-    divider: `${IMAGEKIT_BASE}/profile/Divider.png`,
+    mysticGate: v(`${IMAGEKIT_BASE}/login/MysticGate.png`),
   },
 
   // ============================================
   // SINGERS / ARTISTS - Pro Nites
   // ============================================
   singers: {
-    jubinNautiyal: "/singers/JubinNautiyal.webp",
-    darshanRawal: "/singers/DarshanRawal.webp",
-    mohitChauhan: "/singers/MohitChauhan.webp",
-    vishalShekhar: "/singers/VishalShekhar.webp",
-    raftaar: "/singers/Raftaar.jpeg",
-    ritviz: "/singers/Ritviz.jpg",
-    anubhavBassi: "/singers/AnubhavBassi.jpeg",
-    mj5: "/singers/Mj5Group.jpeg",
+    jubinNautiyal: v(`${IMAGEKIT_BASE}/singers/jubin-nautiyal.webp`),
+    darshanRawal: v(`${IMAGEKIT_BASE}/singers/darshan-rawal.webp`),
+    mohitChauhan: v(`${IMAGEKIT_BASE}/singers/mohit-chauhan.webp`),
+    vishalShekhar: v(`${IMAGEKIT_BASE}/singers/vishal-shekhar.webp`),
+    raftaar: v(`${IMAGEKIT_BASE}/singers/raftaar.jpeg`),
+    ritviz: v(`${IMAGEKIT_BASE}/singers/ritviz.jpg`),
+    anubhavBassi: v(`${IMAGEKIT_BASE}/singers/anubhav-bassi.jpeg`),
+    mj5: v(`${IMAGEKIT_BASE}/singers/mj5-group.jpeg`),
   },
 
   // ============================================
@@ -235,101 +197,65 @@ export const IMAGES = {
   // ============================================
   sponsors: {
     // Title & Co-Title
-    titleSponsor: "/sponsors/logos/TitleSponsor.jpeg",
-    coTitlePartner: "/sponsors/logos/CoTitlePartner.png",
+    titleSponsor: v(`${IMAGEKIT_BASE}/sponsors/title-sponsor.jpeg`),
+    coTitlePartner: v(`${IMAGEKIT_BASE}/sponsors/co-title-partner.png`),
 
     // Powered By Partners
-    poweredByPartner: "/sponsors/logos/PoweredByPartner.jpg",
-    coPoweredByPartner: "/sponsors/logos/CoPoweredByPartner.png",
-    adaniCoPoweredPartner: "/sponsors/logos/AdaniCoPoweredPartner.png",
+    poweredByPartner: v(`${IMAGEKIT_BASE}/sponsors/powered-by-partner.jpg`),
+    coPoweredByPartner: v(`${IMAGEKIT_BASE}/sponsors/co-powered-by-partner.png`),
+    adaniCoPoweredPartner: v(`${IMAGEKIT_BASE}/sponsors/adani-co-powered-partner.png`),
 
     // Major & Event Sponsors
-    majorSponsor: "/sponsors/logos/MajorSponsor.jpg",
-    eventTitleCrosswindz: "/sponsors/logos/EventTitleCrosswindz.jpg",
-    titleEnquiztaSamvad: "/sponsors/logos/TitleEnquiztaSamvad.jpg",
+    majorSponsor: v(`${IMAGEKIT_BASE}/sponsors/major-sponsor.jpg`),
+    eventTitleCrosswindz: v(`${IMAGEKIT_BASE}/sponsors/event-title-crosswindz.jpg`),
+    titleEnquiztaSamvad: v(`${IMAGEKIT_BASE}/sponsors/title-enquizta-samvad.jpg`),
 
     // Industry Partners
-    energyPartner: "/sponsors/logos/EnergyPartner.png",
-    steelPartner: "/sponsors/logos/SteelPartner.png",
-    buildPartner: "/sponsors/logos/BuildPartner.png",
-    constructionPartner: "/sponsors/logos/ConstructionPartner.webp",
-    infrastructurePartner: "/sponsors/logos/InfrastructurePartner.png",
-    realEstatePartner: "/sponsors/logos/RealEstatePartner.jpeg",
-    developmentPartner: "/sponsors/logos/DevelopmentPartner.png",
+    energyPartner: v(`${IMAGEKIT_BASE}/sponsors/energy-partner.png`),
+    steelPartner: v(`${IMAGEKIT_BASE}/sponsors/steel-partner.png`),
+    buildPartner: v(`${IMAGEKIT_BASE}/sponsors/build-partner.png`),
+    constructionPartner: v(`${IMAGEKIT_BASE}/sponsors/construction-partner.webp`),
+    infrastructurePartner: v(`${IMAGEKIT_BASE}/sponsors/infrastructure-partner.png`),
+    realEstatePartner: v(`${IMAGEKIT_BASE}/sponsors/real-estate-partner.jpeg`),
+    developmentPartner: v(`${IMAGEKIT_BASE}/sponsors/development-partner.png`),
 
     // Social & CSR Partners
-    nmdcSustainabilityPartner: "/sponsors/logos/NmdcSustainabilityPartner.jpg",
-    csrPartner: "/sponsors/logos/CsrPartner.png",
-    socialWelfarePartner: "/sponsors/logos/SocialWelfarePartner.png",
-    nationBuildingPartner: "/sponsors/logos/NationBuildingPartner.png",
-    communityPartner: "/sponsors/logos/CommunityPartner.png",
+    nmdcSustainabilityPartner: v(`${IMAGEKIT_BASE}/sponsors/nmdc-sustainability-partner.jpg`),
+    csrPartner: v(`${IMAGEKIT_BASE}/sponsors/csr-partner.png`),
+    socialWelfarePartner: v(`${IMAGEKIT_BASE}/sponsors/social-welfare-partner.png`),
+    nationBuildingPartner: v(`${IMAGEKIT_BASE}/sponsors/nation-building-partner.png`),
+    communityPartner: v(`${IMAGEKIT_BASE}/sponsors/community-partner.png`),
 
     // Hospitality & Lifestyle Partners
-    hospitalityPartner: "/sponsors/logos/HospitalityPartner.jpeg",
-    coffeePartner: "/sponsors/logos/CoffeePartner.png",
-    chocolatePartner: "/sponsors/logos/ChocolatePartner.png",
-    fragrancePartner: "/sponsors/logos/FragrancePartner.jpg",
-    sareePartner: "/sponsors/logos/SareePartner.jpg",
+    hospitalityPartner: v(`${IMAGEKIT_BASE}/sponsors/hospitality-partner.jpeg`),
+    coffeePartner: v(`${IMAGEKIT_BASE}/sponsors/coffee-partner.png`),
+    chocolatePartner: v(`${IMAGEKIT_BASE}/sponsors/chocolate-partner.png`),
+    fragrancePartner: v(`${IMAGEKIT_BASE}/sponsors/fragrance-partner.jpg`),
+    sareePartner: v(`${IMAGEKIT_BASE}/sponsors/saree-partner.jpg`),
 
     // Media & Tech Partners
-    gamingPartner: "/sponsors/logos/GamingPartner.png",
-    musicStreamingPartner: "/sponsors/logos/MusicStreamingPartner.webp",
-    innovationPartner: "/sponsors/logos/InnovationPartner.webp",
-    dalimssNewsPartner: "/sponsors/logos/DalimssNewsPartner.webp",
-    theVibePartner: "/sponsors/logos/TheVibePartner.png",
+    gamingPartner: v(`${IMAGEKIT_BASE}/sponsors/gaming-partner.png`),
+    musicStreamingPartner: v(`${IMAGEKIT_BASE}/sponsors/music-streaming-partner.webp`),
+    innovationPartner: v(`${IMAGEKIT_BASE}/sponsors/innovation-partner.webp`),
+    dalimssNewsPartner: v(`${IMAGEKIT_BASE}/sponsors/dalimss-news-partner.webp`),
+    theVibePartner: v(`${IMAGEKIT_BASE}/sponsors/the-vibe-partner.png`),
   },
 
   // ============================================
   // INTRO SECTION - Mascot and assets
   // ============================================
   intro: {
-    cuteBoyMascot: "/intro/CuteBoyMascot.png",
-    logo: "/intro/IntroLogo.png",
-    stage: "/intro/Stage.png",
-    portalSong: "/intro/PortalSong.mp3",
-    concertStage: "/intro/ConcertStage.webm",
+    neonStage: v(`${IMAGEKIT_BASE}/intro/common/neon-stage.webp`),
+    countdownPlate: v(`${IMAGEKIT_BASE}/intro/countdown/plate.png`),
+    countdownStage: v(`${IMAGEKIT_BASE}/intro/countdown/stage.png`),
   },
 
   // ============================================
   // CAMPUS AMBASSADOR PAGE
   // ============================================
   ca: {
-    cosmicBackground: `${IMAGEKIT_BASE}/ca/common/cosmic-background.png`,
-    goldenBadge: `${IMAGEKIT_BASE}/ca/common/golden-badge.png`,
-    ambassadorDj: `${IMAGEKIT_BASE}/ca/common/ambassador-dj.png`,
-    ambassadorDancing: `${IMAGEKIT_BASE}/ca/common/ambassador-dancing.png`,
-    ambassadorPose: `${IMAGEKIT_BASE}/ca/common/ambassador-pose.png`,
-    ambassadorWalking: `${IMAGEKIT_BASE}/ca/common/ambassador-walking.png`,
-  },
-
-  // ============================================
-  // EVENTS PAGE - Category backgrounds and rangoli art
-  // ============================================
-  events: {
-    // Background images for event categories
-    bg: {
-      natraj: "/events/bg/natraj.webp",
-      enquizta: "/events/bg/enquizta.webp",
-      samwaad: "/events/bg/samwaad.webp",
-      abhinay: "/events/bg/abhinay.webp",
-      zaika: "/events/bg/zaika.webp",
-      crosswindz: "/events/bg/crosswindz.webp",
-      toolika: "/events/bg/toolika.webp",
-      mirage: "/events/bg/mirage.webp",
-      bandish: "/events/bg/bandish.webp",
-    },
-    // Rangoli art for event categories
-    rangoli: {
-      natraj: "/events/rangoli/natraj.webp",
-      enquizta: "/events/rangoli/enquizta.webp",
-      samwaad: "/events/rangoli/samwaad.webp",
-      abhinay: "/events/rangoli/abhinay.webp",
-      zaika: "/events/rangoli/zaika.webp",
-      crosswindz: "/events/rangoli/crosswindz.webp",
-      toolika: "/events/rangoli/toolika.webp",
-      mirage: "/events/rangoli/mirage.webp",
-      bandish: "/events/rangoli/bandish.webp",
-    },
+    cosmicBackground: v(`${IMAGEKIT_BASE}/ca/common/cosmic-background.png`),
+    goldenBadge: v(`${IMAGEKIT_BASE}/ca/common/golden-badge.png`),
   },
 
   // ============================================
@@ -337,32 +263,27 @@ export const IMAGES = {
   // ============================================
   gallery: {
     // Photos
-    stageAtmosphere1: "/gallery/stage-atmosphere-1.jpg",
-    proniteCrowd1: "/gallery/pronite-crowd-1.jpg",
-    proniteCrowd2: "/gallery/pronite-crowd-2.jpg",
-    stageLights1: "/gallery/stage-lights-1.jpg",
-    festivalVibes1: "/gallery/festival-vibes-1.jpg",
-    crowdEnergy1: "/gallery/crowd-energy-1.jpg",
-    performance1: "/gallery/performance-1.jpg",
-    concertNight1: "/gallery/concert-night-1.jpg",
-    concertNight2: "/gallery/concert-night-2.jpg",
-    concertNight3: "/gallery/concert-night-3.jpg",
-    grandFinale1: "/gallery/grand-finale-1.jpg",
-    // Videos
-    crowdMoments: "/gallery/crowd-moments.mp4",
-    festivalAftermovie: "/gallery/festival-aftermovie.mp4",
-    proniteHighlights: "/gallery/pronite-highlights.mp4",
+    stageAtmosphere1: v(`${IMAGEKIT_BASE}/gallery/stage-atmosphere-1.jpg`),
+    proniteCrowd1: v(`${IMAGEKIT_BASE}/gallery/pronite-crowd-1.jpg`),
+    proniteCrowd2: v(`${IMAGEKIT_BASE}/gallery/pronite-crowd-2.jpg`),
+    stageLights1: v(`${IMAGEKIT_BASE}/gallery/stage-lights-1.jpg`),
+    festivalVibes1: v(`${IMAGEKIT_BASE}/gallery/festival-vibes-1.jpg`),
+    crowdEnergy1: v(`${IMAGEKIT_BASE}/gallery/crowd-energy-1.jpg`),
+    performance1: v(`${IMAGEKIT_BASE}/gallery/performance-1.jpg`),
+    concertNight1: v(`${IMAGEKIT_BASE}/gallery/concert-night-1.jpg`),
+    concertNight2: v(`${IMAGEKIT_BASE}/gallery/concert-night-2.jpg`),
+    concertNight3: v(`${IMAGEKIT_BASE}/gallery/concert-night-3.jpg`),
+    grandFinale1: v(`${IMAGEKIT_BASE}/gallery/grand-finale-1.jpg`),
+    // NOTE: Videos are NOT in IMAGES. They are served directly from
+    // /public/gallery/video (see gallery data.config.ts) and will move to R2.
   },
 
   // ============================================
   // SCHEDULE MAP - Campus images and clouds
   // ============================================
   scheduleMap: {
-    campusDay: "/scheduleMap/CampusDay.jpg",
-    campusNight: "/scheduleMap/CampusNight.jpg",
-    cloud1: "/scheduleMap/Cloud1.png",
-    cloud2: "/scheduleMap/Cloud2.png",
-    cloud3: "/scheduleMap/Cloud3.png",
+    campusDay: v(`${IMAGEKIT_BASE}/schedule-map/campus-day.jpg`),
+    campusNight: v(`${IMAGEKIT_BASE}/schedule-map/campus-night.jpg`),
   },
 } as const;
 
@@ -375,5 +296,5 @@ export function getImageUrl(path: string, transformations?: string): string {
 
   // Insert transformations after base URL
   const imagePath = path.replace(IMAGEKIT_BASE as string, "");
-  return `${IMAGEKIT_BASE}/${transformations}${imagePath}`;
+  return v(`${IMAGEKIT_BASE}/${transformations}${imagePath}`);
 }

@@ -10,9 +10,9 @@ import { Starburst, WavyLine } from "./decor/VectorDecorations";
 // ═══════════════════════════════════════════════════════════════════
 
 const stats = [
-  { value: "15K+", label: "Footfall", color: PALETTE.ACID_LIME },
+  { value: "90K+", label: "Footfall", color: PALETTE.ACID_LIME },
   { value: "200+", label: "Colleges", color: PALETTE.HOT_PINK },
-  { value: "50+", label: "Events", color: PALETTE.NEON_CYAN },
+  { value: "80+", label: "Events", color: PALETTE.NEON_CYAN },
   { value: "4", label: "Days", color: PALETTE.FESTIVAL_GOLD },
 ];
 

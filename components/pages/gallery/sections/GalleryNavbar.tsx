@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import { IMAGES } from "@/lib/images";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -95,7 +96,7 @@ export const GalleryNavbar = memo(function GalleryNavbar() {
                 }}
               >
                 <Image
-                  src="/navbar/MainBadge.png"
+                  src={IMAGES.navbar.main.badge}
                   alt="IIT BHU"
                   fill
                   className="object-contain"

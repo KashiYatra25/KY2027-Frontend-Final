@@ -13,7 +13,7 @@ export const stats = [
     color: "#6366f1",
   },
   { value: "90K+", label: "Expected Crowd", Icon: CrowdIcon, color: "#8b5cf6" },
-  { value: "50+", label: "Live Events", Icon: StageIcon, color: "#6366f1" },
+  { value: "80+", label: "Live Events", Icon: StageIcon, color: "#6366f1" },
   {
     value: "100+",
     label: "Colleges Compete",

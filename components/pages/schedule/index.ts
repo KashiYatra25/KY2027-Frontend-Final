@@ -8,7 +8,6 @@ export {
   WhatsOnSidebar,
   VenuePageContent,
   DecorativeElements,
-  ScheduleLoader,
 } from "./sections";
 
 // Components

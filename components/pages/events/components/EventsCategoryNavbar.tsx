@@ -214,7 +214,7 @@ export const EventsCategoryNavbar = memo(function EventsCategoryNavbar({
                 </NavbarProvider>
               ) : (
                 <Link
-                  href="/auth/signin"
+                  href="/login"
                   className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300"
                   style={{
                     background: `linear-gradient(135deg, ${activeColor}30 0%, ${activeColor}15 100%)`,

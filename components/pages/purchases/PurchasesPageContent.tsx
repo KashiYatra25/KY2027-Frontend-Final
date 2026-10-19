@@ -64,7 +64,7 @@ function PaymentSuccessHandler() {
 export function PurchasesPageContent() {
   const router = useRouter();
   const { status } = useSession();
-  const { purchases, paidPurchases, isLoading, isError } = usePurchases();
+  const { purchases, activePurchases, isLoading, isError } = usePurchases();
   const [showLoginRedirect, setShowLoginRedirect] = useState(false);
 
   const isAuthenticated = status === "authenticated";
@@ -81,12 +81,9 @@ export function PurchasesPageContent() {
     }
   }, [isAuthLoading, isAuthenticated, router]);
 
-  // Calculate stats
-  const totalSpent = paidPurchases.reduce((sum, p) => sum + p.totalAmount, 0);
-  const totalPasses = paidPurchases.reduce(
-    (sum, p) => sum + p.items.reduce((s, i) => s + i.quantity, 0),
-    0
-  );
+  // Calculate stats (each purchase = one pass)
+  const totalSpent = activePurchases.reduce((sum, p) => sum + (p.amountPaid ?? 0), 0);
+  const totalPasses = activePurchases.length;
 
   return (
     <>
@@ -165,7 +162,7 @@ export function PurchasesPageContent() {
           </motion.div>
 
           {/* Stats Cards */}
-          {!isLoading && paidPurchases.length > 0 && (
+          {!isLoading && activePurchases.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -187,7 +184,7 @@ export function PurchasesPageContent() {
               <StatCard
                 icon={<CheckCircle2 className="h-5 w-5" />}
                 label="Completed"
-                value={paidPurchases.length.toString()}
+                value={activePurchases.length.toString()}
                 color="blue"
                 className="col-span-2 sm:col-span-1"
               />

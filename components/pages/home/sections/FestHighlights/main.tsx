@@ -308,7 +308,7 @@ function SilhouetteImage() {
         alt="Crowd silhouette"
         className="h-full w-full object-cover object-top"
         onError={(e) => {
-          (e.target as HTMLImageElement).src = "/home/proNites/Silhouette.png";
+          (e.target as HTMLImageElement).src = IMAGES.proNites.silhouette;
         }}
       />
     </div>

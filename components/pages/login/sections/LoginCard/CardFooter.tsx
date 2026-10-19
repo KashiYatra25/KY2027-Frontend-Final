@@ -24,7 +24,7 @@ export function CardFooter() {
         className="mt-3 text-center text-xs tracking-wider"
         style={{ color: `${ROYAL_COLORS.GOLD}60` }}
       >
-        ॥ IIT (BHU) Varanasi ॥
+        ✦ IIT (BHU) Varanasi ✦
       </p>
     </div>
   );

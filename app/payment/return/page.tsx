@@ -131,14 +131,14 @@ function PaymentReturnContent() {
       const purchases = data.purchases || [];
 
       const thisPurchase = purchases.find(
-        (p: { orderId: string; status: string }) => p.orderId === orderId
+        (p: { konfhubBookingId?: string; status: string }) => p.konfhubBookingId === orderId
       );
 
       if (thisPurchase) {
         console.log(`[Payment] Found order with status: ${thisPurchase.status}`);
-        if (thisPurchase.status === "PAID") {
+        if (thisPurchase.status === "VERIFIED" || thisPurchase.status === "CHECKED_IN") {
           return "success";
-        } else if (thisPurchase.status === "FAILED" || thisPurchase.status === "EXPIRED") {
+        } else if (thisPurchase.status === "CANCELLED" || thisPurchase.status === "REJECTED") {
           return "failed";
         }
       } else {

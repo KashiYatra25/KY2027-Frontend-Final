@@ -81,16 +81,16 @@ export function ProfileFooter({ isSigningOut, handleSignOut }: ProfileFooterProp
           />
         </div>
 
-        {/* Sanskrit blessing */}
+        {/* Blessing */}
         <p className="mt-4 text-center text-sm italic" style={{ color: `${COLORS.GOLD}50` }}>
-          असतो मा सद्गमय
+          Lead me from the unreal to the real
         </p>
 
         <p
-          className="mt-2 text-center text-xs tracking-[0.2em] uppercase"
+          className="mt-2 text-center text-xs tracking-[0.2em]"
           style={{ color: `${COLORS.GOLD}40` }}
         >
-          Kashi Yatra 2027 • IIT BHU Varanasi
+          Kashi Yatra 2027 • IIT (BHU) Varanasi
         </p>
       </div>
     </>

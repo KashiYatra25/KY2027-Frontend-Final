@@ -4,13 +4,7 @@ import { JAZZ_COLORS } from "@/components/pages/home/constants/palette";
 // EXPERIENCE STATS DATA - With custom SVG icons
 // ═══════════════════════════════════════════════════════════════════
 
-export type IconType =
-  | "crowd"
-  | "stage"
-  | "artists"
-  | "nights"
-  | "events"
-  | "food";
+export type IconType = "crowd" | "stage" | "artists" | "nights" | "events" | "food";
 export type TileSize = "hero" | "feature" | "standard";
 
 export interface ExperienceTile {
@@ -67,7 +61,7 @@ export const EXPERIENCES: ExperienceTile[] = [
   },
   {
     id: "events",
-    stat: "50+",
+    stat: "80+",
     label: "Cultural",
     sublabel: "Events",
     color: JAZZ_COLORS.GOLD,

@@ -23,7 +23,7 @@ import {
 
 // KonfHub event URL - set in .env.local as NEXT_PUBLIC_KONFHUB_EVENT_URL
 const KONFHUB_EVENT_URL =
-  process.env.NEXT_PUBLIC_KONFHUB_EVENT_URL || "https://konfhub.com/kashiyatra-2027";
+  process.env.NEXT_PUBLIC_KONFHUB_EVENT_URL || "https://konfhub.com/kashiyatra-27";
 
 interface KonfHubIntegrationProps {
   kyId: string;

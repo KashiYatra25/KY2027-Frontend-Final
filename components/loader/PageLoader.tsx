@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { DiyaSpinner } from "./DiyaSpinner";
 
 /**
  * PageLoader - Minimal overlay loader with blur + scroll lock
@@ -99,53 +100,7 @@ export function PageLoader() {
       }}
     >
       {/* Centered loader */}
-      <div className="flex flex-col items-center gap-5">
-        {/* Spinning diya ring */}
-        <div className="relative h-20 w-20">
-          {/* Outer spinning ring */}
-          <div
-            className="absolute inset-0 rounded-full border-2 border-transparent"
-            style={{
-              borderTopColor: "#FFD700",
-              borderRightColor: "rgba(255,215,0,0.3)",
-              animation: "loaderSpin 1s linear infinite",
-            }}
-          />
-          {/* Inner spinning ring (opposite direction) */}
-          <div
-            className="absolute inset-2 rounded-full border-2 border-transparent"
-            style={{
-              borderBottomColor: "#FF6B00",
-              borderLeftColor: "rgba(255,107,0,0.3)",
-              animation: "loaderSpin 0.8s linear infinite reverse",
-            }}
-          />
-          {/* Center diya flame */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div
-              className="h-6 w-4 rounded-full"
-              style={{
-                background: "linear-gradient(to top, #FF6B00, #FFD700, #FFF8DC)",
-                boxShadow: "0 0 20px rgba(255,180,0,0.8), 0 0 40px rgba(255,107,0,0.5)",
-                animation: "flameFlicker 0.3s ease-in-out infinite alternate",
-                borderRadius: "50% 50% 50% 50% / 60% 60% 40% 40%",
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Simple text */}
-        <p
-          className="text-sm tracking-[0.3em] uppercase"
-          style={{
-            fontFamily: "var(--font-ethereal), serif",
-            color: "#FFD700",
-            textShadow: "0 0 10px rgba(255,215,0,0.5)",
-          }}
-        >
-          Loading
-        </p>
-      </div>
+      <DiyaSpinner />
     </div>
   );
 }

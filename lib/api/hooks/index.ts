@@ -158,4 +158,4 @@ export type {
 // PURCHASES
 // ═══════════════════════════════════════════════════════════════════
 
-export { usePurchases, type Purchase, type PurchaseItem } from "./purchases";
+export { usePurchases, type Purchase } from "./purchases";
