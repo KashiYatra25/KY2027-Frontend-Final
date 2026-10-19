@@ -2,7 +2,7 @@
 
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
-import { SuspendedAccountBanner } from "@/lib/api/hooks";
+import { SuspendedRouteGuard } from "@/components/auth";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -11,8 +11,8 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   return (
     <SessionProvider>
-      <SuspendedAccountBanner />
       {children}
+      <SuspendedRouteGuard />
     </SessionProvider>
   );
 }
