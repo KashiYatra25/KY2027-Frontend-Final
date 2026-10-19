@@ -115,7 +115,7 @@ export const HeroSection = memo(function HeroSection() {
           className="mb-12 max-w-xl text-center text-lg sm:text-xl"
           style={{ color: PALETTE.TEXT_SECONDARY }}
         >
-          Connect with <span style={{ color: PALETTE.ACID_LIME }}>15,000+ students</span> across 4
+          Connect with <span style={{ color: PALETTE.ACID_LIME }}>90,000+ students</span> across 4
           days of music, art, and performance at IIT BHU&apos;s biggest cultural festival.
         </motion.p>
 

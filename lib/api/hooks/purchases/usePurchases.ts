@@ -7,27 +7,60 @@ import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions"
 
 // ═══════════════════════════════════════════════════════════════════
 // TYPES
+// Mirrors the backend getMyPurchases controller response.
 // ═══════════════════════════════════════════════════════════════════
 
-export interface PurchaseItem {
-  passId: string;
-  passName: string;
-  quantity: number;
-  unitPrice: number;
+export type PurchaseSource =
+  "konfhub" | "manual_qr" | "manual_cash" | "manual_other" | "complimentary";
+
+export type PurchaseStatus =
+  "PENDING_VERIFICATION" | "VERIFIED" | "CHECKED_IN" | "CHECKED_OUT" | "CANCELLED" | "REJECTED";
+
+/**
+ * Benefits bundled with a pass. All optional — the backend only sends
+ * what applies to the purchased tier.
+ */
+export interface PurchaseBenefits {
+  festivalEntry?: boolean;
+  allDaysAccess?: boolean;
+  proNiteAccess?: boolean;
+  proNiteSeating?: "none" | "general" | "priority" | "vip";
+  welcomeKit?: boolean;
+  tshirt?: boolean;
+  merchandise?: boolean;
+  mealsIncluded?: number;
+  refreshments?: boolean;
+  backstageAccess?: boolean;
+  workshopAccess?: boolean;
+  meetAndGreet?: boolean;
+  accommodationIncluded?: boolean;
+  accommodationType?: string | null;
+  custom?: Array<{ name: string; description?: string; value?: unknown }>;
 }
 
 export interface Purchase {
   id: string;
-  orderId: string;
-  status: "PENDING" | "PAID" | "FAILED" | "EXPIRED" | "TIMEOUT";
-  items: PurchaseItem[];
-  subtotal: number;
-  discount: number;
-  totalAmount: number;
-  couponCode: string | null;
-  paymentMethod: "EXTERNAL" | "WEB_APP";
-  paidAt: string | null;
+  source: PurchaseSource;
+  passType: string;
+  amountPaid: number;
+  currency: string;
+  status: PurchaseStatus;
+  benefits: PurchaseBenefits;
+
+  // Dates (ISO strings)
   createdAt: string;
+  verifiedAt?: string | null;
+  checkedInAt?: string | null;
+
+  // Manual-verification flow
+  isPending: boolean;
+  rejectionReason?: string | null;
+
+  // KonfHub-specific
+  konfhubBookingId?: string | null;
+  konfhubTicketName?: string | null;
+  ticketUrl?: string | null;
+  invoiceUrl?: string | null;
 }
 
 interface PurchasesApiResponse {
@@ -35,8 +68,13 @@ interface PurchasesApiResponse {
   message: string;
   info: string;
   purchases: Purchase[];
+  active: Purchase[];
+  history: Purchase[];
   count: number;
 }
+
+// Statuses that represent a valid, usable pass.
+const ACTIVE_STATUSES: PurchaseStatus[] = ["VERIFIED", "CHECKED_IN"];
 
 // ═══════════════════════════════════════════════════════════════════
 // usePurchases - Get user's purchase history
@@ -64,19 +102,34 @@ export function usePurchases() {
     return null;
   }, [error]);
 
-  // Separate purchases by status
-  const paidPurchases = useMemo(() => {
-    return data?.purchases?.filter((p) => p.status === "PAID") ?? [];
-  }, [data?.purchases]);
+  // Destructure into stable locals so memo dependencies are unambiguous.
+  const allPurchases = data?.purchases;
+  const backendActive = data?.active;
+  const backendHistory = data?.history;
+
+  // Active (usable) passes — prefer the backend's `active` array, fall back
+  // to filtering locally so the UI is resilient to older responses.
+  const activePurchases = useMemo(() => {
+    if (backendActive) return backendActive;
+    return allPurchases?.filter((p) => ACTIVE_STATUSES.includes(p.status)) ?? [];
+  }, [backendActive, allPurchases]);
 
   const pendingPurchases = useMemo(() => {
-    return data?.purchases?.filter((p) => p.status === "PENDING") ?? [];
-  }, [data?.purchases]);
+    return allPurchases?.filter((p) => p.status === "PENDING_VERIFICATION") ?? [];
+  }, [allPurchases]);
+
+  const historyPurchases = useMemo(() => {
+    if (backendHistory) return backendHistory;
+    return (
+      allPurchases?.filter((p) => ["CANCELLED", "REJECTED", "CHECKED_OUT"].includes(p.status)) ?? []
+    );
+  }, [backendHistory, allPurchases]);
 
   return {
-    purchases: data?.purchases ?? [],
-    paidPurchases,
+    purchases: allPurchases ?? [],
+    activePurchases,
     pendingPurchases,
+    historyPurchases,
     count: data?.count ?? 0,
     isLoading,
     isError,

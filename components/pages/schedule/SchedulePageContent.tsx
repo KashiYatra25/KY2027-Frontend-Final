@@ -1,13 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import {
-  CampusMap,
-  EventSearchOverlay,
-  WhatsOnSidebar,
-  DecorativeElements,
-  ScheduleLoader,
-} from "./sections";
+import { CampusMap, EventSearchOverlay, WhatsOnSidebar, DecorativeElements } from "./sections";
+import { DiyaSpinner } from "@/components/loader";
 import { Navigation, MobileControls, MobileLogo } from "./components";
 import { DEFAULT_LAYERS } from "./constants";
 import { useSchedule } from "@/lib/api/hooks";
@@ -51,10 +46,17 @@ export function SchedulePageContent() {
         {/* Decorative Elements - always visible */}
         <DecorativeElements />
 
-        {/* Loading State - shown in content area */}
+        {/* Loading State - centered full-screen overlay with blurred backdrop */}
         {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center lg:left-[260px]">
-            <ScheduleLoader />
+          <div
+            className="fixed inset-0 z-[300] flex items-center justify-center"
+            style={{
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              background: "rgba(12, 18, 32, 0.6)",
+            }}
+          >
+            <DiyaSpinner />
           </div>
         )}
 

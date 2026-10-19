@@ -78,10 +78,10 @@ export const FloatingDiyas = memo(function FloatingDiyas({
             }}
           >
             <p className="mb-1 text-xl font-bold" style={{ color: COLORS.BRIGHT_GOLD }}>
-              ✨ शुभ दीपावली ✨
+              ✨ Happy Diwali ✨
             </p>
             <p className="text-sm" style={{ color: COLORS.CREAM }}>
-              All diyas illuminated. May light guide your path.
+              All the lamps are lit. May the light illuminate your path.
             </p>
           </motion.div>
         )}

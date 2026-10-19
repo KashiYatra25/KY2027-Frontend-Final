@@ -77,7 +77,7 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
 
       {/* Tagline badges */}
       <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
-        {["4 DAYS", "50+ EVENTS", "PRO NITES", "IIT BHU"].map((tag, i) => (
+        {["4 DAYS", "80+ EVENTS", "PRO NITES", "IIT BHU"].map((tag, i) => (
           <span
             key={tag}
             className="rounded-full px-4 py-1.5 text-xs font-bold tracking-wider sm:text-sm"

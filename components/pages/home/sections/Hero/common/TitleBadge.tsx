@@ -11,28 +11,26 @@ export const TitleBadge = memo(function TitleBadge() {
   return (
     <>
       {/* 2027 Ethereal Badge */}
-      <div className="relative mt-4 sm:mt-5 md:mt-6 inline-block">
+      <div className="relative mt-4 inline-block sm:mt-5 md:mt-6">
         {/* Outer divine glow rings */}
         <div
           className="absolute inset-0 -m-4 rounded-full"
           style={{
-            background:
-              "radial-gradient(ellipse, rgba(255,215,0,0.15) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse, rgba(255,215,0,0.15) 0%, transparent 70%)",
             animation: "yearAura 3s ease-in-out infinite",
           }}
         />
         <div
           className="absolute inset-0 -m-8 rounded-full"
           style={{
-            background:
-              "radial-gradient(ellipse, rgba(255,165,0,0.1) 0%, transparent 60%)",
+            background: "radial-gradient(ellipse, rgba(255,165,0,0.1) 0%, transparent 60%)",
             animation: "yearAura 3.5s ease-in-out infinite reverse",
           }}
         />
 
         {/* Main container */}
         <div
-          className="relative px-8 sm:px-10 md:px-14 py-2 sm:py-3 md:py-4 rounded-full"
+          className="relative rounded-full px-8 py-2 sm:px-10 sm:py-3 md:px-14 md:py-4"
           style={{
             background:
               "linear-gradient(135deg, rgba(255,215,0,0.15) 0%, rgba(255,140,0,0.08) 50%, rgba(255,215,0,0.15) 100%)",
@@ -43,7 +41,7 @@ export const TitleBadge = memo(function TitleBadge() {
           }}
         >
           {/* Shimmer overlay */}
-          <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
             <div
               className="absolute inset-0"
               style={{
@@ -54,18 +52,18 @@ export const TitleBadge = memo(function TitleBadge() {
             />
           </div>
 
-          {/* Hindi Year */}
+          {/* Year */}
           <span
-            className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-wider"
+            className="block text-2xl font-bold tracking-wider sm:text-3xl md:text-4xl lg:text-5xl"
             style={{
-              fontFamily: "serif",
+              fontFamily: "'Noto Sans Devanagari', serif",
               color: "#FFD700",
               textShadow:
                 "0 0 20px rgba(255,215,0,0.9), 0 0 40px rgba(255,165,0,0.6), 0 0 60px rgba(255,140,0,0.4)",
               animation: "textGlow 2s ease-in-out infinite",
             }}
           >
-            २०२७
+            2027
           </span>
         </div>
 
@@ -74,7 +72,7 @@ export const TitleBadge = memo(function TitleBadge() {
           {[...Array(6)].map((_, i) => (
             <div
               key={`sparkle-${i}`}
-              className="absolute w-1 h-1 rounded-full"
+              className="absolute h-1 w-1 rounded-full"
               style={{
                 left: `${10 + i * 16}%`,
                 top: `${i % 2 === 0 ? -20 : 120}%`,
@@ -89,10 +87,10 @@ export const TitleBadge = memo(function TitleBadge() {
       </div>
 
       {/* Mobile tagline - premium minimal styling */}
-      <div className="sm:hidden mt-8 px-4 text-center">
+      <div className="mt-8 px-4 text-center sm:hidden">
         {/* Main tagline - elegant serif */}
         <p
-          className="text-base tracking-wide leading-relaxed"
+          className="text-base leading-relaxed tracking-wide"
           style={{
             fontFamily: "'Georgia', 'Times New Roman', serif",
             fontStyle: "italic",
@@ -104,11 +102,10 @@ export const TitleBadge = memo(function TitleBadge() {
           Where the sacred Ganga meets
         </p>
         <p
-          className="text-lg tracking-wide font-semibold mt-1"
+          className="mt-1 text-lg font-semibold tracking-wide"
           style={{
             fontFamily: "'Georgia', 'Times New Roman', serif",
-            background:
-              "linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)",
+            background: "linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -119,16 +116,15 @@ export const TitleBadge = memo(function TitleBadge() {
 
         {/* Subtle divider */}
         <div
-          className="mx-auto mt-4 mb-3 w-12 h-px"
+          className="mx-auto mt-4 mb-3 h-px w-12"
           style={{
-            background:
-              "linear-gradient(90deg, transparent, rgba(255,215,0,0.5), transparent)",
+            background: "linear-gradient(90deg, transparent, rgba(255,215,0,0.5), transparent)",
           }}
         />
 
         {/* Date badge */}
         <p
-          className="text-xs uppercase tracking-[0.25em] font-medium"
+          className="text-xs font-medium tracking-[0.25em] uppercase"
           style={{
             color: "rgba(255,215,0,0.7)",
           }}

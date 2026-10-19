@@ -29,14 +29,11 @@ export function CardHeader() {
           textShadow: `0 0 30px ${ROYAL_COLORS.GOLD}30`,
         }}
       >
-        स्वागतम्
+        Welcome
       </h1>
 
-      <p
-        className="mb-2 text-sm tracking-[0.3em] uppercase"
-        style={{ color: `${ROYAL_COLORS.CREAM}70` }}
-      >
-        Welcome, Traveler
+      <p className="mb-2 text-sm tracking-[0.3em]" style={{ color: `${ROYAL_COLORS.CREAM}70` }}>
+        Welcome, traveller
       </p>
 
       {/* Decorative line */}

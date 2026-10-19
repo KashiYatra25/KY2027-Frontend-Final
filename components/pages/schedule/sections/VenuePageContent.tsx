@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useVenueSchedule, useVenues, getCategoryMeta } from "@/lib/api/hooks";
 import { CampusMap } from "./CampusMap";
-import { ScheduleLoader } from "./loader/ScheduleLoader";
+import { DiyaSpinner } from "@/components/loader";
 
 // ═══════════════════════════════════════════════════════════════════
 // VENUE PAGE CONTENT
@@ -54,10 +54,17 @@ export function VenuePageContent({ venueSlug }: VenuePageContentProps) {
             </>
           )}
 
-          {/* Loading state - centered in map area */}
+          {/* Loading state - centered full-screen overlay with blurred backdrop */}
           {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <ScheduleLoader />
+            <div
+              className="fixed inset-0 z-[300] flex items-center justify-center"
+              style={{
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+                background: "rgba(8, 11, 24, 0.6)",
+              }}
+            >
+              <DiyaSpinner />
             </div>
           )}
 
@@ -84,13 +91,6 @@ export function VenuePageContent({ venueSlug }: VenuePageContentProps) {
           >
             <ArrowLeft className="h-3.5 w-3.5" /> The Campus
           </Link>
-
-          {/* Loading state in panel */}
-          {isLoading && (
-            <div className="mt-8 flex items-center justify-center py-12">
-              <div className="text-sm text-white/50">Loading venue details...</div>
-            </div>
-          )}
 
           {/* Error state in panel */}
           {isError && !isLoading && (

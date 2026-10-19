@@ -7,58 +7,70 @@ import {
   Clock,
   XCircle,
   AlertCircle,
-  Package,
   Ticket,
-  RefreshCw,
-  Phone,
+  LogOut,
+  Download,
+  ExternalLink,
 } from "lucide-react";
-import type { Purchase } from "@/lib/api/hooks";
-import { useCheckOrderStatus } from "@/lib/api/hooks/purchases";
+import type { Purchase, PurchaseStatus } from "@/lib/api/hooks/purchases";
 
 // ═══════════════════════════════════════════════════════════════════
-// STATUS CONFIG
+// STATUS CONFIG — matches backend PurchaseStatus values
 // ═══════════════════════════════════════════════════════════════════
 
-const STATUS_CONFIG = {
-  PAID: {
-    label: "Completed",
+const STATUS_CONFIG: Record<
+  PurchaseStatus,
+  {
+    label: string;
+    icon: typeof CheckCircle2;
+    color: string;
+    bg: string;
+    border: string;
+  }
+> = {
+  VERIFIED: {
+    label: "Confirmed",
     icon: CheckCircle2,
     color: "text-emerald-400",
     bg: "bg-emerald-500/10",
     border: "border-emerald-500/30",
   },
-  PENDING: {
-    label: "Pending",
+  CHECKED_IN: {
+    label: "Checked In",
+    icon: CheckCircle2,
+    color: "text-blue-400",
+    bg: "bg-blue-500/10",
+    border: "border-blue-500/30",
+  },
+  CHECKED_OUT: {
+    label: "Checked Out",
+    icon: LogOut,
+    color: "text-gray-400",
+    bg: "bg-gray-500/10",
+    border: "border-gray-500/30",
+  },
+  PENDING_VERIFICATION: {
+    label: "Pending Verification",
     icon: Clock,
     color: "text-amber-400",
     bg: "bg-amber-500/10",
     border: "border-amber-500/30",
   },
-  FAILED: {
-    label: "Failed",
+  CANCELLED: {
+    label: "Cancelled",
     icon: XCircle,
     color: "text-red-400",
     bg: "bg-red-500/10",
     border: "border-red-500/30",
   },
-  EXPIRED: {
-    label: "Expired",
+  REJECTED: {
+    label: "Rejected",
     icon: AlertCircle,
-    color: "text-gray-400",
-    bg: "bg-gray-500/10",
-    border: "border-gray-500/30",
+    color: "text-red-400",
+    bg: "bg-red-500/10",
+    border: "border-red-500/30",
   },
-  TIMEOUT: {
-    label: "Timed Out",
-    icon: Clock,
-    color: "text-orange-400",
-    bg: "bg-orange-500/10",
-    border: "border-orange-500/30",
-  },
-} as const;
-
-// Support phone number
-const SUPPORT_PHONE = "+91 9876543210"; // Replace with actual support number
+};
 
 // ═══════════════════════════════════════════════════════════════════
 // PURCHASE CARD COMPONENT
@@ -70,16 +82,15 @@ interface PurchaseCardProps {
 }
 
 export function PurchaseCard({ purchase, index }: PurchaseCardProps) {
-  const statusConfig = STATUS_CONFIG[purchase.status];
+  // Fall back gracefully for any unexpected status value.
+  const statusConfig = STATUS_CONFIG[purchase.status] ?? STATUS_CONFIG.PENDING_VERIFICATION;
   const StatusIcon = statusConfig.icon;
-  const { checkStatus, isCheckingOrder } = useCheckOrderStatus();
 
-  const isChecking = isCheckingOrder(purchase.orderId);
-  const isPending = purchase.status === "PENDING";
-
-  const formatDate = (dateString: string | null) => {
+  const formatDate = (dateString: string | null | undefined) => {
     if (!dateString) return "—";
-    return new Date(dateString).toLocaleDateString("en-IN", {
+    const d = new Date(dateString);
+    if (Number.isNaN(d.getTime())) return "—";
+    return d.toLocaleDateString("en-IN", {
       day: "numeric",
       month: "short",
       year: "numeric",
@@ -88,11 +99,8 @@ export function PurchaseCard({ purchase, index }: PurchaseCardProps) {
     });
   };
 
-  const totalItems = purchase.items.reduce((sum, item) => sum + item.quantity, 0);
-
-  const handleCheckStatus = () => {
-    checkStatus(purchase.orderId);
-  };
+  const displayDate = purchase.verifiedAt || purchase.createdAt;
+  const isRejected = purchase.status === "REJECTED";
 
   return (
     <motion.div
@@ -119,7 +127,11 @@ export function PurchaseCard({ purchase, index }: PurchaseCardProps) {
         <div className="mb-4 flex items-start justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs text-gray-500">#{purchase.orderId}</span>
+              {purchase.konfhubBookingId && (
+                <span className="font-mono text-xs text-gray-500">
+                  #{purchase.konfhubBookingId}
+                </span>
+              )}
               <span
                 className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${statusConfig.bg} ${statusConfig.color}`}
               >
@@ -129,89 +141,66 @@ export function PurchaseCard({ purchase, index }: PurchaseCardProps) {
             </div>
             <div className="mt-1 flex items-center gap-2 text-xs text-gray-400">
               <Calendar className="h-3 w-3" />
-              {formatDate(purchase.paidAt || purchase.createdAt)}
+              {formatDate(displayDate)}
             </div>
           </div>
           <div className="text-right">
             <p className="text-lg font-bold text-amber-200">
-              ₹{purchase.totalAmount.toLocaleString()}
+              ₹{(purchase.amountPaid ?? 0).toLocaleString()}
             </p>
-            {purchase.discount > 0 && (
-              <p className="text-xs text-emerald-400">-₹{purchase.discount} saved</p>
-            )}
+            <p className="text-xs text-gray-500 capitalize">{purchase.source.replace("_", " ")}</p>
           </div>
         </div>
 
-        {/* Items */}
-        <div className="space-y-2">
-          {purchase.items.map((item, idx) => (
-            <div
-              key={idx}
-              className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10">
-                  <Ticket className="h-4 w-4 text-amber-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-200">{item.passName}</p>
-                  <p className="text-xs text-gray-500">
-                    ₹{item.unitPrice} × {item.quantity}
-                  </p>
-                </div>
-              </div>
-              <p className="text-sm font-medium text-gray-300">
-                ₹{(item.unitPrice * item.quantity).toLocaleString()}
-              </p>
+        {/* Pass */}
+        <div className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2.5">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/10">
+              <Ticket className="h-4 w-4 text-amber-400" />
             </div>
-          ))}
-        </div>
-
-        {/* Footer */}
-        <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3">
-          <div className="flex items-center gap-2 text-xs text-gray-400">
-            <Package className="h-3.5 w-3.5" />
-            <span>
-              {totalItems} {totalItems === 1 ? "pass" : "passes"}
-            </span>
-            {purchase.couponCode && (
-              <>
-                <span className="text-gray-600">•</span>
-                <span className="text-emerald-400">Coupon: {purchase.couponCode}</span>
-              </>
-            )}
+            <div>
+              <p className="text-sm font-medium text-gray-200">{purchase.passType}</p>
+              {purchase.konfhubTicketName && purchase.konfhubTicketName !== purchase.passType && (
+                <p className="text-xs text-gray-500">{purchase.konfhubTicketName}</p>
+              )}
+            </div>
           </div>
-          <span className="text-xs text-gray-500 capitalize">
-            {purchase.paymentMethod.toLowerCase().replace("_", " ")}
-          </span>
         </div>
 
-        {/* Pending Order Actions */}
-        {isPending && (
-          <div className="mt-4 flex flex-col gap-3 border-t border-amber-500/20 pt-4">
-            <p className="text-xs text-amber-300/70">
-              Payment still processing? Check status or contact our team.
+        {/* Rejection reason */}
+        {isRejected && purchase.rejectionReason && (
+          <div className="mt-3 rounded-lg border border-red-500/20 bg-red-500/5 px-3 py-2">
+            <p className="text-xs text-red-300">
+              <span className="font-medium">Reason:</span> {purchase.rejectionReason}
             </p>
-            <div className="flex flex-wrap gap-2">
-              {/* Check Status Button */}
-              <button
-                onClick={handleCheckStatus}
-                disabled={isChecking}
-                className="inline-flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-300 transition-all hover:bg-amber-500/20 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <RefreshCw className={`h-4 w-4 ${isChecking ? "animate-spin" : ""}`} />
-                {isChecking ? "Checking..." : "Check Status"}
-              </button>
+          </div>
+        )}
 
-              {/* Contact Support Button */}
+        {/* Ticket / Invoice links (KonfHub) */}
+        {(purchase.ticketUrl || purchase.invoiceUrl) && (
+          <div className="mt-4 flex flex-wrap gap-2 border-t border-white/5 pt-3">
+            {purchase.ticketUrl && (
               <a
-                href={`tel:${SUPPORT_PHONE.replace(/\s/g, "")}`}
-                className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-gray-300 transition-all hover:bg-white/10"
+                href={purchase.ticketUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-xs font-medium text-amber-300 transition-all hover:bg-amber-500/20"
               >
-                <Phone className="h-4 w-4" />
-                Talk to Executive
+                <ExternalLink className="h-3.5 w-3.5" />
+                View Ticket
               </a>
-            </div>
+            )}
+            {purchase.invoiceUrl && (
+              <a
+                href={purchase.invoiceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-gray-300 transition-all hover:bg-white/10"
+              >
+                <Download className="h-3.5 w-3.5" />
+                Invoice
+              </a>
+            )}
           </div>
         )}
       </div>

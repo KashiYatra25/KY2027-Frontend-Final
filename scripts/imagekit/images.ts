@@ -765,4 +765,207 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     remoteName: "ambassador-walking.png",
     folder: "/ca/common",
   },
+
+  // ============================================
+  // EVENTS PAGE - Category backgrounds
+  // ============================================
+  { localFile: "events/bg/natraj.webp", remoteName: "natraj.webp", folder: "/events/bg" },
+  { localFile: "events/bg/enquizta.webp", remoteName: "enquizta.webp", folder: "/events/bg" },
+  { localFile: "events/bg/samwaad.webp", remoteName: "samwaad.webp", folder: "/events/bg" },
+  { localFile: "events/bg/abhinay.webp", remoteName: "abhinay.webp", folder: "/events/bg" },
+  { localFile: "events/bg/zaika.webp", remoteName: "zaika.webp", folder: "/events/bg" },
+  { localFile: "events/bg/crosswindz.webp", remoteName: "crosswindz.webp", folder: "/events/bg" },
+  { localFile: "events/bg/toolika.webp", remoteName: "toolika.webp", folder: "/events/bg" },
+  { localFile: "events/bg/mirage.webp", remoteName: "mirage.webp", folder: "/events/bg" },
+  { localFile: "events/bg/bandish.webp", remoteName: "bandish.webp", folder: "/events/bg" },
+
+  // ============================================
+  // EVENTS PAGE - Rangoli art
+  // ============================================
+  {
+    localFile: "events/rangoli/natraj.webp",
+    remoteName: "natraj.webp",
+    folder: "/events/rangoli",
+  },
+  {
+    localFile: "events/rangoli/enquizta.webp",
+    remoteName: "enquizta.webp",
+    folder: "/events/rangoli",
+  },
+  {
+    localFile: "events/rangoli/samwaad.webp",
+    remoteName: "samwaad.webp",
+    folder: "/events/rangoli",
+  },
+  {
+    localFile: "events/rangoli/abhinay.webp",
+    remoteName: "abhinay.webp",
+    folder: "/events/rangoli",
+  },
+  { localFile: "events/rangoli/zaika.webp", remoteName: "zaika.webp", folder: "/events/rangoli" },
+  {
+    localFile: "events/rangoli/crosswindz.webp",
+    remoteName: "crosswindz.webp",
+    folder: "/events/rangoli",
+  },
+  {
+    localFile: "events/rangoli/toolika.webp",
+    remoteName: "toolika.webp",
+    folder: "/events/rangoli",
+  },
+  {
+    localFile: "events/rangoli/mirage.webp",
+    remoteName: "mirage.webp",
+    folder: "/events/rangoli",
+  },
+  {
+    localFile: "events/rangoli/bandish.webp",
+    remoteName: "bandish.webp",
+    folder: "/events/rangoli",
+  },
+
+  // ============================================
+  // GALLERY PAGE - Photos
+  // ============================================
+  {
+    localFile: "gallery/stage-atmosphere-1.jpg",
+    remoteName: "stage-atmosphere-1.jpg",
+    folder: "/gallery",
+  },
+  {
+    localFile: "gallery/pronite-crowd-1.jpg",
+    remoteName: "pronite-crowd-1.jpg",
+    folder: "/gallery",
+  },
+  {
+    localFile: "gallery/pronite-crowd-2.jpg",
+    remoteName: "pronite-crowd-2.jpg",
+    folder: "/gallery",
+  },
+  {
+    localFile: "gallery/stage-lights-1.jpg",
+    remoteName: "stage-lights-1.jpg",
+    folder: "/gallery",
+  },
+  {
+    localFile: "gallery/festival-vibes-1.jpg",
+    remoteName: "festival-vibes-1.jpg",
+    folder: "/gallery",
+  },
+  {
+    localFile: "gallery/crowd-energy-1.jpg",
+    remoteName: "crowd-energy-1.jpg",
+    folder: "/gallery",
+  },
+  {
+    localFile: "gallery/performance-1.jpg",
+    remoteName: "performance-1.jpg",
+    folder: "/gallery",
+  },
+  {
+    localFile: "gallery/concert-night-1.jpg",
+    remoteName: "concert-night-1.jpg",
+    folder: "/gallery",
+  },
+  {
+    localFile: "gallery/concert-night-2.jpg",
+    remoteName: "concert-night-2.jpg",
+    folder: "/gallery",
+  },
+  {
+    localFile: "gallery/concert-night-3.jpg",
+    remoteName: "concert-night-3.jpg",
+    folder: "/gallery",
+  },
+  {
+    localFile: "gallery/grand-finale-1.jpg",
+    remoteName: "grand-finale-1.jpg",
+    folder: "/gallery",
+  },
+
+  // ============================================
+  // GALLERY PAGE - Videos
+  // ============================================
+  // NOTE: Videos are intentionally NOT uploaded to ImageKit.
+  // They are served directly from /public/gallery/video for now and will be
+  // moved to R2 later. Do not add video entries here.
+
+  // ============================================
+  // SCHEDULE MAP - Campus images and clouds
+  // ============================================
+  {
+    localFile: "scheduleMap/CampusDay.jpg",
+    remoteName: "campus-day.jpg",
+    folder: "/schedule-map",
+  },
+  {
+    localFile: "scheduleMap/CampusNight.jpg",
+    remoteName: "campus-night.jpg",
+    folder: "/schedule-map",
+  },
+  { localFile: "scheduleMap/Cloud1.png", remoteName: "cloud-1.png", folder: "/schedule-map" },
+  { localFile: "scheduleMap/Cloud2.png", remoteName: "cloud-2.png", folder: "/schedule-map" },
+  { localFile: "scheduleMap/Cloud3.png", remoteName: "cloud-3.png", folder: "/schedule-map" },
+
+  // ============================================
+  // HERO SECTION - Remaining local assets
+  // ============================================
+  {
+    localFile: "home/hero/lotusChooseThemeBox.png",
+    remoteName: "lotus-choose-theme-box.png",
+    folder: "/hero/common",
+  },
+  {
+    localFile: "home/hero/SteppingStone.webp",
+    remoteName: "stepping-stone.webp",
+    folder: "/hero/common",
+  },
+
+  // ============================================
+  // BANARASI VIBES - Remaining local asset
+  // ============================================
+  {
+    localFile: "home/banarasiVibes/Rickshaw.webp",
+    remoteName: "rickshaw.webp",
+    folder: "/vibes/common",
+  },
+
+  // ============================================
+  // PRO NITES - Remaining local assets
+  // ============================================
+  {
+    localFile: "home/proNites/CrowdSilhouette.png",
+    remoteName: "crowd-silhouette.png",
+    folder: "/pro-nites/common",
+  },
+  {
+    localFile: "home/proNites/MoonBackground.png",
+    remoteName: "moon-background.png",
+    folder: "/pro-nites/common",
+  },
+
+  // ============================================
+  // INTRO SECTION - Remaining assets
+  // ============================================
+  { localFile: "intro/Stage.png", remoteName: "stage.png", folder: "/intro/common" },
+  {
+    localFile: "intro/ConcertStage.webm",
+    remoteName: "concert-stage.webm",
+    folder: "/intro/common",
+  },
+  {
+    localFile: "intro/NeonStage.webp",
+    remoteName: "neon-stage.webp",
+    folder: "/intro/common",
+  },
+  {
+    localFile: "intro/countdown/plate.png",
+    remoteName: "plate.png",
+    folder: "/intro/countdown",
+  },
+  {
+    localFile: "intro/countdown/stage.png",
+    remoteName: "stage.png",
+    folder: "/intro/countdown",
+  },
 ];

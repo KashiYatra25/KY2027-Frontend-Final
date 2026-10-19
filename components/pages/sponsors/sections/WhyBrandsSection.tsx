@@ -13,7 +13,7 @@ const valueProps = [
   {
     title: "Gen-Z Audience",
     description:
-      "Direct access to 15,000+ college students — India&apos;s future decision-makers and trendsetters.",
+      "Direct access to 90,000+ college students — India&apos;s future decision-makers and trendsetters.",
     color: PALETTE.ACID_LIME,
   },
   {

@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 /**
- * Kashi Yatra text in Hindi with year
+ * Kashi Yatra text with year
  * Mobile only - displayed below the diya
  */
 export const KashiYatraText = memo(function KashiYatraText() {
@@ -18,14 +18,14 @@ export const KashiYatraText = memo(function KashiYatraText() {
         Kashi Yatra
       </span>
       <span
-        className="text-[16px] font-bold tracking-[0.3em] mt-1"
+        className="mt-1 text-[16px] font-bold tracking-[0.3em]"
         style={{
           fontFamily: "var(--font-ethereal), 'Noto Sans Devanagari', serif",
           color: "#DAA520",
           textShadow: "0 0 15px rgba(218,165,32,0.7), 0 1px 3px rgba(0,0,0,0.4)",
         }}
       >
-        २०२७
+        2027
       </span>
     </div>
   );

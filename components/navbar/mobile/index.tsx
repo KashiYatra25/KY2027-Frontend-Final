@@ -211,7 +211,7 @@ export const NavbarMobile = memo(function NavbarMobile({
                 className="mt-1 text-[10px] tracking-[0.4em] uppercase"
                 style={{ color: styles.textColorSecondary, fontWeight: 900 }}
               >
-                नक्शा
+                Map
               </span>
               <span
                 aria-hidden

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { IMAGES } from "@/lib/images";
 import { useIntro } from "@/components/pages/home/sections/Intro/context/IntroContext";
 import { createIntro, type IntroEngine } from "./engine/engine";
 import { CountdownTimer } from "./CountdownTimer";
@@ -30,7 +31,7 @@ const baseClip =
   ).join(",") +
   ")";
 
-const STAGE_SRC = "/intro/countdown/stage.png";
+const STAGE_SRC = IMAGES.intro.countdownStage;
 
 /**
  * Countdown concert poster shown during the intro's `video` phase.

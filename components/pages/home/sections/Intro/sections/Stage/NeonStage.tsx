@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useIntro } from "@/components/pages/home/sections/Intro/context/IntroContext";
+import { IMAGES } from "@/lib/images";
 import s from "./NeonStage.module.css";
 
 // Scene geometry (matches /intro/NeonStage.webp at 1556x1011 viewBox units)
@@ -165,7 +166,7 @@ export function NeonStage() {
               </radialGradient>
             ))}
           </defs>
-          <image href="/intro/NeonStage.webp" width={W} height={H} />
+          <image href={IMAGES.intro.neonStage} width={W} height={H} />
           <g className={s.beams}>
             {FIX.flatMap(([x, y], i) =>
               [-1, 1].map((side) => {

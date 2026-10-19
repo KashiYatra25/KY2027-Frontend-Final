@@ -5,7 +5,7 @@ import FestEvents from "@/components/pages/events/fest/FestEvents";
 export const metadata: Metadata = {
   title: "Events",
   description:
-    "50+ competitions at Kashi Yatra 2027 - Dance, Music, Drama, Fashion, Art, Quiz, Literary events & more. Register now for IIT BHU's biggest cultural fest.",
+    "80+ competitions at Kashi Yatra 2027 - Dance, Music, Drama, Fashion, Art, Quiz, Literary events & more. Register now for IIT BHU's biggest cultural fest.",
   keywords: [
     "Kashi Yatra events",
     "IIT BHU competitions",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Events at Kashi Yatra 2027",
-    description: "50+ events across Dance, Music, Drama, Fashion, Art & more. Compete & win!",
+    description: "80+ events across Dance, Music, Drama, Fashion, Art & more. Compete & win!",
   },
 };
 
