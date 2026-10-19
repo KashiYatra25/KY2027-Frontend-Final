@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
-import { User, Calendar, Users, CheckCircle, AlertCircle, CreditCard } from "lucide-react";
+import { User, Calendar, Users, CheckCircle, AlertCircle, CreditCard, Lock } from "lucide-react";
 import { COLORS } from "@/components/pages/complete-profile/constants/palette";
 import {
   useManualIdentity,
@@ -18,13 +18,21 @@ type Gender = "MALE" | "FEMALE" | "OTHER" | "PREFER_NOT_TO_SAY";
 
 interface ManualEntryFlowProps {
   refetchProgress: () => void;
+  /** Reports to the parent when a backend request is in flight. */
+  onBusyChange?: (busy: boolean) => void;
+  /** When true, the flow is a non-interactive preview (shows a lock chip). */
+  locked?: boolean;
 }
 
 // ═══════════════════════════════════════════════════════════════════
 // MAIN COMPONENT
 // ═══════════════════════════════════════════════════════════════════
 
-export function ManualEntryFlow({ refetchProgress }: ManualEntryFlowProps) {
+export function ManualEntryFlow({
+  refetchProgress,
+  onBusyChange,
+  locked = false,
+}: ManualEntryFlowProps) {
   const { data: session } = useSession();
   const [firstName, setFirstName] = useState("");
   const [aadhaarNumber, setAadhaarNumber] = useState("");
@@ -34,6 +42,11 @@ export function ManualEntryFlow({ refetchProgress }: ManualEntryFlowProps) {
 
   const { submitManualIdentity, isLoading, isSubmitted, errorMessage, responseData } =
     useManualIdentity(session?.user?.id);
+
+  // Report busy state (submission in flight) up so the method toggle locks.
+  useEffect(() => {
+    onBusyChange?.(isLoading);
+  }, [isLoading, onBusyChange]);
 
   // ─── Validation ────────────────────────────────────────────────────
 
@@ -135,145 +148,148 @@ export function ManualEntryFlow({ refetchProgress }: ManualEntryFlowProps) {
   return (
     <div className="space-y-6">
       {/* Form */}
-      <div
-        className="mx-auto max-w-md space-y-5 rounded-2xl p-6"
-        style={{
-          background: `linear-gradient(145deg, ${COLORS.BG_DEEP}80 0%, ${COLORS.BG_ROYAL}80 100%)`,
-          border: `1px solid ${COLORS.GOLD}20`,
-        }}
-      >
-        {/* Name Field */}
-        <div>
-          <label
-            className="mb-2 flex items-center gap-2 text-sm font-medium"
-            style={{ color: COLORS.CREAM }}
-          >
-            <User className="h-4 w-4" style={{ color: COLORS.GOLD }} />
-            Full Name
-          </label>
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            placeholder="Enter your full name"
-            className="w-full rounded-xl px-4 py-3 text-sm transition-all outline-none focus:ring-2"
-            style={{
-              background: `${COLORS.BG_DEEP}`,
-              color: COLORS.CREAM,
-              border: validationErrors.firstName
-                ? `1px solid ${COLORS.ERROR}`
-                : `1px solid ${COLORS.GOLD}30`,
-            }}
-          />
-          {validationErrors.firstName && (
-            <p className="mt-1 text-xs" style={{ color: COLORS.ERROR }}>
-              {validationErrors.firstName}
-            </p>
-          )}
-        </div>
-
-        {/* Aadhaar Number Field */}
-        <div>
-          <label
-            className="mb-2 flex items-center gap-2 text-sm font-medium"
-            style={{ color: COLORS.CREAM }}
-          >
-            <CreditCard className="h-4 w-4" style={{ color: COLORS.GOLD }} />
-            Aadhaar Number
-          </label>
-          <input
-            type="text"
-            inputMode="numeric"
-            autoComplete="off"
-            value={aadhaarNumber}
-            onChange={(e) => {
-              // Allow only digits, cap at 12
-              const digits = e.target.value.replace(/\D/g, "").slice(0, 12);
-              setAadhaarNumber(digits);
-            }}
-            placeholder="12-digit Aadhaar number"
-            maxLength={12}
-            className="w-full rounded-xl px-4 py-3 text-sm tracking-wider transition-all outline-none focus:ring-2"
-            style={{
-              background: `${COLORS.BG_DEEP}`,
-              color: COLORS.CREAM,
-              border: validationErrors.aadhaarNumber
-                ? `1px solid ${COLORS.ERROR}`
-                : `1px solid ${COLORS.GOLD}30`,
-            }}
-          />
-          {validationErrors.aadhaarNumber && (
-            <p className="mt-1 text-xs" style={{ color: COLORS.ERROR }}>
-              {validationErrors.aadhaarNumber}
-            </p>
-          )}
-        </div>
-
-        {/* Date of Birth Field */}
-        <div>
-          <label
-            className="mb-2 flex items-center gap-2 text-sm font-medium"
-            style={{ color: COLORS.CREAM }}
-          >
-            <Calendar className="h-4 w-4" style={{ color: COLORS.GOLD }} />
-            Date of Birth
-          </label>
-          <input
-            type="date"
-            value={dateOfBirth}
-            onChange={(e) => setDateOfBirth(e.target.value)}
-            max={
-              new Date(new Date().setFullYear(new Date().getFullYear() - 10))
-                .toISOString()
-                .split("T")[0]
-            }
-            min={
-              new Date(new Date().setFullYear(new Date().getFullYear() - 100))
-                .toISOString()
-                .split("T")[0]
-            }
-            className="w-full rounded-xl px-4 py-3 text-sm transition-all outline-none focus:ring-2"
-            style={{
-              background: `${COLORS.BG_DEEP}`,
-              color: COLORS.CREAM,
-              border: validationErrors.dateOfBirth
-                ? `1px solid ${COLORS.ERROR}`
-                : `1px solid ${COLORS.GOLD}30`,
-              colorScheme: "dark",
-            }}
-          />
-          {validationErrors.dateOfBirth && (
-            <p className="mt-1 text-xs" style={{ color: COLORS.ERROR }}>
-              {validationErrors.dateOfBirth}
-            </p>
-          )}
-        </div>
-
-        {/* Gender Field */}
-        <div>
-          <label
-            className="mb-2 flex items-center gap-2 text-sm font-medium"
-            style={{ color: COLORS.CREAM }}
-          >
-            <Users className="h-4 w-4" style={{ color: COLORS.GOLD }} />
-            Gender
-          </label>
-          <div className="grid grid-cols-2 gap-2">
-            {(["MALE", "FEMALE", "OTHER", "PREFER_NOT_TO_SAY"] as Gender[]).map((option) => (
-              <GenderOption
-                key={option}
-                value={option}
-                selected={gender === option}
-                onClick={() => setGender(option)}
-                hasError={!!validationErrors.gender}
-              />
-            ))}
+      <div className="relative mx-auto max-w-md">
+        {locked && <LockChip />}
+        <div
+          className="space-y-5 rounded-2xl p-6"
+          style={{
+            background: `linear-gradient(145deg, ${COLORS.BG_DEEP}80 0%, ${COLORS.BG_ROYAL}80 100%)`,
+            border: `1px solid ${COLORS.GOLD}20`,
+          }}
+        >
+          {/* Name Field */}
+          <div>
+            <label
+              className="mb-2 flex items-center gap-2 text-sm font-medium"
+              style={{ color: COLORS.CREAM }}
+            >
+              <User className="h-4 w-4" style={{ color: COLORS.GOLD }} />
+              Full Name
+            </label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="Enter your full name"
+              className="w-full rounded-xl px-4 py-3 text-sm transition-all outline-none focus:ring-2"
+              style={{
+                background: `${COLORS.BG_DEEP}`,
+                color: COLORS.CREAM,
+                border: validationErrors.firstName
+                  ? `1px solid ${COLORS.ERROR}`
+                  : `1px solid ${COLORS.GOLD}30`,
+              }}
+            />
+            {validationErrors.firstName && (
+              <p className="mt-1 text-xs" style={{ color: COLORS.ERROR }}>
+                {validationErrors.firstName}
+              </p>
+            )}
           </div>
-          {validationErrors.gender && (
-            <p className="mt-1 text-xs" style={{ color: COLORS.ERROR }}>
-              {validationErrors.gender}
-            </p>
-          )}
+
+          {/* Aadhaar Number Field */}
+          <div>
+            <label
+              className="mb-2 flex items-center gap-2 text-sm font-medium"
+              style={{ color: COLORS.CREAM }}
+            >
+              <CreditCard className="h-4 w-4" style={{ color: COLORS.GOLD }} />
+              Aadhaar Number
+            </label>
+            <input
+              type="text"
+              inputMode="numeric"
+              autoComplete="off"
+              value={aadhaarNumber}
+              onChange={(e) => {
+                // Allow only digits, cap at 12
+                const digits = e.target.value.replace(/\D/g, "").slice(0, 12);
+                setAadhaarNumber(digits);
+              }}
+              placeholder="12-digit Aadhaar number"
+              maxLength={12}
+              className="w-full rounded-xl px-4 py-3 text-sm tracking-wider transition-all outline-none focus:ring-2"
+              style={{
+                background: `${COLORS.BG_DEEP}`,
+                color: COLORS.CREAM,
+                border: validationErrors.aadhaarNumber
+                  ? `1px solid ${COLORS.ERROR}`
+                  : `1px solid ${COLORS.GOLD}30`,
+              }}
+            />
+            {validationErrors.aadhaarNumber && (
+              <p className="mt-1 text-xs" style={{ color: COLORS.ERROR }}>
+                {validationErrors.aadhaarNumber}
+              </p>
+            )}
+          </div>
+
+          {/* Date of Birth Field */}
+          <div>
+            <label
+              className="mb-2 flex items-center gap-2 text-sm font-medium"
+              style={{ color: COLORS.CREAM }}
+            >
+              <Calendar className="h-4 w-4" style={{ color: COLORS.GOLD }} />
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              value={dateOfBirth}
+              onChange={(e) => setDateOfBirth(e.target.value)}
+              max={
+                new Date(new Date().setFullYear(new Date().getFullYear() - 10))
+                  .toISOString()
+                  .split("T")[0]
+              }
+              min={
+                new Date(new Date().setFullYear(new Date().getFullYear() - 100))
+                  .toISOString()
+                  .split("T")[0]
+              }
+              className="w-full rounded-xl px-4 py-3 text-sm transition-all outline-none focus:ring-2"
+              style={{
+                background: `${COLORS.BG_DEEP}`,
+                color: COLORS.CREAM,
+                border: validationErrors.dateOfBirth
+                  ? `1px solid ${COLORS.ERROR}`
+                  : `1px solid ${COLORS.GOLD}30`,
+                colorScheme: "dark",
+              }}
+            />
+            {validationErrors.dateOfBirth && (
+              <p className="mt-1 text-xs" style={{ color: COLORS.ERROR }}>
+                {validationErrors.dateOfBirth}
+              </p>
+            )}
+          </div>
+
+          {/* Gender Field */}
+          <div>
+            <label
+              className="mb-2 flex items-center gap-2 text-sm font-medium"
+              style={{ color: COLORS.CREAM }}
+            >
+              <Users className="h-4 w-4" style={{ color: COLORS.GOLD }} />
+              Gender
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {(["MALE", "FEMALE", "OTHER", "PREFER_NOT_TO_SAY"] as Gender[]).map((option) => (
+                <GenderOption
+                  key={option}
+                  value={option}
+                  selected={gender === option}
+                  onClick={() => setGender(option)}
+                  hasError={!!validationErrors.gender}
+                />
+              ))}
+            </div>
+            {validationErrors.gender && (
+              <p className="mt-1 text-xs" style={{ color: COLORS.ERROR }}>
+                {validationErrors.gender}
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
@@ -331,6 +347,26 @@ function InfoRow({ label, value }: { label: string; value: string }) {
       <span className="font-medium" style={{ color: COLORS.CREAM }}>
         {value}
       </span>
+    </div>
+  );
+}
+
+// Lock chip pinned to the top-right of a box to mark it as not-yet-usable.
+function LockChip() {
+  return (
+    <div className="pointer-events-none absolute -top-2 -right-2 z-10">
+      <div
+        className="flex items-center gap-1.5 rounded-full px-3 py-1.5 shadow-lg"
+        style={{
+          background: COLORS.BG_DEEP,
+          border: `1px solid ${COLORS.GOLD}50`,
+        }}
+      >
+        <Lock className="h-3.5 w-3.5" style={{ color: COLORS.GOLD }} />
+        <span className="text-xs font-semibold" style={{ color: COLORS.CREAM }}>
+          Locked
+        </span>
+      </div>
     </div>
   );
 }

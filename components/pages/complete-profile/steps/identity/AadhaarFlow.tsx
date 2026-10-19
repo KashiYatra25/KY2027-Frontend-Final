@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
-import { Upload, Shield, CheckCircle, FileImage, X } from "lucide-react";
+import { Upload, Shield, CheckCircle, FileImage, X, Lock } from "lucide-react";
 import { Dropzone, useDropzoneState } from "@/components/ui/dropzone";
 import { useAadhaarUpload, useAadhaarVerify } from "@/lib/api/hooks";
 import { COLORS } from "@/components/pages/complete-profile/constants/palette";
@@ -22,13 +22,17 @@ const ACCEPTED_TYPES = {
 
 interface AadhaarFlowProps {
   refetchProgress: () => void;
+  /** Reports to the parent when a backend request is in flight. */
+  onBusyChange?: (busy: boolean) => void;
+  /** When true, the flow is a non-interactive preview (shows a lock chip). */
+  locked?: boolean;
 }
 
 // ═══════════════════════════════════════════════════════════════════
 // MAIN COMPONENT
 // ═══════════════════════════════════════════════════════════════════
 
-export function AadhaarFlow({ refetchProgress }: AadhaarFlowProps) {
+export function AadhaarFlow({ refetchProgress, onBusyChange, locked = false }: AadhaarFlowProps) {
   const { data: session } = useSession();
   const [step, setStep] = useState<AadhaarStep>("upload");
 
@@ -59,6 +63,11 @@ export function AadhaarFlow({ refetchProgress }: AadhaarFlowProps) {
     extractedData,
     reset: resetVerify,
   } = useAadhaarVerify(session?.user?.id);
+
+  // Report busy state (any in-flight request) up so the method toggle locks.
+  useEffect(() => {
+    onBusyChange?.(isUploading || isVerifying);
+  }, [isUploading, isVerifying, onBusyChange]);
 
   // ─── Handlers ──────────────────────────────────────────────────────
 
@@ -183,47 +192,50 @@ export function AadhaarFlow({ refetchProgress }: AadhaarFlowProps) {
     <div className="space-y-6">
       {/* Dropzone or Preview */}
       {!file ? (
-        <Dropzone
-          accept={ACCEPTED_TYPES}
-          maxSize={MAX_FILE_SIZE}
-          multiple={false}
-          onFilesSelected={handleFilesSelected}
-          onFilesRejected={handleFilesRejected}
-          className="mx-auto max-w-md rounded-2xl p-8"
-          style={{
-            background: `linear-gradient(145deg, ${COLORS.BG_DEEP}50 0%, ${COLORS.BG_ROYAL}50 100%)`,
-            borderColor: `${COLORS.GOLD}40`,
-          }}
-        >
-          <div className="text-center">
-            <div
-              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full"
-              style={{
-                background: `linear-gradient(135deg, ${COLORS.GOLD}15 0%, ${COLORS.GOLD_DARK}10 100%)`,
-                border: `2px solid ${COLORS.GOLD}30`,
-              }}
-            >
-              <Upload className="h-8 w-8" style={{ color: COLORS.GOLD }} />
+        <div className="relative mx-auto max-w-md">
+          {locked && <LockChip />}
+          <Dropzone
+            accept={ACCEPTED_TYPES}
+            maxSize={MAX_FILE_SIZE}
+            multiple={false}
+            onFilesSelected={handleFilesSelected}
+            onFilesRejected={handleFilesRejected}
+            className="rounded-2xl p-8"
+            style={{
+              background: `linear-gradient(145deg, ${COLORS.BG_DEEP}50 0%, ${COLORS.BG_ROYAL}50 100%)`,
+              borderColor: `${COLORS.GOLD}40`,
+            }}
+          >
+            <div className="text-center">
+              <div
+                className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full"
+                style={{
+                  background: `linear-gradient(135deg, ${COLORS.GOLD}15 0%, ${COLORS.GOLD_DARK}10 100%)`,
+                  border: `2px solid ${COLORS.GOLD}30`,
+                }}
+              >
+                <Upload className="h-8 w-8" style={{ color: COLORS.GOLD }} />
+              </div>
+              <p className="mb-2 font-medium" style={{ color: COLORS.CREAM }}>
+                Drag and drop your Aadhaar image
+              </p>
+              <p style={{ color: `${COLORS.CREAM}50` }}>
+                or{" "}
+                <span className="cursor-pointer underline" style={{ color: COLORS.GOLD }}>
+                  browse files
+                </span>
+              </p>
+              <div
+                className="mt-4 flex items-center justify-center gap-4 text-xs"
+                style={{ color: `${COLORS.CREAM}40` }}
+              >
+                <span>JPG, PNG</span>
+                <span className="h-1 w-1 rounded-full bg-current" />
+                <span>Max 5MB</span>
+              </div>
             </div>
-            <p className="mb-2 font-medium" style={{ color: COLORS.CREAM }}>
-              Drag and drop your Aadhaar image
-            </p>
-            <p style={{ color: `${COLORS.CREAM}50` }}>
-              or{" "}
-              <span className="cursor-pointer underline" style={{ color: COLORS.GOLD }}>
-                browse files
-              </span>
-            </p>
-            <div
-              className="mt-4 flex items-center justify-center gap-4 text-xs"
-              style={{ color: `${COLORS.CREAM}40` }}
-            >
-              <span>JPG, PNG</span>
-              <span className="h-1 w-1 rounded-full bg-current" />
-              <span>Max 5MB</span>
-            </div>
-          </div>
-        </Dropzone>
+          </Dropzone>
+        </div>
       ) : (
         <div
           className="mx-auto max-w-md overflow-hidden rounded-2xl"
@@ -316,6 +328,26 @@ function InfoRow({ label, value }: { label: string; value: string }) {
       <span className="font-medium" style={{ color: COLORS.CREAM }}>
         {value}
       </span>
+    </div>
+  );
+}
+
+// Lock chip pinned to the top-right of a box to mark it as not-yet-usable.
+function LockChip() {
+  return (
+    <div className="pointer-events-none absolute -top-2 -right-2 z-10">
+      <div
+        className="flex items-center gap-1.5 rounded-full px-3 py-1.5 shadow-lg"
+        style={{
+          background: COLORS.BG_DEEP,
+          border: `1px solid ${COLORS.GOLD}50`,
+        }}
+      >
+        <Lock className="h-3.5 w-3.5" style={{ color: COLORS.GOLD }} />
+        <span className="text-xs font-semibold" style={{ color: COLORS.CREAM }}>
+          Locked
+        </span>
+      </div>
     </div>
   );
 }
