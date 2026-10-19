@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
-import { User, Calendar, Users, CheckCircle, AlertCircle } from "lucide-react";
+import { User, Calendar, Users, CheckCircle, AlertCircle, CreditCard } from "lucide-react";
 import { COLORS } from "@/components/pages/complete-profile/constants/palette";
 import {
   useManualIdentity,
@@ -27,6 +27,7 @@ interface ManualEntryFlowProps {
 export function ManualEntryFlow({ refetchProgress }: ManualEntryFlowProps) {
   const { data: session } = useSession();
   const [firstName, setFirstName] = useState("");
+  const [aadhaarNumber, setAadhaarNumber] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [gender, setGender] = useState<Gender | "">("");
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
@@ -43,6 +44,13 @@ export function ManualEntryFlow({ refetchProgress }: ManualEntryFlowProps) {
       errors.firstName = "Name is required";
     } else if (firstName.trim().length < 2) {
       errors.firstName = "Name must be at least 2 characters";
+    }
+
+    const aadhaarDigits = aadhaarNumber.replace(/\s/g, "");
+    if (!aadhaarDigits) {
+      errors.aadhaarNumber = "Aadhaar number is required";
+    } else if (!/^\d{12}$/.test(aadhaarDigits)) {
+      errors.aadhaarNumber = "Aadhaar number must be exactly 12 digits";
     }
 
     if (!dateOfBirth) {
@@ -62,7 +70,7 @@ export function ManualEntryFlow({ refetchProgress }: ManualEntryFlowProps) {
 
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
-  }, [firstName, dateOfBirth, gender]);
+  }, [firstName, aadhaarNumber, dateOfBirth, gender]);
 
   // ─── Handlers ──────────────────────────────────────────────────────
 
@@ -71,12 +79,13 @@ export function ManualEntryFlow({ refetchProgress }: ManualEntryFlowProps) {
 
     const data: ManualIdentityData = {
       firstName: firstName.trim(),
+      aadhaarNumber: aadhaarNumber.replace(/\s/g, ""),
       dateOfBirth,
       gender: gender as Gender,
     };
 
     await submitManualIdentity(data);
-  }, [validate, firstName, dateOfBirth, gender, submitManualIdentity]);
+  }, [validate, firstName, aadhaarNumber, dateOfBirth, gender, submitManualIdentity]);
 
   const handleComplete = useCallback(() => {
     refetchProgress();
@@ -107,6 +116,7 @@ export function ManualEntryFlow({ refetchProgress }: ManualEntryFlowProps) {
           </h3>
           <div className="space-y-2 text-sm">
             <InfoRow label="Name" value={responseData.data.firstName} />
+            <InfoRow label="Aadhaar Number" value={maskAadhaar(responseData.data.aadhaarNumber)} />
             <InfoRow label="Gender" value={formatGender(responseData.data.gender)} />
             <InfoRow label="Date of Birth" value={formatDate(responseData.data.dateOfBirth)} />
           </div>
@@ -158,6 +168,43 @@ export function ManualEntryFlow({ refetchProgress }: ManualEntryFlowProps) {
           {validationErrors.firstName && (
             <p className="mt-1 text-xs" style={{ color: COLORS.ERROR }}>
               {validationErrors.firstName}
+            </p>
+          )}
+        </div>
+
+        {/* Aadhaar Number Field */}
+        <div>
+          <label
+            className="mb-2 flex items-center gap-2 text-sm font-medium"
+            style={{ color: COLORS.CREAM }}
+          >
+            <CreditCard className="h-4 w-4" style={{ color: COLORS.GOLD }} />
+            Aadhaar Number
+          </label>
+          <input
+            type="text"
+            inputMode="numeric"
+            autoComplete="off"
+            value={aadhaarNumber}
+            onChange={(e) => {
+              // Allow only digits, cap at 12
+              const digits = e.target.value.replace(/\D/g, "").slice(0, 12);
+              setAadhaarNumber(digits);
+            }}
+            placeholder="12-digit Aadhaar number"
+            maxLength={12}
+            className="w-full rounded-xl px-4 py-3 text-sm tracking-wider transition-all outline-none focus:ring-2"
+            style={{
+              background: `${COLORS.BG_DEEP}`,
+              color: COLORS.CREAM,
+              border: validationErrors.aadhaarNumber
+                ? `1px solid ${COLORS.ERROR}`
+                : `1px solid ${COLORS.GOLD}30`,
+            }}
+          />
+          {validationErrors.aadhaarNumber && (
+            <p className="mt-1 text-xs" style={{ color: COLORS.ERROR }}>
+              {validationErrors.aadhaarNumber}
             </p>
           )}
         </div>
@@ -264,7 +311,7 @@ export function ManualEntryFlow({ refetchProgress }: ManualEntryFlowProps) {
         <ActionButton
           onClick={handleSubmit}
           loading={isLoading}
-          disabled={!firstName || !dateOfBirth || !gender}
+          disabled={!firstName || !aadhaarNumber || !dateOfBirth || !gender}
         >
           Save Details
         </ActionButton>
@@ -334,6 +381,13 @@ function formatGender(value: string): string {
 function formatDate(dateStr: string): string {
   const date = new Date(dateStr);
   return date.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+}
+
+function maskAadhaar(value: string): string {
+  const digits = (value || "").replace(/\D/g, "");
+  if (digits.length !== 12) return value || "";
+  // Show only the last 4 digits for privacy: XXXX XXXX 1234
+  return `XXXX XXXX ${digits.slice(8)}`;
 }
 
 interface ActionButtonProps {

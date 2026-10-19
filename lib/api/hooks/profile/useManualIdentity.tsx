@@ -13,6 +13,7 @@ import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions"
 
 export interface ManualIdentityData {
   firstName: string;
+  aadhaarNumber: string; // 12 digits
   dateOfBirth: string; // YYYY-MM-DD
   gender: "MALE" | "FEMALE" | "OTHER" | "PREFER_NOT_TO_SAY";
 }
@@ -22,6 +23,7 @@ export interface ManualIdentityResponse {
   firstName: string;
   gender: string;
   dateOfBirth: string;
+  aadhaarNumber: string;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -30,6 +32,7 @@ export interface ManualIdentityResponse {
 
 const ManualIdentitySchema = z.object({
   firstName: z.string().min(2).max(100),
+  aadhaarNumber: z.string().regex(/^\d{12}$/),
   dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   gender: z.enum(["MALE", "FEMALE", "OTHER", "PREFER_NOT_TO_SAY"]),
 });
