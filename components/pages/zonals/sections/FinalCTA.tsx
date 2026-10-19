@@ -18,16 +18,20 @@ import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { COLORS } from "@/components/pages/zonals/constants/palette";
-import { FINAL_CTA } from "@/components/pages/zonals/config/zonals.config";
+import { FINAL_CTA, type ZonalCollege } from "@/components/pages/zonals/config/zonals.config";
 
 gsap.registerPlugin(ScrollTrigger);
+
+interface Props {
+  college?: ZonalCollege;
+}
 
 // Split headline on the period so each sentence stacks on its own line.
 const HEADLINE_LINES = FINAL_CTA.headline
   .split(". ")
   .map((l, i, arr) => (i < arr.length - 1 ? `${l}.` : l));
 
-export function FinalCTA() {
+export function FinalCTA({ college }: Props) {
   const prefersReducedMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
 

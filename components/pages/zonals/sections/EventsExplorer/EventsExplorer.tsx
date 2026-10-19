@@ -15,12 +15,23 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { COLORS, GRADIENTS } from "@/components/pages/zonals/constants/palette";
-import { EXPLORE_COPY, EXPLORE_EVENTS } from "@/components/pages/zonals/config/zonals.config";
+import {
+  EXPLORE_COPY,
+  ZONAL_COLLEGES,
+  getExploreEventsForCollege,
+  type ZonalCollege,
+} from "@/components/pages/zonals/config/zonals.config";
 import { EventCard } from "./EventCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function EventsExplorer() {
+interface Props {
+  college?: ZonalCollege;
+}
+
+export function EventsExplorer({ college }: Props) {
+  const activeCollege = college ?? ZONAL_COLLEGES[0];
+  const exploreEvents = getExploreEventsForCollege(activeCollege);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -81,7 +92,7 @@ export function EventsExplorer() {
 
       {/* ── Asymmetric grid ─────────────────────────────────────── */}
       <div className="grid auto-rows-[minmax(0,auto)] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {EXPLORE_EVENTS.map((event, i) => (
+        {exploreEvents.map((event, i) => (
           <EventCard key={event.id} event={event} index={i} />
         ))}
       </div>

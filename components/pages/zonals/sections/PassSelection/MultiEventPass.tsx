@@ -18,8 +18,13 @@
 import { motion, type Variants } from "framer-motion";
 import { usePrefersReducedMotion } from "@/hooks";
 import { COLORS, GRADIENTS } from "@/components/pages/zonals/constants/palette";
+import { ZONAL_COLLEGES, type ZonalCollege } from "@/components/pages/zonals/config/zonals.config";
 
 const PASS_ID = "ZN-2027-#ALL";
+
+interface Props {
+  college?: ZonalCollege;
+}
 
 const stampVariants: Variants = {
   rest: { rotate: -14, scale: 1 },
@@ -30,7 +35,12 @@ const stampVariants: Variants = {
   },
 };
 
-export function MultiEventPass() {
+export function MultiEventPass({ college }: Props) {
+  const activeCollege = college ?? ZONAL_COLLEGES[0];
+  const multiPass = activeCollege.passes.find((p) => p.type === "MULTI_EVENT");
+  const PASS_PRICE = multiPass?.price ?? 550;
+  const KONFHUB_URL = activeCollege.registrationUrl;
+
   const prefersReducedMotion = usePrefersReducedMotion();
 
   // Ambient float + continuous holographic sheen sweep.
@@ -166,6 +176,25 @@ export function MultiEventPass() {
                 }}
               />
             ))}
+          </div>
+
+          {/* Price + Buy button */}
+          <div className="mt-6 flex items-center justify-between gap-4">
+            <span className="text-3xl font-black" style={{ color: COLORS.PAPER_WHITE }}>
+              ₹{PASS_PRICE}
+            </span>
+            <a
+              href={KONFHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full px-6 py-3 text-sm font-black tracking-wider uppercase transition-transform hover:scale-[1.02] active:scale-[0.98]"
+              style={{
+                background: GRADIENTS.VIOLET_PINK,
+                color: COLORS.PAPER_WHITE,
+              }}
+            >
+              Get Multi Pass →
+            </a>
           </div>
         </div>
 

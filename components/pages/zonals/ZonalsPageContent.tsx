@@ -1,7 +1,14 @@
 "use client";
 
 import { GRADIENTS } from "@/components/pages/zonals/constants/palette";
-import { HeroSection, EventsExplorer, AtmosphereSection, FinalCTA, ZonalsNavbar } from "./sections";
+import {
+  HeroSection,
+  EventsExplorer,
+  PassSelection,
+  AtmosphereSection,
+  FinalCTA,
+  ZonalsNavbar,
+} from "./sections";
 
 // ═══════════════════════════════════════════════════════════════════
 // MAIN EXPORT - ZonalsPageContent
@@ -25,6 +32,7 @@ export function ZonalsPageContent() {
             SECTIONS
         ─────────────────────────────────────────────────────────── */}
         <HeroSection />
+        <PassSelection />
         <EventsExplorer />
         <AtmosphereSection />
         <FinalCTA />

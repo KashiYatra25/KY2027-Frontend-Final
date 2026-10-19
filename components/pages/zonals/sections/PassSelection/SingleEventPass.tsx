@@ -16,8 +16,13 @@
 import { motion, type Variants } from "framer-motion";
 import { usePrefersReducedMotion } from "@/hooks";
 import { COLORS, SHADOWS } from "@/components/pages/zonals/constants/palette";
+import { ZONAL_COLLEGES, type ZonalCollege } from "@/components/pages/zonals/config/zonals.config";
 
 const EVENT_ID = "ZN-2027-#0417";
+
+interface Props {
+  college?: ZonalCollege;
+}
 
 // Barcode rendered as a run of bars with pseudo-random widths. Static
 // array keeps SSR/CSR output deterministic.
@@ -81,7 +86,12 @@ function Barcode({ color }: { color: string }) {
   );
 }
 
-export function SingleEventPass() {
+export function SingleEventPass({ college }: Props) {
+  const activeCollege = college ?? ZONAL_COLLEGES[0];
+  const singlePass = activeCollege.passes.find((p) => p.type === "SINGLE_EVENT");
+  const PASS_PRICE = singlePass?.price ?? 400;
+  const KONFHUB_URL = activeCollege.registrationUrl;
+
   const prefersReducedMotion = usePrefersReducedMotion();
 
   // Perforation dots along the vertical tear line.
@@ -195,14 +205,25 @@ export function SingleEventPass() {
               >
                 ADMIT ONE
               </span>
-              <span
-                className="block text-lg font-black uppercase"
-                style={{ color: COLORS.SIGNAL_ORANGE }}
-              >
-                GEN ADM
+              <span className="block text-2xl font-black" style={{ color: COLORS.SIGNAL_ORANGE }}>
+                ₹{PASS_PRICE}
               </span>
             </div>
           </div>
+
+          {/* Buy button */}
+          <a
+            href={KONFHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 block w-full rounded-sm py-3 text-center text-sm font-black tracking-wider uppercase transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            style={{
+              background: COLORS.SIGNAL_ORANGE,
+              color: COLORS.DEEP_INK,
+            }}
+          >
+            Get Single Pass →
+          </a>
         </div>
 
         {/* Side perforation notches (semicircle cutouts) */}

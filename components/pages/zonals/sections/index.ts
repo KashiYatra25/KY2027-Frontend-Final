@@ -10,7 +10,9 @@
 // export { ZonesSection } from "./ZonesSection";
 
 export { HeroSection } from "./HeroSection";
+export { CollegeHeroSection } from "./CollegeHeroSection";
 export { EventsExplorer, EventCard } from "./EventsExplorer";
+export { PassSelection } from "./PassSelection";
 export { AtmosphereSection } from "./AtmosphereSection";
 export { FinalCTA } from "./FinalCTA";
 export { ZonalsNavbar } from "./ZonalsNavbar";

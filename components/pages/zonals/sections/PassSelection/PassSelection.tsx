@@ -17,8 +17,13 @@
 import { motion, type Variants } from "framer-motion";
 import { usePrefersReducedMotion } from "@/hooks";
 import { COLORS, GRADIENTS } from "@/components/pages/zonals/constants/palette";
+import { ZONAL_COLLEGES, type ZonalCollege } from "@/components/pages/zonals/config/zonals.config";
 import { SingleEventPass } from "./SingleEventPass";
 import { MultiEventPass } from "./MultiEventPass";
+
+interface Props {
+  college?: ZonalCollege;
+}
 
 const headingVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -43,7 +48,8 @@ const passVariants: Variants = {
   }),
 };
 
-export function PassSelection() {
+export function PassSelection({ college }: Props) {
+  const activeCollege = college ?? ZONAL_COLLEGES[0];
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const sectionMotion = prefersReducedMotion
@@ -103,7 +109,7 @@ export function PassSelection() {
             variants={passVariants}
             className="flex w-full max-w-sm justify-center"
           >
-            <SingleEventPass />
+            <SingleEventPass college={activeCollege} />
           </motion.div>
 
           {/* Divider "/" */}
@@ -120,7 +126,7 @@ export function PassSelection() {
             variants={passVariants}
             className="flex w-full max-w-sm justify-center"
           >
-            <MultiEventPass />
+            <MultiEventPass college={activeCollege} />
           </motion.div>
         </motion.div>
       </div>
