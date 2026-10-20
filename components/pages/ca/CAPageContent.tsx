@@ -16,6 +16,7 @@ import {
   Astronaut3D,
 } from "@/components/pages/ca/sections/decor";
 import { COLORS, COLORS_RGBA, GRADIENTS } from "@/components/pages/ca/constants/palette";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,6 +27,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function CAPageContent() {
   const mainRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -83,8 +85,8 @@ export function CAPageContent() {
       <GridBackground />
       <FloatingElements />
 
-      {/* 3D Astronaut with scroll-controlled rotation */}
-      <Astronaut3D />
+      {/* 3D Astronaut with scroll-controlled rotation (desktop only — skipped on mobile for performance) */}
+      {!isMobile && <Astronaut3D />}
 
       {/* Color shift layer */}
       <div className="color-shift-layer pointer-events-none fixed inset-0 z-[1] opacity-30 mix-blend-overlay">
