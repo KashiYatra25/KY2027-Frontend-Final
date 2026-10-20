@@ -46,7 +46,7 @@ function DefaultContactErrorToast() {
 
 export function useContact(options?: UseContactOptions) {
   const { mutate, isPending, isSuccess, isError, error } = useApiMutation<ContactResponse>({
-    url: "/contact",
+    url: "/user/contact",
     method: "post",
     baseURL: BACKEND_URL,
     apiConfig: { timeout: API_TIMEOUT },

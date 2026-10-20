@@ -5,10 +5,21 @@
 // ═══════════════════════════════════════════════════════════════════
 
 import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import {
+  Menu,
+  X,
+  ArrowUpRight,
+  Home,
+  CalendarDays,
+  Images,
+  Mail,
+  type LucideIcon,
+} from "lucide-react";
 import { PALETTE, GRADIENTS } from "@/components/pages/sponsors/constants/palette";
+import { IMAGES } from "@/lib/images";
 
 // ───────────────────────────────────────────────────────────────────
 // CONFIGURATION
@@ -17,13 +28,14 @@ import { PALETTE, GRADIENTS } from "@/components/pages/sponsors/constants/palett
 interface NavLink {
   label: string;
   href: string;
+  icon: LucideIcon;
 }
 
 const NAV_LINKS: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "Events", href: "/events" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Contact", href: "/contact" },
+  { label: "Home", href: "/", icon: Home },
+  { label: "Events", href: "/events", icon: CalendarDays },
+  { label: "Gallery", href: "/gallery", icon: Images },
+  { label: "Contact", href: "/contact", icon: Mail },
 ];
 
 const SCROLL_THRESHOLD = 50;
@@ -33,48 +45,24 @@ const SCROLL_THRESHOLD = 50;
 // ───────────────────────────────────────────────────────────────────
 
 function LogoMark({ size = 32 }: { size?: number }) {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
-    <motion.svg
-      width={size}
-      height={size}
-      viewBox="0 0 40 40"
-      animate={shouldReduceMotion ? {} : { rotate: [0, 5, -5, 0] }}
-      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+    <div
+      className="relative"
+      style={{
+        width: size,
+        height: size,
+        filter: `drop-shadow(0 0 8px ${PALETTE.ELECTRIC_VIOLET}55)`,
+      }}
     >
-      {/* Outer ring */}
-      <circle
-        cx="20"
-        cy="20"
-        r="18"
-        fill="none"
-        stroke={PALETTE.ELECTRIC_VIOLET}
-        strokeWidth="1.5"
-        strokeDasharray="4 2"
+      <Image
+        src={IMAGES.navbar.main.badge}
+        alt="Kashiyatra"
+        fill
+        sizes="40px"
+        className="object-contain"
+        priority
       />
-      {/* Inner gradient circle */}
-      <defs>
-        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor={PALETTE.ACID_LIME} />
-          <stop offset="50%" stopColor={PALETTE.NEON_CYAN} />
-          <stop offset="100%" stopColor={PALETTE.HOT_PINK} />
-        </linearGradient>
-      </defs>
-      <circle cx="20" cy="20" r="12" fill="url(#logoGrad)" />
-      {/* K letter */}
-      <text
-        x="20"
-        y="25"
-        textAnchor="middle"
-        fill={PALETTE.DEEP_INK}
-        fontSize="14"
-        fontWeight="900"
-        fontFamily="system-ui"
-      >
-        K
-      </text>
-    </motion.svg>
+    </div>
   );
 }
 
@@ -176,25 +164,33 @@ export function SponsorsNavbar() {
 
           {/* Desktop Links */}
           <div className="hidden items-center gap-1 md:flex">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="group relative px-4 py-2 text-sm font-medium tracking-wider uppercase transition-colors"
-                style={{ color: PALETTE.TEXT_SECONDARY }}
-              >
-                <span className="relative z-10 transition-colors group-hover:text-white">
-                  {link.label}
-                </span>
-                {/* Hover pill background */}
-                <motion.div
-                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
-                  style={{ background: `${PALETTE.ELECTRIC_VIOLET}20` }}
-                  layoutId="navHover"
-                  transition={{ duration: 0.2 }}
-                />
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="group relative flex items-center gap-2 px-4 py-2 text-sm font-medium tracking-wider uppercase transition-colors"
+                  style={{ color: PALETTE.TEXT_SECONDARY }}
+                >
+                  <Icon
+                    size={16}
+                    className="relative z-10 transition-all duration-200 group-hover:scale-110 group-hover:text-white"
+                    style={{ color: PALETTE.ELECTRIC_VIOLET }}
+                  />
+                  <span className="relative z-10 transition-colors group-hover:text-white">
+                    {link.label}
+                  </span>
+                  {/* Hover pill background */}
+                  <motion.div
+                    className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
+                    style={{ background: `${PALETTE.ELECTRIC_VIOLET}20` }}
+                    layoutId="navHover"
+                    transition={{ duration: 0.2 }}
+                  />
+                </Link>
+              );
+            })}
           </div>
 
           {/* CTA Button */}
@@ -245,24 +241,28 @@ export function SponsorsNavbar() {
             style={{ background: `${PALETTE.DEEP_INK}f5` }}
           >
             <div className="flex h-full flex-col items-center justify-center gap-8 px-6">
-              {NAV_LINKS.map((link, index) => (
-                <motion.div
-                  key={link.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={closeMenu}
-                    className="text-2xl font-bold tracking-wider uppercase transition-colors"
-                    style={{ color: PALETTE.TEXT_PRIMARY }}
+              {NAV_LINKS.map((link, index) => {
+                const Icon = link.icon;
+                return (
+                  <motion.div
+                    key={link.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ delay: index * 0.1 }}
                   >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link
+                      href={link.href}
+                      onClick={closeMenu}
+                      className="flex items-center gap-3 text-2xl font-bold tracking-wider uppercase transition-colors"
+                      style={{ color: PALETTE.TEXT_PRIMARY }}
+                    >
+                      <Icon size={24} style={{ color: PALETTE.ELECTRIC_VIOLET }} />
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                );
+              })}
 
               {/* Mobile CTA */}
               <motion.div

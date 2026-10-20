@@ -121,7 +121,7 @@ export function FooterSection() {
                       <polyline points="22,6 12,13 2,6" />
                     </svg>
                     <a
-                      href="mailto:contact@kashiyatra.in"
+                      href="mailto:kashiyatra@itbhu.ac.in"
                       className="transition-colors hover:underline"
                       style={{ color: FOOTER_COLORS.TEXT_SECONDARY }}
                       onMouseEnter={(e) => (e.currentTarget.style.color = FOOTER_COLORS.NEON_PINK)}
@@ -129,7 +129,7 @@ export function FooterSection() {
                         (e.currentTarget.style.color = FOOTER_COLORS.TEXT_SECONDARY)
                       }
                     >
-                      contact@kashiyatra.in
+                      kashiyatra@itbhu.ac.in
                     </a>
                   </li>
                   <li className="flex items-center gap-2">
@@ -145,17 +145,7 @@ export function FooterSection() {
                       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                       <polyline points="22,6 12,13 2,6" />
                     </svg>
-                    <a
-                      href="mailto:kashiyatra@itbhu.ac.in"
-                      className="transition-colors hover:underline"
-                      style={{ color: FOOTER_COLORS.TEXT_SECONDARY }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = FOOTER_COLORS.NEON_PINK)}
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.color = FOOTER_COLORS.TEXT_SECONDARY)
-                      }
-                    >
-                      kashiyatra@itbhu.ac.in
-                    </a>
+                    <span>IIT BHU, Varanasi</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <svg

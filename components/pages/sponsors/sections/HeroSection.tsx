@@ -2,6 +2,7 @@
 
 import { memo } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Anton } from "next/font/google";
 import { PALETTE, GRADIENTS, SHADOWS } from "@/components/pages/sponsors/constants/palette";
 import { Starburst } from "./decor/VectorDecorations";
@@ -138,8 +139,8 @@ export const HeroSection = memo(function HeroSection() {
             Partner With Us
           </a>
 
-          <a
-            href="#collaboration-cta"
+          <Link
+            href="/contact"
             className="rounded-full border-2 px-8 py-4 text-center font-bold tracking-wider uppercase transition-all hover:scale-105"
             style={{
               borderColor: PALETTE.NEON_CYAN,
@@ -147,7 +148,7 @@ export const HeroSection = memo(function HeroSection() {
             }}
           >
             Get in Touch
-          </a>
+          </Link>
         </motion.div>
 
         {/* Scroll indicator */}

@@ -56,7 +56,7 @@ export const PassesHeading = memo(function PassesHeading({ isMobile }: { isMobil
           textShadow: `0 0 40px rgba(212, 168, 83, 0.3)`,
         }}
       >
-        KASHIYATRA&apos;26 - Pass Selection
+        KASHIYATRA&apos;27 - Pass Selection
       </h2>
       <p className="mx-auto max-w-2xl text-base md:text-lg" style={{ color: COLORS.LAVENDER }}>
         Choose your journey to the cultural extravaganza

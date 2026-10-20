@@ -13,7 +13,6 @@
 // ═══════════════════════════════════════════════════════════════════
 
 import { useRef, useEffect } from "react";
-import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -121,34 +120,6 @@ export function FinalCTA({ college }: Props) {
         >
           {FINAL_CTA.supporting}
         </p>
-
-        {/* Buttons */}
-        <div className="cta-rise mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Link
-            href={FINAL_CTA.primary.href}
-            className="group inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-black tracking-wider uppercase transition-transform duration-200 hover:-translate-y-1 sm:text-lg"
-            style={{
-              background: COLORS.DEEP_INK,
-              color: COLORS.ACID_LIME,
-              boxShadow: `0 6px 0 ${COLORS.HOT_PINK}`,
-            }}
-          >
-            {FINAL_CTA.primary.label}
-          </Link>
-
-          <Link
-            href={FINAL_CTA.secondary.href}
-            className="group inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-black tracking-wider uppercase transition-transform duration-200 hover:-translate-y-1 sm:text-lg"
-            style={{
-              background: COLORS.PAPER_WHITE,
-              color: COLORS.DEEP_INK,
-              border: `3px solid ${COLORS.DEEP_INK}`,
-              boxShadow: `0 6px 0 ${COLORS.DEEP_INK}`,
-            }}
-          >
-            {FINAL_CTA.secondary.label}
-          </Link>
-        </div>
       </div>
     </section>
   );

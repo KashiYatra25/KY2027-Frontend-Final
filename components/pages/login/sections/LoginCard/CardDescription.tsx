@@ -19,10 +19,12 @@ export function CardDescription() {
             fontFamily: "Georgia, serif",
           }}
         >
-          Embark upon a{" "}
-          <span style={{ color: ROYAL_COLORS.GOLD, fontWeight: 600 }}>sacred journey</span> through
-          the heart of India&apos;s oldest living city. Where ancient traditions dance with youthful
-          spirits.
+          Dive into{" "}
+          <span style={{ color: ROYAL_COLORS.GOLD, fontWeight: 600 }}>
+            IIT BHU&apos;s biggest fest
+          </span>{" "}
+          — three electric concert nights and three days packed with competitions and events in the
+          heart of Varanasi.
         </p>
 
         <div className="flex items-center justify-center gap-2">

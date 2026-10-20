@@ -208,11 +208,11 @@ export const CollaborationCTASection = memo(function CollaborationCTASection() {
             Or reach us directly at
           </p>
           <a
-            href="mailto:sponsors@kashiyatra.org"
+            href="mailto:kashiyatra@itbhu.ac.in"
             className="mt-2 inline-block text-lg font-medium transition-colors hover:opacity-80"
             style={{ color: PALETTE.NEON_CYAN }}
           >
-            sponsors@kashiyatra.org
+            kashiyatra@itbhu.ac.in
           </a>
         </motion.div>
       </div>

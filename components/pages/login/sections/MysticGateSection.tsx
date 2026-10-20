@@ -65,9 +65,9 @@ export function MysticGateSection() {
             fontFamily: "Georgia, serif",
           }}
         >
-          &ldquo;Where the sacred Ganga whispers ancient tales,
+          &ldquo;Where the Ganga&apos;s banks come alive with music,
           <br />
-          and every step is a dance of devotion.&rdquo;
+          and every night turns into a celebration.&rdquo;
         </p>
         <div className="mt-4 flex items-center justify-center gap-3">
           <div
