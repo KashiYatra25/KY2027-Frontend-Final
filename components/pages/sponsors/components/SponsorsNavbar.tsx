@@ -19,7 +19,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { PALETTE, GRADIENTS } from "@/components/pages/sponsors/constants/palette";
-import { IMAGES } from "@/lib/images";
 
 // ───────────────────────────────────────────────────────────────────
 // CONFIGURATION
@@ -55,7 +54,7 @@ function LogoMark({ size = 32 }: { size?: number }) {
       }}
     >
       <Image
-        src={IMAGES.navbar.main.badge}
+        src="/favicon.ico"
         alt="Kashiyatra"
         fill
         sizes="40px"
