@@ -11,6 +11,7 @@ import type {
   SpecialVideoItem,
   PerformerItem,
   TeamPhotoItem,
+  TeamGroup,
 } from "../types";
 import { IMAGES } from "@/lib/images";
 
@@ -124,6 +125,57 @@ export const TEAM_PHOTO: TeamPhotoItem | null = {
   title: "Kashi Yatra 2027 Team",
   aspectRatio: 1.6,
 };
+
+// ═══════════════════════════════════════════════════════════════════
+// TEAM GROUPS - side-panel categories + member cards
+//
+// Each group is a link in the "Meet Our Team" side panel. Members with
+// no `photo` render a stylish placeholder frame (edit later / add photos).
+// ═══════════════════════════════════════════════════════════════════
+export const TEAM_GROUPS: TeamGroup[] = [
+  {
+    id: "convenors",
+    label: "Convenors",
+    members: [
+      { name: "Coming soon", role: "Convenor" },
+      { name: "Coming soon", role: "Convenor" },
+    ],
+  },
+  {
+    id: "tech",
+    label: "Tech Team",
+    members: [
+      { name: "Coming soon", role: "Tech Lead" },
+      { name: "Coming soon", role: "Developer" },
+      { name: "Coming soon", role: "Developer" },
+    ],
+  },
+  {
+    id: "marketing",
+    label: "Marketing Team",
+    members: [
+      { name: "Coming soon", role: "Marketing Lead" },
+      { name: "Coming soon", role: "Marketing" },
+    ],
+  },
+  {
+    id: "publicity",
+    label: "Publicity Team",
+    members: [
+      { name: "Coming soon", role: "Publicity Lead" },
+      { name: "Coming soon", role: "Publicity" },
+    ],
+  },
+  {
+    id: "events",
+    label: "Event Team",
+    members: [
+      { name: "Coming soon", role: "Events Lead" },
+      { name: "Coming soon", role: "Events" },
+      { name: "Coming soon", role: "Events" },
+    ],
+  },
+];
 
 // ═══════════════════════════════════════════════════════════════════
 // CONFIGURATION

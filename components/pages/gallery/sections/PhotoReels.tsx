@@ -148,7 +148,9 @@ function PhotoFrame({ photo, index, frameNumber, onClick, isDuplicate }: PhotoFr
   const isEmpty = !photo;
 
   const handleClick = () => {
-    if (!isEmpty && !isDuplicate) {
+    // Duplicate frames (second half of the scrolling loop) must also open the
+    // lightbox, otherwise clicks on them silently do nothing.
+    if (!isEmpty) {
       onClick(index);
     }
   };

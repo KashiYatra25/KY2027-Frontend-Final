@@ -131,7 +131,10 @@ function VideoFrame({ video, index, onClick, isDuplicate }: VideoFrameProps) {
   const isEmpty = !video;
 
   const handleClick = () => {
-    if (!isEmpty && !isDuplicate) {
+    // Duplicate frames map to a valid index too, so they must also open the
+    // lightbox — otherwise clicks on the scrolling loop's second half do
+    // nothing ("sometimes works, sometimes not").
+    if (!isEmpty) {
       onClick(index);
     }
   };
