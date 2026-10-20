@@ -129,7 +129,12 @@ export function CompleteProfileContent() {
           <div className="p-6 sm:p-10">
             {/* Step Content - 3 Steps: College (1) → Identity (2) → Phone (3) */}
             {currentStep === 1 && <CollegeDetailsStep refetchProgress={refetchProgress} />}
-            {currentStep === 2 && <IdentityVerificationStep refetchProgress={refetchProgress} />}
+            {currentStep === 2 && (
+              <IdentityVerificationStep
+                refetchProgress={refetchProgress}
+                lockedMethod={data?.myAccount?.progress.identityVerificationMethod ?? null}
+              />
+            )}
             {currentStep === 3 && <PhoneVerificationStep refetchProgress={refetchProgress} />}
           </div>
         </div>

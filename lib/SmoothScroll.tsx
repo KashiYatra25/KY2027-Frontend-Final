@@ -56,10 +56,51 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     };
     lenis.on("scroll", scrollCallback);
 
+    // ═══════════════════════════════════════════════════════════════
+    // Smooth in-page anchor scrolling (e.g. "Partner With Us" -> #collaboration-cta)
+    //
+    // Lenis hijacks the scroll, so native hash-anchor jumps don't work.
+    // Intercept clicks on same-page hash links and drive Lenis to the target.
+    // ═══════════════════════════════════════════════════════════════
+    const anchorClickCallback = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) {
+        return;
+      }
+      const link = (e.target as HTMLElement).closest("a");
+      if (!link) return;
+
+      const href = link.getAttribute("href");
+      if (!href || !href.includes("#")) return;
+
+      let url: URL;
+      try {
+        url = new URL(link.href, window.location.href);
+      } catch {
+        return;
+      }
+
+      // Only handle same-page hash links with a real target id.
+      if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) {
+        return;
+      }
+      const id = url.hash.slice(1);
+      if (!id) return;
+
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -20, duration: 1.2 });
+      // Keep the URL hash in sync without triggering a native jump.
+      history.pushState(null, "", url.hash);
+    };
+    document.addEventListener("click", anchorClickCallback);
+
     // Cleanup
     return () => {
       gsap.ticker.remove(tickerCallback);
       lenis.off("scroll", scrollCallback);
+      document.removeEventListener("click", anchorClickCallback);
       lenis.destroy();
       lenisRef.current = null;
     };

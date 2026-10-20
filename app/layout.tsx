@@ -81,22 +81,14 @@ export const metadata: Metadata = {
     siteName: siteName,
     title: "Kashi Yatra 2027 | IIT BHU's Biggest Cultural Festival",
     description: siteDescription,
-    images: [
-      {
-        url: `${siteUrl}/og-image.jpg`,
-        width: 1200,
-        height: 630,
-        alt: "Kashi Yatra 2027 - IIT BHU Cultural Festival",
-      },
-    ],
+    // og:image is auto-generated from app/opengraph-image.tsx
   },
 
-  // Twitter Card
+  // Twitter Card (twitter:image is auto-generated from app/twitter-image.tsx)
   twitter: {
     card: "summary_large_image",
     title: "Kashi Yatra 2027 | IIT BHU Cultural Fest",
     description: siteDescription,
-    images: [`${siteUrl}/og-image.jpg`],
     creator: "@kashiyatra",
     site: "@kashiyatra",
   },
@@ -116,12 +108,9 @@ export const metadata: Metadata = {
 
   // Icons
   icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.svg", type: "image/svg+xml" },
-    ],
+    icon: [{ url: "/favicon.ico", sizes: "any" }],
     shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    apple: "/favicon.ico",
   },
 
   // Manifest
@@ -158,7 +147,7 @@ const jsonLd = {
   "@type": "Event",
   name: "Kashi Yatra 2027",
   description: siteDescription,
-  image: `${siteUrl}/og-image.jpg`,
+  image: `${siteUrl}/opengraph-image`,
   startDate: "2027-02-01",
   endDate: "2027-02-04",
   eventStatus: "https://schema.org/EventScheduled",
