@@ -2,7 +2,16 @@ import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
-const isProduction = process.env.NODE_ENV === "production";
+
+// Cross-subdomain auth config (works in beta without NODE_ENV=production).
+// Secure cookies whenever the site is served over HTTPS (detected via NEXTAUTH_URL).
+// COOKIE_DOMAIN (e.g. ".kashiyatra.org") lets the session cookie be shared with the
+// API subdomain (api.kashiyatra.org); leave it unset on localhost.
+const useSecureCookies = (process.env.NEXTAUTH_URL ?? "").startsWith("https://");
+const cookieDomain = process.env.COOKIE_DOMAIN || undefined;
+const sessionCookieName = useSecureCookies
+  ? "__Secure-next-auth.session-token"
+  : "next-auth.session-token";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -14,32 +23,34 @@ export const authOptions: NextAuthOptions = {
 
   cookies: {
     sessionToken: {
-      name: isProduction ? "__Secure-next-auth.session-token" : "next-auth.session-token",
+      name: sessionCookieName,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: isProduction,
-        // Uncomment for subdomain sharing in production:
-        // domain: isProduction ? ".kashiyatra.com" : undefined,
+        secure: useSecureCookies,
+        // Shared across *.kashiyatra.org so the API subdomain receives it.
+        domain: cookieDomain,
       },
     },
     callbackUrl: {
-      name: isProduction ? "__Secure-next-auth.callback-url" : "next-auth.callback-url",
+      name: useSecureCookies ? "__Secure-next-auth.callback-url" : "next-auth.callback-url",
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: isProduction,
+        secure: useSecureCookies,
       },
     },
     csrfToken: {
-      name: isProduction ? "__Host-next-auth.csrf-token" : "next-auth.csrf-token",
+      // __Host- prefix forbids a domain attribute; CSRF cookie is frontend-only
+      // and does not need to be shared with the backend, so leave it host-scoped.
+      name: useSecureCookies ? "__Host-next-auth.csrf-token" : "next-auth.csrf-token",
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: isProduction,
+        secure: useSecureCookies,
       },
     },
   },
