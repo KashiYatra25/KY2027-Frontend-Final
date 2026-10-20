@@ -6,7 +6,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
 import { CheckCircle, XCircle, AlertCircle } from "lucide-react";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
+import {
+  BACKEND_URL,
+  sharedFeatureConfig,
+  API_TIMEOUT,
+  shouldRetryOnNetworkError,
+} from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 
 // Empty schema for requests without body
@@ -160,7 +165,7 @@ export function useMyZonalPasses() {
       enabled: isAuthenticated,
       staleTime: 1000 * 60 * 2, // 2 minutes
       gcTime: 1000 * 60 * 15, // 15 minutes
-      retry: API_RETRY,
+      retry: shouldRetryOnNetworkError,
       refetchOnWindowFocus: true,
       refetchOnMount: "always",
     },
@@ -261,7 +266,7 @@ export function useZonalEventRegister(collegeSlug: string, eventSlug: string) {
         errorConfig: { customToast: <ZonalRegisterErrorToast /> },
       },
       mutationOptions: {
-        retry: API_RETRY,
+        retry: shouldRetryOnNetworkError,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["my-zonal-passes"] });
         },

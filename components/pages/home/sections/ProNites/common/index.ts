@@ -7,6 +7,6 @@ export {
   BottomBorder,
   GridOverlay,
   CrowdSilhouette,
-} from "./DecorativeElements";
+} from "./decor";
 export { EqualizerBars } from "./EqualizerBars";
 export { SectionTitle } from "./SectionTitle";

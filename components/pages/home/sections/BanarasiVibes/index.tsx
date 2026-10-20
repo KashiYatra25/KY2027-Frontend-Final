@@ -1,1 +1,1 @@
-export { BanarasiVibesSection } from "./main";
+export { BanarasiVibesSection } from "./BanarasiVibesSection";

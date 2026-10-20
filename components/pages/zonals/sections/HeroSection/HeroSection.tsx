@@ -21,7 +21,7 @@ import {
   type Variants,
 } from "framer-motion";
 
-import { COLORS, GRADIENTS, SHADOWS } from "../../constants/palette";
+import { COLORS, GRADIENTS, SHADOWS } from "@/components/pages/zonals/constants/palette";
 
 // Motion-enabled Next Link so CTAs can client-navigate with animation.
 const MotionLink = motion.create(Link);

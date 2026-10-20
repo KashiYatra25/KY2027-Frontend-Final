@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useVenueSchedule, useVenues, getCategoryMeta } from "@/lib/api/hooks";
 import { CampusMap } from "./CampusMap";
-import { DiyaSpinner } from "@/components/loader";
+import { DiyaSpinner } from "@/components/loader/DiyaSpinner";
 
 // ═══════════════════════════════════════════════════════════════════
 // VENUE PAGE CONTENT

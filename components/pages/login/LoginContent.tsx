@@ -4,7 +4,7 @@ import { Suspense, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ThemedNavbar } from "@/components/navbar";
-import { PageLoader } from "@/components/loader";
+import { PageLoader } from "@/components/loader/PageLoader";
 import { AuthErrorToastHandler } from "@/components/auth";
 import { useSignIn } from "@/lib/api/hooks";
 import { ROYAL_COLORS } from "./constants/palette";

@@ -1,1 +1,1 @@
-export { ProNitesSection } from "./main";
+export { ProNitesSection } from "./ProNitesSection";

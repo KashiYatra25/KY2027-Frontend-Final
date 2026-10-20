@@ -2,7 +2,12 @@
 
 import { useMemo } from "react";
 import { useApiQuery } from "wire-axon/hooks";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
+import {
+  BACKEND_URL,
+  sharedFeatureConfig,
+  API_TIMEOUT,
+  shouldRetryOnNetworkError,
+} from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -90,7 +95,7 @@ export function usePurchases() {
     queryOptions: {
       staleTime: 1000 * 60 * 2, // 2 minutes
       gcTime: 1000 * 60 * 15, // 15 minutes
-      retry: API_RETRY,
+      retry: shouldRetryOnNetworkError,
       refetchOnWindowFocus: true,
     },
   });

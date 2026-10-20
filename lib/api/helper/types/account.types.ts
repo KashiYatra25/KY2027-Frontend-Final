@@ -9,7 +9,7 @@ import type {
   accountProgressWithStepsQueryDef,
   userNavbarDisplayQueryDef,
   accountAccessStatusQueryDef,
-} from "../../graphql/queries/user.queries";
+} from "@/lib/api/graphql/queries/user.queries";
 
 // ═══════════════════════════════════════════════════════════════════
 // Full Account

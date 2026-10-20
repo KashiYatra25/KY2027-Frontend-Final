@@ -3,7 +3,12 @@
 import { useApiMutation } from "wire-axon/hooks";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
+import {
+  BACKEND_URL,
+  sharedFeatureConfig,
+  API_TIMEOUT,
+  shouldRetryOnNetworkError,
+} from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import {
   PhoneSuccessToast,
@@ -40,7 +45,7 @@ export function useUpdatePhone(userId?: string) {
       successConfig: { customToast: <PhoneSuccessToast /> },
       errorConfig: { customToast: <PhoneErrorToast /> },
     },
-    mutationOptions: { retry: API_RETRY },
+    mutationOptions: { retry: shouldRetryOnNetworkError },
   });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

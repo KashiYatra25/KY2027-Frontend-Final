@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { LoginContent } from "@/components/pages/login";
-import { PageLoader } from "@/components/loader";
+import { PageLoader } from "@/components/loader/PageLoader";
 
 export const dynamic = "force-dynamic";
 

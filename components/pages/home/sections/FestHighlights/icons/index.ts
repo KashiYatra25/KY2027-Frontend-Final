@@ -1,1 +1,1 @@
-export { MerchIcon, FoodIcon, AccommodationIcon, CulturalAccessIcon } from "./HighlightIcons";
+export { MerchIcon, FoodIcon, AccommodationIcon, CulturalAccessIcon } from "./highlights";

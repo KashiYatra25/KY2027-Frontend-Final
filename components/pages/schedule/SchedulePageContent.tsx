@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CampusMap, EventSearchOverlay, WhatsOnSidebar, DecorativeElements } from "./sections";
-import { DiyaSpinner } from "@/components/loader";
+import { DiyaSpinner } from "@/components/loader/DiyaSpinner";
 import { Navigation, MobileControls, MobileLogo } from "./components";
 import { DEFAULT_LAYERS } from "./constants";
 import { useSchedule } from "@/lib/api/hooks";

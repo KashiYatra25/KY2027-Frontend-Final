@@ -1,1 +1,1 @@
-export { FestHighlightsSection } from "./main";
+export { FestHighlightsSection } from "./FestHighlightsSection";

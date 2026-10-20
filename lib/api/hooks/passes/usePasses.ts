@@ -1,6 +1,11 @@
 "use client";
 
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
+import {
+  BACKEND_URL,
+  sharedFeatureConfig,
+  API_TIMEOUT,
+  shouldRetryOnNetworkError,
+} from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import type { PassesApiResponse } from "@/lib/api/helper/types";
 import { useMemo } from "react";
@@ -24,7 +29,7 @@ export function usePasses() {
     queryOptions: {
       staleTime: 1000 * 60 * 5, // 5 minutes
       gcTime: 1000 * 60 * 30, // 30 minutes
-      retry: API_RETRY,
+      retry: shouldRetryOnNetworkError,
       // Disable placeholderData to fix DevTools "Restore Loading" causing blank UI
       // wire-axon defaults to keepPreviousData which breaks when cache is cleared
     },

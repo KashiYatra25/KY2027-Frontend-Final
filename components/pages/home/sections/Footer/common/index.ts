@@ -1,12 +1,12 @@
 export { BackgroundDecor, AmbientGlow, FooterDancer } from "./BackgroundDecorNew";
-export { 
+export {
   GlitchText,
   PulseRings,
   FloatingStickers,
   GlassmorphismCard,
   NeonSocialButton,
   ConcertBrandHeader,
-} from "./GenZComponents";
+} from "./genz";
 export { socialLinks, quickLinks } from "./data";
 export type { SocialLink, QuickLink } from "./data";
 export { FOOTER_COLORS, FOOTER_GRADIENTS, FLOATING_STICKERS, ANIMATION_CONFIG } from "./constants";

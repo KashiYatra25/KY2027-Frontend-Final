@@ -1,1 +1,1 @@
-export { MicIcon, DJIcon, StarIcon, BoltIcon, HighlightIcon } from "./HighlightIcons";
+export { MicIcon, DJIcon, StarIcon, BoltIcon, HighlightIcon } from "./items";

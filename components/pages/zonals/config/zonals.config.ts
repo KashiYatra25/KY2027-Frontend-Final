@@ -222,6 +222,4 @@ export function getExploreEventsForCollege(college: ZonalCollege): ExploreEvent[
   }));
 }
 
-// Legacy export for backward compatibility
-export const ZONAL_EVENTS = ZONAL_COLLEGES;
 export const EXPLORE_EVENTS = getExploreEventsForCollege(ZONAL_COLLEGES[0]);

@@ -6,7 +6,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
 import { CheckCircle, XCircle, AlertCircle } from "lucide-react";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
+import {
+  BACKEND_URL,
+  sharedFeatureConfig,
+  API_TIMEOUT,
+  shouldRetryOnNetworkError,
+} from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import { RegisterIndividualSchema, RegisterTeamSchema } from "@/lib/api/utils/registration.schema";
 
@@ -176,7 +181,7 @@ export function useMyRegistrations() {
       enabled: isAuthenticated, // Only fetch when user is logged in
       staleTime: 1000 * 60 * 2, // 2 minutes
       gcTime: 1000 * 60 * 15, // 15 minutes
-      retry: API_RETRY,
+      retry: shouldRetryOnNetworkError,
       refetchInterval: false, // Disable polling
       refetchOnWindowFocus: true, // Refetch when tab regains focus to get latest data
       refetchOnMount: "always", // Always refetch on mount to ensure fresh data
@@ -259,7 +264,7 @@ export function useEventRegisterIndividual(eventSlug: string) {
         errorConfig: { customToast: <RegistrationErrorToast /> },
       },
       mutationOptions: {
-        retry: API_RETRY,
+        retry: shouldRetryOnNetworkError,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["my-registrations"] });
         },
@@ -310,7 +315,7 @@ export function useEventRegisterTeam(eventSlug: string) {
         errorConfig: { customToast: <RegistrationErrorToast /> },
       },
       mutationOptions: {
-        retry: API_RETRY,
+        retry: shouldRetryOnNetworkError,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["my-registrations"] });
           queryClient.invalidateQueries({ queryKey: ["my-teams"] });

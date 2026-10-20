@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { PassesPageContent } from "../../components/pages/passes/components/PassesPageContent";
+import { PassesPageContent } from "@/components/pages/passes/components/PassesPageContent";
 
 export const metadata: Metadata = {
   title: "Passes",

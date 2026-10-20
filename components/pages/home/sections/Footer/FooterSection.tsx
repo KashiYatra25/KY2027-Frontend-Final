@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { MotionZone } from "@/lib/motion";
 import { FOOTER_COLORS, FOOTER_GRADIENTS } from "./common/constants";
 import { BackgroundDecor, AmbientGlow } from "./common/BackgroundDecorNew";
-import { ConcertBrandHeader, GlassmorphismCard, NeonSocialButton } from "./common/GenZComponents";
+import { ConcertBrandHeader, GlassmorphismCard, NeonSocialButton } from "./common/genz";
 import { socialLinks, quickLinks } from "./common/data";
 import { IMAGES } from "@/lib/images";
 

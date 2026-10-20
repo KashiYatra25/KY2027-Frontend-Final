@@ -65,9 +65,6 @@ export function shouldRetryOnNetworkError(failureCount: number, error: Error): b
   return false;
 }
 
-// Legacy constant for backward compatibility (deprecated - use shouldRetryOnNetworkError)
-export const API_RETRY = shouldRetryOnNetworkError;
-
 export const sharedFeatureConfig = {
   withCredentials: true,
   auth: new CookieStrategy(),

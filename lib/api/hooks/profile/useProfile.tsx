@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useApiMutation } from "wire-axon/hooks";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
+import {
+  BACKEND_URL,
+  sharedFeatureConfig,
+  API_TIMEOUT,
+  shouldRetryOnNetworkError,
+} from "@/lib/api/constants";
 import { CollegeSuccessToast } from "@/components/pages/complete-profile/steps/college/toasts/success/CollegeSuccessToast";
 import { CollegeErrorToast } from "@/components/pages/complete-profile/steps/college/toasts/error/CollegeErrorToast";
 import { UpdateCollegeSchema } from "@/lib/api/utils/profile.schema";
@@ -32,7 +37,7 @@ export function useUpdateCollege(userId?: string) {
       successConfig: { customToast: <CollegeSuccessToast /> },
       errorConfig: { customToast: <CollegeErrorToast /> },
     },
-    mutationOptions: { retry: API_RETRY },
+    mutationOptions: { retry: shouldRetryOnNetworkError },
   });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

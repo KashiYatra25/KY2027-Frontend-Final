@@ -2,7 +2,12 @@
 
 import { useMemo } from "react";
 import { useApiQuery } from "wire-axon/hooks";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
+import {
+  BACKEND_URL,
+  sharedFeatureConfig,
+  API_TIMEOUT,
+  shouldRetryOnNetworkError,
+} from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -32,7 +37,7 @@ export function usePaymentStatus() {
     queryOptions: {
       staleTime: 1000 * 60 * 5, // 5 minutes - payment status doesn't change often
       gcTime: 1000 * 60 * 30, // 30 minutes
-      retry: API_RETRY,
+      retry: shouldRetryOnNetworkError,
       refetchInterval: false,
       refetchOnWindowFocus: false,
     },

@@ -2,7 +2,12 @@
 
 import { useMemo } from "react";
 import { useApiQuery } from "wire-axon/hooks";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
+import {
+  BACKEND_URL,
+  sharedFeatureConfig,
+  API_TIMEOUT,
+  shouldRetryOnNetworkError,
+} from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 import type {
   ScheduleApiResponse,
@@ -114,7 +119,7 @@ export function useSchedule(params?: ScheduleQueryParams) {
     queryOptions: {
       staleTime: 1000 * 60 * 5, // 5 minutes - schedule data doesn't change often
       gcTime: 1000 * 60 * 30, // 30 minutes
-      retry: API_RETRY,
+      retry: shouldRetryOnNetworkError,
     },
   });
 
@@ -191,7 +196,7 @@ export function useVenues() {
     queryOptions: {
       staleTime: 1000 * 60 * 10, // 10 minutes - venues rarely change
       gcTime: 1000 * 60 * 60, // 1 hour
-      retry: API_RETRY,
+      retry: shouldRetryOnNetworkError,
     },
   });
 
@@ -231,7 +236,7 @@ export function useFestDays() {
     queryOptions: {
       staleTime: 1000 * 60 * 30, // 30 minutes - fest days never change
       gcTime: 1000 * 60 * 60, // 1 hour
-      retry: API_RETRY,
+      retry: shouldRetryOnNetworkError,
     },
   });
 
@@ -269,7 +274,7 @@ export function useVenueSchedule(venueSlug: string | undefined) {
       enabled: !!venueSlug,
       staleTime: 1000 * 60 * 5, // 5 minutes
       gcTime: 1000 * 60 * 30, // 30 minutes
-      retry: API_RETRY,
+      retry: shouldRetryOnNetworkError,
     },
   });
 

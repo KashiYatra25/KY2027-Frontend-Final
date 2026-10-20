@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import GsapRegistration from "@/lib/GsapRegistration";
 import { SmoothScroll } from "@/lib/SmoothScroll";
-import { PageLoader } from "@/components/loader";
+import { PageLoader } from "@/components/loader/PageLoader";
 import { AuthProvider, QueryProvider, ApolloProvider } from "@/components/providers";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 

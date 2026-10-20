@@ -4,7 +4,13 @@ import { useApiMutation } from "wire-axon/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState, useCallback } from "react";
 import { z } from "zod";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT, API_RETRY } from "@/lib/api/constants";
+import { CheckCircle, XCircle } from "lucide-react";
+import {
+  BACKEND_URL,
+  sharedFeatureConfig,
+  API_TIMEOUT,
+  shouldRetryOnNetworkError,
+} from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -37,6 +43,34 @@ const ManualIdentitySchema = z.object({
   gender: z.enum(["MALE", "FEMALE", "OTHER", "PREFER_NOT_TO_SAY"]),
 });
 
+function DefaultManualIdentitySuccessToast() {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-500/20">
+        <CheckCircle className="h-5 w-5 text-green-400" />
+      </div>
+      <div>
+        <p className="font-semibold text-white">Details saved</p>
+        <p className="text-sm text-neutral-400">Identity details submitted successfully</p>
+      </div>
+    </div>
+  );
+}
+
+function DefaultManualIdentityErrorToast() {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-500/20">
+        <XCircle className="h-5 w-5 text-red-400" />
+      </div>
+      <div>
+        <p className="font-semibold text-white">Couldn&apos;t save details</p>
+        <p className="text-sm text-neutral-400">Please try again</p>
+      </div>
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════════
 // HOOK: useManualIdentity
 // Submit identity details manually (alternative to Aadhaar)
@@ -59,7 +93,11 @@ export function useManualIdentity(userId?: string) {
     featureConfig: sharedFeatureConfig,
     apiConfig: { timeout: API_TIMEOUT },
     bodyValidator: { bodySchema: ManualIdentitySchema },
-    mutationOptions: { retry: API_RETRY },
+    toastConfig: {
+      successConfig: { customToast: <DefaultManualIdentitySuccessToast /> },
+      errorConfig: { customToast: <DefaultManualIdentityErrorToast /> },
+    },
+    mutationOptions: { retry: shouldRetryOnNetworkError },
   });
 
   /**
