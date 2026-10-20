@@ -8,11 +8,11 @@ import type { NavbarTheme, BadgeStyleConfig } from "@/components/navbar/types/na
 export const BADGE_STYLES: Record<NavbarTheme, BadgeStyleConfig> = {
   main: {
     position: "left-[15.7%] top-[59%]",
-    size: "h-[195%] sm:h-[175%]",
+    size: "h-[220%] sm:h-[195%]",
   },
   about: {
     position: "left-[16%] top-[52%]",
-    size: "h-[196%] sm:h-[180%]",
+    size: "h-[220%] sm:h-[205%]",
   },
   sponsor: {
     position: "left-[16%] top-[52%]",
