@@ -112,7 +112,7 @@ export const FINAL_CTA = {
   headline: "DON'T WATCH THE RECAP. BE THE RECAP.",
   supporting: "YOUR PEOPLE. YOUR MOMENTS. YOUR ZONALS.",
   primary: { label: "EXPLORE EVENTS ↗", href: "#events" },
-  secondary: { label: "GET PASSES ↗", href: "#passes" },
+  secondary: { label: "SELECT COLLEGE ↗", href: "#colleges" },
 } as const;
 
 /** Atmosphere section copy */

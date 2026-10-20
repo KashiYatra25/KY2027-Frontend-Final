@@ -20,6 +20,7 @@ import { COLORS, GRADIENTS } from "@/components/pages/zonals/constants/palette";
 import { ZONAL_COLLEGES, type ZonalCollege } from "@/components/pages/zonals/config/zonals.config";
 import { SingleEventPass } from "./SingleEventPass";
 import { MultiEventPass } from "./MultiEventPass";
+import { UserInfoBox } from "./UserInfoBox";
 
 interface Props {
   college?: ZonalCollege;
@@ -98,6 +99,9 @@ export function PassSelection({ college }: Props) {
             all-access.
           </p>
         </motion.div>
+
+        {/* User Info Box - shows KY ID and email for KonfHub */}
+        <UserInfoBox className="mx-auto mb-10 max-w-2xl" />
 
         {/* Passes */}
         <motion.div

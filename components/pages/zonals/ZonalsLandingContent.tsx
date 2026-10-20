@@ -40,7 +40,7 @@ export function ZonalsLandingContent() {
         </section>
 
         {/* College Cards */}
-        <section className="mx-auto max-w-6xl px-4 pb-24">
+        <section id="colleges" className="mx-auto max-w-6xl px-4 pb-24">
           <h2
             className="mb-8 text-center text-2xl font-bold tracking-wide uppercase"
             style={{ color: COLORS.ACID_LIME }}

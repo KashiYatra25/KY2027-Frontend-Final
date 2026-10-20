@@ -31,7 +31,7 @@ interface NavLink {
 const NAV_LINKS: NavLink[] = [
   { label: "THE VIBE", targetId: "zonals-hero", number: "01" },
   { label: "EVENTS", targetId: "zonals-events", number: "02" },
-  { label: "PASSES", targetId: "zonals-passes", number: "03" },
+  { label: "COLLEGES", targetId: "zonals-colleges", number: "03" },
   { label: "ABOUT", targetId: "zonals-about", number: "04" },
 ];
 
@@ -423,7 +423,7 @@ export function ZonalsNavbar() {
             </span>
 
             {/* Ticket-style CTA */}
-            <Link href="/passes">
+            <Link href="#colleges">
               <motion.div
                 className="group relative cursor-pointer"
                 whileHover={{ y: -2, rotate: -0.5 }}
@@ -455,7 +455,7 @@ export function ZonalsNavbar() {
                     boxShadow: "3px 3px 0 rgba(0,0,0,0.3)",
                   }}
                 >
-                  <span>GET YOUR PASS</span>
+                  <span>SELECT COLLEGE</span>
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
 
@@ -684,7 +684,7 @@ export function ZonalsNavbar() {
                 exit="closed"
                 transition={{ delay: 0.4, duration: 0.3 }}
               >
-                <Link href="/passes" onClick={() => setMenuOpen(false)}>
+                <Link href="#colleges" onClick={() => setMenuOpen(false)}>
                   <motion.div className="relative" whileTap={{ scale: 0.95 }}>
                     <div
                       className="flex items-center gap-3 px-8 py-4 font-mono text-base font-black tracking-[0.15em] uppercase"
@@ -696,7 +696,7 @@ export function ZonalsNavbar() {
                         boxShadow: `4px 4px 0 ${COLORS.HOT_PINK}80`,
                       }}
                     >
-                      <span>GET YOUR PASS</span>
+                      <span>SELECT COLLEGE</span>
                       <ArrowUpRight className="h-5 w-5" />
                     </div>
                   </motion.div>

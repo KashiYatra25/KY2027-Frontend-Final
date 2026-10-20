@@ -159,3 +159,15 @@ export type {
 // ═══════════════════════════════════════════════════════════════════
 
 export { usePurchases, type Purchase } from "./purchases";
+
+// ═══════════════════════════════════════════════════════════════════
+// ZONALS - Passes and Event Registration
+// ═══════════════════════════════════════════════════════════════════
+
+export {
+  useMyZonalPasses,
+  useZonalEventRegister,
+  useZonalEventCancel,
+  type ZonalPass,
+  type ZonalCollegeData,
+} from "./zonals";

@@ -5,10 +5,8 @@
 //
 // "PICK YOUR PLAYGROUND" — poster-style events grid.
 //  • GSAP ScrollTrigger drives the headline + eyebrow reveal
-//  • Asymmetric masonry-ish grid (card sizes come from EXPLORE_EVENTS)
-//  • Each EventCard handles its own tilt + viewport reveal
-//
-// Content is PLACEHOLDER (see zonals.config.ts → EXPLORE_EVENTS).
+//  • On landing page: visual EventCard (no registration)
+//  • On college page: ZonalEventCard with register/cancel buttons
 // ═══════════════════════════════════════════════════════════════════
 
 import { useRef, useEffect } from "react";
@@ -22,14 +20,17 @@ import {
   type ZonalCollege,
 } from "@/components/pages/zonals/config/zonals.config";
 import { EventCard } from "./EventCard";
+import { ZonalEventCard } from "./ZonalEventCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface Props {
   college?: ZonalCollege;
+  /** If true, show registration-enabled cards (for college pages) */
+  showRegistration?: boolean;
 }
 
-export function EventsExplorer({ college }: Props) {
+export function EventsExplorer({ college, showRegistration = false }: Props) {
   const activeCollege = college ?? ZONAL_COLLEGES[0];
   const exploreEvents = getExploreEventsForCollege(activeCollege);
   const sectionRef = useRef<HTMLElement>(null);
@@ -90,12 +91,22 @@ export function EventsExplorer({ college }: Props) {
         </p>
       </header>
 
-      {/* ── Asymmetric grid ─────────────────────────────────────── */}
-      <div className="grid auto-rows-[minmax(0,auto)] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {exploreEvents.map((event, i) => (
-          <EventCard key={event.id} event={event} index={i} />
-        ))}
-      </div>
+      {/* ── Events grid ─────────────────────────────────────────── */}
+      {showRegistration ? (
+        // College page: show registration-enabled cards
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {activeCollege.events.map((event) => (
+            <ZonalEventCard key={event.id} event={event} collegeSlug={activeCollege.slug} />
+          ))}
+        </div>
+      ) : (
+        // Landing page: show visual preview cards
+        <div className="grid auto-rows-[minmax(0,auto)] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {exploreEvents.map((event, i) => (
+            <EventCard key={event.id} event={event} index={i} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

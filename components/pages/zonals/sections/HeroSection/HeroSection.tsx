@@ -417,7 +417,7 @@ export function HeroSection() {
               </motion.a>
 
               <motion.a
-                href="#passes"
+                href="#colleges"
                 whileHover={reduce ? undefined : { y: -3, scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 className="group inline-flex items-center gap-2 rounded-full border-2 px-7 py-3.5 text-sm font-black tracking-[0.14em] uppercase"
@@ -428,7 +428,7 @@ export function HeroSection() {
                   boxShadow: SHADOWS.PINK_GLOW,
                 }}
               >
-                GET YOUR PASS
+                SELECT COLLEGE
                 <span className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                   ↗
                 </span>

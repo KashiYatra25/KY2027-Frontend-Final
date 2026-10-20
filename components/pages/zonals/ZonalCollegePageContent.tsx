@@ -23,7 +23,7 @@ export function ZonalCollegePageContent({ college }: Props) {
       <main className="relative min-h-screen" style={{ background: GRADIENTS.PAGE_BG }}>
         <CollegeHeroSection college={college} />
         <PassSelection college={college} />
-        <EventsExplorer college={college} />
+        <EventsExplorer college={college} showRegistration />
         <AtmosphereSection />
         <FinalCTA college={college} />
       </main>

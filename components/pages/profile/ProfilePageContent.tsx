@@ -13,6 +13,7 @@ import {
   MyTeamsSection,
   MyRegistrationsSection,
   CaStatusSection,
+  ZonalPassesSection,
 } from "./sections";
 import { COLORS } from "./constants/palette";
 import { ProfileUser } from "@/lib/api/helper/types";
@@ -123,6 +124,9 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
                 <MyTeamsSection />
                 <MyRegistrationsSection />
               </div>
+
+              {/* Zonal Passes Section - Only shows if user has passes */}
+              <ZonalPassesSection />
 
               {/* Footer Section - Sign Out & Decorative */}
               <ProfileFooter isSigningOut={isSigningOut} handleSignOut={handleSignOut} />
