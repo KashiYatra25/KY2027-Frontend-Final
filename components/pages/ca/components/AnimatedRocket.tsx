@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { COLORS, COLORS_RGBA } from "@/components/pages/ca/constants/palette";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // ═══════════════════════════════════════════════════════════════════
 // CUSTOM ANIMATED ROCKET
@@ -17,9 +18,12 @@ interface RocketProps {
 export function AnimatedRocket({ className = "", size = 120 }: RocketProps) {
   const rocketRef = useRef<SVGSVGElement>(null);
   const flameRef = useRef<SVGGElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (!rocketRef.current || !flameRef.current) return;
+    // Mobile: render the rocket static — skip the 4 infinite GSAP loops (perf).
+    if (isMobile) return;
 
     const ctx = gsap.context(() => {
       // Rocket hover/float animation
@@ -66,7 +70,7 @@ export function AnimatedRocket({ className = "", size = 120 }: RocketProps) {
     }, rocketRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
     <svg

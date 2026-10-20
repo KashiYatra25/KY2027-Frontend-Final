@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { IMAGES } from "@/lib/images";
 import { COLORS_RGBA } from "@/components/pages/ca/constants/palette";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,8 +17,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function GridBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    // Mobile: skip parallax/aurora/cosmic-dust scrubs (perf).
+    if (isMobile) return;
     const ctx = gsap.context(() => {
       // Parallax layers at different speeds
       gsap.to(".nebula-layer-1", {
@@ -69,7 +73,7 @@ export function GridBackground() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
     <div ref={containerRef} className="fixed inset-0 z-0 overflow-hidden">
@@ -85,25 +89,30 @@ export function GridBackground() {
         />
       </div>
 
-      {/* Second parallax layer - duplicate with offset and blend */}
-      <div className="nebula-layer-2 absolute inset-0 scale-125 opacity-40">
-        <Image
-          src={IMAGES.ca.cosmicBackground}
-          alt=""
-          fill
-          className="object-cover"
-          style={{ filter: "hue-rotate(30deg) saturate(1.3)" }}
-        />
-      </div>
+      {/* Second parallax layer - duplicate with offset and blend (desktop only) */}
+      {!isMobile && (
+        <div className="nebula-layer-2 absolute inset-0 scale-125 opacity-40">
+          <Image
+            src={IMAGES.ca.cosmicBackground}
+            alt=""
+            fill
+            className="object-cover"
+            style={{ filter: "hue-rotate(30deg) saturate(1.3)" }}
+          />
+        </div>
+      )}
 
       {/* Dark overlay for readability */}
       <div className="absolute inset-0 bg-black/30" />
 
-      {/* Aurora wave overlay */}
-      <div
-        className="aurora-wave absolute inset-0 opacity-30"
-        style={{
-          background: `linear-gradient(
+      {/* Aurora wave + rotating cosmic dust (desktop only — heavy on mobile) */}
+      {!isMobile && (
+        <>
+          {/* Aurora wave overlay */}
+          <div
+            className="aurora-wave absolute inset-0 opacity-30"
+            style={{
+              background: `linear-gradient(
             45deg,
             transparent 0%,
             rgba(236, 72, 153, 0.1) 20%,
@@ -112,15 +121,15 @@ export function GridBackground() {
             transparent 80%,
             rgba(6, 182, 212, 0.1) 100%
           )`,
-          backgroundSize: "400% 400%",
-        }}
-      />
+              backgroundSize: "400% 400%",
+            }}
+          />
 
-      {/* Cosmic dust - rotating radial pattern */}
-      <div
-        className="cosmic-dust absolute top-1/2 left-1/2 h-[200vmax] w-[200vmax] -translate-x-1/2 -translate-y-1/2 opacity-10"
-        style={{
-          background: `conic-gradient(
+          {/* Cosmic dust - rotating radial pattern */}
+          <div
+            className="cosmic-dust absolute top-1/2 left-1/2 h-[200vmax] w-[200vmax] -translate-x-1/2 -translate-y-1/2 opacity-10"
+            style={{
+              background: `conic-gradient(
             from 0deg,
             transparent 0deg,
             ${COLORS_RGBA.PINK_30} 30deg,
@@ -133,8 +142,10 @@ export function GridBackground() {
             transparent 330deg,
             transparent 360deg
           )`,
-        }}
-      />
+            }}
+          />
+        </>
+      )}
 
       {/* Gradient depth layers */}
       <div

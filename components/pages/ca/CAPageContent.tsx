@@ -30,6 +30,8 @@ export function CAPageContent() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
+    // Mobile: skip scroll-scrubbed parallax/color-shift tweens (perf).
+    if (isMobile) return;
     const ctx = gsap.context(() => {
       // Smooth scroll-based parallax for floating elements
       gsap.to(".ca-float-slow", {
@@ -68,7 +70,7 @@ export function CAPageContent() {
     }, mainRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
     <div
@@ -125,7 +127,7 @@ export function CAPageContent() {
             background: GRADIENTS.TRI_90,
           }}
           ref={(el) => {
-            if (el) {
+            if (el && !isMobile) {
               gsap.to(el, {
                 scaleX: 1,
                 ease: "none",

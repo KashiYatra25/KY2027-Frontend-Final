@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { COLORS } from "@/components/pages/ca/constants/palette";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,8 +15,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function FloatingElements() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    // Mobile: skip all scroll-scrubbed parallax/morph tweens (perf).
+    if (isMobile) return;
     const ctx = gsap.context(() => {
       // Parallax orbs at different depths
       gsap.to(".orb-deep", {
@@ -118,7 +122,11 @@ export function FloatingElements() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
+
+  // Mobile: render nothing — this layer is purely decorative and the main
+  // source of scroll jank (blurred parallax orbs, morphing shapes, particles).
+  if (isMobile) return null;
 
   return (
     <div ref={containerRef} className="pointer-events-none fixed inset-0 z-[2] overflow-hidden">

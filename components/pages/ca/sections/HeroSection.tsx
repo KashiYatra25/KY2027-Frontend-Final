@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { IMAGES } from "@/lib/images";
 import { COLORS, COLORS_RGBA } from "@/components/pages/ca/constants/palette";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +20,7 @@ export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -52,29 +54,31 @@ export function HeroSection() {
         ease: "power2.out",
       });
 
-      // Scroll indicator
-      gsap.to(".scroll-indicator", {
-        y: 15,
-        repeat: -1,
-        yoyo: true,
-        duration: 1.2,
-        ease: "power2.inOut",
-      });
+      // Scroll indicator (desktop only — infinite loop + scroll scrub are jank on mobile)
+      if (!isMobile) {
+        gsap.to(".scroll-indicator", {
+          y: 15,
+          repeat: -1,
+          yoyo: true,
+          duration: 1.2,
+          ease: "power2.inOut",
+        });
 
-      gsap.to(".scroll-indicator", {
-        opacity: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "10% top",
-          end: "30% top",
-          scrub: true,
-        },
-      });
+        gsap.to(".scroll-indicator", {
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "10% top",
+            end: "30% top",
+            scrub: true,
+          },
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
     <section ref={sectionRef} className="relative min-h-screen overflow-hidden px-4 pt-24 pb-16">
