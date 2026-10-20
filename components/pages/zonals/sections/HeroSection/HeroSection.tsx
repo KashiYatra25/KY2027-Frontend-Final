@@ -10,6 +10,7 @@
 // ═══════════════════════════════════════════════════════════════════
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Anton } from "next/font/google";
 import {
   motion,
@@ -21,6 +22,9 @@ import {
 } from "framer-motion";
 
 import { COLORS, GRADIENTS, SHADOWS } from "../../constants/palette";
+
+// Motion-enabled Next Link so CTAs can client-navigate with animation.
+const MotionLink = motion.create(Link);
 
 // Massive condensed display face (Anton / Bebas-Neue style) scoped to
 // this section via a CSS variable.
@@ -416,8 +420,8 @@ export function HeroSection() {
                 </span>
               </motion.a>
 
-              <motion.a
-                href="#colleges"
+              <MotionLink
+                href="/zonals/colleges"
                 whileHover={reduce ? undefined : { y: -3, scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 className="group inline-flex items-center gap-2 rounded-full border-2 px-7 py-3.5 text-sm font-black tracking-[0.14em] uppercase"
@@ -432,7 +436,7 @@ export function HeroSection() {
                 <span className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                   ↗
                 </span>
-              </motion.a>
+              </MotionLink>
             </motion.div>
           </div>
 

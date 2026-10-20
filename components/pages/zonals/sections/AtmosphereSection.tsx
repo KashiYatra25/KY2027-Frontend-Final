@@ -81,7 +81,8 @@ export function AtmosphereSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden"
+      id="zones"
+      className="relative w-full scroll-mt-20 overflow-hidden"
       style={{ background: COLORS.DEEP_INK, minHeight: "90vh" }}
     >
       {/* ── Layer 1: Abstract stage lighting ─────────────────────── */}

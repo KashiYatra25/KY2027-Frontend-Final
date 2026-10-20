@@ -30,6 +30,16 @@ export const IMAGES = {
   },
 
   // ============================================
+  // ZONALS - pass artwork (floating decor on /zonals/colleges)
+  // ============================================
+  zonals: {
+    singlePassPortrait: v(`${IMAGEKIT_BASE}/zonals/single-pass-portrait.png`),
+    singlePassLandscape: v(`${IMAGEKIT_BASE}/zonals/single-pass-landscape.png`),
+    multiPassPortrait: v(`${IMAGEKIT_BASE}/zonals/multi-pass-portrait.png`),
+    multiPassLandscape: v(`${IMAGEKIT_BASE}/zonals/multi-pass-landscape.png`),
+  },
+
+  // ============================================
   // HERO SECTION - All common
   // ============================================
   hero: {

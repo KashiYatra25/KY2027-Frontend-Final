@@ -13,6 +13,30 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   { localFile: "passes/SwarnimPass.png", remoteName: "swarnim-pass.png", folder: "/passes" },
 
   // ============================================
+  // ZONALS - pass artwork (floating decor on /zonals/colleges)
+  // ============================================
+  {
+    localFile: "zonals/singlePassPortrait.png",
+    remoteName: "single-pass-portrait.png",
+    folder: "/zonals",
+  },
+  {
+    localFile: "zonals/singlePassLandscape.png",
+    remoteName: "single-pass-landscape.png",
+    folder: "/zonals",
+  },
+  {
+    localFile: "zonals/multiPassPortrait.png",
+    remoteName: "multi-pass-portrait.png",
+    folder: "/zonals",
+  },
+  {
+    localFile: "zonals/multiPassLandscape.png",
+    remoteName: "multi-pass-landscape.png",
+    folder: "/zonals",
+  },
+
+  // ============================================
   // HERO SECTION - All common
   // ============================================
   {

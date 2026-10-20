@@ -15,6 +15,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import { ArrowUpRight, Home } from "lucide-react";
 import { COLORS, SHADOWS } from "../constants/palette";
 
@@ -26,35 +27,19 @@ interface NavLink {
   label: string;
   targetId: string;
   number: string;
+  /** Destination. May be a route ("/zonals/colleges") or a route+hash
+   *  ("/zonals#zones"). THE VIBE points at the landing page top. */
+  href: string;
 }
 
 const NAV_LINKS: NavLink[] = [
-  { label: "THE VIBE", targetId: "zonals-hero", number: "01" },
-  { label: "EVENTS", targetId: "zonals-events", number: "02" },
-  { label: "COLLEGES", targetId: "zonals-colleges", number: "03" },
-  { label: "ABOUT", targetId: "zonals-about", number: "04" },
+  { label: "THE VIBE", targetId: "zonals-hero", number: "01", href: "/zonals" },
+  { label: "COLLEGES", targetId: "zonals-colleges", number: "02", href: "/zonals/colleges" },
+  { label: "ABOUT", targetId: "zonals-about", number: "03", href: "/zonals/about" },
 ];
 
 const SCROLL_THRESHOLD = 80;
 const NAVBAR_HEIGHT = 72;
-
-// ───────────────────────────────────────────────────────────────────
-// HELPERS
-// ───────────────────────────────────────────────────────────────────
-
-function scrollToSection(targetId: string) {
-  if (typeof document === "undefined") return;
-  const el = document.getElementById(targetId);
-  if (!el) {
-    // If section doesn't exist, scroll to top
-    if (targetId === "zonals-hero") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-    return;
-  }
-  const top = el.getBoundingClientRect().top + window.scrollY - NAVBAR_HEIGHT;
-  window.scrollTo({ top, behavior: "smooth" });
-}
 
 // ───────────────────────────────────────────────────────────────────
 // ANIMATED STARBURST COMPONENT
@@ -125,6 +110,22 @@ export function ZonalsNavbar() {
   const [hasEntered, setHasEntered] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Route-aware state. The sub-routes (COLLEGES, ABOUT) are their own pages
+  // with NO scrollable sections — the navbar syncs active state from the
+  // pathname there and skips the section observer. The landing page
+  // ("/zonals") keeps the scroll-based observer.
+  const LANDING_HREF = "/zonals";
+  // Any /zonals sub-route (college pages, /colleges, /about) — NOT the
+  // landing page. The "Select College" CTA is hidden on these.
+  const isZonalsSubRoute = pathname !== LANDING_HREF && pathname.startsWith("/zonals/");
+  // A routed sub-page (not the landing page) whose href path matches.
+  const routedActiveTargetId = NAV_LINKS.find(
+    (l) => l.href.split("#")[0] === pathname && l.href.split("#")[0] !== LANDING_HREF
+  )?.targetId;
+  const isRoutedPage = Boolean(routedActiveTargetId);
 
   // ── Initial entrance animation trigger ────────────────────────────
   useEffect(() => {
@@ -153,6 +154,13 @@ export function ZonalsNavbar() {
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
 
+    // On a routed nav page (colleges/about) there are no scrollable
+    // sections — force that nav item active and skip observing.
+    if (isRoutedPage && routedActiveTargetId) {
+      setActiveId(routedActiveTargetId);
+      return;
+    }
+
     const sections = NAV_LINKS.map((link) => document.getElementById(link.targetId)).filter(
       (el): el is HTMLElement => el !== null
     );
@@ -173,7 +181,7 @@ export function ZonalsNavbar() {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [isRoutedPage, routedActiveTargetId]);
 
   // ── Lock body scroll while mobile menu is open ────────────────────
   useEffect(() => {
@@ -193,11 +201,38 @@ export function ZonalsNavbar() {
     return () => document.removeEventListener("keydown", handleEscape);
   }, [menuOpen]);
 
-  const handleNavClick = useCallback((targetId: string) => {
-    setMenuOpen(false);
-    setActiveId(targetId);
-    scrollToSection(targetId);
-  }, []);
+  const handleNavClick = useCallback(
+    (targetId: string) => {
+      setMenuOpen(false);
+      setActiveId(targetId);
+
+      const link = NAV_LINKS.find((l) => l.targetId === targetId);
+      if (!link) return;
+
+      const [path, hash] = link.href.split("#");
+
+      // Different route → navigate (Next will land at top; hash targets are
+      // only on the landing page, handled below when already there).
+      if (path !== pathname) {
+        router.push(link.href);
+        return;
+      }
+
+      // Same route, with a hash → smooth-scroll to that section.
+      if (hash) {
+        const el = document.getElementById(hash);
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - NAVBAR_HEIGHT;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+        return;
+      }
+
+      // Same route, no hash (e.g. THE VIBE on the landing page) → scroll top.
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    [router, pathname]
+  );
 
   // ── Animation variants ────────────────────────────────────────────
   const containerVariants = {
@@ -422,55 +457,57 @@ export function ZonalsNavbar() {
               KY / 2027
             </span>
 
-            {/* Ticket-style CTA */}
-            <Link href="#colleges">
-              <motion.div
-                className="group relative cursor-pointer"
-                whileHover={{ y: -2, rotate: -0.5 }}
-                whileTap={{ y: 0, scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              >
-                {/* Ticket perforation pattern (left edge) */}
-                <div
-                  className="absolute top-1/2 -left-1 flex -translate-y-1/2 flex-col gap-[3px]"
-                  aria-hidden
+            {/* Ticket-style CTA (hidden on all /zonals sub-routes) */}
+            {!isZonalsSubRoute && (
+              <Link href="/zonals/colleges">
+                <motion.div
+                  className="group relative cursor-pointer"
+                  whileHover={{ y: -2, rotate: -0.5 }}
+                  whileTap={{ y: 0, scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 >
-                  {[...Array(4)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-1 w-1 rounded-full"
-                      style={{ backgroundColor: `${COLORS.ACID_LIME}40` }}
-                    />
-                  ))}
-                </div>
+                  {/* Ticket perforation pattern (left edge) */}
+                  <div
+                    className="absolute top-1/2 -left-1 flex -translate-y-1/2 flex-col gap-[3px]"
+                    aria-hidden
+                  >
+                    {[...Array(4)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-1 w-1 rounded-full"
+                        style={{ backgroundColor: `${COLORS.ACID_LIME}40` }}
+                      />
+                    ))}
+                  </div>
 
-                {/* Main button */}
-                <div
-                  className="relative flex items-center gap-2 px-5 py-3 font-mono text-[13px] font-black tracking-[0.12em] uppercase transition-shadow duration-200"
-                  style={{
-                    backgroundColor: COLORS.ACID_LIME,
-                    color: COLORS.DEEP_INK,
-                    clipPath:
-                      "polygon(4px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 4px)",
-                    boxShadow: "3px 3px 0 rgba(0,0,0,0.3)",
-                  }}
-                >
-                  <span>SELECT COLLEGE</span>
-                  <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </div>
+                  {/* Main button */}
+                  <div
+                    className="relative flex items-center gap-2 px-5 py-3 font-mono text-[13px] font-black tracking-[0.12em] uppercase transition-shadow duration-200"
+                    style={{
+                      backgroundColor: COLORS.ACID_LIME,
+                      color: COLORS.DEEP_INK,
+                      clipPath:
+                        "polygon(4px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 4px)",
+                      boxShadow: "3px 3px 0 rgba(0,0,0,0.3)",
+                    }}
+                  >
+                    <span>SELECT COLLEGE</span>
+                    <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
 
-                {/* Offset shadow accent */}
-                <div
-                  className="absolute inset-0 -z-10 translate-x-1 translate-y-1"
-                  style={{
-                    backgroundColor: COLORS.HOT_PINK,
-                    clipPath:
-                      "polygon(4px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 4px)",
-                    opacity: 0.5,
-                  }}
-                />
-              </motion.div>
-            </Link>
+                  {/* Offset shadow accent */}
+                  <div
+                    className="absolute inset-0 -z-10 translate-x-1 translate-y-1"
+                    style={{
+                      backgroundColor: COLORS.HOT_PINK,
+                      clipPath:
+                        "polygon(4px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 4px)",
+                      opacity: 0.5,
+                    }}
+                  />
+                </motion.div>
+              </Link>
+            )}
           </motion.div>
 
           {/* ═══════════════════════════════════════════════════════════
@@ -684,7 +721,7 @@ export function ZonalsNavbar() {
                 exit="closed"
                 transition={{ delay: 0.4, duration: 0.3 }}
               >
-                <Link href="#colleges" onClick={() => setMenuOpen(false)}>
+                <Link href="/zonals/colleges" onClick={() => setMenuOpen(false)}>
                   <motion.div className="relative" whileTap={{ scale: 0.95 }}>
                     <div
                       className="flex items-center gap-3 px-8 py-4 font-mono text-base font-black tracking-[0.15em] uppercase"
