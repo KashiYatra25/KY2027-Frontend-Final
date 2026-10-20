@@ -57,7 +57,7 @@ export function UserInfoBox({ className = "" }: UserInfoBoxProps) {
             </p>
           </div>
           <Link
-            href="/auth/signin"
+            href="/login"
             className="rounded-lg px-4 py-2 text-sm font-bold transition-transform hover:scale-105"
             style={{ background: COLORS.ACID_LIME, color: COLORS.DEEP_INK }}
           >
