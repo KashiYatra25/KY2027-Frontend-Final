@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import { useMyTeams, useMyAccount } from "@/lib/api/hooks";
@@ -18,7 +17,6 @@ import { Users, Plus, ShoppingCart } from "lucide-react";
 // ═══════════════════════════════════════════════════════════════════
 
 export function TeamsPageContent() {
-  const { data: session } = useSession();
   const { profile } = useMyAccount("full");
   // Use fresh profile data instead of stale session
   const isPaidUser = profile?.isPaidUser ?? false;

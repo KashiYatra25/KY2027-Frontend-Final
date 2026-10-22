@@ -38,7 +38,7 @@ export function EmptyPurchases() {
           No Purchases Yet
         </h3>
         <p className="mx-auto mb-6 max-w-sm text-sm text-gray-400">
-          You haven't made any purchases yet. Explore our festival passes and be part of the
+          You haven&apos;t made any purchases yet. Explore our festival passes and be part of the
           grandest cultural celebration!
         </p>
 

@@ -4,8 +4,7 @@ import { useMemo, useCallback, useState, useEffect } from "react";
 import { useApiQuery, useApiMutation } from "wire-axon/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { z } from "zod";
-import { CheckCircle, XCircle, AlertCircle } from "lucide-react";
+import { CheckCircle, XCircle } from "lucide-react";
 import {
   BACKEND_URL,
   sharedFeatureConfig,
@@ -16,7 +15,6 @@ import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions"
 import { RegisterIndividualSchema, RegisterTeamSchema } from "@/lib/api/utils/registration.schema";
 
 // Empty schema for DELETE requests that don't require a body
-const EmptyBodySchema = z.object({});
 import type { EventCategorySlug, ParticipationType } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -117,46 +115,6 @@ function RegistrationErrorToast() {
       </div>
       <div>
         <p className="font-semibold text-red-100">Registration Failed</p>
-        <p className="text-sm text-red-300/70">Please try again later</p>
-      </div>
-    </div>
-  );
-}
-
-function CancelSuccessToast() {
-  return (
-    <div className="flex items-center gap-3 rounded-xl border border-amber-500/30 bg-gradient-to-r from-amber-950/95 to-stone-900/95 px-5 py-4 shadow-2xl backdrop-blur-sm">
-      <div
-        className="flex h-10 w-10 items-center justify-center rounded-full"
-        style={{
-          background: "linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.3))",
-          boxShadow: "0 0 20px rgba(245, 158, 11, 0.2)",
-        }}
-      >
-        <AlertCircle className="h-5 w-5 text-amber-400" />
-      </div>
-      <div>
-        <p className="font-semibold text-amber-100">Registration Cancelled</p>
-        <p className="text-sm text-amber-300/70">You can register again anytime</p>
-      </div>
-    </div>
-  );
-}
-
-function CancelErrorToast() {
-  return (
-    <div className="flex items-center gap-3 rounded-xl border border-red-500/30 bg-gradient-to-r from-red-950/95 to-stone-900/95 px-5 py-4 shadow-2xl backdrop-blur-sm">
-      <div
-        className="flex h-10 w-10 items-center justify-center rounded-full"
-        style={{
-          background: "linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(185, 28, 28, 0.3))",
-          boxShadow: "0 0 20px rgba(239, 68, 68, 0.2)",
-        }}
-      >
-        <XCircle className="h-5 w-5 text-red-400" />
-      </div>
-      <div>
-        <p className="font-semibold text-red-100">Cancellation Failed</p>
         <p className="text-sm text-red-300/70">Please try again later</p>
       </div>
     </div>
@@ -350,15 +308,6 @@ export function useEventRegisterTeam(eventSlug: string) {
 // ═══════════════════════════════════════════════════════════════════
 // useCancelRegistration - Cancel a registration for an event
 // ═══════════════════════════════════════════════════════════════════
-
-interface CancelRegistrationResponse {
-  statusCode: number;
-  message: string;
-  info: string;
-  eventSlug: string;
-  eventName: string;
-  participationType: string;
-}
 
 export function useCancelRegistration() {
   const queryClient = useQueryClient();

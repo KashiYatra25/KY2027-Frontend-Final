@@ -142,7 +142,7 @@ export function useSchedule(params?: ScheduleQueryParams) {
       result[event.day].push(event);
     }
     return result;
-  }, [data?.scheduledEvents]);
+  }, [data]);
 
   // Group events by venue for sidebar/search
   const eventsByVenue = useMemo(() => {
@@ -157,7 +157,7 @@ export function useSchedule(params?: ScheduleQueryParams) {
       result[venueSlug].push(event);
     }
     return result;
-  }, [data?.scheduledEvents]);
+  }, [data]);
 
   // Get clickable venues only (for map interactions)
   const clickableVenues = useMemo(() => {
@@ -292,7 +292,7 @@ export function useVenueSchedule(venueSlug: string | undefined) {
       ...e,
       venue: data.venue,
     })) as ScheduledEvent[];
-  }, [data?.scheduledEvents, data?.venue]);
+  }, [data]);
 
   return {
     venue: data?.venue ?? null,

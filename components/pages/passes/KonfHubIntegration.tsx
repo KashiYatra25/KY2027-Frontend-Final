@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useSession } from "next-auth/react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ExternalLink,
   Copy,

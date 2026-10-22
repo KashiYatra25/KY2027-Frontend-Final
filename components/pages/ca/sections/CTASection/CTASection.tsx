@@ -113,7 +113,7 @@ export function CTASection() {
 
   // rhf submit handler — runs only after guards pass. Preserves the exact
   // backend mutation call with the identical (empty) payload.
-  const onApplySubmit = (_data: CtaApplicationData) => {
+  const onApplySubmit = () => {
     // Submit application
     apply();
   };

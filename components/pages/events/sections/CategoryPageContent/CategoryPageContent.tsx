@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import type { EventCategory, EventCategorySlug } from "@/lib/api/helper/types";
 import {
@@ -57,7 +56,6 @@ export function CategoryPageContent({
   );
 
   const { isRegisteredFor, refetch: refetchRegistrations } = useMyRegistrations();
-  const { data: session } = useSession();
   const { profile } = useMyAccount("full");
   // Use fresh profile data instead of stale session
   const isPaidUser = profile?.isPaidUser ?? false;
