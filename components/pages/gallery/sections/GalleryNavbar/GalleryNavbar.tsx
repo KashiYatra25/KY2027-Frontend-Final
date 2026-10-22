@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { IMAGES } from "@/lib/images";
 import { Spinner } from "@/components/ui/spinner";
 import { COLORS } from "@/components/pages/gallery/constants/palette";
 import { CameraLensIcon } from "./CameraLensIcon";
@@ -72,7 +71,7 @@ export const GalleryNavbar = memo(function GalleryNavbar() {
             `,
           }}
         >
-          {/* Left: IIT BHU Badge - using the same badge image as main navbar */}
+          {/* Left: Favicon logo (links home) */}
           <div className="flex items-center gap-3">
             <Link href="/" className="group flex items-center gap-2">
               <div
@@ -82,11 +81,13 @@ export const GalleryNavbar = memo(function GalleryNavbar() {
                 }}
               >
                 <Image
-                  src={IMAGES.navbar.main.badge}
-                  alt="IIT BHU"
+                  src="/favicon.ico"
+                  alt="KashiYatra"
                   fill
+                  sizes="56px"
                   className="object-contain"
                   priority
+                  unoptimized
                 />
               </div>
             </Link>
