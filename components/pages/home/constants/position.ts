@@ -25,7 +25,7 @@ export const POS_STONES = {
     sm: { bottom: "41%", left: "50%", transform: "translateX(-50%)" },
   },
   GALLERY: {
-    mobile: { bottom: "73%", right: "5%" },
+    mobile: { bottom: "55%", right: "6%" },
     sm: { bottom: "17%", left: "68%", right: "auto" },
   },
   ABOUT: {
