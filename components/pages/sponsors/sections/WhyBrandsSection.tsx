@@ -3,7 +3,7 @@
 import { memo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { PALETTE, GRADIENTS } from "@/components/pages/sponsors/constants/palette";
-import { CircleRing, CrossDecor, Diamond } from "./decor/VectorDecorations";
+import { CircleRing, CrossDecor, Diamond } from "./decor";
 
 // ═══════════════════════════════════════════════════════════════════
 // WHY BRANDS SECTION - VALUE PROPOSITION WITH VECTOR ART

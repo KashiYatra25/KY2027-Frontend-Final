@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CampusMap, EventSearchOverlay, WhatsOnSidebar, DecorativeElements } from "./sections";
 import { DiyaSpinner } from "@/components/loader/DiyaSpinner";
 import { Navigation, MobileControls, MobileLogo } from "./components";
-import { DEFAULT_LAYERS } from "./constants";
+import { DEFAULT_LAYERS } from "./constants/layers";
 import { useSchedule } from "@/lib/api/hooks";
 import type { MapLayers, Layer } from "@/lib/api/helper/types";
 

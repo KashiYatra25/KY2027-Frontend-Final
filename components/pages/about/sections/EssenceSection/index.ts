@@ -1,1 +1,0 @@
-export { EssenceSection } from "./EssenceSection";

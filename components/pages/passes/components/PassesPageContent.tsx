@@ -1,7 +1,7 @@
 "use client";
 
 import { PassesSection } from "@/components/pages/passes/sections/PassesSection";
-import { ThemedNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 
 export function PassesPageContent() {
   return (

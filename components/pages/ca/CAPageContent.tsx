@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ThemedNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import {
   HeroSection,
   PerksSection,

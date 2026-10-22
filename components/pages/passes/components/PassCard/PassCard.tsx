@@ -18,7 +18,7 @@ import {
   GRADIENT_LINE_GOLD_LEFT,
   GRADIENT_LINE_GOLD_RIGHT,
 } from "@/components/pages/passes/constants/palette";
-import { hexToRgb } from "./hexToRgb";
+import { hexToRgb } from "@/lib/api/helper/functions/color.functions";
 import { PassIcon } from "./PassIcon";
 import { AnimatedMandala } from "./AnimatedMandala";
 import { RoyalPrice } from "./RoyalPrice";

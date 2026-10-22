@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client/react";
-import { ThemedNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import {
   ACCOUNT_PROGRESS_WITH_STEPS_QUERY,
   type AccountProgressWithStepsQueryResponse,
@@ -17,7 +17,8 @@ import { CompleteProfileLoader } from "./loader/CompleteProfileLoader";
 import { CollegeDetailsStep } from "./steps/college/CollegeDetailsStep";
 import { IdentityVerificationStep } from "./steps/identity";
 import { PhoneVerificationStep } from "./steps/phone/PhoneVerificationStep";
-import { CongratulationsPage, hasWelcomeBeenShown } from "./CongratulationsPage";
+import { CongratulationsPage } from "./CongratulationsPage";
+import { hasWelcomeBeenShown } from "@/lib/api/helper/functions/welcome.functions";
 
 // ═══════════════════════════════════════════════════════════════════
 // CONSTANTS

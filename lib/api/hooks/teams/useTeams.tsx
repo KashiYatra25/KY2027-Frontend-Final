@@ -184,7 +184,7 @@ export function useCreateTeam() {
   const queryClient = useQueryClient();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { mutate, isPending, isSuccess, isError, error, data, reset } =
+  const { mutate, isPending, isSuccess, isError, error, reset } =
     useApiMutation<CreateTeamResponse>({
       url: "/teams",
       baseURL: BACKEND_URL,
@@ -225,7 +225,6 @@ export function useCreateTeam() {
     isSuccess,
     isError,
     errorMessage,
-    data: data?.data ?? null,
     reset,
   };
 }

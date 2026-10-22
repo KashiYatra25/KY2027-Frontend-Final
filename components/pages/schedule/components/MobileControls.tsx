@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { LAYERS } from "@/components/pages/schedule/constants";
+import { LAYERS } from "@/components/pages/schedule/constants/layers";
 import type { MapLayers, Layer } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════

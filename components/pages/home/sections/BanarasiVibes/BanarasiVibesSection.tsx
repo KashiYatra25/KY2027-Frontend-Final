@@ -6,7 +6,7 @@ import { Road, LampPost, BHUGate } from "./common";
 import { BanarasiVibesMobile } from "./mobile";
 import { BanarasiVibesDesktop } from "./desktop";
 import { IMAGES } from "@/lib/images";
-import { MotionZone, useMotionZone } from "@/lib/motion";
+import { MotionZone, useMotionZone } from "@/lib/motion/MotionZone";
 import { useAnimationPolicy } from "@/hooks";
 
 // Inner component that can access MotionZone context

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { CADashboardContent } from "@/components/pages/ca-dashboard";
+import { CADashboardContent } from "@/components/pages/ca-dashboard/CADashboardContent";
 
 export const metadata: Metadata = {
   title: "CA Dashboard - Leaderboard",

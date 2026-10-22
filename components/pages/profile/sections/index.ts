@@ -1,8 +1,8 @@
-export { ProfileHero } from "./ProfileHero";
+export { ProfileHero } from "./ProfileHero/ProfileHero";
 export { DetailedInfo } from "./DetailedInfo";
 export { ProfileFooter } from "./ProfileFooter";
 export { MyTeamsSection } from "./MyTeamsSection";
-export { MyRegistrationsSection } from "./MyRegistrationsSection";
+export { MyRegistrationsSection } from "./MyRegistrationsSection/MyRegistrationsSection";
 export { ZonalPassesSection } from "./ZonalPassesSection";
 export { CaStatusSection } from "./CaStatusSection";
 export { ProfileLoader } from "./loader/ProfileLoader";

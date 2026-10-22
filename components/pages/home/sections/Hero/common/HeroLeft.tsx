@@ -17,7 +17,7 @@ export const HeroLeft = memo(function HeroLeft({ ref }: HeroLeftProps) {
   return (
     <div
       ref={ref}
-      className="pointer-events-none absolute bottom-[30.18%] left-[2%] w-[65%] sm:bottom-[25.7%] sm:left-[-9%] sm:w-[56%]"
+      className="pointer-events-none absolute bottom-[30.18%] left-[-5%] w-[65%] sm:bottom-[25.7%] sm:left-[-9%] sm:w-[56%]"
       style={{
         zIndex: Z_HERO.HERO_LEFT,
       }}

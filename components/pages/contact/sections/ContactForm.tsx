@@ -1,7 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { memo, type FormEvent, useRef } from "react";
+import { memo, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { IMAGES } from "@/lib/images";
 import { COLORS, JAZZ_COLORS } from "@/components/pages/contact/constants/palette";
 import { CornerOrnaments } from "./decor";
@@ -16,31 +19,42 @@ const fieldStyle = {
   color: COLORS.CREAM,
 } as const;
 
+// Form validation schema
+const ContactFormSchema = z.object({
+  name: z.string().min(1, "Name is required").max(100, "Name is too long"),
+  email: z.string().min(1, "Email is required").email("Enter a valid email"),
+});
+
+type ContactFormData = z.infer<typeof ContactFormSchema>;
+
 // ═══════════════════════════════════════════════════════════════════
 // CONTACT FORM SECTION
 // ═══════════════════════════════════════════════════════════════════
 export const ContactForm = memo(function ContactForm() {
-  const formRef = useRef<HTMLFormElement>(null);
   const { submitContact, isPending, isSuccess } = useContact({
     successToast: <ContactSuccessToast />,
     errorToast: <ContactErrorToast />,
   });
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(ContactFormSchema),
+    defaultValues: { name: "", email: "" },
+  });
+
+  const onSubmit = (data: ContactFormData) => {
     if (isPending) return;
+    submitContact(data);
+  };
 
-    const formData = new FormData(e.currentTarget);
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-
-    submitContact({ name, email });
-  }
-
-  // Reset form on success
-  if (isSuccess && formRef.current) {
-    formRef.current.reset();
-  }
+  // Reset form on successful submission
+  useEffect(() => {
+    if (isSuccess) reset();
+  }, [isSuccess, reset]);
 
   return (
     <section className="relative px-4 py-14 sm:px-6 sm:py-20">
@@ -80,7 +94,7 @@ export const ContactForm = memo(function ContactForm() {
             Leave your details and our team will reach out to you.
           </p>
 
-          <form ref={formRef} className="space-y-5" onSubmit={handleSubmit}>
+          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <label className="block">
                 <span className="text-xs tracking-wider uppercase" style={{ color: COLORS.GOLD }}>
@@ -88,12 +102,14 @@ export const ContactForm = memo(function ContactForm() {
                 </span>
                 <input
                   type="text"
-                  name="name"
-                  required
                   placeholder="Your name"
                   className="mt-2 w-full rounded-lg px-4 py-3 text-sm transition-colors outline-none focus:border-yellow-400/70"
                   style={fieldStyle}
+                  {...register("name")}
                 />
+                {errors.name && (
+                  <span className="mt-1 block text-xs text-red-400">{errors.name.message}</span>
+                )}
               </label>
               <label className="block">
                 <span className="text-xs tracking-wider uppercase" style={{ color: COLORS.GOLD }}>
@@ -101,12 +117,14 @@ export const ContactForm = memo(function ContactForm() {
                 </span>
                 <input
                   type="email"
-                  name="email"
-                  required
                   placeholder="you@example.com"
                   className="mt-2 w-full rounded-lg px-4 py-3 text-sm transition-colors outline-none focus:border-yellow-400/70"
                   style={fieldStyle}
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <span className="mt-1 block text-xs text-red-400">{errors.email.message}</span>
+                )}
               </label>
             </div>
 

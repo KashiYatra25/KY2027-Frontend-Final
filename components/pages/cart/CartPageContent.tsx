@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Ticket, Sparkles, Crown, Info } from "lucide-react";
-import { ThemedNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import { useMyAccount } from "@/lib/api/hooks";
 import { ProfileIncompleteCard } from "./components/ProfileIncompleteCard";
 import { KonfHubIntegration } from "../passes/KonfHubIntegration";

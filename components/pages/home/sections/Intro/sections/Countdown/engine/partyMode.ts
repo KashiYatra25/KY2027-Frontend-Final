@@ -1,9 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Canvas FX module ported from kashiyatra-countdown-clean.
 // Dense per-frame math for party mode concert effects.
-// Note: This file uses dynamic animation structures that are difficult to type strictly.
 import { smooth } from "./utils";
-import type { IntroCtx } from "./types";
+import type {
+  IntroCtx,
+  ShockwaveRing,
+  ConfettiParticle,
+  GlowStick,
+  BokehBall,
+  PyroSpark,
+  PyroFountain,
+  CrowdRow,
+} from "./types";
 
 /** Party mode: beat-driven concert lights, tap-for-confetti chaos, the ENTER flash and the silhouette crowd. */
 export function initPartyMode(ctx: IntroCtx) {
@@ -37,12 +44,12 @@ export function initPartyMode(ctx: IntroCtx) {
   hs();
 
   /* ---------- state ---------- */
-  const HR: any[] = [],
-    CF: any[] = [],
-    GS: any[] = [],
-    BK: any[] = [],
-    PY: any[] = [],
-    FT: any[] = [];
+  const HR: ShockwaveRing[] = [],
+    CF: ConfettiParticle[] = [],
+    GS: GlowStick[] = [],
+    BK: BokehBall[] = [],
+    PY: PyroSpark[] = [],
+    FT: PyroFountain[] = [];
   let tT = performance.now(),
     run = false,
     bOrg = 0,
@@ -386,7 +393,7 @@ export function initPartyMode(ctx: IntroCtx) {
   /* ---------- PEOPLE: a living silhouette crowd in front of the stage (jumping, waving, mexican-wave, phone lights) ---------- */
   const pp = refs.pp,
     pc2 = pp.getContext("2d")!;
-  let ROWS: any[] = [],
+  let ROWS: CrowdRow[] = [],
     doneAt = 0,
     curK = 0;
   function buildPeople() {

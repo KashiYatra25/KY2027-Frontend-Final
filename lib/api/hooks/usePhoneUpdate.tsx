@@ -10,10 +10,8 @@ import {
   shouldRetryOnNetworkError,
 } from "@/lib/api/constants";
 import { extractErrorMessage } from "@/lib/api/helper/functions/error.functions";
-import {
-  PhoneSuccessToast,
-  PhoneErrorToast,
-} from "@/components/pages/complete-profile/steps/phone/toasts";
+import { PhoneSuccessToast } from "@/components/pages/complete-profile/steps/phone/toasts/success/PhoneSuccessToast";
+import { PhoneErrorToast } from "@/components/pages/complete-profile/steps/phone/toasts/error/PhoneErrorToast";
 import type { PhoneUpdateData } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════

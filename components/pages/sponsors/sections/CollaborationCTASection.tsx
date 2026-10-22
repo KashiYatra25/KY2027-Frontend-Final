@@ -2,30 +2,46 @@
 
 import { memo, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { useContact } from "@/lib/api/hooks";
 import { PALETTE, GRADIENTS, SHADOWS } from "@/components/pages/sponsors/constants/palette";
-import { Starburst, FloatingCircles } from "./decor/VectorDecorations";
+import { Starburst, FloatingCircles } from "./decor";
 
 // ═══════════════════════════════════════════════════════════════════
 // COLLABORATION CTA - CONTACT FORM WITH VECTOR ART
 // ═══════════════════════════════════════════════════════════════════
 
+const CollaborationFormSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.email("Invalid email address"),
+});
+
+type CollaborationFormData = z.infer<typeof CollaborationFormSchema>;
+
 export const CollaborationCTASection = memo(function CollaborationCTASection() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  });
-
   const [showSuccess, setShowSuccess] = useState(false);
   const { submitContact, isPending, isSuccess, isError, errorMessage } = useContact();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email) return;
-    submitContact(formData);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<CollaborationFormData>({
+    resolver: zodResolver(CollaborationFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+    },
+  });
+
+  const onSubmit = (data: CollaborationFormData) => {
+    submitContact(data);
   };
 
   if (isSuccess && !showSuccess) {
@@ -107,7 +123,7 @@ export const CollaborationCTASection = memo(function CollaborationCTASection() {
             <button
               onClick={() => {
                 setShowSuccess(false);
-                setFormData({ name: "", email: "" });
+                reset({ name: "", email: "" });
               }}
               className="mt-6 text-sm underline"
               style={{ color: PALETTE.TEXT_MUTED }}
@@ -120,7 +136,7 @@ export const CollaborationCTASection = memo(function CollaborationCTASection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="space-y-6"
           >
             {/* Name */}
@@ -133,16 +149,19 @@ export const CollaborationCTASection = memo(function CollaborationCTASection() {
               </label>
               <input
                 type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                {...register("name")}
                 placeholder="John Doe"
-                required
                 className="focus:border-opacity-100 w-full rounded-xl border bg-transparent px-4 py-3 transition-colors outline-none"
                 style={{
                   borderColor: `${PALETTE.ELECTRIC_VIOLET}30`,
                   color: PALETTE.TEXT_PRIMARY,
                 }}
               />
+              {errors.name && (
+                <p className="mt-2 text-sm" style={{ color: PALETTE.HOT_PINK }}>
+                  {errors.name.message}
+                </p>
+              )}
             </div>
 
             {/* Email */}
@@ -155,16 +174,19 @@ export const CollaborationCTASection = memo(function CollaborationCTASection() {
               </label>
               <input
                 type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                {...register("email")}
                 placeholder="john@company.com"
-                required
                 className="focus:border-opacity-100 w-full rounded-xl border bg-transparent px-4 py-3 transition-colors outline-none"
                 style={{
                   borderColor: `${PALETTE.ELECTRIC_VIOLET}30`,
                   color: PALETTE.TEXT_PRIMARY,
                 }}
               />
+              {errors.email && (
+                <p className="mt-2 text-sm" style={{ color: PALETTE.HOT_PINK }}>
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             {/* Error */}

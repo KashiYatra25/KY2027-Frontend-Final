@@ -2,17 +2,17 @@
 
 import { useState, useCallback } from "react";
 import { COLORS } from "./constants/palette";
-import { GalleryNavbar } from "./sections/GalleryNavbar";
+import { GalleryNavbar } from "./sections/GalleryNavbar/GalleryNavbar";
 import { HeroSection } from "./sections/HeroSection";
-import { PhotoReels } from "./sections/PhotoReels";
+import { PhotoReels } from "./sections/PhotoReels/PhotoReels";
 import { VideoReelSection } from "./sections/VideoReelSection";
-import { SpecialVideosSection } from "./sections/SpecialVideosSection";
+import { SpecialVideosSection } from "./sections/SpecialVideosSection/SpecialVideosSection";
 import { PerformersSection } from "./sections/PerformersSection";
-import { TeamSection } from "./sections/TeamSection";
+import { TeamSection } from "./sections/TeamSection/TeamSection";
 import { FooterSection } from "./sections/FooterSection";
 import { Lightbox } from "./sections/Lightbox";
 import { GlowBackgrounds } from "./sections/GlowBackgrounds";
-import { DecoElements } from "./sections/DecoElements";
+import { DecoElements } from "./sections/decor";
 import { Sparkles } from "./sections/Sparkles";
 import type { LightboxItem } from "./types";
 

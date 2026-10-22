@@ -17,4 +17,5 @@ export { Navigation, MobileControls, MobileLogo } from "./components";
 export type { Layer, MapLayers, LayerConfig } from "@/lib/api/helper/types";
 
 // Constants
-export { DEFAULT_LAYERS, LAYERS, TONE_COLORS } from "./constants";
+export { DEFAULT_LAYERS, LAYERS } from "./constants/layers";
+export { TONE_COLORS } from "./constants/palette";

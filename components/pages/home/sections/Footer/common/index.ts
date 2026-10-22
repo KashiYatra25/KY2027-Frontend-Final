@@ -1,4 +1,4 @@
-export { BackgroundDecor, AmbientGlow, FooterDancer } from "./BackgroundDecorNew";
+export { BackgroundDecor, AmbientGlow, FooterDancer } from "./decor";
 export {
   GlitchText,
   PulseRings,

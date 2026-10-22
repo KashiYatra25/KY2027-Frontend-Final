@@ -1,1 +1,0 @@
-export { PassCard } from "./PassCard";

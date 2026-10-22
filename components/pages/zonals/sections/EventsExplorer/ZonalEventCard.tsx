@@ -9,6 +9,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { CheckCircle, Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { COLORS } from "@/components/pages/zonals/constants/palette";
@@ -100,8 +101,8 @@ export function ZonalEventCard({ event, collegeSlug }: Props) {
 
     if (!hasPass) {
       return (
-        <a
-          href="#passes"
+        <Link
+          href="/passes"
           className="block w-full rounded-lg px-4 py-2.5 text-center text-sm font-black tracking-wide uppercase transition-transform hover:scale-[1.02]"
           style={{
             background: COLORS.SIGNAL_ORANGE,
@@ -110,7 +111,7 @@ export function ZonalEventCard({ event, collegeSlug }: Props) {
           }}
         >
           Get Pass First
-        </a>
+        </Link>
       );
     }
 

@@ -4,41 +4,7 @@ import Image from "next/image";
 import { memo, type ReactNode } from "react";
 import { IMAGES } from "@/lib/images";
 import { COLORS, JAZZ_COLORS } from "@/components/pages/contact/constants/palette";
-import { CornerOrnaments } from "./decor";
-
-// ═══════════════════════════════════════════════════════════════════
-// ROYAL GOLD LINE ICONS
-// ═══════════════════════════════════════════════════════════════════
-const iconProps = {
-  width: 30,
-  height: 30,
-  viewBox: "0 0 24 24",
-  fill: "none",
-  stroke: COLORS.BRIGHT_GOLD,
-  strokeWidth: 1.5,
-  strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
-};
-
-const EmailIcon = (
-  <svg {...iconProps}>
-    <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" />
-    <path d="M3 6l9 6 9-6" />
-  </svg>
-);
-
-const PhoneIcon = (
-  <svg {...iconProps}>
-    <path d="M6.5 3.5c.5 0 .9.3 1.1.8l1.3 3c.2.5.1 1-.3 1.4L7.4 10c1 2 2.6 3.6 4.6 4.6l1.3-1.2c.4-.4.9-.5 1.4-.3l3 1.3c.5.2.8.6.8 1.1v3c0 .8-.7 1.5-1.5 1.4C9.6 19.4 4.6 14.4 4.1 6.5 4 5.2 4.7 4.5 5.5 4.5z" />
-  </svg>
-);
-
-const PinIcon = (
-  <svg {...iconProps}>
-    <path d="M12 21c4-4.5 7-8 7-11a7 7 0 10-14 0c0 3 3 6.5 7 11z" />
-    <circle cx="12" cy="10" r="2.5" />
-  </svg>
-);
+import { CornerOrnaments, EmailIcon, PhoneIcon, PinIcon } from "./decor";
 
 const infoCards: {
   icon: ReactNode;
@@ -47,19 +13,19 @@ const infoCards: {
   href: string;
 }[] = [
   {
-    icon: EmailIcon,
+    icon: <EmailIcon />,
     label: "Email",
     value: "contact@kashiyatra.org.in",
     href: "mailto:contact@kashiyatra.org.in",
   },
   {
-    icon: PhoneIcon,
+    icon: <PhoneIcon />,
     label: "Call Us",
     value: "+91 79069 49235",
     href: "tel:+917906949235",
   },
   {
-    icon: PinIcon,
+    icon: <PinIcon />,
     label: "Find Us",
     value: "IIT (BHU) Varanasi, Uttar Pradesh 221005",
     href: "https://maps.google.com/?q=IIT+BHU+Varanasi",

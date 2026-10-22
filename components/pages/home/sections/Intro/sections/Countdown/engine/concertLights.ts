@@ -1,9 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Canvas FX module ported from kashiyatra-countdown-clean.
 // Concert lights, beams, crowd phone-lights, lanterns, fireworks.
-// Note: This file uses dynamic animation structures that are difficult to type strictly.
 import { clamp } from "./utils";
-import type { IntroCtx } from "./types";
+import type {
+  IntroCtx,
+  CrowdPhoneLight,
+  StringBulb,
+  Rocket,
+  FireworkSpark,
+  GroundGlow,
+} from "./types";
 
 /** Phase 5: live concert lights, beams, crowd phone-lights, lanterns, fireworks. */
 export function initConcertLights(ctx: IntroCtx) {
@@ -265,12 +270,12 @@ export function initConcertLights(ctx: IntroCtx) {
     nextBurst = 1.2,
     nextFin = 18,
     ft: ReturnType<typeof setTimeout> | undefined,
-    CROWD: any[] = [],
-    STRB: any[] = [],
+    CROWD: CrowdPhoneLight[] = [],
+    STRB: StringBulb[] = [],
     SP: Record<string, HTMLCanvasElement> = {};
-  const PT: any[] = [],
-    RK: any[] = [],
-    GL: any[] = [];
+  const PT: FireworkSpark[] = [],
+    RK: Rocket[] = [],
+    GL: GroundGlow[] = [];
   const rr = (a: number, b: number) => a + Math.random() * (b - a);
   const PAL = [
     [255, 196, 92],

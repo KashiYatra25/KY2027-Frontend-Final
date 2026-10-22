@@ -1,1 +1,0 @@
-export { JazzIcon } from "./JazzIcons";

@@ -2,8 +2,8 @@
 
 import { memo } from "react";
 import { JAZZ_COLORS } from "@/components/pages/home/constants/palette";
-import { JazzIcon } from "@/components/pages/home/sections/TheExperience/icons";
-import { OrnateFrame } from "@/components/pages/home/sections/TheExperience/decor";
+import { JazzIcon } from "@/components/pages/home/sections/TheExperience/icons/JazzIcon";
+import { OrnateFrame } from "@/components/pages/home/sections/TheExperience/decor/OrnateFrame";
 import type { ExperienceTile } from "@/components/pages/home/sections/TheExperience/data/experiences.config";
 
 // ═══════════════════════════════════════════════════════════════════

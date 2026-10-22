@@ -1,1 +1,0 @@
-export { FirePot } from "./FirePot";

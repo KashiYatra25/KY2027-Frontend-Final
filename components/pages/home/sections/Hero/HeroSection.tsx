@@ -11,7 +11,7 @@ import { FlyingBirds } from "@/components/pages/home/sections/Hero/Sky/Birds";
 import { River } from "@/components/pages/home/sections/Hero/River";
 import { useTimeOfDay } from "@/hooks/useTimeOfDay";
 import { useAnimationPolicy } from "@/hooks";
-import { MotionZone } from "@/lib/motion";
+import { MotionZone } from "@/lib/motion/MotionZone";
 import { IMAGES } from "@/lib/images";
 import { Kandeels } from "@/components/pages/home/sections/Hero/desktop/Kandeels";
 import { DriftingClouds } from "@/components/pages/home/sections/Hero/desktop/DriftingClouds";

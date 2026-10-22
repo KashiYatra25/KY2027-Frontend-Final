@@ -17,7 +17,7 @@ export const HeroRight = memo(function HeroRight({ ref }: HeroRightProps) {
   return (
     <div
       ref={ref}
-      className="pointer-events-none absolute right-[-9%] bottom-[31%] w-[55%] sm:right-[4%] sm:bottom-[29.6%] sm:w-[20%]"
+      className="pointer-events-none absolute right-[0%] bottom-[31%] w-[35%] sm:right-[4%] sm:bottom-[29.6%] sm:w-[20%]"
       style={{
         zIndex: Z_HERO.HERO_RIGHT,
       }}

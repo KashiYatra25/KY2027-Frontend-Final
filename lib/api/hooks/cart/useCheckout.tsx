@@ -89,7 +89,7 @@ function CheckoutErrorToast() {
  * Hook to checkout cart and get Cashfree payment session
  */
 export function useCheckout() {
-  const { mutate, isPending, isSuccess, isError, error, reset, data } =
+  const { mutate, isPending, isSuccess, isError, error, reset } =
     useApiMutation<CheckoutApiResponse>({
       url: "/user/cart/checkout",
       method: "post",
@@ -137,6 +137,5 @@ export function useCheckout() {
     isError,
     error,
     reset,
-    data: data?.data,
   };
 }

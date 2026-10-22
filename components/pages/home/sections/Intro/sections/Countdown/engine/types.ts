@@ -176,19 +176,82 @@ export interface Lantern {
   l: number;
 }
 
+/** Crowd phone-light dot (concertLights CROWD array) */
+export interface CrowdPhoneLight {
+  x: number;
+  y: number;
+  k: string;
+  s: number;
+  ph: number;
+  sp: number;
+  f: number;
+  sway: number;
+}
+
+/** String-bulb light (concertLights STRB array) */
+export interface StringBulb {
+  x: number;
+  y: number;
+  s: number;
+  ph: number;
+  sp: number;
+  sp2: number;
+}
+
+/** Rocket in flight (concertLights RK array) */
+export interface Rocket {
+  sx: number;
+  sy: number;
+  x: number;
+  y: number;
+  tx: number;
+  ty: number;
+  s: number;
+  t: number;
+  dur: number;
+}
+
+/** Firework spark particle (concertLights PT array) */
+export interface FireworkSpark {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  max: number;
+  c: number[];
+  drag: number;
+  grav: number;
+  size: number;
+  ks: number;
+  tw: boolean;
+  cr: boolean;
+  ph: number;
+}
+
+/** Ground glow burst (concertLights GL array) */
+export interface GroundGlow {
+  x: number;
+  y: number;
+  r: number;
+  c: string;
+  t: number;
+  max: number;
+}
+
 // Living crowd types
 /** Arm silhouette */
 export interface ArmSilhouette {
   x: number;
   y: number;
-  s: number;
+  s?: number;
   u: number;
   ph: number;
   hu: number;
-  up: number;
-  hand: number;
-  side: number;
-  wave: number;
+  up?: number;
+  hand?: number;
+  side?: number;
+  wave?: number;
   hs: number;
   hs2?: number;
   w?: number;
@@ -201,13 +264,15 @@ export interface ArmSilhouette {
   j?: number;
   jump?: number;
   arm?: number;
+  wf?: number;
+  gear?: number;
 }
 
 /** Standing person silhouette */
 export interface StandingSilhouette {
   x: number;
   y: number;
-  s: number;
+  s?: number;
   u: number;
   hu: number;
   ph: number;
@@ -215,10 +280,10 @@ export interface StandingSilhouette {
   h: number;
   hs: number;
   hs2?: number;
-  wave: number;
-  jump: number;
+  wave?: number;
+  jump?: number;
   j: number;
-  arm: number;
+  arm?: number;
   both?: boolean;
   turn?: number;
   phone?: boolean;

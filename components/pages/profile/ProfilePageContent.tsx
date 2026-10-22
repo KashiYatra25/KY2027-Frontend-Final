@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import { ThemedNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import { AuthSuccessToastHandler } from "@/components/auth";
 import { useMyAccount, useSignOut, useCaInfo } from "@/lib/api/hooks";
 import {

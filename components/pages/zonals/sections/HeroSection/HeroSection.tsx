@@ -23,6 +23,10 @@ import {
 
 import { COLORS, GRADIENTS, SHADOWS } from "@/components/pages/zonals/constants/palette";
 
+import { Starburst } from "./decor/Starburst";
+import { SoundWave } from "./decor/SoundWave";
+import { Sticker } from "./decor/Sticker";
+
 // Motion-enabled Next Link so CTAs can client-navigate with animation.
 const MotionLink = motion.create(Link);
 
@@ -69,166 +73,9 @@ const headlineVariants: Variants = {
   },
 };
 
-const stickerVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.6, rotate: 0 },
-  show: (rotate: number) => ({
-    opacity: 1,
-    scale: 1,
-    rotate,
-    transition: { type: "spring", stiffness: 160, damping: 14, delay: 0.6 },
-  }),
-};
-
 // ───────────────────────────────────────────────────────────────────
-// Decorative sub-components
+// Decorative sub-components (extracted to ./decor)
 // ───────────────────────────────────────────────────────────────────
-
-/** Rotating many-pointed starburst (pure SVG). */
-function Starburst({
-  size,
-  color,
-  points = 12,
-  duration = 24,
-  reverse = false,
-}: {
-  size: number;
-  color: string;
-  points?: number;
-  duration?: number;
-  reverse?: boolean;
-}) {
-  const outer = size / 2;
-  const inner = outer * 0.52;
-  const cx = outer;
-  const cy = outer;
-  const coords: string[] = [];
-  const step = Math.PI / points;
-  for (let i = 0; i < points * 2; i++) {
-    const r = i % 2 === 0 ? outer : inner;
-    const a = i * step - Math.PI / 2;
-    coords.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
-  }
-
-  return (
-    <motion.svg
-      width={size}
-      height={size}
-      viewBox={`0 0 ${size} ${size}`}
-      aria-hidden="true"
-      animate={{ rotate: reverse ? -360 : 360 }}
-      transition={{ duration, ease: "linear", repeat: Infinity }}
-      style={{ display: "block" }}
-    >
-      <polygon points={coords.join(" ")} fill={color} />
-    </motion.svg>
-  );
-}
-
-/** Animated sound-wave visualizer bars (pure SVG). */
-function SoundWave({
-  bars = 28,
-  color,
-  width = 320,
-  height = 72,
-}: {
-  bars?: number;
-  color: string;
-  width?: number;
-  height?: number;
-}) {
-  const reduce = useReducedMotion();
-  const barWidth = width / (bars * 1.8);
-  const gap = (width - bars * barWidth) / (bars - 1);
-
-  return (
-    <svg
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
-      aria-hidden="true"
-      style={{ overflow: "visible" }}
-    >
-      {Array.from({ length: bars }).map((_, i) => {
-        const x = i * (barWidth + gap);
-        const base = 6 + (Math.sin(i * 1.3) * 0.5 + 0.5) * (height - 10);
-        return (
-          <motion.rect
-            key={i}
-            x={x}
-            width={barWidth}
-            rx={barWidth / 2}
-            fill={color}
-            initial={{ height: base, y: (height - base) / 2 }}
-            animate={
-              reduce
-                ? { height: base, y: (height - base) / 2 }
-                : {
-                    height: [base * 0.3, base, base * 0.5, base * 0.9, base * 0.3],
-                    y: [
-                      (height - base * 0.3) / 2,
-                      (height - base) / 2,
-                      (height - base * 0.5) / 2,
-                      (height - base * 0.9) / 2,
-                      (height - base * 0.3) / 2,
-                    ],
-                  }
-            }
-            transition={{
-              duration: 1.1 + (i % 5) * 0.18,
-              ease: "easeInOut",
-              repeat: Infinity,
-              delay: i * 0.04,
-            }}
-          />
-        );
-      })}
-    </svg>
-  );
-}
-
-/** Floating sticker chip. */
-function Sticker({
-  label,
-  bg,
-  fg,
-  rotate,
-  className,
-  float = 0,
-}: {
-  label: string;
-  bg: string;
-  fg: string;
-  rotate: number;
-  className?: string;
-  float?: number;
-}) {
-  const reduce = useReducedMotion();
-  return (
-    <motion.div
-      custom={rotate}
-      variants={stickerVariants}
-      className={`pointer-events-none absolute select-none ${className ?? ""}`}
-    >
-      <motion.span
-        className="inline-block rounded-full border-2 px-3 py-1.5 text-[10px] font-black tracking-[0.18em] whitespace-nowrap uppercase sm:text-xs"
-        style={{
-          background: bg,
-          color: fg,
-          borderColor: COLORS.DEEP_INK,
-          boxShadow: `3px 3px 0 ${COLORS.DEEP_INK}`,
-        }}
-        animate={reduce ? undefined : { y: [0, float, 0] }}
-        transition={{
-          duration: 4 + Math.abs(float) * 0.05,
-          ease: "easeInOut",
-          repeat: Infinity,
-        }}
-      >
-        {label}
-      </motion.span>
-    </motion.div>
-  );
-}
 
 // ───────────────────────────────────────────────────────────────────
 // Main component

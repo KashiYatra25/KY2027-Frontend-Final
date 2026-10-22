@@ -13,7 +13,7 @@ import {
   GridOverlay,
 } from "./common";
 import { FloatingSoundParticles, AnimatedSpeakers, VerticalNeonText } from "./common/decor";
-import { MotionZone } from "@/lib/motion";
+import { MotionZone } from "@/lib/motion/MotionZone";
 import { useAnimationPolicy } from "@/hooks";
 
 gsap.registerPlugin(ScrollTrigger);

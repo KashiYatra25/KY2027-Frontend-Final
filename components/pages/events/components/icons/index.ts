@@ -1,0 +1,10 @@
+export { NatrajIcon } from "./NatrajIcon";
+export { CrosswindzIcon } from "./CrosswindzIcon";
+export { BandishIcon } from "./BandishIcon";
+export { AbhinayIcon } from "./AbhinayIcon";
+export { MirageIcon } from "./MirageIcon";
+export { ToolikaIcon } from "./ToolikaIcon";
+export { EnquiztaIcon } from "./EnquiztaIcon";
+export { SamwaadIcon } from "./SamwaadIcon";
+export { ZaikaIcon } from "./ZaikaIcon";
+export { CATEGORY_ICONS, getCategoryIcon } from "./getCategoryIcon";

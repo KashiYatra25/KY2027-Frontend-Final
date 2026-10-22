@@ -1,4 +1,5 @@
-export { HeadlinerCard, FeaturingCard } from "./ArtistCard";
+export { HeadlinerCard } from "./ArtistCard/HeadlinerCard";
+export { FeaturingCard } from "./ArtistCard/FeaturingCard";
 export {
   DancingGirlFestiveVibes,
   GlowingMoon,

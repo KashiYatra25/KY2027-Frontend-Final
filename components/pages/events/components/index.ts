@@ -12,7 +12,7 @@ export {
   DiyaDecor,
   RangoliStar,
   SwirlDecor,
-} from "./CategoryDecorations";
+} from "./decor";
 export {
   CATEGORY_ICONS,
   getCategoryIcon,
@@ -25,4 +25,4 @@ export {
   EnquiztaIcon,
   SamwaadIcon,
   ZaikaIcon,
-} from "./CategoryIcons";
+} from "./icons";

@@ -3,7 +3,7 @@
 import { memo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { PALETTE, GRADIENTS } from "@/components/pages/sponsors/constants/palette";
-import { Starburst, WavyLine } from "./decor/VectorDecorations";
+import { Starburst, WavyLine } from "./decor";
 
 // ═══════════════════════════════════════════════════════════════════
 // IMPACT SECTION - BOLD STATISTICS WITH VECTOR ART

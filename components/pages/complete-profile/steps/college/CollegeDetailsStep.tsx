@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { useSession } from "next-auth/react";
 import { GraduationCap, Loader2 } from "lucide-react";
 import { useCollegeSearch, useUpdateCollege, type College } from "@/lib/api/hooks";
@@ -11,8 +14,8 @@ import {
   CollegeDropdown,
   SelectedCollegeCard,
   ManualInput,
-  isIITBhuCollege,
 } from "./sections";
+import { isIITBhuCollege } from "@/lib/api/helper/functions/college.functions";
 import { useDebounce } from "@/hooks/useDebounce";
 import { CollegeLoader } from "./loader/CollegeLoader";
 import { CollegeErrorState } from "./error/CollegeErrorState";
@@ -26,20 +29,98 @@ interface CollegeDetailsStepProps {
 }
 
 // ═══════════════════════════════════════════════════════════════════
+// FORM SCHEMA
+// ═══════════════════════════════════════════════════════════════════
+
+const CollegeFormSchema = z
+  .object({
+    // Which entry mode the user is in. Drives which value becomes the payload.
+    isManualMode: z.boolean(),
+    // Autocomplete query (also used as a fallback submitted value in search mode).
+    searchQuery: z.string(),
+    // The college selected from the search dropdown.
+    selectedCollege: z.custom<College | null>().nullable(),
+    // Manually typed college name.
+    manualCollege: z.string(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.isManualMode) {
+      const trimmed = data.manualCollege.trim();
+      if (trimmed.length < 3) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["manualCollege"],
+          message: "Please enter your full college name (at least 3 characters)",
+        });
+        return;
+      }
+      if (isIITBhuCollege(trimmed)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["manualCollege"],
+          message:
+            "IIT BHU students are verified via their institute email. Please sign in with your @itbhu.ac.in or @iitbhu.ac.in email instead.",
+        });
+      }
+    } else {
+      const collegeName = data.selectedCollege?.name || data.searchQuery;
+      if (!data.selectedCollege && data.searchQuery.trim().length < 3) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["searchQuery"],
+          message: "Please search and select your college (at least 3 characters)",
+        });
+        return;
+      }
+      if (isIITBhuCollege(collegeName)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["searchQuery"],
+          message:
+            "IIT BHU students are verified via their institute email. Please sign in with your @itbhu.ac.in or @iitbhu.ac.in email instead.",
+        });
+      }
+    }
+  });
+
+type CollegeFormData = z.infer<typeof CollegeFormSchema>;
+
+// ═══════════════════════════════════════════════════════════════════
 // MAIN COMPONENT
 // ═══════════════════════════════════════════════════════════════════
 
 export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps) {
   const { data: session } = useSession();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCollege, setSelectedCollege] = useState<College | null>(null);
-  const [manualCollege, setManualCollege] = useState("");
+
+  // Form state (genuine submitted fields) managed via react-hook-form
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<CollegeFormData>({
+    resolver: zodResolver(CollegeFormSchema),
+    mode: "onChange",
+    defaultValues: {
+      isManualMode: false,
+      searchQuery: "",
+      selectedCollege: null,
+      manualCollege: "",
+    },
+  });
+
+  // Register non-input-backed fields so they participate in validation
+  register("isManualMode");
+  register("selectedCollege");
+
+  const isManualMode = watch("isManualMode");
+  const searchQuery = watch("searchQuery");
+  const selectedCollege = watch("selectedCollege");
+  const manualCollege = watch("manualCollege");
+
+  // Pure UI / non-field state stays as useState
   const [isManualInputValid, setIsManualInputValid] = useState(true);
-
-  // If the person's college is not in our dataset , then he have to enter it manually.
-  const [isManualMode, setIsManualMode] = useState(false);
-
-  // Dropdown state
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -80,73 +161,84 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
   }, []);
 
   // Handlers
-  const handleSelectCollege = useCallback((college: College) => {
-    setSelectedCollege(college);
-    setSearchQuery(college.name);
-    setIsDropdownOpen(false);
-  }, []);
+  const handleSelectCollege = useCallback(
+    (college: College) => {
+      setValue("selectedCollege", college, { shouldValidate: true });
+      setValue("searchQuery", college.name, { shouldValidate: true });
+      setIsDropdownOpen(false);
+    },
+    [setValue]
+  );
 
-  const handleSearchChange = useCallback((value: string) => {
-    setSearchQuery(value);
-    setSelectedCollege(null);
-    setIsDropdownOpen(true);
-  }, []);
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setValue("searchQuery", value, { shouldValidate: true });
+      setValue("selectedCollege", null, { shouldValidate: true });
+      setIsDropdownOpen(true);
+    },
+    [setValue]
+  );
 
   const handleClearSearch = useCallback(() => {
-    setSearchQuery("");
-    setSelectedCollege(null);
-  }, []);
+    setValue("searchQuery", "", { shouldValidate: true });
+    setValue("selectedCollege", null, { shouldValidate: true });
+  }, [setValue]);
 
   const handleToggleManualMode = useCallback(() => {
-    setIsManualMode(true);
-    setSelectedCollege(null);
-    setSearchQuery("");
-    setManualCollege("");
+    setValue("isManualMode", true, { shouldValidate: true });
+    setValue("selectedCollege", null, { shouldValidate: true });
+    setValue("searchQuery", "", { shouldValidate: true });
+    setValue("manualCollege", "", { shouldValidate: true });
     setIsManualInputValid(true);
-  }, []);
+  }, [setValue]);
 
   const handleManualValidationChange = useCallback((isValid: boolean) => {
     setIsManualInputValid(isValid);
   }, []);
 
-  const handleSubmit = useCallback(() => {
-    const collegeName = isManualMode ? manualCollege : selectedCollege?.name || searchQuery;
+  const onSubmit = useCallback(
+    (data: CollegeFormData) => {
+      const collegeName = data.isManualMode
+        ? data.manualCollege
+        : data.selectedCollege?.name || data.searchQuery;
 
-    if (!collegeName.trim()) return;
+      if (!collegeName.trim()) return;
 
-    // Double-check IIT BHU validation before submitting
-    if (isIITBhuCollege(collegeName)) {
-      setShowError(true);
-      return;
-    }
-
-    updateCollege(
-      { college: collegeName },
-      {
-        onSuccess: () => {
-          setShowError(false);
-          refetchProgress();
-        },
-        onError: () => {
-          // Hook derives a user-friendly errorMessage; just surface the error state
-          setShowError(true);
-        },
+      // Double-check IIT BHU validation before submitting
+      if (isIITBhuCollege(collegeName)) {
+        setShowError(true);
+        return;
       }
-    );
-  }, [isManualMode, manualCollege, selectedCollege, searchQuery, updateCollege, refetchProgress]);
+
+      updateCollege(
+        { college: collegeName },
+        {
+          onSuccess: () => {
+            setShowError(false);
+            refetchProgress();
+          },
+          onError: () => {
+            // Hook derives a user-friendly errorMessage; just surface the error state
+            setShowError(true);
+          },
+        }
+      );
+    },
+    [updateCollege, refetchProgress]
+  );
 
   const handleRetry = useCallback(() => {
     setShowError(false);
-    handleSubmit();
-  }, [handleSubmit]);
+    handleSubmit(onSubmit)();
+  }, [handleSubmit, onSubmit]);
 
   const handleSearchAgain = useCallback(() => {
     setShowError(false);
-    setSearchQuery("");
-    setSelectedCollege(null);
-    setManualCollege("");
+    setValue("searchQuery", "", { shouldValidate: true });
+    setValue("selectedCollege", null, { shouldValidate: true });
+    setValue("manualCollege", "", { shouldValidate: true });
     setIsManualInputValid(true);
-  }, []);
+  }, [setValue]);
 
   // Check if selected college from search is IIT BHU (shouldn't happen via normal search but safety check)
   const isSearchCollegeValid = !selectedCollege || !isIITBhuCollege(selectedCollege.name);
@@ -175,7 +267,7 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
   }
 
   return (
-    <div className="space-y-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       {/* Header */}
       <div className="text-center">
         <div
@@ -198,8 +290,8 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
       {/* Mode Toggle */}
       <ModeToggle
         isManualMode={isManualMode}
-        onSearchMode={() => setIsManualMode(false)}
-        onManualMode={() => setIsManualMode(true)}
+        onSearchMode={() => setValue("isManualMode", false, { shouldValidate: true })}
+        onManualMode={() => setValue("isManualMode", true, { shouldValidate: true })}
       />
 
       {/* College Search or Manual Input */}
@@ -214,6 +306,10 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
             isDropdownOpen={isDropdownOpen}
           />
 
+          {errors.searchQuery && (
+            <span className="mt-2 block text-xs text-red-400">{errors.searchQuery.message}</span>
+          )}
+
           {isDropdownOpen && searchQuery.length >= 2 && (
             <CollegeDropdown
               ref={dropdownRef}
@@ -227,17 +323,22 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
           {selectedCollege && <SelectedCollegeCard college={selectedCollege} />}
         </div>
       ) : (
-        <ManualInput
-          value={manualCollege}
-          onChange={setManualCollege}
-          onValidationChange={handleManualValidationChange}
-        />
+        <div>
+          <ManualInput
+            value={manualCollege}
+            onChange={(value) => setValue("manualCollege", value, { shouldValidate: true })}
+            onValidationChange={handleManualValidationChange}
+          />
+          {errors.manualCollege && (
+            <span className="mt-2 block text-xs text-red-400">{errors.manualCollege.message}</span>
+          )}
+        </div>
       )}
 
       {/* Action Button */}
       <div className="pt-4">
         <button
-          onClick={handleSubmit}
+          type="submit"
           disabled={!isValid || isUpdating}
           className={`w-full rounded-xl py-3 text-lg font-semibold transition-all duration-300 ${
             isValid && !isUpdating
@@ -262,6 +363,6 @@ export function CollegeDetailsStep({ refetchProgress }: CollegeDetailsStepProps)
           )}
         </button>
       </div>
-    </div>
+    </form>
   );
 }

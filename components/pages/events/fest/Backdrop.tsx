@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { EVENTS } from "./events";
-import type { Viewport } from "./hooks";
+import type { Viewport } from "@/hooks/useViewport";
 
 type Layer = { i: number; cls: "in" | "out" } | null;
 

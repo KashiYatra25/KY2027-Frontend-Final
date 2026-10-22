@@ -1,23 +1,7 @@
 import { useState, useEffect } from "react";
 import { Building2, AlertCircle } from "lucide-react";
 import { COLORS } from "@/components/pages/complete-profile/constants/palette";
-
-// ═══════════════════════════════════════════════════════════════════
-// IIT BHU VALIDATION
-// ═══════════════════════════════════════════════════════════════════
-
-/**
- * Regex to detect IIT BHU / IIT Varanasi variants that users should NOT be able to manually enter.
- * IIT BHU users get their college auto-set via Google OAuth with their @itbhu.ac.in email.
- *
- * Does NOT block Banaras Hindu University (BHU) - that's a separate institution.
- */
-const IIT_BHU_REGEX =
-  /i{1,2}\.?\s*t\.?\s*[\(\[\-]?\s*bhu|i{1,2}\.?\s*t\.?\s*varanasi|indian\s+institute\s+of\s+technology\s*[\(\[]?\s*bhu|indian\s+institute\s+of\s+technology\s+varanasi/i;
-
-export function isIITBhuCollege(collegeName: string): boolean {
-  return IIT_BHU_REGEX.test(collegeName);
-}
+import { isIITBhuCollege } from "@/lib/api/helper/functions/college.functions";
 
 // ═══════════════════════════════════════════════════════════════════
 // MANUAL INPUT COMPONENT

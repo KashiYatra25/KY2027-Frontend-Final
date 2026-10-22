@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Canvas FX module ported from kashiyatra-countdown-clean.
 // Living crowd: the photo's own crowd sliced into strips that bounce on the beat.
-// Note: This file uses dynamic animation structures that are difficult to type strictly.
-import type { IntroCtx } from "./types";
+import type { IntroCtx, ArmSilhouette, StandingSilhouette, CrowdLayer } from "./types";
 
 /** Living crowd: the photo's own crowd is sliced into strips that bounce on the beat, plus silhouettes that wave and jump. */
 export function initLivingCrowd(ctx: IntroCtx) {
@@ -25,8 +23,8 @@ export function initLivingCrowd(ctx: IntroCtx) {
   let FW = 0,
     FH = 0,
     d = 1,
-    ARM: any[] = [],
-    STD: any[] = [],
+    ARM: ArmSilhouette[] = [],
+    STD: StandingSilhouette[] = [],
     doneT = 0;
 
   /* y0/y1 = band of the photo (fraction of image height) · amp = jump height · wv = wave density · rate = jumps per beat */
@@ -158,7 +156,7 @@ export function initLivingCrowd(ctx: IntroCtx) {
     STD.sort((a, b) => a.y - b.y);
   }
 
-  function warp(L: any, tt: number, k: number, E: number) {
+  function warp(L: CrowdLayer, tt: number, k: number, E: number) {
     const bh = (L.y1 - L.y0) * FH,
       mg = 0.03 * FH,
       th = bh + mg * 2,
@@ -186,7 +184,7 @@ export function initLivingCrowd(ctx: IntroCtx) {
         FH *
         E *
         pf;
-      if (L.x0)
+      if (L.x0 != null && L.x1 != null)
         t2.globalAlpha = smoothS(L.x0, L.x0 + 0.05, u) * (1 - smoothS(L.x1 - 0.05, L.x1, u));
       t2.drawImage(
         base,
@@ -214,7 +212,7 @@ export function initLivingCrowd(ctx: IntroCtx) {
 
   /* silhouette person: head, shoulders, raised waving arms, optional phone light / glow-stick */
   function person(
-    p: any,
+    p: ArmSilhouette | StandingSilhouette,
     t: number,
     k: number,
     E: number,
@@ -258,7 +256,9 @@ export function initLivingCrowd(ctx: IntroCtx) {
         const sx = X + sd * sw * 0.95,
           sy = y + u * 1.1 + (pass ? 0 : o),
           th =
-            sd * 0.32 + Math.sin(t * p.wf + p.ph + sd) * 0.55 * E + Math.sin(t * 1.3 + p.ph) * 0.12,
+            sd * 0.32 +
+            Math.sin(t * (p.wf ?? 0) + p.ph + sd) * 0.55 * E +
+            Math.sin(t * 1.3 + p.ph) * 0.12,
           hx = sx + Math.sin(th) * L,
           hy2 = sy - Math.cos(th) * L - k * u * 0.5 * E,
           ex = (sx + hx) / 2 + sd * u * 0.34 * bend,
@@ -490,7 +490,7 @@ export function initLivingCrowd(ctx: IntroCtx) {
     }
     // seated crowd STANDS UP and goes wild
     for (const p of STD) {
-      const pe = smoothS(p.dl, p.dl + 1.6, t - doneT);
+      const pe = smoothS(p.dl ?? 0, (p.dl ?? 0) + 1.6, t - doneT);
       if (pe <= 0) continue;
       const bounce = Math.abs(Math.sin(Math.PI * tt * 0.5 * (1 + (p.j > 1 ? 1 : 0)) + p.ph * 0.3)),
         jump = p.u * (0.45 + 0.7 * k) * bounce * p.j * Ef * 0.8,

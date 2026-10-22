@@ -1,4 +1,4 @@
-import { PurchasesPageContent } from "@/components/pages/purchases/PurchasesPageContent";
+import { PurchasesPageContent } from "@/components/pages/purchases/PurchasesPageContent/PurchasesPageContent";
 
 export const metadata = {
   title: "My Purchases | Kashi Yatra 2027",

@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useCallback, useEffect, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { useCreateTeam, useUserSearch, useMyAccount, type SearchedUser } from "@/lib/api/hooks";
 import { TEAMS_COLORS } from "@/components/pages/teams/constants/palette";
 import { X, Search, UserPlus, Trash2, Users, Loader2, Crown } from "lucide-react";
@@ -14,10 +17,25 @@ interface CreateTeamModalProps {
   onSuccess: () => void;
 }
 
+const CreateTeamSchema = z.object({
+  teamName: z.string().trim().min(1, "Team name is required").max(50, "Team name is too long"),
+});
+
+type CreateTeamFormData = z.infer<typeof CreateTeamSchema>;
+
 export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalProps) {
-  const [teamName, setTeamName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMembers, setSelectedMembers] = useState<SearchedUser[]>([]);
+
+  const {
+    register,
+    handleSubmit,
+    reset: resetForm,
+    formState: { errors, isSubmitting },
+  } = useForm<CreateTeamFormData>({
+    resolver: zodResolver(CreateTeamSchema),
+    defaultValues: { teamName: "" },
+  });
 
   const { profile, progress } = useMyAccount("full");
   const account = profile && progress ? { profile, progress } : null;
@@ -45,12 +63,12 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
   // Reset form when modal closes
   useEffect(() => {
     if (!isOpen) {
-      setTeamName("");
+      resetForm();
       setSearchQuery("");
       setSelectedMembers([]);
       reset();
     }
-  }, [isOpen, reset]);
+  }, [isOpen, reset, resetForm]);
 
   // Handle success
   useEffect(() => {
@@ -73,12 +91,15 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
     setSelectedMembers((prev) => prev.filter((m) => m.id !== userId));
   }, []);
 
-  const handleSubmit = useCallback(() => {
-    if (!teamName.trim() || selectedMembers.length === 0) return; // Need at least 1 other member
-    // Only send other members - backend adds creator automatically
-    const memberIds = selectedMembers.map((m) => m.id);
-    createTeam(teamName.trim(), memberIds);
-  }, [teamName, selectedMembers, createTeam]);
+  const onSubmit = useCallback(
+    (data: CreateTeamFormData) => {
+      if (selectedMembers.length === 0) return; // Need at least 1 other member
+      // Only send other members - backend adds creator automatically
+      const memberIds = selectedMembers.map((m) => m.id);
+      createTeam(data.teamName.trim(), memberIds);
+    },
+    [selectedMembers, createTeam]
+  );
 
   // Filter out already selected users AND creator from search results
   const filteredUsers = users.filter(
@@ -132,13 +153,15 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
             <label className="mb-2 block text-sm font-medium text-white/80">Team Name</label>
             <input
               type="text"
-              value={teamName}
-              onChange={(e) => setTeamName(e.target.value)}
+              {...register("teamName")}
               placeholder="Enter team name..."
               className="w-full rounded-lg border bg-white/5 px-4 py-2.5 text-white placeholder-white/40 transition-colors outline-none focus:border-[#D4A853]/50"
               style={{ borderColor: TEAMS_COLORS.BORDER_SUBTLE }}
               maxLength={50}
             />
+            {errors.teamName && (
+              <p className="mt-1.5 text-sm text-red-400">{errors.teamName.message}</p>
+            )}
           </div>
 
           {/* Member Search */}
@@ -312,15 +335,15 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
             Cancel
           </button>
           <button
-            onClick={handleSubmit}
-            disabled={!teamName.trim() || selectedMembers.length === 0 || isCreating}
+            onClick={handleSubmit(onSubmit)}
+            disabled={selectedMembers.length === 0 || isSubmitting || isCreating}
             className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
             style={{
               background: `linear-gradient(135deg, ${TEAMS_COLORS.GOLD} 0%, ${TEAMS_COLORS.GOLD_LIGHT} 100%)`,
               color: TEAMS_COLORS.BG_DEEP,
             }}
           >
-            {isCreating && <Loader2 className="h-4 w-4 animate-spin" />}
+            {(isSubmitting || isCreating) && <Loader2 className="h-4 w-4 animate-spin" />}
             Create Team
           </button>
         </div>

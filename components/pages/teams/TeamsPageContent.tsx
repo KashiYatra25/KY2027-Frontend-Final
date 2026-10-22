@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { ThemedNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import { useMyTeams, useMyAccount } from "@/lib/api/hooks";
 import { TEAMS_COLORS } from "./constants/palette";
 import { TeamCard } from "./components/TeamCard";

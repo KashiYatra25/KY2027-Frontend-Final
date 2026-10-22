@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Clock, CheckCircle, XCircle, ArrowLeft, Mail, Copy, Rocket } from "lucide-react";
 import { useState } from "react";
-import { ThemedNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import { useCaInfo } from "@/lib/api/hooks";
 import { COLORS, COLORS_RGBA, GRADIENTS } from "@/components/pages/ca/constants/palette";
 import { GridBackground, FloatingElements } from "@/components/pages/ca/sections/decor";

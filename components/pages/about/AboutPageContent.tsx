@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemedNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import {
   HeroSection,
   LegacySection,

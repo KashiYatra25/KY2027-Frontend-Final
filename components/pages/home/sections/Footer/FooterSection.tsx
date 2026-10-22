@@ -3,9 +3,9 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { MotionZone } from "@/lib/motion";
+import { MotionZone } from "@/lib/motion/MotionZone";
 import { FOOTER_COLORS, FOOTER_GRADIENTS } from "./common/constants";
-import { BackgroundDecor, AmbientGlow } from "./common/BackgroundDecorNew";
+import { BackgroundDecor, AmbientGlow } from "./common/decor";
 import { ConcertBrandHeader, GlassmorphismCard, NeonSocialButton } from "./common/genz";
 import { socialLinks, quickLinks } from "./common/data";
 import { IMAGES } from "@/lib/images";

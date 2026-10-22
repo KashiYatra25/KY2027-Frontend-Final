@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Anton } from "next/font/google";
 import { PALETTE, GRADIENTS, SHADOWS } from "@/components/pages/sponsors/constants/palette";
-import { Starburst } from "./decor/VectorDecorations";
+import { Starburst } from "./decor";
 
 // Bold display font
 const displayFont = Anton({

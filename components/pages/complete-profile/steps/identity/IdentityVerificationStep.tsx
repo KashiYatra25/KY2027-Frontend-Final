@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Shield, FileText, Fingerprint, Lock } from "lucide-react";
 import { COLORS } from "@/components/pages/complete-profile/constants/palette";
 import { useSelectIdentityMethod } from "@/lib/api/hooks/profile/useSelectIdentityMethod";
-import { AadhaarFlow } from "./AadhaarFlow";
-import { ManualEntryFlow } from "./ManualEntryFlow";
+import { AadhaarFlow } from "./AadhaarFlow/AadhaarFlow";
+import { ManualEntryFlow } from "./ManualEntryFlow/ManualEntryFlow";
 
 // ═══════════════════════════════════════════════════════════════════
 // FEATURE FLAG

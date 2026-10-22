@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { EventCategory } from "@/lib/api/helper/types";
 import { ArrowLeft, Sparkles, CalendarCheck } from "lucide-react";
-import { getCategoryIcon } from "./CategoryIcons";
+import { getCategoryIcon } from "./icons";
 
 // ═══════════════════════════════════════════════════════════════════
 // CATEGORY HEADER COMPONENT - FESTIVE DESIGN

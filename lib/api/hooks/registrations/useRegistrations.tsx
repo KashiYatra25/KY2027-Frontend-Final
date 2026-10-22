@@ -251,7 +251,7 @@ export function useEventRegisterIndividual(eventSlug: string) {
   const queryClient = useQueryClient();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { mutate, isPending, isSuccess, isError, error, data, reset } =
+  const { mutate, isPending, isSuccess, isError, error, reset } =
     useApiMutation<RegisterIndividualResponse>({
       url: `/events/${eventSlug}/register`,
       baseURL: BACKEND_URL,
@@ -289,7 +289,6 @@ export function useEventRegisterIndividual(eventSlug: string) {
     isSuccess,
     isError,
     errorMessage,
-    data: data?.data ?? null,
     reset,
   };
 }
@@ -302,7 +301,7 @@ export function useEventRegisterTeam(eventSlug: string) {
   const queryClient = useQueryClient();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { mutate, isPending, isSuccess, isError, error, data, reset } =
+  const { mutate, isPending, isSuccess, isError, error, reset } =
     useApiMutation<RegisterTeamResponse>({
       url: `/events/${eventSlug}/register`,
       baseURL: BACKEND_URL,
@@ -344,7 +343,6 @@ export function useEventRegisterTeam(eventSlug: string) {
     isSuccess,
     isError,
     errorMessage,
-    data: data?.data ?? null,
     reset,
   };
 }

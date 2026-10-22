@@ -3,7 +3,7 @@
 import { Suspense, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { ThemedNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import { PageLoader } from "@/components/loader/PageLoader";
 import { AuthErrorToastHandler } from "@/components/auth";
 import { useSignIn } from "@/lib/api/hooks";

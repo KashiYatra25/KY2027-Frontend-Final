@@ -3,7 +3,7 @@
 import { memo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { PALETTE } from "@/components/pages/sponsors/constants/palette";
-import { ZigzagLine, DotGrid, ArrowDecor } from "./decor/VectorDecorations";
+import { ZigzagLine, DotGrid, ArrowDecor } from "./decor";
 
 // ═══════════════════════════════════════════════════════════════════
 // ACTIVATIONS SECTION - BRAND OPPORTUNITIES WITH VECTOR ART

@@ -1,6 +1,7 @@
 "use client";
 
 import { memo, useState, useCallback, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import type { SubEvent } from "@/lib/api/helper/types";
 import { useEventRegisterIndividual, useCancelRegistration } from "@/lib/api/hooks";
@@ -60,6 +61,7 @@ export const SubEventCard = memo(function SubEventCard({
   const [showTeamModal, setShowTeamModal] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const hasCalledSuccessRef = useRef(false);
+  const router = useRouter();
 
   // Debug: log what we're receiving
   console.log("SubEventCard event:", {
@@ -111,7 +113,13 @@ export const SubEventCard = memo(function SubEventCard({
   }, [isCancelSuccess, onRegistrationSuccess]);
 
   const handleRegisterClick = useCallback(() => {
-    if (!event.registrationOpen || isRegistered || !canRegister) return;
+    if (!event.registrationOpen || isRegistered) return;
+
+    // No pass yet → send the user to the passes page to buy one first.
+    if (!canRegister) {
+      router.push("/passes");
+      return;
+    }
 
     if (event.type === "team" || event.type === "duo") {
       setShowTeamModal(true);
@@ -119,7 +127,7 @@ export const SubEventCard = memo(function SubEventCard({
     }
 
     registerIndividual();
-  }, [event.registrationOpen, event.type, isRegistered, canRegister, registerIndividual]);
+  }, [event.registrationOpen, event.type, isRegistered, canRegister, registerIndividual, router]);
 
   const handleTeamRegisterSuccess = useCallback(() => {
     setShowTeamModal(false);
@@ -399,11 +407,7 @@ export const SubEventCard = memo(function SubEventCard({
                     : undefined
               }
               onClick={showAsRegistered ? handleRegisteredClick : handleRegisterClick}
-              disabled={
-                (!event.registrationOpen && !showAsRegistered) ||
-                isRegistering ||
-                (!canRegister && !showAsRegistered)
-              }
+              disabled={(!event.registrationOpen && !showAsRegistered) || isRegistering}
               className="group/btn relative mt-auto w-full overflow-hidden rounded-xl py-3.5 text-sm font-bold tracking-wider uppercase transition-all duration-300"
               style={{
                 background: "transparent",
@@ -425,7 +429,7 @@ export const SubEventCard = memo(function SubEventCard({
                       : "none",
                 cursor: showAsRegistered
                   ? "pointer"
-                  : !event.registrationOpen || !canRegister
+                  : !event.registrationOpen
                     ? "not-allowed"
                     : "pointer",
               }}

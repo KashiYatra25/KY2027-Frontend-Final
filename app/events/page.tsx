@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { ThemedNavbar } from "@/components/navbar";
+import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import FestEvents from "@/components/pages/events/fest/FestEvents";
 
 export const metadata: Metadata = {

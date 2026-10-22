@@ -6,26 +6,7 @@ import { motion } from "framer-motion";
 import { PartyPopper, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { COLORS } from "./constants/palette";
-
-// ═══════════════════════════════════════════════════════════════════
-// CONSTANTS
-// ═══════════════════════════════════════════════════════════════════
-
-const WELCOME_SHOWN_KEY = "ky_profile_welcome_shown";
-
-// ═══════════════════════════════════════════════════════════════════
-// HELPER FUNCTIONS
-// ═══════════════════════════════════════════════════════════════════
-
-export function hasWelcomeBeenShown(): boolean {
-  if (typeof window === "undefined") return false;
-  return localStorage.getItem(WELCOME_SHOWN_KEY) === "true";
-}
-
-export function markWelcomeAsShown(): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(WELCOME_SHOWN_KEY, "true");
-}
+import { markWelcomeAsShown } from "@/lib/api/helper/functions/welcome.functions";
 
 // ═══════════════════════════════════════════════════════════════════
 // MAIN COMPONENT

@@ -4,6 +4,7 @@ import { memo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { PassConfig } from "@/lib/api/helper/types";
 import { COLORS } from "@/components/pages/passes/constants/palette";
+import { hexToRgb } from "@/lib/api/helper/functions/color.functions";
 import { TornEdgeTop } from "./TornEdgeTop";
 import { TornEdgeBottom } from "./TornEdgeBottom";
 import { CornerFlourish } from "./CornerFlourish";
@@ -12,14 +13,6 @@ interface PassDetailsModalProps {
   pass: PassConfig | null;
   isOpen: boolean;
   onClose: () => void;
-}
-
-// Helper to convert hex to rgb string
-function hexToRgb(hex: string): string {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
-    : "0, 0, 0";
 }
 
 export const PassDetailsModal = memo(function PassDetailsModal({

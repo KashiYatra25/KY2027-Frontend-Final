@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { SPONSORS_2027 } from "@/components/pages/sponsors/config/sponsors.config";
 import { PALETTE, GRADIENTS } from "@/components/pages/sponsors/constants/palette";
-import { Starburst, Spiral } from "./decor/VectorDecorations";
+import { Starburst, Spiral } from "./decor";
 
 // ═══════════════════════════════════════════════════════════════════
 // SPONSOR WALL - PREVIOUS PARTNERS WITH VECTOR ART
