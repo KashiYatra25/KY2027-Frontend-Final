@@ -221,15 +221,12 @@ export const HeroSection = memo(function HeroSection() {
               className="absolute inset-0 text-7xl leading-none font-black tracking-tighter text-[#6366f1]/10 uppercase blur-sm sm:text-8xl md:text-9xl"
               aria-hidden="true"
             >
-              <span className="block">KASHI</span>
-              <span className="block">YATRA</span>
+              <span className="whitespace-nowrap">KASHI YATRA</span>
             </h1>
-            <h1 className="relative text-7xl leading-none font-black tracking-tighter uppercase sm:text-8xl md:text-9xl">
-              <span className="block text-white drop-shadow-[0_0_30px_rgba(99,102,241,0.3)]">
-                KASHI
-              </span>
+            <h1 className="relative text-7xl leading-none font-black tracking-tighter whitespace-nowrap uppercase sm:text-8xl md:text-9xl">
+              <span className="text-white drop-shadow-[0_0_30px_rgba(99,102,241,0.3)]">KASHI</span>{" "}
               <span
-                className="relative block"
+                className="relative"
                 style={{
                   background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%)",
                   WebkitBackgroundClip: "text",

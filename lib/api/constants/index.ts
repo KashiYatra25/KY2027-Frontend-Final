@@ -4,8 +4,8 @@ import { CookieStrategy } from "wire-axon/auth";
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 export const BACKEND_URL = `${BASE_URL}/api/v1`;
 
-// API timeout in milliseconds (7 seconds)
-export const API_TIMEOUT = 7000;
+// API timeout in milliseconds (10 seconds)
+export const API_TIMEOUT = 10000;
 
 // Maximum retry attempts for network errors
 const MAX_NETWORK_RETRIES = 2;

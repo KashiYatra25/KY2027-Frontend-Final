@@ -60,12 +60,12 @@ export const IMAGES = {
     // Main/Home navbar (golden/cream theme)
     main: {
       background: v(`${IMAGEKIT_BASE}/navbar/main/nav-bg.png`),
-      badge: v(`${IMAGEKIT_BASE}/navbar/main/nav-badge-home-v2.png`),
+      badge: v(`${IMAGEKIT_BASE}/navbar/main/nav-badge-home-v3.png`),
     },
     // About page navbar (purple/blue concert theme)
     about: {
       background: v(`${IMAGEKIT_BASE}/navbar/about/navbar-about.png`),
-      badge: v(`${IMAGEKIT_BASE}/navbar/about/nav-badge-about-v2.png`),
+      badge: v(`${IMAGEKIT_BASE}/navbar/about/nav-badge-about-v3.png`),
     },
     // Sponsors page navbar (green/gold nature theme)
     sponsor: {

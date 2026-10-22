@@ -92,8 +92,8 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     folder: "/navbar/main",
   },
   {
-    localFile: "navbar/MainBadgev2.png",
-    remoteName: "nav-badge-home-v2.png",
+    localFile: "navbar/MainBadgev3.png",
+    remoteName: "nav-badge-home-v3.png",
     folder: "/navbar/main",
   },
   // About page navbar (purple/blue concert theme)
@@ -108,8 +108,8 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     folder: "/navbar/about",
   },
   {
-    localFile: "navbar/AboutBadgev2.png",
-    remoteName: "nav-badge-about-v2.png",
+    localFile: "navbar/AboutBadgev3.png",
+    remoteName: "nav-badge-about-v3.png",
     folder: "/navbar/about",
   },
   // Sponsors page navbar (green/gold nature theme)

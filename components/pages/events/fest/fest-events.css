@@ -873,7 +873,10 @@
     & {
       height: auto;
       min-height: 100dvh;
-      overflow: visible;
+      /* Clip horizontal overflow so the rotating rangoli / glow can't widen
+         the page and shift the screen. `overflow-x: clip` (unlike `hidden`)
+         does NOT coerce overflow-y to auto, so vertical content still flows. */
+      overflow-x: clip;
     }
     #app {
       grid-template-columns: minmax(0, 1fr);
