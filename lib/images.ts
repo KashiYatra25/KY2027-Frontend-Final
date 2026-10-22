@@ -62,7 +62,7 @@ export const IMAGES = {
     // Main/Home navbar (golden/cream theme)
     main: {
       background: v(`${IMAGEKIT_BASE}/navbar/main/nav-bg.png`),
-      badge: v(`${IMAGEKIT_BASE}/navbar/main/nav-badge-home-v4.png`),
+      badge: v(`${IMAGEKIT_BASE}/navbar/main/nav-badge-home-v5.png`),
     },
     // About page navbar (purple/blue concert theme)
     about: {
