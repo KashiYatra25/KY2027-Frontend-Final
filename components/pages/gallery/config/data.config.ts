@@ -134,45 +134,12 @@ export const TEAM_PHOTO: TeamPhotoItem | null = {
 // ═══════════════════════════════════════════════════════════════════
 export const TEAM_GROUPS: TeamGroup[] = [
   {
-    id: "convenors",
-    label: "Convenors",
-    members: [
-      { name: "Coming soon", role: "Convenor" },
-      { name: "Coming soon", role: "Convenor" },
-    ],
-  },
-  {
     id: "tech",
     label: "Tech Team",
     members: [
       { name: "Coming soon", role: "Tech Lead" },
       { name: "Coming soon", role: "Developer" },
       { name: "Coming soon", role: "Developer" },
-    ],
-  },
-  {
-    id: "marketing",
-    label: "Marketing Team",
-    members: [
-      { name: "Coming soon", role: "Marketing Lead" },
-      { name: "Coming soon", role: "Marketing" },
-    ],
-  },
-  {
-    id: "publicity",
-    label: "Publicity Team",
-    members: [
-      { name: "Coming soon", role: "Publicity Lead" },
-      { name: "Coming soon", role: "Publicity" },
-    ],
-  },
-  {
-    id: "events",
-    label: "Event Team",
-    members: [
-      { name: "Coming soon", role: "Events Lead" },
-      { name: "Coming soon", role: "Events" },
-      { name: "Coming soon", role: "Events" },
     ],
   },
 ];
