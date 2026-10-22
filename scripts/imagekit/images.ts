@@ -80,6 +80,16 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     folder: "/hero/common",
   },
   { localFile: "home/hero/Kites.png", remoteName: "kites.png", folder: "/hero/common" },
+  {
+    localFile: "home/hero/HeroLeft.png",
+    remoteName: "hero-left-v5.png",
+    folder: "/hero/common",
+  },
+  {
+    localFile: "home/hero/HeroRight.png",
+    remoteName: "hero-right-v5.png",
+    folder: "/hero/common",
+  },
 
   // ============================================
   // NAVBAR - Page-specific variants
@@ -92,8 +102,8 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     folder: "/navbar/main",
   },
   {
-    localFile: "navbar/MainBadgev3.png",
-    remoteName: "nav-badge-home-v3.png",
+    localFile: "navbar/MainBadgeV4.png",
+    remoteName: "nav-badge-home-v4.png",
     folder: "/navbar/main",
   },
   // About page navbar (purple/blue concert theme)
@@ -108,8 +118,8 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     folder: "/navbar/about",
   },
   {
-    localFile: "navbar/AboutBadgev3.png",
-    remoteName: "nav-badge-about-v3.png",
+    localFile: "navbar/AboutBadgeV4.png",
+    remoteName: "nav-badge-about-v4.png",
     folder: "/navbar/about",
   },
   // Sponsors page navbar (green/gold nature theme)

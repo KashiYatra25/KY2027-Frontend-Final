@@ -1,12 +1,27 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Shield, FileText, Fingerprint, Lock } from "lucide-react";
 import { COLORS } from "@/components/pages/complete-profile/constants/palette";
 import { useSelectIdentityMethod } from "@/lib/api/hooks/profile/useSelectIdentityMethod";
 import { AadhaarFlow } from "./AadhaarFlow";
 import { ManualEntryFlow } from "./ManualEntryFlow";
+
+// ═══════════════════════════════════════════════════════════════════
+// FEATURE FLAG
+// ═══════════════════════════════════════════════════════════════════
+//
+// Aadhaar auto-upload uses AWS Textract for OCR. Until AWS access is
+// restored, Textract cannot run, so the auto-upload pipeline is DISABLED.
+// With this off:
+//   • the Aadhaar choice is never offered on the UI,
+//   • everyone is routed to Manual Entry (which works without AWS),
+//   • users previously committed to "aadhaar" are auto-switched to manual
+//     so they are not stranded on a broken flow.
+//
+// To re-enable Aadhaar auto-upload later: flip this back to `true`.
+const AADHAAR_ENABLED = false;
 
 // ═══════════════════════════════════════════════════════════════════
 // TYPES
@@ -34,21 +49,41 @@ export function IdentityVerificationStep({
 }: IdentityVerificationStepProps) {
   const { selectMethod, isLoading: isSelecting } = useSelectIdentityMethod();
 
+  // When Aadhaar auto-upload is disabled, the ONLY available method is manual.
+  // We ignore any backend-committed "aadhaar" method and route to manual so a
+  // user who started the (now broken) Aadhaar flow can still finish via manual.
+  const forcedManual = !AADHAAR_ENABLED;
+
   // Local selection (the user's tentative choice before committing).
-  const [selected, setSelected] = useState<VerificationMode>(lockedMethod ?? "aadhaar");
+  const [selected, setSelected] = useState<VerificationMode>(
+    forcedManual ? "manual" : (lockedMethod ?? "aadhaar")
+  );
 
   // Whether the user has committed their choice this session (clicked Proceed).
   const [hasProceeded, setHasProceeded] = useState(false);
 
   // A method already committed on the backend (resuming) → locked for good.
-  const isLocked = lockedMethod !== null;
+  // When Aadhaar is disabled we never treat the backend method as a lock,
+  // because we always want manual regardless of what was previously chosen.
+  const isLocked = !forcedManual && lockedMethod !== null;
 
   // The committed method drives the flow once chosen; otherwise the local pick.
-  const effectiveMode: VerificationMode = lockedMethod ?? selected;
+  const effectiveMode: VerificationMode = forcedManual ? "manual" : (lockedMethod ?? selected);
 
   // Show the "make your choice" overlay until the user has committed (either
   // this session via Proceed, or previously via a locked backend method).
-  const needsChoice = !isLocked && !hasProceeded;
+  // With Aadhaar disabled there is no choice to make — go straight to manual.
+  const needsChoice = !forcedManual && !isLocked && !hasProceeded;
+
+  // When Aadhaar is disabled, silently commit "manual" on the backend once so
+  // the server record aligns (and any prior "aadhaar" selection is overridden).
+  useEffect(() => {
+    if (!forcedManual) return;
+    if (lockedMethod === "manual") return; // already correct on the backend
+    void selectMethod("manual");
+    // Run once on mount for this step; selectMethod is stable (useCallback).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [forcedManual]);
 
   // Commit the chosen method (the ONLY place a request fires). Nothing hits the
   // backend while the user is merely toggling between the two options.
@@ -78,9 +113,11 @@ export function IdentityVerificationStep({
           Verify Your Identity
         </h2>
         <p style={{ color: `${COLORS.CREAM}60` }}>
-          {isLocked || hasProceeded
-            ? `Continue with ${effectiveMode === "aadhaar" ? "Aadhaar" : "manual"} verification.`
-            : "Choose how you'd like to verify, then continue."}
+          {forcedManual
+            ? "Enter your identity details manually to continue."
+            : isLocked || hasProceeded
+              ? `Continue with ${effectiveMode === "aadhaar" ? "Aadhaar" : "manual"} verification.`
+              : "Choose how you'd like to verify, then continue."}
         </p>
       </div>
 
@@ -151,7 +188,7 @@ export function IdentityVerificationStep({
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
             >
-              {effectiveMode === "aadhaar" ? (
+              {effectiveMode === "aadhaar" && AADHAAR_ENABLED ? (
                 <AadhaarFlow refetchProgress={refetchProgress} locked={needsChoice} />
               ) : (
                 <ManualEntryFlow refetchProgress={refetchProgress} locked={needsChoice} />

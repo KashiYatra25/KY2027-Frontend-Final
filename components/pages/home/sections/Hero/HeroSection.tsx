@@ -12,24 +12,23 @@ import { River } from "@/components/pages/home/sections/Hero/River";
 import { useTimeOfDay } from "@/hooks/useTimeOfDay";
 import { useAnimationPolicy } from "@/hooks";
 import { MotionZone } from "@/lib/motion";
-import { Z_HERO } from "@/components/pages/home/constants";
 import { IMAGES } from "@/lib/images";
 import { Kandeels } from "@/components/pages/home/sections/Hero/desktop/Kandeels";
 import { DriftingClouds } from "@/components/pages/home/sections/Hero/desktop/DriftingClouds";
 import { EmberField } from "@/components/pages/home/sections/Hero/desktop/EmberField";
 import { MobileKite } from "@/components/pages/home/sections/Hero/mobile/MobileKite";
-import { Ghats, ThemePicker } from "@/components/pages/home/sections/Hero/common";
+import { HeroLeft, HeroRight, ThemePicker } from "@/components/pages/home/sections/Hero/common";
 
 // Register plugin at module level (runs once when file is imported)
 gsap.registerPlugin(ScrollTrigger);
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const templeRef = useRef<HTMLDivElement>(null);
+  const heroRightRef = useRef<HTMLDivElement>(null);
   const celestialRef = useRef<HTMLDivElement>(null); // Moon or Sun
   const titleRef = useRef<HTMLHeadingElement>(null);
   const riverRef = useRef<HTMLDivElement>(null);
-  const ghatsRef = useRef<HTMLDivElement>(null);
+  const heroLeftRef = useRef<HTMLDivElement>(null);
   const kitesRef = useRef<HTMLDivElement>(null);
 
   // Get current time-based sky configuration
@@ -79,7 +78,7 @@ export function HeroSection() {
     return () => ctx.revert();
   }, []);
 
-  // Entry animation: Temple & Ghats (related - both are buildings)
+  // Entry animation: Hero right & left artwork
   useEffect(() => {
     /**
      * gsap.context() --> Creates a scope for animations that makes cleanup easy. All animations created inside it are tracked and can be reverted with a single call.
@@ -90,8 +89,8 @@ export function HeroSection() {
      */
 
     const ctx = gsap.context(() => {
-      gsap.set(templeRef.current, { y: 250, opacity: 0 });
-      gsap.set(ghatsRef.current, { x: -250, opacity: 0 });
+      gsap.set(heroRightRef.current, { y: 250, opacity: 0 });
+      gsap.set(heroLeftRef.current, { x: -250, opacity: 0 });
 
       const tl = gsap.timeline({ delay: 0.8 });
 
@@ -109,18 +108,18 @@ export function HeroSection() {
         "<0.2"	0.2s after previous starts	Slight delay from same start
        */
 
-      tl.to(templeRef.current, {
+      tl.to(heroRightRef.current, {
         y: 0,
         opacity: 1,
         duration: 0.5,
         ease: "none",
-      }).to(ghatsRef.current, { x: -40, opacity: 1, duration: 0.5, ease: "none" }, "<");
+      }).to(heroLeftRef.current, { x: -40, opacity: 1, duration: 0.5, ease: "none" }, "<");
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Entry animation: Kites - Desktop only, flies in after temple (not at night)
+  // Entry animation: Kites - Desktop only, flies in after hero artwork (not at night)
   useEffect(() => {
     // Skip on mobile or if it's night time
     if (isMobile) return;
@@ -137,7 +136,7 @@ export function HeroSection() {
         rotation: -30,
       });
 
-      // Animate in after temple (delay matches temple timeline: 0.8 + 0.5 + 0.2 = 1.5s)
+      // Animate in after hero artwork (delay matches timeline: 0.8 + 0.5 + 0.2 = 1.5s)
       gsap.to(kitesRef.current, {
         x: 0,
         y: 0,
@@ -145,7 +144,7 @@ export function HeroSection() {
         scale: 1,
         rotation: -10,
         duration: 0.8,
-        delay: 1.6, // After temple + ghats animation
+        delay: 1.6, // After hero artwork animation
         ease: "power2.out",
       });
     }, containerRef);
@@ -153,34 +152,7 @@ export function HeroSection() {
     return () => ctx.revert();
   }, [timeOfDay, isMobile]);
 
-  // Continuous glow: Temple & Ghats (related visual effect)
-  useEffect(() => {
-    if (!shouldAnimate) return;
-
-    const ctx = gsap.context(() => {
-      gsap.to(templeRef.current, {
-        filter:
-          "drop-shadow(0 0 40px rgba(255,215,0,0.5)) drop-shadow(0 0 70px rgba(255,140,0,0.3))",
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(ghatsRef.current, {
-        filter:
-          "drop-shadow(0 0 30px rgba(255,100,100,0.5)) drop-shadow(0 0 50px rgba(255,150,150,0.3))",
-        duration: 2.5,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, [shouldAnimate]);
-
-  // Parallax scroll: Celestial body & Temple (related scroll behavior) - Desktop only
+  // Parallax scroll: Celestial body & Hero right artwork - Desktop only
   useEffect(() => {
     // Skip parallax on mobile for performance
     if (isMobile) return;
@@ -193,11 +165,11 @@ export function HeroSection() {
         duration: 0.1,
         ease: "none",
       });
-      const templeY = gsap.quickTo(templeRef.current, "y", {
+      const heroRightY = gsap.quickTo(heroRightRef.current, "y", {
         duration: 0.1,
         ease: "none",
       });
-      const ghatsX = gsap.quickTo(ghatsRef.current, "x", {
+      const heroLeftX = gsap.quickTo(heroLeftRef.current, "x", {
         duration: 0.1,
         ease: "none",
       });
@@ -210,8 +182,8 @@ export function HeroSection() {
         onUpdate: (self) => {
           const p = self.progress;
           celestialY(p * -200);
-          templeY(p * 60);
-          ghatsX(p * -100 - 40); // -40 is the base x position from entry animation
+          heroRightY(p * 60);
+          heroLeftX(p * -100 - 40); // -40 is the base x position from entry animation
         },
       });
     }, containerRef);
@@ -476,63 +448,11 @@ export function HeroSection() {
         </div>
       </h1>
 
-      {/* GHATS - Day/Night variants with different positioning */}
-      <Ghats ref={ghatsRef} timeOfDay={timeOfDay} />
+      {/* HERO LEFT - left-side hero artwork (single image, no day/night) */}
+      <HeroLeft ref={heroLeftRef} />
 
-      {/* TEMPLE PNG - Highest z-index, aligned with ghats */}
-      <div
-        ref={templeRef}
-        className="pointer-events-none absolute right-[-9%] bottom-[31%] w-[55%] sm:right-[-6%] sm:bottom-[31%] sm:w-[62%] md:right-[-7%] md:bottom-[28%] md:w-[56%] lg:w-[48%]"
-        style={{
-          zIndex: Z_HERO.TEMPLE,
-        }}
-      >
-        {/* Divine aura rings - Desktop only */}
-        <div
-          className="pointer-events-none absolute top-[10%] left-1/2 hidden h-[60%] w-[80%] -translate-x-1/2 rounded-full sm:block"
-          style={{
-            background: "radial-gradient(ellipse, rgba(255,215,0,0.15) 0%, transparent 70%)",
-            animation: "divineAura 2s ease-in-out infinite",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute top-[5%] left-1/2 hidden h-[70%] w-[90%] -translate-x-1/2 rounded-full sm:block"
-          style={{
-            background: "radial-gradient(ellipse, rgba(255,140,0,0.1) 0%, transparent 60%)",
-            animation: "divineAura 2.5s ease-in-out infinite reverse",
-          }}
-        />
-
-        {/* Floating divine particles - Desktop only */}
-        <div className="hidden sm:block">
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={`particle-${i}`}
-              className="pointer-events-none absolute h-2 w-2 rounded-full"
-              style={{
-                left: `${20 + (i % 4) * 20}%`,
-                top: `${15 + Math.floor(i / 4) * 25}%`,
-                background:
-                  i % 2 === 0
-                    ? "radial-gradient(circle, #FFD700 0%, transparent 70%)"
-                    : "radial-gradient(circle, #FFA500 0%, transparent 70%)",
-                animation: `floatParticle ${2 + (i % 3)}s ease-in-out infinite`,
-                animationDelay: `${i * 0.2}s`,
-                boxShadow: "0 0 6px rgba(255,215,0,0.5)",
-              }}
-            />
-          ))}
-        </div>
-
-        <Image
-          src={IMAGES.hero.temple}
-          alt="Kashi Vishwanath Temple"
-          width={1000}
-          height={1100}
-          className="h-auto w-full sm:drop-shadow-[0_0_25px_rgba(255,215,0,0.5)]"
-          priority
-        />
-      </div>
+      {/* HERO RIGHT - right-side hero artwork (single image, no day/night) */}
+      <HeroRight ref={heroRightRef} />
 
       {/* RIVER - Contains water, lotus, diyas, boats, and stepping stones */}
       {/* RIVER - Contains water, lotus, diyas, boats, and stepping stones */}

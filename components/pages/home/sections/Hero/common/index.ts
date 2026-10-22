@@ -1,3 +1,4 @@
 export { TitleBadge } from "./TitleBadge";
-export { Ghats } from "./Ghats";
+export { HeroLeft } from "./HeroLeft";
+export { HeroRight } from "./HeroRight";
 export { ThemePicker } from "./ThemePicker";

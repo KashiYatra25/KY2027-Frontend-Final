@@ -34,9 +34,9 @@ export const Z_HERO = {
   TITLE: 20,
   BIRDS: 30,
 
-  // Buildings
-  TEMPLE: 50,
-  GHATS: 71,
+  // Hero artwork (left + right)
+  HERO_RIGHT: 71,
+  HERO_LEFT: 71,
 
   // River elements (layered from bottom to top)
   RIVER: 70,

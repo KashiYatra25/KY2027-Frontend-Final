@@ -104,15 +104,15 @@ export const POS_BOATS = {
 // HERO SECTION - BUILDINGS
 // ═══════════════════════════════════════════════════════════════════
 
-/** Temple position */
-export const POS_HERO_TEMPLE = {
+/** Hero right artwork position */
+export const POS_HERO_RIGHT = {
   mobile: { bottom: "31%", right: "-9%" },
   sm: { bottom: "31%", right: "-6%" },
   md: { bottom: "28%", right: "-7%" },
 } as const;
 
-/** Ghats position */
-export const POS_HERO_GHATS = {
+/** Hero left artwork position */
+export const POS_HERO_LEFT = {
   mobile: { bottom: "29%", left: "-5%" },
   sm: { bottom: "28%", left: "-3%" },
   md: { bottom: "25.5%", left: "-2%" },
@@ -167,4 +167,3 @@ export const POS_VIBES_DIYA_MOBILE = {
   left: "50%",
   transform: "translateX(-50%) translateY(-50%)",
 } as const;
-

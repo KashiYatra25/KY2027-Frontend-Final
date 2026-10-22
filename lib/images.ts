@@ -51,6 +51,8 @@ export const IMAGES = {
     varanasiBack: v(`${IMAGEKIT_BASE}/hero/common/varanasi-back.png`),
     steppingStone: v(`${IMAGEKIT_BASE}/hero/common/stepping-stone.webp`),
     kites: v(`${IMAGEKIT_BASE}/hero/common/kites.png`),
+    heroLeft: v(`${IMAGEKIT_BASE}/hero/common/hero-left-v5.png`),
+    heroRight: v(`${IMAGEKIT_BASE}/hero/common/hero-right-v5.png`),
   },
 
   // ============================================
@@ -60,12 +62,12 @@ export const IMAGES = {
     // Main/Home navbar (golden/cream theme)
     main: {
       background: v(`${IMAGEKIT_BASE}/navbar/main/nav-bg.png`),
-      badge: v(`${IMAGEKIT_BASE}/navbar/main/nav-badge-home-v3.png`),
+      badge: v(`${IMAGEKIT_BASE}/navbar/main/nav-badge-home-v4.png`),
     },
     // About page navbar (purple/blue concert theme)
     about: {
       background: v(`${IMAGEKIT_BASE}/navbar/about/navbar-about.png`),
-      badge: v(`${IMAGEKIT_BASE}/navbar/about/nav-badge-about-v3.png`),
+      badge: v(`${IMAGEKIT_BASE}/navbar/about/nav-badge-about-v4.png`),
     },
     // Sponsors page navbar (green/gold nature theme)
     sponsor: {
