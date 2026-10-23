@@ -20,7 +20,7 @@ export const PassDetailsModal = memo(function PassDetailsModal({
   isOpen,
   onClose,
 }: PassDetailsModalProps) {
-  // Close on escape key
+  // Close on escape key + lock background scroll (both native and Lenis).
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -28,11 +28,16 @@ export const PassDetailsModal = memo(function PassDetailsModal({
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
+      // Native scroll lock (mobile / no-Lenis).
       document.body.style.overflow = "hidden";
+      // Lenis ignores body overflow:hidden (virtual wheel/touch scroll), so
+      // pause it explicitly — otherwise the page scrolls behind the modal.
+      window.__lenis?.stop();
     }
     return () => {
       document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "";
+      window.__lenis?.start();
     };
   }, [isOpen, onClose]);
 
@@ -50,6 +55,7 @@ export const PassDetailsModal = memo(function PassDetailsModal({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="fixed inset-0 isolate z-[1000] overflow-y-auto overscroll-none"
+          data-lenis-prevent
         >
           {/* Backdrop - click to close */}
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />

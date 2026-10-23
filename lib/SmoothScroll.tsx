@@ -9,6 +9,15 @@ import { usePathname } from "next/navigation";
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
+// Expose the active Lenis instance so overlays/modals can pause smooth scroll
+// (Lenis ignores `body { overflow: hidden }` because it drives its own virtual
+// scroll from wheel/touch events — modals must call lenis.stop()/start()).
+declare global {
+  interface Window {
+    __lenis?: Lenis | null;
+  }
+}
+
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
   const pathname = usePathname();
@@ -30,6 +39,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     });
 
     lenisRef.current = lenis;
+    window.__lenis = lenis;
 
     // ═══════════════════════════════════════════════════════════════
     // GSAP + Lenis Synchronization (Simple approach)
@@ -103,6 +113,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       document.removeEventListener("click", anchorClickCallback);
       lenis.destroy();
       lenisRef.current = null;
+      window.__lenis = null;
     };
   }, []);
 
