@@ -98,6 +98,20 @@ export const GRADIENT_RIVER = `linear-gradient(180deg,
 /** Moon reflection on water */
 export const GRADIENT_MOON_REFLECTION = `radial-gradient(ellipse, rgba(200,220,255,0.12) 0%, transparent 70%)`;
 
+/**
+ * River water gradient per time-of-day theme.
+ * Night/dusk keep the deep indigo-blue (the look we like); dawn/evening get
+ * warm tints; morning/afternoon get brighter daylight blues.
+ */
+export const RIVER_WATER_BY_THEME: Record<string, string> = {
+  night: `linear-gradient(180deg, #1a4a6e 0%, #15405c 20%, #12354d 40%, #0f2a3e 60%, #0c2030 80%, #081520 100%)`,
+  dusk: `linear-gradient(180deg, #3a2f5e 0%, #2f2a52 20%, #272445 40%, #1d1d38 60%, #15162a 80%, #0e0f1d 100%)`,
+  evening: `linear-gradient(180deg, #5a3f5e 0%, #4a3650 20%, #3a2c44 40%, #2a2135 60%, #1d1826 80%, #120f18 100%)`,
+  dawn: `linear-gradient(180deg, #4a6a8e 0%, #456080 20%, #3d526e 40%, #33455c 60%, #27354a 80%, #1a2636 100%)`,
+  morning: `linear-gradient(180deg, #4a7fa6 0%, #437192 20%, #3b6180 40%, #31506b 60%, #264056 80%, #1a2f42 100%)`,
+  afternoon: `linear-gradient(180deg, #3a86b5 0%, #3576a0 20%, #2f678c 40%, #285576 60%, #204560 80%, #16344a 100%)`,
+};
+
 // ═══════════════════════════════════════════════════════════════════
 // FOOTER GRADIENTS (Royal Maroon & Gold Theme)
 // ═══════════════════════════════════════════════════════════════════
@@ -230,15 +244,12 @@ export const BG_SECTIONS = {
 
 export const SHADOWS = {
   /** Royal card shadow with purple glow and gold border hint */
-  CARD_ROYAL:
-    "0 10px 40px rgba(74, 26, 85, 0.5), 0 0 0 1px rgba(212, 168, 83, 0.2)",
-  CARD_ROYAL_HOVER:
-    "0 20px 60px rgba(74, 26, 85, 0.6), 0 0 30px rgba(212, 168, 83, 0.3)",
+  CARD_ROYAL: "0 10px 40px rgba(74, 26, 85, 0.5), 0 0 0 1px rgba(212, 168, 83, 0.2)",
+  CARD_ROYAL_HOVER: "0 20px 60px rgba(74, 26, 85, 0.6), 0 0 30px rgba(212, 168, 83, 0.3)",
   /** Badge shadow */
   BADGE_GOLD: "0 4px 20px rgba(212, 168, 83, 0.6)",
   /** Button shadow */
-  BUTTON_GOLD:
-    "0 4px 15px rgba(212, 168, 83, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
+  BUTTON_GOLD: "0 4px 15px rgba(212, 168, 83, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
   /** QR frame shadow */
   QR_FRAME: "0 0 15px rgba(212, 168, 83, 0.2), inset 0 0 10px rgba(0,0,0,0.3)",
 } as const;
@@ -363,13 +374,7 @@ export const JAZZ_COLORS = {
 // HERO TIME-BASED SKY GRADIENTS
 // ═══════════════════════════════════════════════════════════════════
 
-export type TimeOfDay =
-  | "dawn"
-  | "morning"
-  | "afternoon"
-  | "evening"
-  | "dusk"
-  | "night";
+export type TimeOfDay = "dawn" | "morning" | "afternoon" | "evening" | "dusk" | "night";
 
 // Dawn - Early morning, sun just rising (5:00 - 7:00)
 // Cooler tones: deep blue transitioning through soft lavender/pink to pale peach/gold

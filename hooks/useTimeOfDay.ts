@@ -51,7 +51,9 @@ const DEV_TIME_OVERRIDE: TimeOfDay | null = null; // Change to null for producti
  * - Night:     21:00 - 5:00
  */
 export function useTimeOfDay(): TimeOfDayState {
-  const [manualTheme, setManualTheme] = useState<TimeOfDay | null>(null);
+  // Default the site to the NIGHT theme on load (not auto). Users can still
+  // switch to auto or any other theme via the picker.
+  const [manualTheme, setManualTheme] = useState<TimeOfDay | null>("night");
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [autoTime, setAutoTime] = useState<TimeOfDay>(() => {
     return DEV_TIME_OVERRIDE ?? "night";

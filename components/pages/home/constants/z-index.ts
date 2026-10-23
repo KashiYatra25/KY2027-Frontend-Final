@@ -36,7 +36,7 @@ export const Z_HERO = {
 
   // Hero artwork (left + right)
   HERO_RIGHT: 71,
-  HERO_LEFT: 71,
+  HERO_LEFT: 72,
 
   // River elements (layered from bottom to top)
   RIVER: 70,

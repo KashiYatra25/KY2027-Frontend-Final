@@ -6,18 +6,24 @@ import { IMAGES } from "@/lib/images";
 import { Z_HERO } from "@/components/pages/home/constants";
 
 interface HeroRightProps {
+  /** Current time-of-day theme; selects the night vs day artwork. */
+  timeOfDay: string;
   ref?: React.Ref<HTMLDivElement>;
 }
 
 /**
  * HeroRight component — the right-side hero artwork.
- * Single image used at all times (no day/night variants).
+ * Theme-responsive: night/dusk/evening use the night image, the rest (dawn,
+ * morning, afternoon) use the day image.
  */
-export const HeroRight = memo(function HeroRight({ ref }: HeroRightProps) {
+export const HeroRight = memo(function HeroRight({ timeOfDay, ref }: HeroRightProps) {
+  const isNight = timeOfDay === "night" || timeOfDay === "dusk" || timeOfDay === "evening";
+  const artwork = isNight ? IMAGES.hero.heroRightNight : IMAGES.hero.heroRightDay;
+
   return (
     <div
       ref={ref}
-      className="pointer-events-none absolute right-[0%] bottom-[31%] w-[35%] sm:right-[4%] sm:bottom-[29.6%] sm:w-[20%]"
+      className="pointer-events-none absolute right-[0%] bottom-[31.7%] w-[53%] sm:right-[0%] sm:bottom-[30.5%] sm:w-[63%]"
       style={{
         zIndex: Z_HERO.HERO_RIGHT,
       }}
@@ -44,7 +50,7 @@ export const HeroRight = memo(function HeroRight({ ref }: HeroRightProps) {
       </div>
 
       <Image
-        src={IMAGES.hero.heroRight}
+        src={artwork}
         alt="Kashiyatra hero artwork"
         width={1000}
         height={1100}

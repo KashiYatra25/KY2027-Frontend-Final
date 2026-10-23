@@ -51,8 +51,10 @@ export const IMAGES = {
     varanasiBack: v(`${IMAGEKIT_BASE}/hero/common/varanasi-back.png`),
     steppingStone: v(`${IMAGEKIT_BASE}/hero/common/stepping-stone.webp`),
     kites: v(`${IMAGEKIT_BASE}/hero/common/kites.png`),
-    heroLeft: v(`${IMAGEKIT_BASE}/hero/common/hero-left-v5.png`),
+    heroLeft: v(`${IMAGEKIT_BASE}/hero/common/hero-left-v2.png`),
     heroRight: v(`${IMAGEKIT_BASE}/hero/common/hero-right-v5.png`),
+    heroRightDay: v(`${IMAGEKIT_BASE}/hero/common/hero-right-day-v2.png`),
+    heroRightNight: v(`${IMAGEKIT_BASE}/hero/common/hero-right-night.png`),
   },
 
   // ============================================

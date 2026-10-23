@@ -1,5 +1,6 @@
 import {
   WATER_GRADIENT_STOPS,
+  WATER_GRADIENT_STOPS_BY_THEME,
   MOON_GRADIENT_STOPS,
   type Particle,
   type Sparkle,
@@ -10,29 +11,20 @@ export function drawWaterGradient(
   ctx: CanvasRenderingContext2D,
   w: number,
   h: number,
+  timeOfDay: string = "night"
 ) {
+  const stops = WATER_GRADIENT_STOPS_BY_THEME[timeOfDay] ?? WATER_GRADIENT_STOPS;
   const grad = ctx.createLinearGradient(0, 0, 0, h);
-  for (let i = 0; i < WATER_GRADIENT_STOPS.length; i++) {
-    const { offset, color } = WATER_GRADIENT_STOPS[i];
+  for (let i = 0; i < stops.length; i++) {
+    const { offset, color } = stops[i];
     grad.addColorStop(offset, color);
   }
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, w, h);
 }
 
-export function drawMoonlightReflection(
-  ctx: CanvasRenderingContext2D,
-  w: number,
-  h: number,
-) {
-  const grad = ctx.createRadialGradient(
-    w * 0.5,
-    0,
-    0,
-    w * 0.5,
-    h * 0.3,
-    w * 0.5,
-  );
+export function drawMoonlightReflection(ctx: CanvasRenderingContext2D, w: number, h: number) {
+  const grad = ctx.createRadialGradient(w * 0.5, 0, 0, w * 0.5, h * 0.3, w * 0.5);
   for (let i = 0; i < MOON_GRADIENT_STOPS.length; i++) {
     const { offset, color } = MOON_GRADIENT_STOPS[i];
     grad.addColorStop(offset, color);
@@ -45,7 +37,7 @@ export function drawWaveLayers(
   ctx: CanvasRenderingContext2D,
   w: number,
   time: number,
-  computed: ComputedValues,
+  computed: ComputedValues
 ) {
   const { waveLayers, waveXCoords } = computed;
   const len = waveLayers.length;
@@ -94,7 +86,7 @@ export function drawWaveLayers(
 export function drawFlowLines(
   ctx: CanvasRenderingContext2D,
   time: number,
-  computed: ComputedValues,
+  computed: ComputedValues
 ) {
   const { flowLineYs, flowLineXCoords } = computed;
   const yLen = flowLineYs.length;
@@ -118,11 +110,7 @@ export function drawFlowLines(
   }
 }
 
-export function drawRipples(
-  ctx: CanvasRenderingContext2D,
-  time: number,
-  computed: ComputedValues,
-) {
+export function drawRipples(ctx: CanvasRenderingContext2D, time: number, computed: ComputedValues) {
   const { rippleBases, width: w, height: h } = computed;
   const len = rippleBases.length;
   const halfTime = time * 0.5;
@@ -154,7 +142,7 @@ export function drawRipples(
 export function drawDiyaReflections(
   ctx: CanvasRenderingContext2D,
   time: number,
-  computed: ComputedValues,
+  computed: ComputedValues
 ) {
   const { diyaPositions } = computed;
   const len = diyaPositions.length;
@@ -184,7 +172,7 @@ export function drawSparkles(
   w: number,
   h: number,
   time: number,
-  sparkles: Sparkle[],
+  sparkles: Sparkle[]
 ) {
   const len = sparkles.length;
   const halfH = h * 0.5;
@@ -206,13 +194,7 @@ export function drawSparkles(
     const size = 1 + alpha * 2;
 
     ctx.beginPath();
-    ctx.arc(
-      sparkle.x + Math.sin(time2 + sparkle.x) * 2,
-      sparkle.y,
-      size,
-      0,
-      Math.PI * 2,
-    );
+    ctx.arc(sparkle.x + Math.sin(time2 + sparkle.x) * 2, sparkle.y, size, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.8})`;
     ctx.fill();
   }
@@ -223,7 +205,7 @@ export function drawParticles(
   w: number,
   h: number,
   time: number,
-  particles: Particle[],
+  particles: Particle[]
 ) {
   const len = particles.length;
   const time2 = time * 2;
@@ -273,7 +255,7 @@ export function drawForegroundWave(
   w: number,
   h: number,
   time: number,
-  computed: ComputedValues,
+  computed: ComputedValues
 ) {
   const { foregroundXCoords } = computed;
   const len = foregroundXCoords.length;
@@ -302,12 +284,7 @@ export function drawForegroundWave(
   ctx.fill();
 }
 
-export function drawCaustics(
-  ctx: CanvasRenderingContext2D,
-  w: number,
-  h: number,
-  time: number,
-) {
+export function drawCaustics(ctx: CanvasRenderingContext2D, w: number, h: number, time: number) {
   const baseY = h * 0.6;
   const time30 = time * 30;
   const time2 = time * 2;
@@ -324,14 +301,7 @@ export function drawCaustics(
 
     ctx.beginPath();
     ctx.moveTo(cx, cy);
-    ctx.bezierCurveTo(
-      cx + 20,
-      cy - 10 + sinTime2,
-      cx + 40,
-      cy + 10 + cosTime2,
-      cx + 60,
-      cy,
-    );
+    ctx.bezierCurveTo(cx + 20, cy - 10 + sinTime2, cx + 40, cy + 10 + cosTime2, cx + 60, cy);
     ctx.stroke();
   }
 }

@@ -18,9 +18,67 @@ import { DriftingClouds } from "@/components/pages/home/sections/Hero/desktop/Dr
 import { EmberField } from "@/components/pages/home/sections/Hero/desktop/EmberField";
 import { MobileKite } from "@/components/pages/home/sections/Hero/mobile/MobileKite";
 import { HeroLeft, HeroRight, ThemePicker } from "@/components/pages/home/sections/Hero/common";
+import type { TimeOfDay } from "@/components/pages/home/constants/palette";
 
 // Register plugin at module level (runs once when file is imported)
 gsap.registerPlugin(ScrollTrigger);
+
+// ═══════════════════════════════════════════════════════════════════
+// HERO TITLE THEME
+//
+// The KASHIYATRA wordmark + "2027" are gradient-filled (background-clip: text).
+// The default bright gold reads great at night/dusk but washes out against the
+// bright blue morning/afternoon sky — so we adapt the gradient + drop-shadow
+// per time-of-day: deeper high-contrast gold + a strong dark halo for daylight,
+// luminous bright gold + glow for darker skies.
+// ═══════════════════════════════════════════════════════════════════
+interface HeroTitleStyle {
+  titleGradient: string;
+  titleFilter: string;
+  yearGradient: string;
+  yearFilter: string;
+}
+
+// Bright-sky look: richer/darker gold + strong dark shadow for legibility.
+const HERO_TITLE_DAYLIGHT: HeroTitleStyle = {
+  titleGradient:
+    "linear-gradient(180deg, #FFF3C4 0%, #F0B429 22%, #C87F0A 50%, #8C5A00 78%, #5C3A00 100%)",
+  titleFilter:
+    "drop-shadow(0 2px 2px rgba(60,30,0,0.55)) drop-shadow(0 3px 10px rgba(0,0,0,0.5)) drop-shadow(0 0 2px rgba(92,58,0,0.9))",
+  yearGradient: "linear-gradient(180deg, #FFE08A 0%, #E8A020 50%, #B8860B 100%)",
+  yearFilter: "drop-shadow(0 2px 3px rgba(60,30,0,0.5)) drop-shadow(0 0 2px rgba(92,58,0,0.8))",
+};
+
+// Dark-sky look: original luminous bright gold with a warm glow.
+const HERO_TITLE_NIGHT: HeroTitleStyle = {
+  titleGradient:
+    "linear-gradient(180deg, #FFFAF0 0%, #FFD700 20%, #DAA520 45%, #B8860B 70%, #996515 100%)",
+  titleFilter: "drop-shadow(0 4px 8px rgba(0,0,0,0.4)) drop-shadow(0 0 40px rgba(255,215,0,0.6))",
+  yearGradient: "linear-gradient(180deg, #FFE4B5 0%, #FFD700 50%, #FFA500 100%)",
+  yearFilter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3)) drop-shadow(0 0 20px rgba(255,165,0,0.5))",
+};
+
+// Transitional skies (dawn / dusk / evening): warm bright gold, softer glow.
+const HERO_TITLE_TWILIGHT: HeroTitleStyle = {
+  titleGradient:
+    "linear-gradient(180deg, #FFF4D6 0%, #FFD24D 24%, #E39A1A 52%, #A86A08 80%, #7A4B00 100%)",
+  titleFilter:
+    "drop-shadow(0 3px 6px rgba(30,15,0,0.5)) drop-shadow(0 0 24px rgba(255,180,60,0.5))",
+  yearGradient: "linear-gradient(180deg, #FFE4B5 0%, #FFCC33 50%, #FFA500 100%)",
+  yearFilter: "drop-shadow(0 2px 4px rgba(30,15,0,0.4)) drop-shadow(0 0 16px rgba(255,165,0,0.5))",
+};
+
+function getHeroTitleStyle(timeOfDay: TimeOfDay): HeroTitleStyle {
+  switch (timeOfDay) {
+    case "morning":
+    case "afternoon":
+      return HERO_TITLE_DAYLIGHT;
+    case "night":
+      return HERO_TITLE_NIGHT;
+    default: // dawn, evening, dusk
+      return HERO_TITLE_TWILIGHT;
+  }
+}
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -46,6 +104,9 @@ export function HeroSection() {
     resetToAuto,
   } = useTimeOfDay();
   const { isMobile, shouldAnimate } = useAnimationPolicy();
+
+  // Theme-adaptive hero title colors (legible across day/dusk/night skies).
+  const titleStyle = getHeroTitleStyle(timeOfDay);
 
   // Entry animation: Celestial body (Moon or Sun)
   useEffect(() => {
@@ -89,7 +150,7 @@ export function HeroSection() {
      */
 
     const ctx = gsap.context(() => {
-      gsap.set(heroRightRef.current, { y: 250, opacity: 0 });
+      gsap.set(heroRightRef.current, { x: 250, opacity: 0 });
       gsap.set(heroLeftRef.current, { x: -250, opacity: 0 });
 
       const tl = gsap.timeline({ delay: 0.8 });
@@ -109,7 +170,7 @@ export function HeroSection() {
        */
 
       tl.to(heroRightRef.current, {
-        y: 0,
+        x: 0,
         opacity: 1,
         duration: 0.5,
         ease: "none",
@@ -165,7 +226,7 @@ export function HeroSection() {
         duration: 0.1,
         ease: "none",
       });
-      const heroRightY = gsap.quickTo(heroRightRef.current, "y", {
+      const heroRightX = gsap.quickTo(heroRightRef.current, "x", {
         duration: 0.1,
         ease: "none",
       });
@@ -182,7 +243,7 @@ export function HeroSection() {
         onUpdate: (self) => {
           const p = self.progress;
           celestialY(p * -200);
-          heroRightY(p * 60);
+          heroRightX(p * 60); // slide left -> right on scroll (base x is 0 from entry)
           heroLeftX(p * -100 - 40); // -40 is the base x position from entry animation
         },
       });
@@ -296,7 +357,8 @@ export function HeroSection() {
       </MotionZone>
 
       {/* Celestial Body - Moon or Sun based on time of day */}
-      {/* Dawn sun positioned on right side (rising from horizon), others centered */}
+      {/* Dawn sun rises on the right, morning/afternoon are high & centered,
+          evening/dusk are a smaller, lower SETTING sun. */}
       <div
         ref={celestialRef}
         className={`absolute z-5 ${
@@ -306,7 +368,9 @@ export function HeroSection() {
               ? "top-[12%] right-[8%] h-12 w-12 sm:top-[8%] sm:right-[25%] sm:h-16 sm:w-16 md:h-20 md:w-20" // Dawn - right side, rising
               : timeOfDay === "morning"
                 ? "top-[5%] left-1/2 h-14 w-14 -translate-x-1/2 sm:top-[6%] sm:h-18 sm:w-18 md:h-24 md:w-24" // Morning - centered, rising
-                : "top-[2%] left-1/2 h-16 w-16 -translate-x-1/2 sm:top-[3%] sm:h-20 sm:w-20 md:h-28 md:w-28" // Afternoon/evening - centered, high
+                : timeOfDay === "evening" || timeOfDay === "dusk"
+                  ? "top-[3%] left-1/2 h-12 w-12 -translate-x-1/2 sm:top-[4%] sm:h-16 sm:w-16 md:top-[3%] md:h-20 md:w-20" // Evening/Dusk - smaller, high (clears the title)
+                  : "top-[2%] left-1/2 h-16 w-16 -translate-x-1/2 sm:top-[3%] sm:h-20 sm:w-20 md:h-28 md:w-28" // Afternoon - centered, high
         }`}
         style={{ transition: "all 1s ease-in-out" }}
       >
@@ -316,7 +380,13 @@ export function HeroSection() {
           <Sun
             className="h-full w-full"
             isMobile={isMobile}
-            variant={timeOfDay === "dawn" ? "dawn" : "day"}
+            variant={
+              timeOfDay === "dawn"
+                ? "dawn"
+                : timeOfDay === "evening" || timeOfDay === "dusk"
+                  ? "dusk"
+                  : "day"
+            }
           />
         )}
       </div>
@@ -360,12 +430,11 @@ export function HeroSection() {
             className="text-4xl font-black tracking-wide sm:text-5xl md:text-6xl lg:text-7xl"
             style={{
               fontFamily: "var(--font-cinzel-decorative), serif",
-              background:
-                "linear-gradient(180deg, #FFFAF0 0%, #FFD700 20%, #DAA520 45%, #B8860B 70%, #996515 100%)",
+              backgroundImage: titleStyle.titleGradient,
               WebkitBackgroundClip: "text",
+              backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              filter:
-                "drop-shadow(0 4px 8px rgba(0,0,0,0.4)) drop-shadow(0 0 40px rgba(255,215,0,0.6))",
+              filter: titleStyle.titleFilter,
             }}
           >
             KASHIYATRA
@@ -390,11 +459,11 @@ export function HeroSection() {
             className="mt-1 text-xl font-semibold tracking-[0.3em] sm:mt-2 sm:text-2xl sm:tracking-[0.4em] md:text-3xl lg:text-4xl"
             style={{
               fontFamily: "var(--font-cinzel), serif",
-              background: "linear-gradient(180deg, #FFE4B5 0%, #FFD700 50%, #FFA500 100%)",
+              backgroundImage: titleStyle.yearGradient,
               WebkitBackgroundClip: "text",
+              backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              filter:
-                "drop-shadow(0 2px 4px rgba(0,0,0,0.3)) drop-shadow(0 0 20px rgba(255,165,0,0.5))",
+              filter: titleStyle.yearFilter,
             }}
           >
             2027
@@ -452,13 +521,13 @@ export function HeroSection() {
       <HeroLeft ref={heroLeftRef} />
 
       {/* HERO RIGHT - right-side hero artwork (single image, no day/night) */}
-      <HeroRight ref={heroRightRef} />
+      <HeroRight ref={heroRightRef} timeOfDay={timeOfDay} />
 
       {/* RIVER - Contains water, lotus, diyas, boats, and stepping stones */}
       {/* RIVER - Contains water, lotus, diyas, boats, and stepping stones */}
       {/* Wrapped in MotionZone to pause SMIL animations when off-screen */}
       <MotionZone>
-        <River ref={riverRef} />
+        <River ref={riverRef} timeOfDay={timeOfDay} />
       </MotionZone>
 
       {/* Floating embers - Desktop only */}

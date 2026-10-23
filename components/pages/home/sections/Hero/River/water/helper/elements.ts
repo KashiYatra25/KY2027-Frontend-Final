@@ -105,6 +105,63 @@ export const WATER_GRADIENT_STOPS = [
   { offset: 1, color: "#081520" },
 ] as const;
 
+type GradientStop = { offset: number; color: string };
+
+/**
+ * Per-theme water gradient stops. Night/dusk are the deep look; dawn/morning/
+ * afternoon brighten; evening warms. Keyed by useTimeOfDay() value.
+ */
+export const WATER_GRADIENT_STOPS_BY_THEME: Record<string, readonly GradientStop[]> = {
+  night: [
+    { offset: 0, color: "#0f3050" },
+    { offset: 0.15, color: "#0c2842" },
+    { offset: 0.35, color: "#092035" },
+    { offset: 0.55, color: "#061828" },
+    { offset: 0.75, color: "#04101c" },
+    { offset: 1, color: "#020810" },
+  ],
+  dusk: [
+    { offset: 0, color: "#2f2a52" },
+    { offset: 0.15, color: "#272445" },
+    { offset: 0.35, color: "#211f3c" },
+    { offset: 0.55, color: "#191830" },
+    { offset: 0.75, color: "#121223" },
+    { offset: 1, color: "#0b0b18" },
+  ],
+  evening: [
+    { offset: 0, color: "#4a3650" },
+    { offset: 0.15, color: "#3e2e46" },
+    { offset: 0.35, color: "#33253a" },
+    { offset: 0.55, color: "#281d2d" },
+    { offset: 0.75, color: "#1d1521" },
+    { offset: 1, color: "#120d16" },
+  ],
+  dawn: [
+    { offset: 0, color: "#456080" },
+    { offset: 0.15, color: "#3d5570" },
+    { offset: 0.35, color: "#344860" },
+    { offset: 0.55, color: "#2a3b4e" },
+    { offset: 0.75, color: "#202d3c" },
+    { offset: 1, color: "#16202c" },
+  ],
+  morning: [
+    { offset: 0, color: "#4a7fa6" },
+    { offset: 0.15, color: "#427193" },
+    { offset: 0.35, color: "#396180" },
+    { offset: 0.55, color: "#30506b" },
+    { offset: 0.75, color: "#264056" },
+    { offset: 1, color: "#1a2f42" },
+  ],
+  afternoon: [
+    { offset: 0, color: "#3a86b5" },
+    { offset: 0.15, color: "#3576a0" },
+    { offset: 0.35, color: "#2f678c" },
+    { offset: 0.55, color: "#285576" },
+    { offset: 0.75, color: "#204560" },
+    { offset: 1, color: "#16344a" },
+  ],
+};
+
 export const MOON_GRADIENT_STOPS = [
   { offset: 0, color: "rgba(200, 220, 255, 0.18)" },
   { offset: 0.3, color: "rgba(180, 200, 240, 0.1)" },

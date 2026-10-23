@@ -24,13 +24,22 @@ import {
 } from "./helper/draw";
 import { DiyaLightsOverlay } from "./DiyaLightsOverlay";
 
-export const Water = memo(function Water({ className = "" }: { className?: string }) {
+export const Water = memo(function Water({
+  className = "",
+  timeOfDay = "night",
+}: {
+  className?: string;
+  timeOfDay?: string;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const sparklesRef = useRef<Sparkle[]>([]);
   const computedRef = useRef<ComputedValues | null>(null);
   const animationIdRef = useRef<number>(0);
   const timeRef = useRef(0);
+  // Live theme ref so the rAF draw loop always reads the latest value.
+  const timeOfDayRef = useRef(timeOfDay);
+  timeOfDayRef.current = timeOfDay;
 
   // Track dimensions for memoization
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -99,7 +108,7 @@ export const Water = memo(function Water({ className = "" }: { className?: strin
 
       ctx.clearRect(0, 0, w, h);
 
-      drawWaterGradient(ctx, w, h);
+      drawWaterGradient(ctx, w, h, timeOfDayRef.current);
       drawMoonlightReflection(ctx, w, h);
       drawWaveLayers(ctx, w, time, computed);
       drawFlowLines(ctx, time, computed);
@@ -120,13 +129,10 @@ export const Water = memo(function Water({ className = "" }: { className?: strin
   }, []);
 
   return (
-    <div
-      className={`relative w-full h-full ${className}`}
-      style={{ minHeight: "100px" }}
-    >
+    <div className={`relative h-full w-full ${className}`} style={{ minHeight: "100px" }}>
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 h-full w-full"
         style={{ display: "block", minHeight: "100px" }}
       />
       <DiyaLightsOverlay />

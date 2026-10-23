@@ -2,30 +2,32 @@
 
 import { memo } from "react";
 
-type TimeVariant = "dawn" | "day";
+type TimeVariant = "dawn" | "day" | "dusk";
 
-export const Sun = memo(function Sun({ 
-  className = "", 
+export const Sun = memo(function Sun({
+  className = "",
   isMobile = false,
-  variant = "day"
-}: { 
-  className?: string; 
+  variant = "day",
+}: {
+  className?: string;
   isMobile?: boolean;
   variant?: TimeVariant;
 }) {
-  // Dawn has softer, paler colors (rising sun)
+  // Dawn has softer, paler colors (rising sun); dusk is a warm, dimmer setting sun.
   const isDawn = variant === "dawn";
-  
-  const colors = isDawn ? {
-    haloOuter: "rgba(255,230,180,0.04)",
-    haloOuterMid: "rgba(255,210,150,0.02)",
-    glowOuter: "rgba(255,220,170,0.08)",
-    glowOuterMid: "rgba(255,200,140,0.04)",
-    glowMiddle: "rgba(255,240,200,0.15)",
-    glowMiddleMid: "rgba(255,220,180,0.08)",
-    glowInner: "rgba(255,255,245,0.25)",
-    glowInnerMid: "rgba(255,250,230,0.12)",
-    surface: `radial-gradient(circle at 35% 35%, 
+  const isDusk = variant === "dusk";
+
+  const colors = isDawn
+    ? {
+        haloOuter: "rgba(255,230,180,0.04)",
+        haloOuterMid: "rgba(255,210,150,0.02)",
+        glowOuter: "rgba(255,220,170,0.08)",
+        glowOuterMid: "rgba(255,200,140,0.04)",
+        glowMiddle: "rgba(255,240,200,0.15)",
+        glowMiddleMid: "rgba(255,220,180,0.08)",
+        glowInner: "rgba(255,255,245,0.25)",
+        glowInnerMid: "rgba(255,250,230,0.12)",
+        surface: `radial-gradient(circle at 35% 35%, 
       #FFFEF8 0%, 
       #FFFBF0 15%, 
       #FFF5E0 30%, 
@@ -34,7 +36,7 @@ export const Sun = memo(function Sun({
       #FFC880 85%,
       #FFB860 100%
     )`,
-    boxShadow: `
+        boxShadow: `
       0 0 30px rgba(255,230,180,0.6),
       0 0 60px rgba(255,210,150,0.4),
       0 0 90px rgba(255,190,130,0.25),
@@ -42,16 +44,47 @@ export const Sun = memo(function Sun({
       inset -3px -3px 15px rgba(255,180,100,0.2),
       inset 3px 3px 12px rgba(255,255,230,0.4)
     `,
-  } : {
-    haloOuter: "rgba(255,200,100,0.06)",
-    haloOuterMid: "rgba(255,160,60,0.03)",
-    glowOuter: "rgba(255,180,80,0.12)",
-    glowOuterMid: "rgba(255,140,50,0.06)",
-    glowMiddle: "rgba(255,220,150,0.2)",
-    glowMiddleMid: "rgba(255,180,100,0.1)",
-    glowInner: "rgba(255,255,240,0.35)",
-    glowInnerMid: "rgba(255,240,200,0.15)",
-    surface: `radial-gradient(circle at 35% 35%, 
+      }
+    : isDusk
+      ? {
+          // Setting sun — warm amber→orange→deep-red, softer/dimmer glow to sit in a
+          // twilight purple sky without blowing out.
+          haloOuter: "rgba(255,150,70,0.05)",
+          haloOuterMid: "rgba(230,110,50,0.025)",
+          glowOuter: "rgba(255,140,60,0.1)",
+          glowOuterMid: "rgba(220,90,40,0.05)",
+          glowMiddle: "rgba(255,170,90,0.16)",
+          glowMiddleMid: "rgba(230,120,60,0.08)",
+          glowInner: "rgba(255,210,150,0.22)",
+          glowInnerMid: "rgba(255,170,100,0.1)",
+          surface: `radial-gradient(circle at 40% 40%, 
+      #FFE8C0 0%, 
+      #FFD093 14%, 
+      #FBA74E 32%, 
+      #F0802A 52%, 
+      #D85A1C 72%, 
+      #B23E14 88%,
+      #8F2E10 100%
+    )`,
+          boxShadow: `
+      0 0 30px rgba(255,150,70,0.55),
+      0 0 60px rgba(230,100,50,0.35),
+      0 0 95px rgba(200,70,35,0.2),
+      0 0 140px rgba(170,55,25,0.1),
+      inset -4px -4px 18px rgba(150,45,15,0.35),
+      inset 4px 4px 14px rgba(255,220,160,0.3)
+    `,
+        }
+      : {
+          haloOuter: "rgba(255,200,100,0.06)",
+          haloOuterMid: "rgba(255,160,60,0.03)",
+          glowOuter: "rgba(255,180,80,0.12)",
+          glowOuterMid: "rgba(255,140,50,0.06)",
+          glowMiddle: "rgba(255,220,150,0.2)",
+          glowMiddleMid: "rgba(255,180,100,0.1)",
+          glowInner: "rgba(255,255,240,0.35)",
+          glowInnerMid: "rgba(255,240,200,0.15)",
+          surface: `radial-gradient(circle at 35% 35%, 
       #FFFEF8 0%, 
       #FFF8E8 15%, 
       #FFE8C0 30%, 
@@ -60,7 +93,7 @@ export const Sun = memo(function Sun({
       #FF8020 85%,
       #FF6000 100%
     )`,
-    boxShadow: `
+          boxShadow: `
       0 0 40px rgba(255,200,100,0.8),
       0 0 80px rgba(255,160,60,0.5),
       0 0 120px rgba(255,120,40,0.3),
@@ -68,13 +101,13 @@ export const Sun = memo(function Sun({
       inset -4px -4px 20px rgba(255,100,0,0.3),
       inset 4px 4px 15px rgba(255,255,200,0.4)
     `,
-  };
+        };
 
   return (
     <div className={`relative ${className}`}>
       {/* Outermost atmospheric halo */}
       <div
-        className={`absolute inset-0 rounded-full ${isMobile ? '' : 'sun-halo-outer'}`}
+        className={`absolute inset-0 rounded-full ${isMobile ? "" : "sun-halo-outer"}`}
         style={{
           transform: "scale(4)",
           background: `radial-gradient(circle, ${colors.haloOuter} 0%, ${colors.haloOuterMid} 40%, transparent 70%)`,
@@ -83,7 +116,7 @@ export const Sun = memo(function Sun({
 
       {/* Outer warm glow */}
       <div
-        className={`absolute inset-0 rounded-full ${isMobile ? '' : 'sun-glow-outer'}`}
+        className={`absolute inset-0 rounded-full ${isMobile ? "" : "sun-glow-outer"}`}
         style={{
           transform: "scale(2.5)",
           background: `radial-gradient(circle, ${colors.glowOuter} 0%, ${colors.glowOuterMid} 35%, transparent 65%)`,
@@ -92,7 +125,7 @@ export const Sun = memo(function Sun({
 
       {/* Middle intense glow */}
       <div
-        className={`absolute inset-0 rounded-full ${isMobile ? '' : 'sun-glow-middle'}`}
+        className={`absolute inset-0 rounded-full ${isMobile ? "" : "sun-glow-middle"}`}
         style={{
           transform: "scale(1.8)",
           background: `radial-gradient(circle, ${colors.glowMiddle} 0%, ${colors.glowMiddleMid} 45%, transparent 75%)`,
@@ -101,7 +134,7 @@ export const Sun = memo(function Sun({
 
       {/* Inner white-hot glow */}
       <div
-        className={`absolute inset-0 rounded-full ${isMobile ? '' : 'sun-glow-inner'}`}
+        className={`absolute inset-0 rounded-full ${isMobile ? "" : "sun-glow-inner"}`}
         style={{
           transform: "scale(1.3)",
           background: `radial-gradient(circle, ${colors.glowInner} 0%, ${colors.glowInnerMid} 50%, transparent 85%)`,
@@ -110,7 +143,7 @@ export const Sun = memo(function Sun({
 
       {/* Corona rays - matches moon scale(2.2) */}
       <div
-        className={`absolute inset-0 ${isMobile ? '' : 'sun-corona'}`}
+        className={`absolute inset-0 ${isMobile ? "" : "sun-corona"}`}
         style={{
           transform: "scale(2.2)",
           background: `
@@ -163,7 +196,7 @@ export const Sun = memo(function Sun({
 
       {/* Sun surface - the actual disc */}
       <div
-        className={`relative w-full h-full rounded-full overflow-hidden ${isMobile ? '' : 'sun-surface'}`}
+        className={`relative h-full w-full overflow-hidden rounded-full ${isMobile ? "" : "sun-surface"}`}
         style={{
           background: colors.surface,
           boxShadow: colors.boxShadow,
@@ -171,9 +204,10 @@ export const Sun = memo(function Sun({
       >
         {/* Surface shimmer - light sweep */}
         <div
-          className={`absolute inset-0 rounded-full ${isMobile ? '' : 'sun-light-sweep'}`}
+          className={`absolute inset-0 rounded-full ${isMobile ? "" : "sun-light-sweep"}`}
           style={{
-            background: "linear-gradient(110deg, transparent 0%, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%, transparent 100%)",
+            background:
+              "linear-gradient(110deg, transparent 0%, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%, transparent 100%)",
           }}
         />
 
@@ -185,7 +219,8 @@ export const Sun = memo(function Sun({
             height: "40%",
             top: "20%",
             left: "20%",
-            background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.6) 0%, rgba(255,255,240,0.3) 40%, transparent 70%)",
+            background:
+              "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.6) 0%, rgba(255,255,240,0.3) 40%, transparent 70%)",
           }}
         />
 
@@ -205,13 +240,14 @@ export const Sun = memo(function Sun({
         <div
           className="absolute inset-0 rounded-full"
           style={{
-            background: "radial-gradient(circle, transparent 50%, rgba(255,80,0,0.2) 85%, rgba(200,50,0,0.3) 100%)",
+            background:
+              "radial-gradient(circle, transparent 50%, rgba(255,80,0,0.2) 85%, rgba(200,50,0,0.3) 100%)",
           }}
         />
 
         {/* Subtle surface texture */}
         <div
-          className={`absolute inset-0 rounded-full opacity-20 ${isMobile ? '' : 'sun-texture'}`}
+          className={`absolute inset-0 rounded-full opacity-20 ${isMobile ? "" : "sun-texture"}`}
           style={{
             background: `
               radial-gradient(circle at 25% 40%, rgba(255,200,100,0.4) 0%, transparent 20%),
@@ -225,31 +261,31 @@ export const Sun = memo(function Sun({
 
       {!isMobile && (
         <style jsx>{`
-        .sun-halo-outer {
-          animation: sunHaloOuter 8s ease-in-out infinite;
-        }
-        .sun-glow-outer {
-          animation: sunGlowOuter 6s ease-in-out infinite;
-        }
-        .sun-glow-middle {
-          animation: sunGlowMiddle 4s ease-in-out infinite 0.3s;
-        }
-        .sun-glow-inner {
-          animation: sunGlowInner 3s ease-in-out infinite 0.6s;
-        }
-        .sun-corona {
-          animation: sunCorona 30s linear infinite;
-        }
-        .sun-surface {
-          animation: sunSurfacePulse 5s ease-in-out infinite;
-        }
-        .sun-light-sweep {
-          animation: sunLightSweep 8s ease-in-out infinite;
-        }
-        .sun-texture {
-          animation: sunTexture 10s ease-in-out infinite;
-        }
-      `}</style>
+          .sun-halo-outer {
+            animation: sunHaloOuter 8s ease-in-out infinite;
+          }
+          .sun-glow-outer {
+            animation: sunGlowOuter 6s ease-in-out infinite;
+          }
+          .sun-glow-middle {
+            animation: sunGlowMiddle 4s ease-in-out infinite 0.3s;
+          }
+          .sun-glow-inner {
+            animation: sunGlowInner 3s ease-in-out infinite 0.6s;
+          }
+          .sun-corona {
+            animation: sunCorona 30s linear infinite;
+          }
+          .sun-surface {
+            animation: sunSurfacePulse 5s ease-in-out infinite;
+          }
+          .sun-light-sweep {
+            animation: sunLightSweep 8s ease-in-out infinite;
+          }
+          .sun-texture {
+            animation: sunTexture 10s ease-in-out infinite;
+          }
+        `}</style>
       )}
     </div>
   );

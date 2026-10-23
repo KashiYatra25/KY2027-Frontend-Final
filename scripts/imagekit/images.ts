@@ -86,8 +86,28 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     folder: "/hero/common",
   },
   {
+    localFile: "home/hero/HeroLeftV2.png",
+    remoteName: "hero-left-v2.png",
+    folder: "/hero/common",
+  },
+  {
     localFile: "home/hero/HeroRight.png",
     remoteName: "hero-right-v5.png",
+    folder: "/hero/common",
+  },
+  {
+    localFile: "home/hero/HeroRightDay.png",
+    remoteName: "hero-right-day.png",
+    folder: "/hero/common",
+  },
+  {
+    localFile: "home/hero/HeroRightDayV2.png",
+    remoteName: "hero-right-day-v2.png",
+    folder: "/hero/common",
+  },
+  {
+    localFile: "home/hero/HeroRightNight.png",
+    remoteName: "hero-right-night.png",
     folder: "/hero/common",
   },
 
