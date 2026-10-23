@@ -10,8 +10,8 @@ export { CategoryCard, PageTitle, SubEventCard, CategoryHeader } from "./compone
 // Types
 export type { SubEvent, EventCategory } from "@/lib/api/helper/types";
 
-// Config
-export { EVENT_CATEGORIES } from "./config/events.config";
+// Config (shared data - used by schedule campusMap too)
+export { EVENT_CATEGORIES } from "@/lib/data/events.config";
 
 // Constants
 export { COLORS, JAZZ_COLORS, EVENT_TYPE_COLORS } from "./constants/palette";

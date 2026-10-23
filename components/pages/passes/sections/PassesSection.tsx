@@ -11,12 +11,8 @@ import {
   MandalaRing,
   FloatingParticles,
 } from "@/components/pages/passes/sections/decor";
-import { PassesLoader } from "@/components/pages/passes/sections/loader/PassesLoader";
-import { PassesError } from "@/components/pages/passes/sections/error/PassesError";
-import { toPassConfig } from "@/lib/api/helper/functions";
-import { ANIMATION } from "@/components/pages/passes/config/passes.config";
+import { ANIMATION, PASSES } from "@/components/pages/passes/config/passes.config";
 import type { PassConfig } from "@/lib/api/helper/types";
-import { usePasses } from "@/lib/api/hooks";
 import { Z_INDEX } from "@/components/pages/passes/constants/palette";
 import { useAnimationPolicy } from "@/hooks";
 import { COLORS, GRADIENT_BORDER_ORNATE } from "@/components/pages/passes/constants/palette";
@@ -33,9 +29,8 @@ export function PassesSection() {
   const [selectedPass, setSelectedPass] = useState<PassConfig | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetch passes from backend
-  const { passes, isLoading, isError, refetch } = usePasses();
-  const passConfigs = passes.map(toPassConfig);
+  // Static pass data — passes don't change, so no backend fetch needed.
+  const passConfigs: PassConfig[] = PASSES;
 
   const { isMobile, shouldAnimate } = useAnimationPolicy();
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
@@ -171,47 +166,32 @@ export function PassesSection() {
         {/* Heading */}
         <PassesHeading isMobile={isMobile} />
 
-        {/* Hover instruction - only show when passes loaded */}
-        {!isLoading && !isError && (
-          <motion.p
-            className="mb-8 hidden text-center text-sm text-gray-500 sm:block"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            [ HOVER TO SEE BENEFITS ]
-          </motion.p>
-        )}
+        {/* Hover instruction */}
+        <motion.p
+          className="mb-8 hidden text-center text-sm text-gray-500 sm:block"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          [ HOVER TO SEE BENEFITS ]
+        </motion.p>
 
         {/* Pass cards */}
-        {isLoading ? (
-          <PassesLoader />
-        ) : isError ? (
-          <PassesError onRetry={() => refetch()} />
-        ) : (
-          <div className="grid grid-cols-1 items-end justify-items-center gap-8 sm:grid-cols-3 sm:gap-6 lg:gap-10">
-            {passConfigs.map((pass, index) => (
-              <PassCard
-                key={pass.id}
-                pass={pass}
-                index={index}
-                onDetailsClick={handleDetailsClick}
-              />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 items-end justify-items-center gap-8 sm:grid-cols-3 sm:gap-6 lg:gap-10">
+          {passConfigs.map((pass, index) => (
+            <PassCard key={pass.id} pass={pass} index={index} onDetailsClick={handleDetailsClick} />
+          ))}
+        </div>
 
-        {/* Mobile tap instruction - only show when passes loaded */}
-        {!isLoading && !isError && (
-          <motion.p
-            className="mt-8 text-center text-sm text-gray-500 sm:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            [ TAP TO SEE BENEFITS ]
-          </motion.p>
-        )}
+        {/* Mobile tap instruction */}
+        <motion.p
+          className="mt-8 text-center text-sm text-gray-500 sm:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          [ TAP TO SEE BENEFITS ]
+        </motion.p>
 
         {/* Footer note */}
         <motion.p

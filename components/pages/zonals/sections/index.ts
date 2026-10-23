@@ -15,5 +15,6 @@ export { EventsExplorer } from "./EventsExplorer/EventsExplorer";
 export { EventCard } from "./EventsExplorer/EventCard";
 export { PassSelection } from "./PassSelection";
 export { AtmosphereSection } from "./AtmosphereSection";
+export { CrowdSilhouette } from "./CrowdSilhouette";
 export { FinalCTA } from "./FinalCTA";
 export { ZonalsNavbar } from "./ZonalsNavbar/ZonalsNavbar";

@@ -4,7 +4,12 @@ import { useApiMutation } from "wire-axon/hooks";
 import { z } from "zod";
 import { load } from "@cashfreepayments/cashfree-js";
 import { AlertCircle, CheckCircle } from "lucide-react";
-import { BACKEND_URL, sharedFeatureConfig, API_TIMEOUT } from "@/lib/api/constants";
+import {
+  BACKEND_URL,
+  sharedFeatureConfig,
+  API_TIMEOUT,
+  shouldRetryOnNetworkError,
+} from "@/lib/api/constants";
 
 // Schema for checkout request - optional couponCode
 const CheckoutSchema = z.object({
@@ -102,6 +107,7 @@ export function useCheckout() {
         errorConfig: { customToast: <CheckoutErrorToast /> },
       },
       mutationOptions: {
+        retry: shouldRetryOnNetworkError,
         onSuccess: async (response) => {
           const paymentSessionId = response.data?.paymentSessionId;
           if (paymentSessionId) {

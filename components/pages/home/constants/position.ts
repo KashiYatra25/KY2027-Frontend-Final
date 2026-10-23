@@ -70,7 +70,7 @@ export const POS_DIYA = {
   },
   DIYA_4: {
     mobile: { bottom: "13%", left: "72%" },
-    sm: { bottom: "83%", left: "75%" },
+    sm: { bottom: "83%", left: "70%" },
     desktopOnly: true,
   },
   DIYA_5: {
@@ -79,7 +79,7 @@ export const POS_DIYA = {
   },
   DIYA_6: {
     mobile: { bottom: "10%", left: "42%" },
-    sm: { bottom: "85%", left: "45%" },
+    sm: { bottom: "80%", left: "42%" },
     desktopOnly: true,
   },
 } as const;

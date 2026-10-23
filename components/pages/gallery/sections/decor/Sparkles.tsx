@@ -1,19 +1,11 @@
 "use client";
 
 import { useMemo } from "react";
+import { Sparkle, type SparkleConfig } from "./Sparkle";
 
 // ═══════════════════════════════════════════════════════════════════
 // SPARKLES - Animated twinkling star decorations
 // ═══════════════════════════════════════════════════════════════════
-
-type SparkleConfig = {
-  left: string;
-  top: string;
-  size: number;
-  duration: number;
-  delay: number;
-  hot?: boolean;
-};
 
 const SPARKLE_CONFIGS: SparkleConfig[] = [
   { left: "8%", top: "12%", size: 14, duration: 3.2, delay: 0 },
@@ -37,23 +29,5 @@ export function Sparkles() {
         <Sparkle key={i} {...config} />
       ))}
     </div>
-  );
-}
-
-function Sparkle({ left, top, size, duration, delay, hot }: SparkleConfig) {
-  return (
-    <i
-      className={`sparkle-star absolute opacity-20 ${hot ? "sparkle-hot" : ""}`}
-      style={{
-        left,
-        top,
-        width: size,
-        height: size,
-        background: hot ? "#ffe9b0" : "#f6d98f",
-        clipPath: "polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%)",
-        animationDuration: `${duration}s`,
-        animationDelay: `${delay}s`,
-      }}
-    />
   );
 }

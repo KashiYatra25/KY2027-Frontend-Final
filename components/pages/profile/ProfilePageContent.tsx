@@ -31,7 +31,14 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
   const { isSigningOut, handleSignOut } = useSignOut();
 
   // Fetch account data via GraphQL - returns profile + progress
-  const { profile: userData, progress, isLoading, isError, accountStatus } = useMyAccount("full");
+  const {
+    profile: userData,
+    progress,
+    isLoading,
+    isError,
+    accountStatus,
+    refetch,
+  } = useMyAccount("full");
 
   // Only fetch CA info if profile is complete (CA features require complete profile)
   const isProfileComplete = progress?.isProfileComplete ?? false;
@@ -81,6 +88,7 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
                 user={user}
                 progress={progress}
                 isApprovedCa={isCaApproved}
+                refetch={refetch}
               />
 
               {/* Account Suspension Warning */}

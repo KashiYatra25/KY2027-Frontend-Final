@@ -27,6 +27,8 @@ export const IMAGES = {
   // ============================================
   passes: {
     yatri: v(`${IMAGEKIT_BASE}/passes/yatri-pass.png`),
+    darbar: v(`${IMAGEKIT_BASE}/passes/darbar-pass.png`),
+    swarnim: v(`${IMAGEKIT_BASE}/passes/swarnim-pass.png`),
   },
 
   // ============================================
@@ -288,6 +290,41 @@ export const IMAGES = {
     concertNight2: v(`${IMAGEKIT_BASE}/gallery/concert-night-2.jpg`),
     concertNight3: v(`${IMAGEKIT_BASE}/gallery/concert-night-3.jpg`),
     grandFinale1: v(`${IMAGEKIT_BASE}/gallery/grand-finale-1.jpg`),
+    // Team member photos (Tech team)
+    team: {
+      tech: {
+        head: {
+          srajan: v(`${IMAGEKIT_BASE}/gallery/team/tech/head/srajan.jpg`),
+        },
+        subordinates: {
+          akhilesh: v(`${IMAGEKIT_BASE}/gallery/team/tech/subordinates/akhilesh.png`),
+          balajiSiddharthaKatiki: v(
+            `${IMAGEKIT_BASE}/gallery/team/tech/subordinates/balaji-siddhartha-katiki.png`
+          ),
+          bhavanasiAnjanaAkhileswar: v(
+            `${IMAGEKIT_BASE}/gallery/team/tech/subordinates/bhavanasi-anjana-akhileswar.png`
+          ),
+          eraganaboinaKrishnaKoushik: v(
+            `${IMAGEKIT_BASE}/gallery/team/tech/subordinates/eraganaboina-krishna-koushik.png`
+          ),
+          gPremKumar: v(`${IMAGEKIT_BASE}/gallery/team/tech/subordinates/g-prem-kumar.png`),
+          meesalaPawanKumar: v(
+            `${IMAGEKIT_BASE}/gallery/team/tech/subordinates/meesala-pawan-kumar.png`
+          ),
+          prerna: v(`${IMAGEKIT_BASE}/gallery/team/tech/subordinates/prerna.jpg`),
+          rishikar: v(`${IMAGEKIT_BASE}/gallery/team/tech/subordinates/rishikar.png`),
+          sidduKumarReddyBandi: v(
+            `${IMAGEKIT_BASE}/gallery/team/tech/subordinates/siddu-kumar-reddy-bandi.png`
+          ),
+          vanchaAbhinavReddy: v(
+            `${IMAGEKIT_BASE}/gallery/team/tech/subordinates/vancha-abhinav-reddy.png`
+          ),
+          yvSureshKumarReddy: v(
+            `${IMAGEKIT_BASE}/gallery/team/tech/subordinates/y-v-suresh-kumar-reddy.png`
+          ),
+        },
+      },
+    },
     // NOTE: Videos are NOT in IMAGES. They are served directly from
     // /public/gallery/video (see gallery data.config.ts) and will move to R2.
   },
@@ -308,7 +345,9 @@ export const IMAGES = {
 export function getImageUrl(path: string, transformations?: string): string {
   if (!transformations) return path;
 
-  // Insert transformations after base URL
-  const imagePath = path.replace(IMAGEKIT_BASE as string, "");
+  // Strip any existing query (e.g. the ?v= cache-bust) and the base URL, then
+  // rebuild as BASE/<transformations>/<imagePath>?v=... (avoids a double ?v=).
+  const noQuery = path.split("?")[0];
+  const imagePath = noQuery.replace(IMAGEKIT_BASE as string, "");
   return v(`${IMAGEKIT_BASE}/${transformations}${imagePath}`);
 }

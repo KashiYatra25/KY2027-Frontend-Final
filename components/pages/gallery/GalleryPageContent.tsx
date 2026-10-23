@@ -11,9 +11,7 @@ import { PerformersSection } from "./sections/PerformersSection";
 import { TeamSection } from "./sections/TeamSection/TeamSection";
 import { FooterSection } from "./sections/FooterSection";
 import { Lightbox } from "./sections/Lightbox";
-import { GlowBackgrounds } from "./sections/GlowBackgrounds";
-import { DecoElements } from "./sections/decor";
-import { Sparkles } from "./sections/Sparkles";
+import { GlowBackgrounds, Sparkles, DecoElements } from "./sections/decor";
 import type { LightboxItem } from "./types";
 
 // ═══════════════════════════════════════════════════════════════════

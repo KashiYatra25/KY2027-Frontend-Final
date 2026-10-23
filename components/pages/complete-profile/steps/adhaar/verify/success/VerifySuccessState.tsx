@@ -8,63 +8,22 @@ import {
   CreditCard,
   CheckCircle2,
   ArrowRight,
-  type LucideIcon,
 } from "lucide-react";
 import { type AadhaarExtractedData } from "@/lib/api/hooks";
 import { COLORS } from "@/components/pages/complete-profile/constants/palette";
-
-interface InfoCardProps {
-  icon: LucideIcon;
-  label: string;
-  value: string;
-}
-
-function InfoCard({ icon: Icon, label, value }: InfoCardProps) {
-  return (
-    <div
-      className="p-4 rounded-xl"
-      style={{
-        background: `linear-gradient(145deg, ${COLORS.BG_DEEP}60 0%, ${COLORS.BG_ROYAL}60 100%)`,
-        border: `1px solid ${COLORS.GOLD}20`,
-      }}
-    >
-      <div className="flex items-center gap-3">
-        <div
-          className="p-2 rounded-lg"
-          style={{
-            background: `${COLORS.GOLD}15`,
-            border: `1px solid ${COLORS.GOLD}25`,
-          }}
-        >
-          <Icon className="h-4 w-4" color={COLORS.GOLD} />
-        </div>
-        <div>
-          <p className="text-xs mb-0.5" style={{ color: `${COLORS.CREAM}50` }}>
-            {label}
-          </p>
-          <p className="font-medium" style={{ color: COLORS.CREAM }}>
-            {value}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { InfoCard } from "./InfoCard";
 
 interface VerifySuccessStateProps {
   data: AadhaarExtractedData;
   onConfirm: () => void;
 }
 
-export function VerifySuccessState({
-  data,
-  onConfirm,
-}: VerifySuccessStateProps) {
+export function VerifySuccessState({ data, onConfirm }: VerifySuccessStateProps) {
   return (
     <div className="space-y-8">
       <div className="text-center">
         <div
-          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
+          className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl"
           style={{
             background: `${COLORS.SUCCESS}20`,
             border: `1px solid ${COLORS.SUCCESS}30`,
@@ -72,24 +31,15 @@ export function VerifySuccessState({
         >
           <UserCheck className="h-8 w-8" style={{ color: COLORS.SUCCESS }} />
         </div>
-        <h2
-          className="text-2xl sm:text-3xl font-bold mb-2"
-          style={{ color: COLORS.CREAM }}
-        >
+        <h2 className="mb-2 text-2xl font-bold sm:text-3xl" style={{ color: COLORS.CREAM }}>
           Aadhaar Verified Successfully
         </h2>
-        <p style={{ color: `${COLORS.CREAM}60` }}>
-          Your details have been extracted and verified
-        </p>
+        <p style={{ color: `${COLORS.CREAM}60` }}>Your details have been extracted and verified</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <InfoCard icon={User} label="Full Name" value={data.name} />
-        <InfoCard
-          icon={Calendar}
-          label="Date of Birth"
-          value={data.dateOfBirth}
-        />
+        <InfoCard icon={Calendar} label="Date of Birth" value={data.dateOfBirth} />
         <InfoCard icon={Users} label="Gender" value={data.gender} />
         <InfoCard
           icon={CreditCard}
@@ -99,7 +49,7 @@ export function VerifySuccessState({
       </div>
 
       <div
-        className="flex items-center justify-center gap-3 p-4 rounded-xl"
+        className="flex items-center justify-center gap-3 rounded-xl p-4"
         style={{
           background: `${COLORS.SUCCESS}10`,
           border: `1px solid ${COLORS.SUCCESS}25`,
@@ -114,7 +64,7 @@ export function VerifySuccessState({
       <div className="flex justify-center">
         <button
           onClick={onConfirm}
-          className="group relative w-full max-w-sm py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-300 overflow-hidden hover:scale-[1.02] active:scale-[0.98]"
+          className="group relative w-full max-w-sm overflow-hidden rounded-xl px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
           style={{
             background: `linear-gradient(135deg, ${COLORS.GOLD} 0%, ${COLORS.GOLD_DARK} 100%)`,
             color: COLORS.BG_DEEP,
@@ -122,7 +72,7 @@ export function VerifySuccessState({
           }}
         >
           <span
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
             style={{
               background: `linear-gradient(105deg, transparent 40%, ${COLORS.GOLD_LIGHT}30 45%, ${COLORS.GOLD_LIGHT}40 50%, ${COLORS.GOLD_LIGHT}30 55%, transparent 60%)`,
             }}

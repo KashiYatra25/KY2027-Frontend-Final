@@ -7,7 +7,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Menu,
   X,
@@ -19,6 +18,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { PALETTE, GRADIENTS } from "@/components/pages/sponsors/constants/palette";
+import { LogoMark } from "@/components/pages/sponsors/components/LogoMark";
 
 // ───────────────────────────────────────────────────────────────────
 // CONFIGURATION
@@ -38,32 +38,6 @@ const NAV_LINKS: NavLink[] = [
 ];
 
 const SCROLL_THRESHOLD = 50;
-
-// ───────────────────────────────────────────────────────────────────
-// ANIMATED LOGO MARK
-// ───────────────────────────────────────────────────────────────────
-
-function LogoMark({ size = 32 }: { size?: number }) {
-  return (
-    <div
-      className="relative"
-      style={{
-        width: size,
-        height: size,
-        filter: `drop-shadow(0 0 8px ${PALETTE.ELECTRIC_VIOLET}55)`,
-      }}
-    >
-      <Image
-        src="/favicon.ico"
-        alt="Kashiyatra"
-        fill
-        sizes="40px"
-        className="object-contain"
-        priority
-      />
-    </div>
-  );
-}
 
 // ───────────────────────────────────────────────────────────────────
 // MAIN COMPONENT

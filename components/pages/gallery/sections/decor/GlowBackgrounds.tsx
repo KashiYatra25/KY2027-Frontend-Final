@@ -1,6 +1,6 @@
 "use client";
 
-import { GRADIENTS } from "../constants/palette";
+import { GRADIENTS } from "../../constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
 // GLOW BACKGROUNDS - Radial gradient overlays for ambient lighting

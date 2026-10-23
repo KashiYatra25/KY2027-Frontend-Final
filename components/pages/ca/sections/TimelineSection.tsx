@@ -35,7 +35,7 @@ const STEPS = [
   {
     step: "04",
     title: "Earn Rewards",
-    description: "Unlock perks, cash prizes, and recognition based on your performance",
+    description: "Unlock perks and recognition based on your performance",
     icon: "🎉",
   },
 ];

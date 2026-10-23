@@ -167,6 +167,25 @@ body {
   background: var(--bright-gold);
 }
 
+/* Thin, subtle scrollbar — opt-in via .thin-scrollbar (e.g. pass benefits list) */
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 168, 83, 0.5) transparent;
+}
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(212, 168, 83, 0.5);
+  border-radius: 9999px;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 215, 0, 0.7);
+}
+
 /* Selection color */
 ::selection {
   background: var(--maroon);

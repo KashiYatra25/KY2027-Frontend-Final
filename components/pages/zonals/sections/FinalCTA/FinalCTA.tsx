@@ -18,6 +18,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { COLORS } from "@/components/pages/zonals/constants/palette";
 import { FINAL_CTA } from "@/components/pages/zonals/config/zonals.config";
+import { FloatingSticker } from "./FloatingSticker";
+import { BurstStar } from "./BurstStar";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -118,85 +120,5 @@ export function FinalCTA() {
         </p>
       </div>
     </section>
-  );
-}
-
-// ── Floating sticker chip (gentle idle bob) ───────────────────────────
-interface FloatingStickerProps {
-  children: React.ReactNode;
-  className?: string;
-  rotate: number;
-  bg: string;
-  color: string;
-  delay: number;
-  disabled: boolean;
-}
-
-function FloatingSticker({
-  children,
-  className = "",
-  rotate,
-  bg,
-  color,
-  delay,
-  disabled,
-}: FloatingStickerProps) {
-  return (
-    <motion.span
-      aria-hidden
-      className={`pointer-events-none absolute hidden rounded-full px-4 py-2 text-xs font-black tracking-widest uppercase sm:inline-block ${className}`}
-      style={{
-        background: bg,
-        color,
-        rotate: `${rotate}deg`,
-        border: `2px solid ${COLORS.DEEP_INK}`,
-        boxShadow: "0 4px 0 rgba(0,0,0,0.35)",
-      }}
-      animate={disabled ? undefined : { y: [0, -10, 0] }}
-      transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay }}
-    >
-      {children}
-    </motion.span>
-  );
-}
-
-// ── Burst / seal star (SVG) ───────────────────────────────────────────
-function BurstStar({ size, fill }: { size: number; fill: string }) {
-  // 12-point burst built from alternating outer/inner radii.
-  const points = 12;
-  const outer = 50;
-  const inner = 38;
-  const cx = 50;
-  const cy = 50;
-  const path = Array.from({ length: points * 2 }, (_, i) => {
-    const r = i % 2 === 0 ? outer : inner;
-    const a = (Math.PI / points) * i - Math.PI / 2;
-    const x = cx + r * Math.cos(a);
-    const y = cy + r * Math.sin(a);
-    return `${x.toFixed(2)},${y.toFixed(2)}`;
-  }).join(" ");
-
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
-      role="presentation"
-      className="opacity-90"
-    >
-      <polygon points={path} fill={fill} stroke={COLORS.DEEP_INK} strokeWidth="2" />
-      <circle cx="50" cy="50" r="22" fill={COLORS.DEEP_INK} />
-      <text
-        x="50"
-        y="54"
-        textAnchor="middle"
-        fontSize="12"
-        fontWeight="900"
-        fill={COLORS.ACID_LIME}
-        style={{ letterSpacing: "0.1em" }}
-      >
-        2027
-      </text>
-    </svg>
   );
 }

@@ -26,6 +26,7 @@ export const fullAccountQueryDef = query("GetFullAccount", {
       isFromIITBhu: types.boolean,
       isPaidUser: types.boolean,
       kyId: optional(types.string),
+      referredBy: optional(types.string),
       role: optional({
         level: types.constant<"MASTER_ADMIN" | "MANAGER" | "OPERATOR" | "USER">("USER"),
       }),

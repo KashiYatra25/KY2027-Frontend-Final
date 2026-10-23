@@ -158,7 +158,7 @@ export function HeroSection() {
           {[
             { value: "500+", label: "Colleges" },
             { value: "50K+", label: "Participants" },
-            { value: "₹2L+", label: "In Prizes" },
+            { value: "4 Days", label: "Of Celebration" },
           ].map((stat, i) => (
             <div key={i} className="group text-center">
               <div className="ca-gradient-text text-4xl font-black transition-transform duration-300 group-hover:scale-110 sm:text-5xl">

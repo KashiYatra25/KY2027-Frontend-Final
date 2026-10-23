@@ -107,6 +107,40 @@ export function TeamSection({ onPhotoClick }: TeamSectionProps) {
         </motion.div>
       )}
 
+      {/* Team photo placeholder — shown until the real team photo is added */}
+      {!hasPhoto && (
+        <motion.div
+          className="mx-auto mt-9 max-w-[1200px] px-4 sm:px-6 md:px-12 lg:px-16 2xl:max-w-[1400px]"
+          initial={{ opacity: 0, scale: 0.9, rotate: 3 }}
+          animate={
+            isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.9, rotate: 3 }
+          }
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          <div
+            className="team-photo-frame mx-auto flex w-full max-w-[820px] -rotate-1 flex-col items-center justify-center gap-3 overflow-hidden border-[10px]"
+            style={{
+              borderColor: COLORS.PAPER,
+              background: "linear-gradient(135deg, #2a1a30 0%, #1a0f24 100%)",
+              aspectRatio: 1.6,
+              boxShadow: "0 30px 60px -26px rgba(0,0,0,0.85)",
+            }}
+            aria-label="Team photo coming soon"
+          >
+            <span className="text-3xl opacity-60">📸</span>
+            <span
+              className="text-lg tracking-[0.25em] uppercase sm:text-xl"
+              style={{
+                fontFamily: "var(--font-cormorant), Georgia, serif",
+                color: COLORS.MARIGOLD,
+              }}
+            >
+              Coming Soon
+            </span>
+          </div>
+        </motion.div>
+      )}
+
       {/* Side panel + member cards */}
       {TEAM_GROUPS.length > 0 && activeGroup && (
         <motion.div

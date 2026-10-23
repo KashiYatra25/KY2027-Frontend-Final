@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
 import type { PassConfig } from "@/lib/api/helper/types";
+import { getImageUrl } from "@/lib/images";
 import { ANIMATION } from "@/components/pages/passes/config/passes.config";
 import { useAnimationPolicy } from "@/hooks";
 import { useMyAccount } from "@/lib/api/hooks";
@@ -58,6 +59,11 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
   const handleMouseEnter = () => setIsFlipped(true);
   const handleMouseLeave = () => setIsFlipped(false);
   const floatDelay = index * 0.4;
+
+  // Let ImageKit resize/compress the (large) source. The pass art renders at
+  // ~220px, so deliver a retina-width, quality-80 version — and skip Next's
+  // optimizer (unoptimized) since ImageKit already optimizes delivery.
+  const passImageUrl = getImageUrl(pass.image, "tr:w-520,q-80,f-auto");
 
   // Handle buy button click - redirect to cart/buy page
   const handleBuyClick = (e: React.MouseEvent) => {
@@ -156,12 +162,13 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                       />
                       <div style={{ filter: `drop-shadow(0 0 20px ${pass.glowColor})` }}>
                         <Image
-                          src={pass.image}
+                          src={passImageUrl}
                           alt={pass.name}
                           width={220}
                           height={280}
                           className="relative z-10 max-h-[260px] w-auto object-contain"
                           priority={index === 0}
+                          unoptimized
                         />
                       </div>
                     </div>
@@ -190,12 +197,13 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                       >
                         <Image
-                          src={pass.image}
+                          src={passImageUrl}
                           alt={pass.name}
                           width={220}
                           height={280}
                           className="relative z-10 max-h-[260px] w-auto object-contain"
                           priority={index === 0}
+                          unoptimized
                         />
                       </motion.div>
                     </motion.div>
@@ -262,17 +270,50 @@ export const PassCard = memo(function PassCard({ pass, index, onDetailsClick }: 
                         {pass.name.split(" ")[0]} Benefits
                       </h3>
                     </div>
-                    <ul className="flex-1 space-y-2.5 overflow-y-auto px-1">
+                    <ul
+                      className="thin-scrollbar flex-1 space-y-2 overflow-y-auto overscroll-contain px-1 py-0.5"
+                      data-lenis-prevent
+                    >
                       {pass.benefits.map(
                         (benefit: { text: string; highlight?: boolean }, i: number) => (
                           <li
                             key={i}
-                            className={`flex items-start gap-2.5 text-sm ${benefit.highlight ? "text-yellow-200" : "text-gray-200"}`}
+                            className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors"
+                            style={{
+                              background: benefit.highlight
+                                ? `linear-gradient(135deg, rgba(${hexToRgb(COLORS.BRIGHT_GOLD)}, 0.14) 0%, rgba(${hexToRgb(COLORS.GOLD)}, 0.06) 100%)`
+                                : `rgba(${hexToRgb(COLORS.GOLD)}, 0.05)`,
+                              border: benefit.highlight
+                                ? `1px solid rgba(${hexToRgb(COLORS.BRIGHT_GOLD)}, 0.45)`
+                                : `1px solid rgba(${hexToRgb(COLORS.GOLD)}, 0.18)`,
+                              boxShadow: benefit.highlight
+                                ? `0 0 14px rgba(${hexToRgb(COLORS.BRIGHT_GOLD)}, 0.15)`
+                                : "none",
+                            }}
                           >
-                            <span style={{ color: COLORS.BRIGHT_GOLD }} className="mt-0.5">
-                              ✦
+                            {/* Badge */}
+                            <span
+                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[11px]"
+                              style={{
+                                background: benefit.highlight
+                                  ? GRADIENT_BADGE_GOLD
+                                  : `rgba(${hexToRgb(COLORS.GOLD)}, 0.12)`,
+                                border: `1px solid rgba(${hexToRgb(COLORS.BRIGHT_GOLD)}, ${benefit.highlight ? 0.6 : 0.3})`,
+                                color: benefit.highlight ? COLORS.BG_DEEP : COLORS.BRIGHT_GOLD,
+                              }}
+                            >
+                              {benefit.highlight ? "★" : "✦"}
                             </span>
-                            <span className="leading-tight">{benefit.text}</span>
+                            {/* Text */}
+                            <span
+                              className={`text-sm leading-snug ${benefit.highlight ? "font-semibold" : "font-medium"}`}
+                              style={{
+                                color: benefit.highlight ? COLORS.BRIGHT_GOLD : COLORS.CREAM,
+                                letterSpacing: "0.01em",
+                              }}
+                            >
+                              {benefit.text}
+                            </span>
                           </li>
                         )
                       )}

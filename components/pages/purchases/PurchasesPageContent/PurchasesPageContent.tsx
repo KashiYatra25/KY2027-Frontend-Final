@@ -9,7 +9,7 @@ import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import { usePurchases } from "@/lib/api/hooks";
 import { PurchaseCard } from "@/components/pages/purchases/components/PurchaseCard";
 import { EmptyPurchases } from "@/components/pages/purchases/components/EmptyPurchases";
-import { PurchasesLoader } from "@/components/pages/purchases/components/PurchasesLoader";
+import { PurchasesLoader } from "@/components/pages/purchases/components/loader/PurchasesLoader";
 import { PaymentSuccessHandler } from "./PaymentSuccessHandler";
 import { StatCard } from "./StatCard";
 

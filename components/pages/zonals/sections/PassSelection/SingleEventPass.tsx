@@ -17,19 +17,14 @@ import { motion, type Variants } from "framer-motion";
 import { usePrefersReducedMotion } from "@/hooks";
 import { COLORS, SHADOWS } from "@/components/pages/zonals/constants/palette";
 import { ZONAL_COLLEGES, type ZonalCollege } from "@/components/pages/zonals/config/zonals.config";
+import { PhotocopyTexture } from "./PhotocopyTexture";
+import { Barcode } from "./Barcode";
 
 const EVENT_ID = "ZN-2027-#0417";
 
 interface Props {
   college?: ZonalCollege;
 }
-
-// Barcode rendered as a run of bars with pseudo-random widths. Static
-// array keeps SSR/CSR output deterministic.
-const BARCODE_BARS = [
-  3, 1, 2, 1, 4, 1, 1, 3, 2, 1, 1, 2, 4, 1, 2, 1, 3, 1, 1, 2, 2, 1, 4, 1, 1, 3, 1, 2, 1, 1, 3, 2, 1,
-  4, 1, 2,
-];
 
 const cardVariants: Variants = {
   rest: { y: 0, rotate: 0, scale: 1 },
@@ -50,41 +45,6 @@ const detailsVariants: Variants = {
     transition: { type: "spring", stiffness: 260, damping: 26 },
   },
 };
-
-function PhotocopyTexture() {
-  // Subtle grain + diagonal "toner streak" overlay for the zine feel.
-  return (
-    <span
-      aria-hidden
-      className="pointer-events-none absolute inset-0"
-      style={{
-        backgroundImage: `
-          repeating-linear-gradient(115deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 1px, transparent 1px, transparent 5px),
-          radial-gradient(circle at 20% 30%, rgba(0,0,0,0.10) 0, transparent 55%),
-          radial-gradient(circle at 80% 70%, rgba(0,0,0,0.08) 0, transparent 50%)
-        `,
-        mixBlendMode: "multiply",
-      }}
-    />
-  );
-}
-
-function Barcode({ color }: { color: string }) {
-  return (
-    <div className="flex h-10 items-end gap-[2px]" role="img" aria-label="barcode graphic">
-      {BARCODE_BARS.map((w, i) => (
-        <span
-          key={i}
-          style={{
-            width: `${w}px`,
-            height: i % 7 === 0 ? "100%" : "80%",
-            background: color,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
 
 export function SingleEventPass({ college }: Props) {
   const activeCollege = college ?? ZONAL_COLLEGES[0];
@@ -241,5 +201,3 @@ export function SingleEventPass({ college }: Props) {
     </motion.article>
   );
 }
-
-export default SingleEventPass;

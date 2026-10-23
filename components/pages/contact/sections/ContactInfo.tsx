@@ -15,8 +15,8 @@ const infoCards: {
   {
     icon: <EmailIcon />,
     label: "Email",
-    value: "contact@kashiyatra.org.in",
-    href: "mailto:contact@kashiyatra.org.in",
+    value: "kashiyatra@itbhu.ac.in",
+    href: "mailto:kashiyatra@itbhu.ac.in",
   },
   {
     icon: <PhoneIcon />,

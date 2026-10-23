@@ -1,10 +1,137 @@
 /**
  * Pass page configuration for Kashiyatra
- * Animation and sizing configuration - pass data comes from backend API
+ * Static pass data lives here (passes don't change), plus animation/sizing config.
  */
 
-// Types are defined in lib/api/helper/types/pass.types.ts
-// PassConfig, PassBenefit, PassDetailItem are re-exported from there via lib/api/helper/types
+import type { PassConfig } from "@/lib/api/helper/types";
+import { IMAGES } from "@/lib/images";
+
+// ═══════════════════════════════════════════════════════════════════
+// PASSES DATA (static — single source of truth, no backend fetch)
+//
+// All passes include: Welcome Kit (T-shirt + toiletries), Campus Tour,
+// all Events entry, and Pro-Nite entries.
+//   • Darbar  = all of the above + Accommodation
+//   • Swarnim = all of the above + Accommodation + Food
+// ═══════════════════════════════════════════════════════════════════
+export const PASSES: PassConfig[] = [
+  {
+    id: "yatri",
+    name: "Yatri Pass",
+    price: 2399,
+    image: IMAGES.passes.yatri,
+    tagline: "Begin Your Journey",
+    accentColor: "#1A5F7A", // Ganga blue
+    glowColor: "rgba(26, 95, 122, 0.5)",
+    popular: false,
+    benefits: [
+      { text: "Welcome Kit (T-shirt + Toiletries)" },
+      { text: "Campus Tour" },
+      { text: "All Events Entry" },
+      { text: "Pro-Nite Entries" },
+    ],
+    details: [
+      {
+        icon: "🎁",
+        title: "Welcome Kit",
+        description: "A festival welcome kit including a T-shirt and toiletries.",
+      },
+      {
+        icon: "🏛️",
+        title: "Campus Tour",
+        description: "A guided tour of the historic IIT (BHU) campus.",
+      },
+      { icon: "🎭", title: "Events Entry", description: "Entry to all festival events." },
+      {
+        icon: "🎤",
+        title: "Pro-Nite Entries",
+        description: "Access to all the Pro-Nite performances.",
+      },
+    ],
+  },
+  {
+    id: "darbar",
+    name: "Darbar Pass",
+    price: 2699,
+    image: IMAGES.passes.darbar,
+    tagline: "The Royal Experience",
+    accentColor: "#D4A853", // Gold
+    glowColor: "rgba(212, 168, 83, 0.5)",
+    popular: true,
+    benefits: [
+      { text: "Accommodation", highlight: true },
+      { text: "Welcome Kit (T-shirt + Toiletries)" },
+      { text: "Campus Tour" },
+      { text: "All Events Entry" },
+      { text: "Pro-Nite Entries" },
+    ],
+    details: [
+      {
+        icon: "🏨",
+        title: "Accommodation",
+        description: "Stay arranged for the festival duration.",
+      },
+      {
+        icon: "🎁",
+        title: "Welcome Kit",
+        description: "A festival welcome kit including a T-shirt and toiletries.",
+      },
+      {
+        icon: "🏛️",
+        title: "Campus Tour",
+        description: "A guided tour of the historic IIT (BHU) campus.",
+      },
+      { icon: "🎭", title: "Events Entry", description: "Entry to all festival events." },
+      {
+        icon: "🎤",
+        title: "Pro-Nite Entries",
+        description: "Access to all the Pro-Nite performances.",
+      },
+    ],
+  },
+  {
+    id: "swarnim",
+    name: "Swarnim Pass",
+    price: 2999,
+    image: IMAGES.passes.swarnim,
+    tagline: "The Divine Experience",
+    accentColor: "#FFD700", // Bright gold
+    glowColor: "rgba(255, 215, 0, 0.5)",
+    popular: false,
+    benefits: [
+      { text: "Accommodation", highlight: true },
+      { text: "Food", highlight: true },
+      { text: "Welcome Kit (T-shirt + Toiletries)" },
+      { text: "Campus Tour" },
+      { text: "All Events Entry" },
+      { text: "Pro-Nite Entries" },
+    ],
+    details: [
+      {
+        icon: "🏨",
+        title: "Accommodation",
+        description: "Stay arranged for the festival duration.",
+      },
+      { icon: "🍽️", title: "Food", description: "Meals included for the festival duration." },
+      {
+        icon: "🎁",
+        title: "Welcome Kit",
+        description: "A festival welcome kit including a T-shirt and toiletries.",
+      },
+      {
+        icon: "🏛️",
+        title: "Campus Tour",
+        description: "A guided tour of the historic IIT (BHU) campus.",
+      },
+      { icon: "🎭", title: "Events Entry", description: "Entry to all festival events." },
+      {
+        icon: "🎤",
+        title: "Pro-Nite Entries",
+        description: "Access to all the Pro-Nite performances.",
+      },
+    ],
+  },
+];
 
 /**
  * Animation configuration - tune these values to adjust feel

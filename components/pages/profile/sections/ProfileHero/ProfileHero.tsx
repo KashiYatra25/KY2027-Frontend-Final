@@ -6,6 +6,7 @@ import { COLORS } from "@/components/pages/profile/constants/palette";
 import { UserProfile, UserAccountProgress, ProfileUser } from "@/lib/api/helper/types";
 import { AvatarSection } from "./AvatarSection";
 import { UserInfoSection } from "./UserInfoSection";
+import { ReferredBySection } from "./ReferredBySection";
 
 // ═══════════════════════════════════════════════════════════════════
 // PROFILE HERO SECTION
@@ -17,9 +18,11 @@ interface ProfileHeroProps {
   user: ProfileUser;
   progress: UserAccountProgress | null;
   isApprovedCa?: boolean;
+  /** Refetch the account query (used after applying a referral). */
+  refetch?: () => void;
 }
 
-export function ProfileHero({ userData, user, progress, isApprovedCa }: ProfileHeroProps) {
+export function ProfileHero({ userData, user, progress, isApprovedCa, refetch }: ProfileHeroProps) {
   const initials =
     (userData?.firstName || user.name)
       ?.split(" ")
@@ -121,6 +124,13 @@ export function ProfileHero({ userData, user, progress, isApprovedCa }: ProfileH
             isApprovedCa={isApprovedCa}
           />
         </div>
+
+        {/* Referred-by: name (if applied) or one-time apply form */}
+        <ReferredBySection
+          userData={userData}
+          progress={progress}
+          refetch={refetch ?? (() => {})}
+        />
       </div>
 
       {/* Bottom decorative border */}

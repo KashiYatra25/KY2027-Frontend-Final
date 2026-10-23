@@ -16,12 +16,6 @@ const PERKS = [
     color: "pink",
   },
   {
-    icon: "🏆",
-    title: "Cash Rewards",
-    description: "Earn up to ₹10,000+ based on registrations and performance milestones",
-    color: "purple",
-  },
-  {
     icon: "📜",
     title: "Certificate & LOR",
     description:

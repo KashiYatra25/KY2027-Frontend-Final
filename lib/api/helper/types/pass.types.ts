@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════
 // PASS TYPES
-// Types for festival passes API
+// Passes are static frontend data (see components/pages/passes/config).
 // ═══════════════════════════════════════════════════════════════════
 
 export interface PassBenefit {
@@ -20,12 +20,10 @@ export interface PassDetail {
 export type PassDetailItem = PassDetail;
 
 /**
- * Frontend pass configuration shape (used by UI components).
- * Derived from the backend Pass via `toPassConfig`.
+ * Frontend pass configuration shape (used by the UI + static config).
  */
 export interface PassConfig {
   id: string; // slug (for display/URLs)
-  _id?: string; // MongoDB ObjectId (for API calls like cart) - optional for static config
   name: string;
   price: number;
   image: string;
@@ -35,26 +33,4 @@ export interface PassConfig {
   benefits: PassBenefit[];
   popular?: boolean; // For highlighting recommended pass
   details: PassDetailItem[]; // Detailed info for modal
-}
-
-export interface Pass {
-  _id: string;
-  slug: string;
-  name: string;
-  price: number;
-  image: string;
-  tagline: string;
-  accentColor: string;
-  glowColor: string;
-  popular?: boolean;
-  benefits: PassBenefit[];
-  details: PassDetail[];
-  sortOrder: number;
-  active: boolean;
-}
-
-export interface PassesApiResponse {
-  info: string;
-  passes: Pass[];
-  count: number;
 }

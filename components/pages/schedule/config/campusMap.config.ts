@@ -6,7 +6,7 @@
  * All positions are percentages of the map image (1332 × 1252).
  */
 
-import { EVENT_CATEGORIES } from "@/components/pages/events/config/events.config";
+import { EVENT_CATEGORIES } from "@/lib/data/events.config";
 import type { ScheduledEvent, Venue } from "@/lib/api/helper/types";
 
 export const MAP_ASPECT = 1332 / 1252;

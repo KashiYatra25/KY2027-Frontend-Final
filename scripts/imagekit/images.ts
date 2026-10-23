@@ -1032,4 +1032,66 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     remoteName: "stage.png",
     folder: "/intro/countdown",
   },
+
+  // Gallery — Team photos (Tech team)
+  {
+    localFile: "gallery/team/tech/head/srajan.jpg",
+    remoteName: "srajan.jpg",
+    folder: "/gallery/team/tech/head",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/akhilesh.png",
+    remoteName: "akhilesh.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/balaji-siddhartha-katiki.png",
+    remoteName: "balaji-siddhartha-katiki.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/bhavanasi-anjana-akhileswar.png",
+    remoteName: "bhavanasi-anjana-akhileswar.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/eraganaboina-krishna-koushik.png",
+    remoteName: "eraganaboina-krishna-koushik.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/g-prem-kumar.png",
+    remoteName: "g-prem-kumar.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/meesala-pawan-kumar.png",
+    remoteName: "meesala-pawan-kumar.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/prerna.jpg",
+    remoteName: "prerna.jpg",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/rishikar.png",
+    remoteName: "rishikar.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/siddu-kumar-reddy-bandi.png",
+    remoteName: "siddu-kumar-reddy-bandi.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/vancha-abhinav-reddy.png",
+    remoteName: "vancha-abhinav-reddy.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/y-v-suresh-kumar-reddy.png",
+    remoteName: "y-v-suresh-kumar-reddy.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
 ];

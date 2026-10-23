@@ -6,5 +6,4 @@
 export * from "./college.functions";
 export * from "./color.functions";
 export * from "./error.functions";
-export * from "./pass.functions";
 export * from "./welcome.functions";

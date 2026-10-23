@@ -65,8 +65,7 @@ export { useMyAccount } from "./profile/useMyAccount";
 // PASSES
 // ═══════════════════════════════════════════════════════════════════
 
-export { usePasses } from "./passes/usePasses";
-export type { Pass, PassBenefit, PassDetail } from "@/lib/api/helper/types";
+export type { PassBenefit, PassDetail } from "@/lib/api/helper/types";
 
 // ═══════════════════════════════════════════════════════════════════
 // EVENTS
@@ -122,6 +121,7 @@ export { usePaymentStatus } from "./payment/usePaymentStatus";
 
 export { useCaApplication } from "./ca/useCaApplication";
 export { useCaInfo } from "./ca/useCaInfo";
+export { useApplyReferral } from "./ca/useApplyReferral";
 export type {
   CAApplicationStatus,
   CaApplication,

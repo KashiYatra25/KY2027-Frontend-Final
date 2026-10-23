@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { PaymentSuccessToast } from "@/components/pages/purchases/toasts/PaymentSuccessToast";
+import { PaymentSuccessToast } from "@/components/pages/purchases/toasts/success/PaymentSuccessToast";
 
 // ═══════════════════════════════════════════════════════════════════
 // PAYMENT SUCCESS HANDLER

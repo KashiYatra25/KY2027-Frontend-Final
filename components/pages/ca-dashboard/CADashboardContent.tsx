@@ -5,7 +5,7 @@ import gsap from "gsap";
 import Image from "next/image";
 import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import { useLeaderboard, type SortField, type SortOrder } from "@/lib/api/hooks/ca/useLeaderboard";
-import { COLORS } from "@/components/pages/profile/constants/palette";
+import { COLORS } from "./constants/palette";
 import {
   Trophy,
   Crown,

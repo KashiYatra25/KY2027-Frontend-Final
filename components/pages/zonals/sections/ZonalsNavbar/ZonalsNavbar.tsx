@@ -294,7 +294,7 @@ export function ZonalsNavbar() {
               {/* Brand text stack */}
               <div className="flex flex-col items-start leading-none">
                 <span
-                  className="font-mono text-xs font-bold tracking-[0.2em] uppercase"
+                  className="font-mono text-xs font-bold tracking-[0.2em] whitespace-nowrap uppercase"
                   style={{ color: COLORS.ACID_LIME }}
                 >
                   KASHIYATRA

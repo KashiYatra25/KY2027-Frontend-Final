@@ -43,18 +43,34 @@ export const PHOTOS: PhotoItem[] = [
   { src: "/gallery/photos/group-dance.jpg", title: "Group Dance", sub: "Stage Show" },
   { src: "/gallery/photos/awareness-exhibit.jpg", title: "Campus Exhibit", sub: "Festival" },
   { src: "/gallery/photos/fashion-show.jpg", title: "Fashion Showcase", sub: "Stage Show" },
-  { src: "/gallery/photos/dance-performance.jpg", title: "Dance Performance", sub: "Cultural Night" },
+  {
+    src: "/gallery/photos/dance-performance.jpg",
+    title: "Dance Performance",
+    sub: "Cultural Night",
+  },
   { src: "/gallery/photos/costume-performance.jpg", title: "Costume Showcase", sub: "Stage Show" },
   { src: "/gallery/photos/music-performance.jpg", title: "Music Performance", sub: "Live Show" },
   { src: "/gallery/photos/pageant.jpg", title: "Pageant", sub: "Stage Show" },
   { src: "/gallery/photos/solo-performance.jpg", title: "Solo Performance", sub: "Stage Show" },
   { src: "/gallery/photos/daytime-dance.jpg", title: "Daytime Dance", sub: "Campus" },
-  // Additional slider images
-  { src: IMAGES.about.slider.left1, title: "Opening Ceremony", sub: "Day 1" },
-  { src: IMAGES.about.slider.right1, title: "Cultural Night", sub: "Day 2" },
-  { src: IMAGES.about.slider.left2, title: "Dance Performance", sub: "Natraj" },
-  { src: IMAGES.about.slider.right2, title: "Artists Live", sub: "Day 3" },
-  { src: IMAGES.about.slider.left3, title: "Memories", sub: "KY 2027" },
+  // Kashiyatra festival photos (replaces the old non-fest placeholder art)
+  { src: "/gallery/gallery-01.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-02.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-03.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-04.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-05.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-06.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-07.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-08.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-09.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-10.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-11.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-12.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-13.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-14.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-15.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-16.jpeg", title: "Kashiyatra", sub: "KY 2026" },
+  { src: "/gallery/gallery-17.jpeg", title: "Kashiyatra", sub: "KY 2026" },
 ];
 
 // ═══════════════════════════════════════════════════════════════════
@@ -125,7 +141,7 @@ export const SPECIAL_VIDEOS: SpecialVideoItem[] = [
 // Golden polaroid-style cards with floating animation
 // ═══════════════════════════════════════════════════════════════════
 export const PERFORMERS: PerformerItem[] = [
-  { src: IMAGES.singers.ritviz, name: "Ritviz", subtitle: "Pro Nite 2027" },
+  { src: IMAGES.singers.ritviz, name: "Ritviz", subtitle: "Pro Nite 2026" },
   { src: IMAGES.singers.raftaar, name: "Raftaar", subtitle: "EDM Night" },
   { src: IMAGES.singers.jubinNautiyal, name: "Jubin Nautiyal", subtitle: "Day 2" },
   { src: IMAGES.singers.mohitChauhan, name: "Mohit Chauhan", subtitle: "Sufi Night" },
@@ -136,11 +152,9 @@ export const PERFORMERS: PerformerItem[] = [
 // ═══════════════════════════════════════════════════════════════════
 // TEAM PHOTO - Group photo of the organizing team
 // ═══════════════════════════════════════════════════════════════════
-export const TEAM_PHOTO: TeamPhotoItem | null = {
-  src: IMAGES.gallery.grandFinale1,
-  title: "Kashi Yatra 2027 Team",
-  aspectRatio: 1.6,
-};
+// Team group photo — set to null until the real team photo is available.
+// A "Coming soon" placeholder is shown in its place (see TeamSection).
+export const TEAM_PHOTO: TeamPhotoItem | null = null;
 
 // ═══════════════════════════════════════════════════════════════════
 // TEAM GROUPS - side-panel categories + member cards
@@ -153,9 +167,62 @@ export const TEAM_GROUPS: TeamGroup[] = [
     id: "tech",
     label: "Tech Team",
     members: [
-      { name: "Coming soon", role: "Tech Lead" },
-      { name: "Coming soon", role: "Developer" },
-      { name: "Coming soon", role: "Developer" },
+      { name: "Srajan", role: "Tech Lead", photo: IMAGES.gallery.team.tech.head.srajan },
+      {
+        name: "Akhilesh",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.akhilesh,
+      },
+      {
+        name: "Prerna",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.prerna,
+      },
+      {
+        name: "Rishikar",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.rishikar,
+      },
+      {
+        name: "G. Prem Kumar",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.gPremKumar,
+      },
+      {
+        name: "Balaji Siddhartha Katiki",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.balajiSiddharthaKatiki,
+      },
+      {
+        name: "Bhavanasi Anjana Akhileswar",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.bhavanasiAnjanaAkhileswar,
+      },
+      {
+        name: "Eraganaboina Krishna Koushik",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.eraganaboinaKrishnaKoushik,
+      },
+      {
+        name: "Meesala Pawan Kumar",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.meesalaPawanKumar,
+      },
+      {
+        name: "Siddu Kumar Reddy Bandi",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.sidduKumarReddyBandi,
+      },
+      {
+        name: "Vancha Abhinav Reddy",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.vanchaAbhinavReddy,
+      },
+      {
+        name: "Y. V. Suresh Kumar Reddy",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.yvSureshKumarReddy,
+      },
     ],
   },
 ];
