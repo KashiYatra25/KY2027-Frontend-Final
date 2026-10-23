@@ -25,11 +25,11 @@ export const POS_STONES = {
     sm: { bottom: "41%", left: "50%", transform: "translateX(-50%)" },
   },
   GALLERY: {
-    mobile: { bottom: "55%", right: "6%" },
+    mobile: { bottom: "30%", right: "6%" },
     sm: { bottom: "17%", left: "68%", right: "auto" },
   },
   ABOUT: {
-    mobile: { bottom: "30%", right: "8%" },
+    mobile: { bottom: "55%", right: "8%" },
     sm: { bottom: "50%", left: "86%", right: "auto" },
   },
 } as const;

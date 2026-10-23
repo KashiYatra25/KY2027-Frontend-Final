@@ -38,7 +38,7 @@ export const ConcertBrandHeader = memo(function ConcertBrandHeader() {
 
       {/* Main Title - KASHIYATRA with premium styling */}
       <h3
-        className="mb-6 text-5xl font-bold tracking-wider sm:text-6xl md:text-8xl"
+        className="mb-6 text-5xl font-bold tracking-wider whitespace-nowrap sm:text-6xl md:text-8xl"
         style={{
           fontFamily: "var(--font-ethereal), 'Cinzel Decorative', serif",
           color: "#FFFFFF",

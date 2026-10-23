@@ -427,7 +427,7 @@ export function HeroSection() {
         <div className="relative inline-block">
           {/* Main Title */}
           <div
-            className="text-4xl font-black tracking-wide sm:text-5xl md:text-6xl lg:text-7xl"
+            className="text-4xl font-black tracking-wide whitespace-nowrap sm:text-5xl md:text-6xl lg:text-7xl"
             style={{
               fontFamily: "var(--font-cinzel-decorative), serif",
               backgroundImage: titleStyle.titleGradient,
