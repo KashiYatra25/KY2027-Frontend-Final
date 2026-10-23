@@ -45,6 +45,9 @@ export function ReferredBySection({ userData, progress, refetch }: ReferredBySec
   // Only show this on a completed profile.
   if (!progress?.isProfileComplete) return null;
 
+  // CAs cannot apply referral codes - they ARE the referrers
+  if (userData?.isCa) return null;
+
   const referredBy = userData?.referredBy ?? null;
 
   const onSubmit = async (data: ReferralFormData) => {
