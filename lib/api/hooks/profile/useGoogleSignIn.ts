@@ -29,6 +29,15 @@ export function useSignIn(options: UseSignInOptions = {}) {
 
     setIsSigningIn(true);
 
+    // CRITICAL: signIn() triggers a hard browser redirect to Google. If we call
+    // it synchronously after setIsSigningIn(true), the redirect can start before
+    // React commits the re-render — so the loader never paints and the page
+    // looks frozen. Wait for two animation frames to guarantee the browser has
+    // painted the loader overlay, THEN start the redirect.
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+    });
+
     // For OAuth, this will redirect the browser to the provider's auth page.
     // The loader stays visible until the browser navigates away.
     await signIn(provider, { callbackUrl });

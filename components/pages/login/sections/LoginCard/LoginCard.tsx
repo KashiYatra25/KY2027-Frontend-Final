@@ -8,9 +8,10 @@ import { CardFooter } from "@/components/pages/login/sections/LoginCard/CardFoot
 
 interface LoginCardProps {
   onGoogleLogin: () => void;
+  isSigningIn?: boolean;
 }
 
-export function LoginCard({ onGoogleLogin }: LoginCardProps) {
+export function LoginCard({ onGoogleLogin, isSigningIn = false }: LoginCardProps) {
   return (
     <div
       className="relative mx-auto w-full max-w-md lg:mx-0"
@@ -65,7 +66,7 @@ export function LoginCard({ onGoogleLogin }: LoginCardProps) {
         <CardDescription />
 
         {/* Google Sign In Button */}
-        <GoogleSignInButton onClick={onGoogleLogin} />
+        <GoogleSignInButton onClick={onGoogleLogin} loading={isSigningIn} />
 
         {/* Bottom decorative element */}
         <CardFooter />

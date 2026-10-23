@@ -4,11 +4,11 @@ import { Suspense, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
-import { PageLoader } from "@/components/loader/PageLoader";
 import { AuthErrorToastHandler } from "@/components/auth";
 import { useSignIn } from "@/lib/api/hooks";
 import { ROYAL_COLORS } from "./constants/palette";
 import { MysticGateSection, LoginCard, BackgroundEffects } from "./sections";
+import { SigningInOverlay } from "./sections/loader/SigningInOverlay";
 
 export function LoginContent() {
   const { data: session, status } = useSession();
@@ -27,7 +27,7 @@ export function LoginContent() {
 
   // Show loader while checking session or if already authenticated (redirecting)
   if (status === "loading" || (status === "authenticated" && session)) {
-    return <PageLoader />;
+    return <SigningInOverlay />;
   }
 
   return (
@@ -37,8 +37,9 @@ export function LoginContent() {
         <AuthErrorToastHandler />
       </Suspense>
 
-      {/* Full page loader when signing in */}
-      {isSigningIn && <PageLoader />}
+      {/* Full page loader when signing in (always-visible overlay, not the
+          route-transition PageLoader which needs a navigation click to show) */}
+      {isSigningIn && <SigningInOverlay />}
 
       {/* Fixed navbar */}
       <div className="fixed inset-x-0 top-0 z-[200]">
@@ -61,7 +62,7 @@ export function LoginContent() {
         {/* Main Content Container */}
         <div className="relative mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12 2xl:max-w-6xl">
           <MysticGateSection />
-          <LoginCard onGoogleLogin={handleSignIn} />
+          <LoginCard onGoogleLogin={handleSignIn} isSigningIn={isSigningIn} />
         </div>
       </main>
     </>
