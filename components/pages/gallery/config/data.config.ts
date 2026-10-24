@@ -172,6 +172,11 @@ export const TEAM_GROUPS: TeamGroup[] = [
       // Developers (core team)
       { name: "Shashwat", role: "Developer", photo: IMAGES.gallery.team.tech.developers.shashwat },
       { name: "Sudhir", role: "Developer", photo: IMAGES.gallery.team.tech.developers.sudhir },
+      {
+        name: "Shubhankar",
+        role: "Developer",
+        photo: IMAGES.gallery.team.tech.developers.shubhankar,
+      },
       // Contributors
       {
         name: "Akhilesh",

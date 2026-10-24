@@ -1060,6 +1060,11 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     remoteName: "sudhir.jpg",
     folder: "/gallery/team/tech/developer",
   },
+  {
+    localFile: "gallery/team/tech/developer/Shubhankar.jpg",
+    remoteName: "shubhankar.jpg",
+    folder: "/gallery/team/tech/developer",
+  },
   // Contributors (subordinates)
   {
     localFile: "gallery/team/tech/subordinates/akhilesh.png",
