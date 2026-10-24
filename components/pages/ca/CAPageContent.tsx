@@ -8,6 +8,7 @@ import {
   HeroSection,
   PerksSection,
   TimelineSection,
+  LeaderboardSection,
   CTASection,
 } from "@/components/pages/ca/sections";
 import {
@@ -149,6 +150,7 @@ export function CAPageContent() {
         <HeroSection />
         <PerksSection />
         <TimelineSection />
+        <LeaderboardSection />
         <CTASection />
       </main>
 

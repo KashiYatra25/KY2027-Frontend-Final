@@ -18,7 +18,6 @@ import { COLORS_RGBA, GRADIENTS } from "@/components/pages/ca/constants/palette"
 import { IITBhuRestrictedDisplay } from "./IITBhuRestrictedDisplay";
 import { AdminRestrictedDisplay } from "./AdminRestrictedDisplay";
 import { ApplicationStatusDisplay } from "./ApplicationStatusDisplay";
-import { LeaderboardPreview } from "./LeaderboardPreview";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -219,11 +218,6 @@ export function CTASection() {
                 Have questions? Contact us →
               </Link>
             </div>
-
-            {/* Leaderboard Preview */}
-            <div className="mt-12">
-              <LeaderboardPreview />
-            </div>
           </>
         ) : showIITBhuRestricted ? (
           <>
@@ -238,11 +232,6 @@ export function CTASection() {
                 Have questions? Contact us →
               </Link>
             </div>
-
-            {/* Leaderboard Preview */}
-            <div className="mt-12">
-              <LeaderboardPreview />
-            </div>
           </>
         ) : showApplicationStatus ? (
           <>
@@ -256,11 +245,6 @@ export function CTASection() {
               <Link href="/contact" className="transition-colors hover:text-white">
                 Have questions? Contact us →
               </Link>
-            </div>
-
-            {/* Leaderboard Preview */}
-            <div className="mt-12">
-              <LeaderboardPreview />
             </div>
           </>
         ) : (
@@ -359,11 +343,6 @@ export function CTASection() {
               <Link href="/contact" className="transition-colors hover:text-white">
                 Have questions? Contact us →
               </Link>
-            </div>
-
-            {/* Leaderboard Preview */}
-            <div className="mt-12">
-              <LeaderboardPreview />
             </div>
           </>
         )}

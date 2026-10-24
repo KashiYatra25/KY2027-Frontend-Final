@@ -87,9 +87,9 @@ export function PerksSection() {
           return (
             <div
               key={i}
-              className="perk-card group relative rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]"
+              className="perk-card group relative rounded-2xl p-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]"
               style={{
-                background: colors.bg,
+                background: `linear-gradient(135deg, ${colors.bg}, rgba(10, 6, 18, 0.6))`,
                 border: `1px solid ${colors.border}`,
               }}
             >
