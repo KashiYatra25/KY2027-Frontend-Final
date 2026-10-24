@@ -12,15 +12,18 @@ import { LinkedinIcon } from "./LinkedinIcon";
 // MEMBER CARD - stamp/polaroid-style card with placeholder support.
 //
 // Tier-aware styling so the hierarchy reads at a glance:
-//   • lead      → large, gold ornate frame + crown ribbon (the main one)
-//   • developer → clean paper card (default)
-// Tier is derived from the role text (anything with "Lead" → lead).
+//   • lead        → large, gold ornate frame (the main one)
+//   • developer   → medium, purple/maroon accent frame (core devs)
+//   • contributor → clean paper card (helpers)
+// Tier is derived from the role text.
 // ═══════════════════════════════════════════════════════════════════
 
-type MemberTier = "lead" | "developer";
+type MemberTier = "lead" | "developer" | "contributor";
 
 function getTier(role: string): MemberTier {
-  return /lead/i.test(role) ? "lead" : "developer";
+  if (/lead/i.test(role)) return "lead";
+  if (/developer/i.test(role)) return "developer";
+  return "contributor";
 }
 
 export function MemberCard({
@@ -36,9 +39,13 @@ export function MemberCard({
   const hasPhoto = !!member.photo;
   const tier = getTier(member.role);
   const isLead = tier === "lead" || featured;
+  const isDeveloper = tier === "developer" && !featured;
 
   // Slight alternating tilt for the scrapbook feel (lead stays straight).
   const tilt = isLead ? 0 : index % 3 === 0 ? -1.5 : index % 3 === 1 ? 1.5 : 0;
+
+  // Tier-specific accent colors
+  const accentColor = isLead ? COLORS.BRIGHT_GOLD : isDeveloper ? COLORS.RANI : COLORS.MARIGOLD;
 
   return (
     <motion.div
@@ -51,20 +58,28 @@ export function MemberCard({
         rotate: `${tilt}deg`,
         background: isLead
           ? `linear-gradient(135deg, ${COLORS.BRIGHT_GOLD} 0%, ${COLORS.PAPER} 22%, ${COLORS.PAPER} 78%, ${COLORS.GOLD} 100%)`
-          : COLORS.PAPER,
-        padding: isLead ? 10 : 7,
-        borderRadius: isLead ? 10 : 6,
-        border: isLead ? `2px solid ${COLORS.BRIGHT_GOLD}` : "none",
+          : isDeveloper
+            ? `linear-gradient(135deg, ${COLORS.RANI}44 0%, ${COLORS.PAPER} 18%, ${COLORS.PAPER} 82%, ${COLORS.PURPLE}44 100%)`
+            : COLORS.PAPER,
+        padding: isLead ? 10 : isDeveloper ? 8 : 7,
+        borderRadius: isLead ? 10 : isDeveloper ? 8 : 6,
+        border: isLead
+          ? `2px solid ${COLORS.BRIGHT_GOLD}`
+          : isDeveloper
+            ? `1.5px solid ${COLORS.RANI}88`
+            : "none",
         boxShadow: isLead
           ? `0 22px 60px -16px ${COLORS.MARIGOLD}, 0 0 0 1px ${COLORS.GOLD}66, 0 0 44px -8px ${COLORS.BRIGHT_GOLD}88`
-          : SHADOWS.CARD,
+          : isDeveloper
+            ? `0 16px 40px -12px ${COLORS.RANI}66, 0 0 0 1px ${COLORS.PURPLE}44, 0 0 30px -6px ${COLORS.RANI}55`
+            : SHADOWS.CARD,
       }}
     >
-      {/* Glow on hover (gold for lead, marigold for others) */}
+      {/* Glow on hover (gold for lead, rani for developer, marigold for contributor) */}
       <span
         className="pointer-events-none absolute -inset-1 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          boxShadow: `0 18px 50px -14px ${isLead ? COLORS.BRIGHT_GOLD : COLORS.MARIGOLD}88`,
+          boxShadow: `0 18px 50px -14px ${accentColor}88`,
         }}
       />
 
@@ -124,13 +139,15 @@ export function MemberCard({
           </div>
         )}
 
-        {/* inner frame line (gold for lead) */}
+        {/* inner frame line (tier-specific accent) */}
         <span
           className="pointer-events-none absolute inset-0 rounded-[3px]"
           style={{
             boxShadow: isLead
               ? `inset 0 0 0 2px ${COLORS.BRIGHT_GOLD}aa`
-              : "inset 0 0 0 1px rgba(27,15,36,0.18)",
+              : isDeveloper
+                ? `inset 0 0 0 1.5px ${COLORS.RANI}77`
+                : "inset 0 0 0 1px rgba(27,15,36,0.18)",
           }}
         />
 
@@ -140,18 +157,10 @@ export function MemberCard({
             key={k}
             className={`pointer-events-none absolute ${pos} h-3 w-3`}
             style={{
-              borderTop: pos.includes("top")
-                ? `1.5px solid ${isLead ? COLORS.BRIGHT_GOLD : COLORS.MARIGOLD}`
-                : "none",
-              borderBottom: pos.includes("bottom")
-                ? `1.5px solid ${isLead ? COLORS.BRIGHT_GOLD : COLORS.MARIGOLD}`
-                : "none",
-              borderLeft: pos.includes("left")
-                ? `1.5px solid ${isLead ? COLORS.BRIGHT_GOLD : COLORS.MARIGOLD}`
-                : "none",
-              borderRight: pos.includes("right")
-                ? `1.5px solid ${isLead ? COLORS.BRIGHT_GOLD : COLORS.MARIGOLD}`
-                : "none",
+              borderTop: pos.includes("top") ? `1.5px solid ${accentColor}` : "none",
+              borderBottom: pos.includes("bottom") ? `1.5px solid ${accentColor}` : "none",
+              borderLeft: pos.includes("left") ? `1.5px solid ${accentColor}` : "none",
+              borderRight: pos.includes("right") ? `1.5px solid ${accentColor}` : "none",
               opacity: 0.8,
             }}
           />
@@ -162,14 +171,14 @@ export function MemberCard({
       <div className="relative flex items-center justify-between gap-2 px-1.5 pt-2.5 pb-1">
         <div className="min-w-0">
           <p
-            className={`truncate leading-tight font-bold ${isLead ? "text-[15px]" : "text-[13px]"}`}
+            className={`truncate leading-tight font-bold ${isLead ? "text-[15px]" : isDeveloper ? "text-[14px]" : "text-[13px]"}`}
             style={{ color: COLORS.TEXT_DARK, fontFamily: "var(--font-cinzel), Georgia, serif" }}
           >
             {member.name}
           </p>
           <p
-            className={`truncate font-semibold tracking-wide uppercase ${isLead ? "text-[11px]" : "text-[10px]"}`}
-            style={{ color: isLead ? COLORS.MAROON : COLORS.RANI }}
+            className={`truncate font-semibold tracking-wide uppercase ${isLead ? "text-[11px]" : isDeveloper ? "text-[10px]" : "text-[10px]"}`}
+            style={{ color: isLead ? COLORS.MAROON : isDeveloper ? COLORS.PURPLE : COLORS.RANI }}
           >
             {member.role}
           </p>

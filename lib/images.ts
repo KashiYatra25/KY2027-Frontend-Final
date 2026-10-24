@@ -295,6 +295,11 @@ export const IMAGES = {
       tech: {
         head: {
           srajan: v(`${IMAGEKIT_BASE}/gallery/team/tech/head/srajan.jpg`),
+          shashank: v(`${IMAGEKIT_BASE}/gallery/team/tech/head/shashank.jpeg`),
+        },
+        developers: {
+          shashwat: v(`${IMAGEKIT_BASE}/gallery/team/tech/developer/shashwat.jpg`),
+          sudhir: v(`${IMAGEKIT_BASE}/gallery/team/tech/developer/sudhir.jpg`),
         },
         subordinates: {
           akhilesh: v(`${IMAGEKIT_BASE}/gallery/team/tech/subordinates/akhilesh.png`),

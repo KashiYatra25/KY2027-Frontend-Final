@@ -1045,6 +1045,23 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     folder: "/gallery/team/tech/head",
   },
   {
+    localFile: "gallery/team/tech/head/Shashank.jpeg",
+    remoteName: "shashank.jpeg",
+    folder: "/gallery/team/tech/head",
+  },
+  // Developers (core team members)
+  {
+    localFile: "gallery/team/tech/developer/Shashwat.jpg",
+    remoteName: "shashwat.jpg",
+    folder: "/gallery/team/tech/developer",
+  },
+  {
+    localFile: "gallery/team/tech/developer/Sudhir.jpg",
+    remoteName: "sudhir.jpg",
+    folder: "/gallery/team/tech/developer",
+  },
+  // Contributors (subordinates)
+  {
     localFile: "gallery/team/tech/subordinates/akhilesh.png",
     remoteName: "akhilesh.png",
     folder: "/gallery/team/tech/subordinates",

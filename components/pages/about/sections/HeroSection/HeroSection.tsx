@@ -196,10 +196,9 @@ export const HeroSection = memo(function HeroSection() {
         {/* Main Title */}
         {isMobile ? (
           <div className="mb-4">
-            <h1 className="text-6xl leading-none font-black tracking-tighter uppercase">
-              <span className="block text-white">KASHI</span>
+            <h1 className="text-6xl leading-none font-black tracking-tighter whitespace-nowrap uppercase">
+              <span className="text-white">KASHI</span>
               <span
-                className="block"
                 style={{
                   background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%)",
                   WebkitBackgroundClip: "text",
