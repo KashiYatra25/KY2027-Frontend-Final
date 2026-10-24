@@ -9,7 +9,8 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "upload:videos": "npx tsx scripts/upload-videos-to-r2.ts"
   },
   "dependencies": {
     "@apollo/client": "^4.3.1",
@@ -49,10 +50,12 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "^3.1156.0",
     "@aws-sdk/client-ssm": "^3.1141.0",
     "@tailwindcss/postcss": "^4",
     "@tanstack/react-query-devtools": "^5.104.1",
     "@types/canvas-confetti": "^1.9.0",
+    "@types/mime-types": "^3.0.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -63,6 +66,7 @@
     "graphiql": "^5.4.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
+    "mime-types": "^3.0.2",
     "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",

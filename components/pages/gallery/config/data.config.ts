@@ -77,10 +77,10 @@ export const PHOTOS: PhotoItem[] = [
 // VIDEOS - General video reel
 // Video clips that scroll horizontally. Provide poster for thumbnail.
 //
-// NOTE: Videos are served directly from /public/gallery/video (NOT ImageKit).
-// They will be migrated to R2 later — update VIDEO_BASE when that happens.
+// Videos are served from Cloudflare R2 via cdn.kashiyatra.org
+// CORS restricted to kashiyatra.org origins only
 // ═══════════════════════════════════════════════════════════════════
-const VIDEO_BASE = "/gallery/video";
+const VIDEO_BASE = "https://cdn.kashiyatra.org/gallery/video";
 
 export const VIDEOS: VideoItem[] = [
   {
