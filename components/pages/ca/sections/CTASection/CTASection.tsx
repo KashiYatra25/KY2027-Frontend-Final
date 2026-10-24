@@ -18,6 +18,7 @@ import { COLORS_RGBA, GRADIENTS } from "@/components/pages/ca/constants/palette"
 import { IITBhuRestrictedDisplay } from "./IITBhuRestrictedDisplay";
 import { AdminRestrictedDisplay } from "./AdminRestrictedDisplay";
 import { ApplicationStatusDisplay } from "./ApplicationStatusDisplay";
+import { LeaderboardPreview } from "./LeaderboardPreview";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -211,15 +212,17 @@ export function CTASection() {
 
             {/* Secondary links */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-              <Link href="/ca-dashboard" className="transition-colors hover:text-white">
-                View CA Leaderboard →
-              </Link>
               <Link href="/about" className="transition-colors hover:text-white">
                 Learn about Kashi Yatra →
               </Link>
               <Link href="/contact" className="transition-colors hover:text-white">
                 Have questions? Contact us →
               </Link>
+            </div>
+
+            {/* Leaderboard Preview */}
+            <div className="mt-12">
+              <LeaderboardPreview />
             </div>
           </>
         ) : showIITBhuRestricted ? (
@@ -228,15 +231,17 @@ export function CTASection() {
 
             {/* Secondary links */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-              <Link href="/ca-dashboard" className="transition-colors hover:text-white">
-                View CA Leaderboard →
-              </Link>
               <Link href="/about" className="transition-colors hover:text-white">
                 Learn about Kashi Yatra →
               </Link>
               <Link href="/contact" className="transition-colors hover:text-white">
                 Have questions? Contact us →
               </Link>
+            </div>
+
+            {/* Leaderboard Preview */}
+            <div className="mt-12">
+              <LeaderboardPreview />
             </div>
           </>
         ) : showApplicationStatus ? (
@@ -245,15 +250,17 @@ export function CTASection() {
 
             {/* Secondary links */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-              <Link href="/ca-dashboard" className="transition-colors hover:text-white">
-                View CA Leaderboard →
-              </Link>
               <Link href="/about" className="transition-colors hover:text-white">
                 Learn about Kashi Yatra →
               </Link>
               <Link href="/contact" className="transition-colors hover:text-white">
                 Have questions? Contact us →
               </Link>
+            </div>
+
+            {/* Leaderboard Preview */}
+            <div className="mt-12">
+              <LeaderboardPreview />
             </div>
           </>
         ) : (
@@ -346,15 +353,17 @@ export function CTASection() {
 
             {/* Secondary links */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-              <Link href="/ca-dashboard" className="transition-colors hover:text-white">
-                View CA Leaderboard →
-              </Link>
               <Link href="/about" className="transition-colors hover:text-white">
                 Learn about Kashi Yatra →
               </Link>
               <Link href="/contact" className="transition-colors hover:text-white">
                 Have questions? Contact us →
               </Link>
+            </div>
+
+            {/* Leaderboard Preview */}
+            <div className="mt-12">
+              <LeaderboardPreview />
             </div>
           </>
         )}
