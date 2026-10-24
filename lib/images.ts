@@ -341,6 +341,9 @@ export const IMAGES = {
   scheduleMap: {
     campusDay: v(`${IMAGEKIT_BASE}/schedule-map/campus-day.jpg`),
     campusNight: v(`${IMAGEKIT_BASE}/schedule-map/campus-night.jpg`),
+    cloud1: v(`${IMAGEKIT_BASE}/schedule-map/cloud-1.png`),
+    cloud2: v(`${IMAGEKIT_BASE}/schedule-map/cloud-2.png`),
+    cloud3: v(`${IMAGEKIT_BASE}/schedule-map/cloud-3.png`),
   },
 } as const;
 

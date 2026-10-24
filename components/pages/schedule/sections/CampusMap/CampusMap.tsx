@@ -34,6 +34,12 @@ const CLOUDS: [number, number][] = [
   [82, 72],
 ];
 
+const CLOUD_IMAGES = [
+  IMAGES.scheduleMap.cloud1,
+  IMAGES.scheduleMap.cloud2,
+  IMAGES.scheduleMap.cloud3,
+];
+
 const FLOCKS: [number, number, number][] = [
   [18, 26, -260],
   [52, 38, -320],
@@ -280,7 +286,7 @@ export function CampusMap({
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={i}
-              src={`/scheduleMap/Cloud${(i % 3) + 1}.png`}
+              src={CLOUD_IMAGES[i % 3]}
               alt=""
               loading="lazy"
               decoding="async"
