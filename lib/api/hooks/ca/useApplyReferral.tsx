@@ -88,7 +88,7 @@ export function useApplyReferral() {
     (referralId: string): Promise<boolean> => {
       return new Promise((resolve) => {
         mutate(
-          { referralId: referralId.trim().toUpperCase() },
+          { referralId: referralId.trim() },
           {
             onSuccess: () => resolve(true),
             onError: () => resolve(false),
