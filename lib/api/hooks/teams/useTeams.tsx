@@ -69,6 +69,7 @@ export interface SearchedUser {
   googleAvatarUrl: string | null;
   candidatePhotoUrl: string | null;
   college: string | null;
+  isPaidUser?: boolean;
 }
 
 interface UserSearchApiResponse {
