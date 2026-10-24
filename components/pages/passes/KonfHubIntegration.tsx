@@ -20,9 +20,10 @@ import {
 // Shows user their ID + email for use in KonfHub registration
 // ═══════════════════════════════════════════════════════════════════
 
-// KonfHub event URL - set in .env.local as NEXT_PUBLIC_KONFHUB_EVENT_URL
-const KONFHUB_EVENT_URL =
-  process.env.NEXT_PUBLIC_KONFHUB_EVENT_URL || "https://konfhub.com/kashiyatra-27";
+// KonfHub event URL
+// TODO: Env var NEXT_PUBLIC_KONFHUB_EVENT_URL is stale, using hardcoded URL for now
+// To use env: const KONFHUB_EVENT_URL = process.env.NEXT_PUBLIC_KONFHUB_EVENT_URL || "https://konfhub.com/kashiyatra2027";
+const KONFHUB_EVENT_URL = "https://konfhub.com/kashiyatra2027";
 
 interface KonfHubIntegrationProps {
   kyId: string;

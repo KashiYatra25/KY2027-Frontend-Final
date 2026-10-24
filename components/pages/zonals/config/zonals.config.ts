@@ -175,7 +175,7 @@ export const ZONAL_COLLEGES: ZonalCollege[] = [
     date: "2027-01-15", // PLACEHOLDER
     status: "registration-open",
     accentColor: "ACID_LIME",
-    registrationUrl: "https://konfhub.com/kashiyatra-rgipt-zonals-2027",
+    registrationUrl: "https://konfhub.com/kashi-yatra-2027-rgipt-zonals",
     description:
       "Join us at RGIPT for an exciting showcase of talent across 11 events. Compete, perform, and win amazing prizes!",
     passes: [
