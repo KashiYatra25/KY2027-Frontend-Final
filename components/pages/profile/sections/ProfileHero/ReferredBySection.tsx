@@ -110,9 +110,8 @@ export function ReferredBySection({ userData, progress, refetch }: ReferredBySec
         <input
           type="text"
           placeholder="Enter referral code"
-          autoCapitalize="characters"
           disabled={isPending}
-          className="flex-1 rounded-lg px-3 py-2 text-sm uppercase transition-colors outline-none focus:border-yellow-400/70 disabled:opacity-60"
+          className="flex-1 rounded-lg px-3 py-2 text-sm transition-colors outline-none focus:border-yellow-400/70 disabled:opacity-60"
           style={{
             background: `${COLORS.BG_DEEP}`,
             border: `1px solid ${COLORS.GOLD}30`,

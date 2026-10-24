@@ -167,6 +167,7 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
           {/* Member Search */}
           <div>
             <label className="mb-2 block text-sm font-medium text-white/80">Add Members</label>
+            <p className="mb-2 text-xs text-white/50">Only paid users can be added to teams</p>
             <div className="relative">
               <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-white/40" />
               <input
