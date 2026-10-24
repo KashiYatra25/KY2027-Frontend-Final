@@ -211,6 +211,9 @@ export function CTASection() {
 
             {/* Secondary links */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+              <Link href="/ca-dashboard" className="transition-colors hover:text-white">
+                View CA Leaderboard →
+              </Link>
               <Link href="/about" className="transition-colors hover:text-white">
                 Learn about Kashi Yatra →
               </Link>
@@ -225,6 +228,9 @@ export function CTASection() {
 
             {/* Secondary links */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+              <Link href="/ca-dashboard" className="transition-colors hover:text-white">
+                View CA Leaderboard →
+              </Link>
               <Link href="/about" className="transition-colors hover:text-white">
                 Learn about Kashi Yatra →
               </Link>
@@ -239,6 +245,9 @@ export function CTASection() {
 
             {/* Secondary links */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+              <Link href="/ca-dashboard" className="transition-colors hover:text-white">
+                View CA Leaderboard →
+              </Link>
               <Link href="/about" className="transition-colors hover:text-white">
                 Learn about Kashi Yatra →
               </Link>
@@ -337,6 +346,9 @@ export function CTASection() {
 
             {/* Secondary links */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+              <Link href="/ca-dashboard" className="transition-colors hover:text-white">
+                View CA Leaderboard →
+              </Link>
               <Link href="/about" className="transition-colors hover:text-white">
                 Learn about Kashi Yatra →
               </Link>
