@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, LogOut, Loader2, Ticket, Mail, Receipt, Trophy } from "lucide-react";
+import { User, LogOut, Loader2, Ticket, Mail, Receipt, Trophy, Users, Image } from "lucide-react";
 import { useSignOut } from "@/lib/api/hooks";
 import { useNavbar } from "@/components/navbar/config/NavbarContext";
 import { DROPDOWN_THEMES } from "@/components/navbar/config/dropdown.config";
@@ -173,6 +173,42 @@ export function UserAvatarDropdown({ user }: UserAvatarDropdownProps) {
           >
             <Receipt className="h-4 w-4" style={{ color: styles.iconColor }} />
             <span>My Purchases</span>
+          </Link>
+        </DropdownMenuItem>
+
+        {/* Teams Link */}
+        <DropdownMenuItem
+          asChild
+          className="mx-1 rounded-md"
+          style={{
+            ["--dropdown-hover" as string]: styles.menuItemHover,
+          }}
+        >
+          <Link
+            href="/teams"
+            className="flex cursor-pointer items-center gap-2 px-3 py-2 transition-colors hover:bg-[var(--dropdown-hover)]"
+            style={{ color: styles.itemColor }}
+          >
+            <Users className="h-4 w-4" style={{ color: styles.iconColor }} />
+            <span>Teams</span>
+          </Link>
+        </DropdownMenuItem>
+
+        {/* Gallery Link */}
+        <DropdownMenuItem
+          asChild
+          className="mx-1 rounded-md"
+          style={{
+            ["--dropdown-hover" as string]: styles.menuItemHover,
+          }}
+        >
+          <Link
+            href="/gallery"
+            className="flex cursor-pointer items-center gap-2 px-3 py-2 transition-colors hover:bg-[var(--dropdown-hover)]"
+            style={{ color: styles.itemColor }}
+          >
+            <Image className="h-4 w-4" style={{ color: styles.iconColor }} />
+            <span>Gallery</span>
           </Link>
         </DropdownMenuItem>
 
