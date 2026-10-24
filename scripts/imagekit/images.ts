@@ -543,6 +543,11 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     remoteName: "MysticGate.png",
     folder: "/login",
   },
+  {
+    localFile: "login/LoginPage.png",
+    remoteName: "LoginPage.png",
+    folder: "/login",
+  },
 
   // ============================================
   // SINGERS / ARTISTS - Pro Nites

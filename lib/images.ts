@@ -191,7 +191,7 @@ export const IMAGES = {
   // LOGIN PAGE - All common
   // ============================================
   login: {
-    mysticGate: v(`${IMAGEKIT_BASE}/login/MysticGate.png`),
+    loginPage: v(`${IMAGEKIT_BASE}/login/LoginPage.png`),
   },
 
   // ============================================

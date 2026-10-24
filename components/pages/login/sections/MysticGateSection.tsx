@@ -6,10 +6,10 @@ import { ROYAL_COLORS } from "@/components/pages/login/constants/palette";
 
 export function MysticGateSection() {
   return (
-    <div className="relative hidden lg:block">
+    <div className="relative hidden lg:flex lg:flex-col lg:items-center lg:justify-center">
       {/* Mystic Login Image with animations */}
       <div
-        className="relative mx-auto w-full max-w-[500px]"
+        className="relative mx-auto w-full max-w-[420px]"
         style={{
           animation: "floatUpDown 4s ease-in-out infinite",
         }}
@@ -25,11 +25,11 @@ export function MysticGateSection() {
         />
 
         <Image
-          src={IMAGES.login.mysticGate}
+          src={IMAGES.login.loginPage}
           alt="Gateway to Kashi Yatra"
-          width={600}
-          height={800}
-          className="relative h-auto w-full rounded-2xl"
+          width={500}
+          height={650}
+          className="relative h-auto max-h-[65vh] w-full rounded-2xl object-contain"
           style={{
             filter:
               "drop-shadow(0 0 40px rgba(255,215,0,0.3)) drop-shadow(0 20px 40px rgba(0,0,0,0.5))",
