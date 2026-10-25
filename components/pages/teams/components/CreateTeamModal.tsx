@@ -200,18 +200,19 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
                   <>
                     {/* Results count header */}
                     <div
-                      className="sticky top-0 z-10 border-b px-3 py-2"
+                      className="border-b px-3 py-2"
                       style={{
                         background: TEAMS_COLORS.BG_CARD,
                         borderColor: TEAMS_COLORS.BORDER_SUBTLE,
                       }}
                     >
                       <p className="text-xs text-white/50">
-                        {filteredUsers.length} result{filteredUsers.length !== 1 ? "s" : ""} found
+                        Top {filteredUsers.length} result{filteredUsers.length !== 1 ? "s" : ""} ·
+                        Paid users shown first
                       </p>
                     </div>
-                    {/* Scrollable list */}
-                    <div className="max-h-48 overflow-y-auto">
+                    {/* Scrollable list - overscroll-contain prevents parent scroll */}
+                    <div className="max-h-48 overflow-y-auto overscroll-contain">
                       {filteredUsers.map((user) => {
                         const isUnpaid = user.isPaidUser === false;
                         return (

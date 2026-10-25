@@ -1,5 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { headers } from "next/headers";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
@@ -80,10 +81,20 @@ export const authOptions: NextAuthOptions = {
         }
 
         try {
+          // Get browser's headers to forward to backend
+          const reqHeaders = await headers();
+          const userAgent = reqHeaders.get("user-agent") || "unknown";
+          const clientIp =
+            reqHeaders.get("cf-connecting-ip") ||
+            reqHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+            "unknown";
+
           const response = await fetch(`${BACKEND_URL}/api/v1/user/auth`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "X-Forwarded-User-Agent": userAgent,
+              "X-Forwarded-Client-IP": clientIp,
             },
             body: JSON.stringify({
               idToken, // Only send the Google ID token
