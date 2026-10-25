@@ -285,6 +285,39 @@ export function HeroSection() {
                 </span>
               </MotionLink>
             </motion.div>
+
+            {/* RGIPT Trending Quick Link */}
+            <motion.div variants={riseVariants} className="mt-6">
+              <MotionLink
+                href="/zonals/rgipt"
+                whileHover={reduce ? undefined : { scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group inline-flex items-center gap-3 rounded-2xl border px-5 py-3"
+                style={{
+                  background: `linear-gradient(135deg, ${COLORS.SIGNAL_ORANGE}15, ${COLORS.ELECTRIC_VIOLET}10)`,
+                  borderColor: `${COLORS.SIGNAL_ORANGE}44`,
+                }}
+              >
+                <span
+                  className="flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-black uppercase"
+                  style={{
+                    background: `linear-gradient(90deg, ${COLORS.SIGNAL_ORANGE}, ${COLORS.ELECTRIC_VIOLET})`,
+                    color: COLORS.PAPER_WHITE,
+                  }}
+                >
+                  🔥 Trending
+                </span>
+                <span className="text-sm font-bold" style={{ color: COLORS.PAPER_WHITE }}>
+                  RGIPT Zonals · 2 Nov 2026
+                </span>
+                <span
+                  className="text-xl transition-transform duration-200 group-hover:translate-x-0.5"
+                  style={{ color: COLORS.SIGNAL_ORANGE }}
+                >
+                  →
+                </span>
+              </MotionLink>
+            </motion.div>
           </div>
 
           {/* Sound-wave visualizer card (mid parallax layer) */}

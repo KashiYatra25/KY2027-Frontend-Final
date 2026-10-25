@@ -172,7 +172,7 @@ export const ZONAL_COLLEGES: ZonalCollege[] = [
     city: "Amethi",
     state: "Uttar Pradesh",
     venue: "TBD", // PLACEHOLDER
-    date: "2027-01-15", // PLACEHOLDER
+    date: "2026-11-02",
     status: "registration-open",
     accentColor: "ACID_LIME",
     registrationUrl: "https://konfhub.com/kashi-yatra-2027-rgipt-zonals",

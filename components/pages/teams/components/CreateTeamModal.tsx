@@ -186,7 +186,7 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
             {/* Search Results */}
             {searchQuery.length >= 2 && (
               <div
-                className="mt-2 max-h-48 overflow-y-auto rounded-lg border"
+                className="mt-2 rounded-lg border"
                 style={{
                   background: TEAMS_COLORS.BG_CARD,
                   borderColor: TEAMS_COLORS.BORDER_SUBTLE,
@@ -197,49 +197,66 @@ export function CreateTeamModal({ isOpen, onClose, onSuccess }: CreateTeamModalP
                     {isSearching ? "Searching..." : "No users found"}
                   </p>
                 ) : (
-                  filteredUsers.map((user) => {
-                    const isUnpaid = user.isPaidUser === false;
-                    return (
-                      <button
-                        key={user.id}
-                        onClick={() => !isUnpaid && handleAddMember(user)}
-                        disabled={isUnpaid}
-                        className={`flex w-full items-center gap-3 px-3 py-2 text-left transition-colors ${
-                          isUnpaid ? "cursor-not-allowed opacity-60" : "hover:bg-white/5"
-                        }`}
-                        title={isUnpaid ? "This user hasn't purchased a pass yet" : undefined}
-                      >
-                        {/* Avatar */}
-                        <div className="relative h-8 w-8 overflow-hidden rounded-full bg-white/10">
-                          {user.candidatePhotoUrl || user.googleAvatarUrl ? (
-                            <Image
-                              src={user.candidatePhotoUrl ?? user.googleAvatarUrl ?? ""}
-                              alt={user.firstName ?? "User"}
-                              fill
-                              className="object-cover"
-                            />
-                          ) : (
-                            <div className="flex h-full w-full items-center justify-center text-xs font-medium text-white/60">
-                              {(user.firstName?.[0] ?? user.email[0]).toUpperCase()}
+                  <>
+                    {/* Results count header */}
+                    <div
+                      className="sticky top-0 z-10 border-b px-3 py-2"
+                      style={{
+                        background: TEAMS_COLORS.BG_CARD,
+                        borderColor: TEAMS_COLORS.BORDER_SUBTLE,
+                      }}
+                    >
+                      <p className="text-xs text-white/50">
+                        {filteredUsers.length} result{filteredUsers.length !== 1 ? "s" : ""} found
+                      </p>
+                    </div>
+                    {/* Scrollable list */}
+                    <div className="max-h-48 overflow-y-auto">
+                      {filteredUsers.map((user) => {
+                        const isUnpaid = user.isPaidUser === false;
+                        return (
+                          <button
+                            key={user.id}
+                            onClick={() => !isUnpaid && handleAddMember(user)}
+                            disabled={isUnpaid}
+                            className={`flex w-full items-center gap-3 px-3 py-2 text-left transition-colors ${
+                              isUnpaid ? "cursor-not-allowed opacity-60" : "hover:bg-white/5"
+                            }`}
+                            title={isUnpaid ? "This user hasn't purchased a pass yet" : undefined}
+                          >
+                            {/* Avatar */}
+                            <div className="relative h-8 w-8 overflow-hidden rounded-full bg-white/10">
+                              {user.candidatePhotoUrl || user.googleAvatarUrl ? (
+                                <Image
+                                  src={user.candidatePhotoUrl ?? user.googleAvatarUrl ?? ""}
+                                  alt={user.firstName ?? "User"}
+                                  fill
+                                  className="object-cover"
+                                />
+                              ) : (
+                                <div className="flex h-full w-full items-center justify-center text-xs font-medium text-white/60">
+                                  {(user.firstName?.[0] ?? user.email[0]).toUpperCase()}
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="truncate text-sm text-white">
-                            {user.firstName ?? ""} {user.lastName ?? ""}
-                          </p>
-                          <p className="truncate text-xs text-white/50">{user.email}</p>
-                        </div>
-                        {isUnpaid ? (
-                          <span className="shrink-0 rounded-full bg-orange-500/20 px-2 py-0.5 text-xs font-medium text-orange-400">
-                            Unpaid
-                          </span>
-                        ) : (
-                          <UserPlus className="h-4 w-4 flex-shrink-0 text-white/40" />
-                        )}
-                      </button>
-                    );
-                  })
+                            <div className="min-w-0 flex-1">
+                              <p className="truncate text-sm text-white">
+                                {user.firstName ?? ""} {user.lastName ?? ""}
+                              </p>
+                              <p className="truncate text-xs text-white/50">{user.email}</p>
+                            </div>
+                            {isUnpaid ? (
+                              <span className="shrink-0 rounded-full bg-orange-500/20 px-2 py-0.5 text-xs font-medium text-orange-400">
+                                Unpaid
+                              </span>
+                            ) : (
+                              <UserPlus className="h-4 w-4 flex-shrink-0 text-white/40" />
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </>
                 )}
               </div>
             )}

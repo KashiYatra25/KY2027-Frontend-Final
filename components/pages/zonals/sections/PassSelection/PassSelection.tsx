@@ -21,6 +21,7 @@ import { ZONAL_COLLEGES, type ZonalCollege } from "@/components/pages/zonals/con
 import { SingleEventPass } from "./SingleEventPass";
 import { MultiEventPass } from "./MultiEventPass";
 import { UserInfoBox } from "./UserInfoBox";
+import { YourPassStatus } from "./YourPassStatus";
 
 interface Props {
   college?: ZonalCollege;
@@ -99,6 +100,9 @@ export function PassSelection({ college }: Props) {
             all-access.
           </p>
         </motion.div>
+
+        {/* Your Pass Status - shows current pass for this college */}
+        <YourPassStatus college={activeCollege} className="mb-6" />
 
         {/* User Info Box - shows KY ID and email for KonfHub */}
         <UserInfoBox className="mx-auto mb-10 max-w-2xl" />

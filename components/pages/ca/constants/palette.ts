@@ -28,8 +28,12 @@ export const COLORS = {
 
 // RGBA helpers for the recurring translucent accents
 export const COLORS_RGBA = {
+  PINK_10: "rgba(236, 72, 153, 0.1)",
+  PINK_20: "rgba(236, 72, 153, 0.2)",
   PINK_30: "rgba(236, 72, 153, 0.3)",
   PINK_50: "rgba(236, 72, 153, 0.5)",
+  PURPLE_10: "rgba(139, 92, 246, 0.1)",
+  PURPLE_20: "rgba(139, 92, 246, 0.2)",
   PURPLE_30: "rgba(139, 92, 246, 0.3)",
   PURPLE_50: "rgba(139, 92, 246, 0.5)",
   CYAN_30: "rgba(6, 182, 212, 0.3)",
@@ -40,6 +44,7 @@ export const GRADIENTS = {
   TRI: "linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #06b6d4 100%)",
   TRI_90: "linear-gradient(90deg, #ec4899, #8b5cf6, #06b6d4)",
   PINK_PURPLE: "linear-gradient(135deg, #ec4899, #8b5cf6)",
+  PURPLE_PINK: "linear-gradient(135deg, #8b5cf6, #ec4899)",
 } as const;
 
 export type CAColor = keyof typeof COLORS;

@@ -145,117 +145,140 @@ export function CollegesPageContent() {
         {/* ── College cards (the hero of this page) ── */}
         <section className="relative z-10 mx-auto max-w-6xl px-4 pb-28">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {ZONAL_COLLEGES.map((college, index) => (
-              <motion.div
-                key={college.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
-                whileHover={reduce ? undefined : { y: -6 }}
-              >
-                <Link href={`/zonals/${college.slug}`}>
-                  <article
-                    className="group relative h-full overflow-hidden rounded-3xl p-6 backdrop-blur-sm transition-shadow"
-                    style={{
-                      background: `${COLORS.DEEP_INK}cc`,
-                      border: `2px solid ${COLORS.ACID_LIME}33`,
-                      boxShadow: SHADOWS.CARD,
-                    }}
-                  >
-                    {/* Hover glow sweep */}
-                    <div
-                      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                      style={{
-                        background: `radial-gradient(circle at 50% 0%, ${COLORS.ACID_LIME}18 0%, transparent 60%)`,
-                      }}
-                    />
+            {ZONAL_COLLEGES.map((college, index) => {
+              const isTrending = college.slug === "rgipt"; // RGIPT is the first active zonal
 
-                    {/* Status badge */}
-                    <span
-                      className="absolute top-5 right-5 rounded-full px-3 py-1 text-xs font-black uppercase"
+              return (
+                <motion.div
+                  key={college.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
+                  whileHover={reduce ? undefined : { y: -6 }}
+                >
+                  <Link href={`/zonals/${college.slug}`}>
+                    <article
+                      className="group relative h-full overflow-hidden rounded-3xl p-6 backdrop-blur-sm transition-shadow"
                       style={{
-                        background:
-                          college.status === "registration-open"
-                            ? COLORS.ACID_LIME
-                            : college.status === "upcoming"
-                              ? COLORS.SIGNAL_ORANGE
-                              : COLORS.ELECTRIC_BLUE,
-                        color: COLORS.DEEP_INK,
+                        background: `${COLORS.DEEP_INK}cc`,
+                        border: isTrending
+                          ? `2px solid ${COLORS.SIGNAL_ORANGE}66`
+                          : `2px solid ${COLORS.ACID_LIME}33`,
+                        boxShadow: isTrending
+                          ? `${SHADOWS.CARD}, 0 0 40px ${COLORS.SIGNAL_ORANGE}33`
+                          : SHADOWS.CARD,
                       }}
                     >
-                      {college.status === "registration-open"
-                        ? "Open"
-                        : college.status === "upcoming"
-                          ? "Coming Soon"
-                          : "Completed"}
-                    </span>
-
-                    <h3
-                      className="relative text-3xl font-black uppercase"
-                      style={{ color: COLORS.PAPER_WHITE }}
-                    >
-                      {college.shortName}
-                    </h3>
-                    <p
-                      className="relative mt-1 text-sm"
-                      style={{ color: `${COLORS.PAPER_WHITE}88` }}
-                    >
-                      {college.name}
-                    </p>
-
-                    <div className="relative mt-4 flex flex-wrap gap-4 text-sm">
-                      <span
-                        className="flex items-center gap-1.5"
-                        style={{ color: `${COLORS.PAPER_WHITE}aa` }}
-                      >
-                        <MapPin className="h-4 w-4" />
-                        {college.city}, {college.state}
-                      </span>
-                      <span
-                        className="flex items-center gap-1.5"
-                        style={{ color: `${COLORS.PAPER_WHITE}aa` }}
-                      >
-                        <Calendar className="h-4 w-4" />
-                        {new Date(college.date).toLocaleDateString("en-IN", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
-                      </span>
-                    </div>
-
-                    <div className="relative mt-4 flex items-center justify-between">
-                      <span className="text-sm font-bold" style={{ color: COLORS.ACID_LIME }}>
-                        {college.events.length} Events
-                      </span>
-                      <span className="text-sm" style={{ color: `${COLORS.PAPER_WHITE}aa` }}>
-                        From ₹{Math.min(...college.passes.map((p) => p.price))}
-                      </span>
-                    </div>
-
-                    <div
-                      className="relative mt-6 flex items-center justify-between rounded-xl px-4 py-3 transition-colors"
-                      style={{
-                        background: `${COLORS.ACID_LIME}15`,
-                        border: `1px solid ${COLORS.ACID_LIME}33`,
-                      }}
-                    >
-                      <span
-                        className="text-sm font-black uppercase"
-                        style={{ color: COLORS.ACID_LIME }}
-                      >
-                        View Events &amp; Register
-                      </span>
-                      <ArrowRight
-                        className="h-5 w-5 transition-transform group-hover:translate-x-1"
-                        style={{ color: COLORS.ACID_LIME }}
+                      {/* Hover glow sweep */}
+                      <div
+                        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                        style={{
+                          background: `radial-gradient(circle at 50% 0%, ${isTrending ? COLORS.SIGNAL_ORANGE : COLORS.ACID_LIME}18 0%, transparent 60%)`,
+                        }}
                       />
-                    </div>
-                  </article>
-                </Link>
-              </motion.div>
-            ))}
+
+                      {/* Trending badge - only for RGIPT */}
+                      {isTrending && (
+                        <span
+                          className="absolute top-5 left-5 flex items-center gap-1 rounded-full px-3 py-1 text-xs font-black uppercase"
+                          style={{
+                            background: `linear-gradient(90deg, ${COLORS.SIGNAL_ORANGE}, ${COLORS.ELECTRIC_VIOLET})`,
+                            color: COLORS.PAPER_WHITE,
+                            boxShadow: `0 0 12px ${COLORS.SIGNAL_ORANGE}55`,
+                          }}
+                        >
+                          <span className="text-sm">🔥</span>
+                          Trending
+                        </span>
+                      )}
+
+                      {/* Status badge */}
+                      <span
+                        className="absolute top-5 right-5 rounded-full px-3 py-1 text-xs font-black uppercase"
+                        style={{
+                          background:
+                            college.status === "registration-open"
+                              ? COLORS.ACID_LIME
+                              : college.status === "upcoming"
+                                ? COLORS.SIGNAL_ORANGE
+                                : COLORS.ELECTRIC_BLUE,
+                          color: COLORS.DEEP_INK,
+                        }}
+                      >
+                        {college.status === "registration-open"
+                          ? "Open"
+                          : college.status === "upcoming"
+                            ? "Coming Soon"
+                            : "Completed"}
+                      </span>
+
+                      <h3
+                        className="relative text-3xl font-black uppercase"
+                        style={{ color: COLORS.PAPER_WHITE }}
+                      >
+                        {college.shortName}
+                      </h3>
+                      <p
+                        className="relative mt-1 text-sm"
+                        style={{ color: `${COLORS.PAPER_WHITE}88` }}
+                      >
+                        {college.name}
+                      </p>
+
+                      <div className="relative mt-4 flex flex-wrap gap-4 text-sm">
+                        <span
+                          className="flex items-center gap-1.5"
+                          style={{ color: `${COLORS.PAPER_WHITE}aa` }}
+                        >
+                          <MapPin className="h-4 w-4" />
+                          {college.city}, {college.state}
+                        </span>
+                        <span
+                          className="flex items-center gap-1.5"
+                          style={{ color: `${COLORS.PAPER_WHITE}aa` }}
+                        >
+                          <Calendar className="h-4 w-4" />
+                          {new Date(college.date).toLocaleDateString("en-IN", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </span>
+                      </div>
+
+                      <div className="relative mt-4 flex items-center justify-between">
+                        <span className="text-sm font-bold" style={{ color: COLORS.ACID_LIME }}>
+                          {college.events.length} Events
+                        </span>
+                        <span className="text-sm" style={{ color: `${COLORS.PAPER_WHITE}aa` }}>
+                          From ₹{Math.min(...college.passes.map((p) => p.price))}
+                        </span>
+                      </div>
+
+                      <div
+                        className="relative mt-6 flex items-center justify-between rounded-xl px-4 py-3 transition-colors"
+                        style={{
+                          background: `${COLORS.ACID_LIME}15`,
+                          border: `1px solid ${COLORS.ACID_LIME}33`,
+                        }}
+                      >
+                        <span
+                          className="text-sm font-black uppercase"
+                          style={{ color: COLORS.ACID_LIME }}
+                        >
+                          View Events &amp; Register
+                        </span>
+                        <ArrowRight
+                          className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                          style={{ color: COLORS.ACID_LIME }}
+                        />
+                      </div>
+                    </article>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Back to Zonals */}
