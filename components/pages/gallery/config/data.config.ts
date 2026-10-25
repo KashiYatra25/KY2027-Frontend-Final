@@ -184,6 +184,11 @@ export const TEAM_GROUPS: TeamGroup[] = [
         photo: IMAGES.gallery.team.tech.subordinates.akhilesh,
       },
       {
+        name: "Amulya",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.amulya,
+      },
+      {
         name: "Prerna",
         role: "Contributor",
         photo: IMAGES.gallery.team.tech.subordinates.prerna,
@@ -197,6 +202,11 @@ export const TEAM_GROUPS: TeamGroup[] = [
         name: "G. Prem Kumar",
         role: "Contributor",
         photo: IMAGES.gallery.team.tech.subordinates.gPremKumar,
+      },
+      {
+        name: "Gorantala Vyshnavi",
+        role: "Contributor",
+        photo: IMAGES.gallery.team.tech.subordinates.gorantalaVyshnavi,
       },
       {
         name: "Balaji Siddhartha Katiki",

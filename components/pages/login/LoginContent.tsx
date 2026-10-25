@@ -14,7 +14,7 @@ export function LoginContent() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { isSigningIn, handleSignIn } = useSignIn({
-    callbackUrl: "/profile?auth=success",
+    callbackUrl: "/complete-profile?auth=success",
   });
 
   // Redirect to profile if already logged in

@@ -8,6 +8,7 @@ import { Ticket, Sparkles, Crown, Info } from "lucide-react";
 import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
 import { useMyAccount } from "@/lib/api/hooks";
 import { ProfileIncompleteCard } from "./components/ProfileIncompleteCard";
+import { AccountSuspendedCard } from "./components/AccountSuspendedCard";
 import { KonfHubIntegration } from "../passes/KonfHubIntegration";
 import { CartLoader } from "./sections/loader/CartLoader";
 import {
@@ -34,7 +35,12 @@ export function CartPageContent() {
   const [showLoginToast, setShowLoginToast] = useState(false);
 
   // Auth & profile state - use "full" to get kyId from profile
-  const { profile, progress, isLoading: isAccountLoading } = useMyAccount("full");
+  const {
+    profile,
+    progress,
+    isLoading: isAccountLoading,
+    isSuspensionError,
+  } = useMyAccount("full");
 
   const isProfileComplete = progress?.isProfileComplete ?? false;
   const completionPercentage = progress?.completionPercentage ?? 0;
@@ -198,6 +204,8 @@ export function CartPageContent() {
 
           {isLoading ? (
             <CartLoader />
+          ) : isSuspensionError ? (
+            <AccountSuspendedCard />
           ) : !isProfileComplete ? (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <ProfileIncompleteCard

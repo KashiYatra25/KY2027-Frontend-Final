@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client/react";
 import { ThemedNavbar } from "@/components/navbar/ThemedNavbar";
+import { AuthToastHandler } from "@/components/auth";
 import {
   ACCOUNT_PROGRESS_WITH_STEPS_QUERY,
   type AccountProgressWithStepsQueryResponse,
@@ -13,6 +14,7 @@ import { StepperIndicator } from "./StepperIndicator";
 import { STEPS } from "./config/data";
 import { COLORS } from "./constants/palette";
 import { ErrorState } from "./error/ErrorState";
+import { AccountSuspendedState } from "./error/AccountSuspendedState";
 import { CompleteProfileLoader } from "./loader/CompleteProfileLoader";
 import { CollegeDetailsStep } from "./steps/college/CollegeDetailsStep";
 import { IdentityVerificationStep } from "./steps/identity";
@@ -66,10 +68,18 @@ export function CompleteProfileContent() {
     }
   }, [data, router]);
 
+  // Check if error is a suspension error
+  const isSuspensionError =
+    error && /account.*suspended|suspended.*account/i.test(error.message || "");
+
   // Render loading or error content inside the styled wrapper
   const renderContent = () => {
     if (stepLoading || !checkedWelcome) {
       return <CompleteProfileLoader />;
+    }
+
+    if (isSuspensionError) {
+      return <AccountSuspendedState />;
     }
 
     if (error) {
@@ -148,6 +158,11 @@ export function CompleteProfileContent() {
 
   return (
     <>
+      {/* Auth toast handler - shows success/error toasts and cleans URL */}
+      <Suspense fallback={null}>
+        <AuthToastHandler />
+      </Suspense>
+
       {/* Fixed navbar */}
       <div className="fixed inset-x-0 top-0 z-[200]">
         <ThemedNavbar position="relative" topOffset={18} theme="main" />

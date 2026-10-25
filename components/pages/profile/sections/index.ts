@@ -7,3 +7,4 @@ export { ZonalPassesSection } from "./ZonalPassesSection";
 export { CaStatusSection } from "./CaStatusSection";
 export { ProfileLoader } from "./loader/ProfileLoader";
 export { ErrorState } from "./error/ErrorState";
+export { AccountSuspendedState } from "./error/AccountSuspendedState";

@@ -10,6 +10,7 @@ import {
   ProfileFooter,
   ProfileLoader,
   ErrorState,
+  AccountSuspendedState,
   MyTeamsSection,
   MyRegistrationsSection,
   CaStatusSection,
@@ -36,6 +37,7 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
     progress,
     isLoading,
     isError,
+    isSuspensionError,
     accountStatus,
     refetch,
   } = useMyAccount("full");
@@ -78,6 +80,8 @@ export function ProfilePageContent({ user }: ProfilePageContentProps) {
         <div className="mx-auto max-w-5xl 2xl:max-w-6xl">
           {isLoading ? (
             <ProfileLoader />
+          ) : isSuspensionError ? (
+            <AccountSuspendedState />
           ) : isError ? (
             <ErrorState />
           ) : (

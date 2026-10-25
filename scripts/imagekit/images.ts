@@ -1072,6 +1072,11 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
     folder: "/gallery/team/tech/subordinates",
   },
   {
+    localFile: "gallery/team/tech/subordinates/Amulya.jpg",
+    remoteName: "amulya.jpg",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
     localFile: "gallery/team/tech/subordinates/balaji-siddhartha-katiki.png",
     remoteName: "balaji-siddhartha-katiki.png",
     folder: "/gallery/team/tech/subordinates",
@@ -1084,6 +1089,11 @@ export const IMAGES_TO_UPLOAD: ImageToUpload[] = [
   {
     localFile: "gallery/team/tech/subordinates/eraganaboina-krishna-koushik.png",
     remoteName: "eraganaboina-krishna-koushik.png",
+    folder: "/gallery/team/tech/subordinates",
+  },
+  {
+    localFile: "gallery/team/tech/subordinates/Gorantala Vyshnavi.jpg",
+    remoteName: "gorantala-vyshnavi.jpg",
     folder: "/gallery/team/tech/subordinates",
   },
   {

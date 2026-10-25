@@ -71,6 +71,7 @@ interface UseMyAccountReturn {
   // Query State
   isLoading: boolean;
   isError: boolean;
+  isSuspensionError: boolean;
   errorMessage: string | null;
 
   // Raw data
@@ -145,6 +146,13 @@ export function useMyAccount<T extends AccountQueryType = "full">(
   const isAccountActive = accountStatus === "ACTIVE";
   const canAccessGatedFeatures = isProfileComplete && isAccountActive;
 
+  // Check if error is specifically an account suspension error
+  const isSuspensionError = useMemo(() => {
+    if (!error) return false;
+    const errorString = error.message || "";
+    return /account.*suspended|suspended.*account/i.test(errorString);
+  }, [error]);
+
   const errorMessage = useMemo(() => {
     if (error) {
       return extractErrorMessage(error, "Failed to fetch account data");
@@ -182,6 +190,7 @@ export function useMyAccount<T extends AccountQueryType = "full">(
     // Query State
     isLoading: loading,
     isError: !!error,
+    isSuspensionError,
     errorMessage,
 
     // Raw data

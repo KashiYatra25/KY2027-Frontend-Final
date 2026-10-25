@@ -21,7 +21,7 @@ interface UseSignInOptions {
  * On error: NextAuth redirects to /?error=<code>
  */
 export function useSignIn(options: UseSignInOptions = {}) {
-  const { provider = "google", callbackUrl = "/?auth=success" } = options;
+  const { provider = "google", callbackUrl = "/complete-profile?auth=success" } = options;
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   const handleSignIn = useCallback(async () => {

@@ -304,6 +304,7 @@ export const IMAGES = {
         },
         subordinates: {
           akhilesh: v(`${IMAGEKIT_BASE}/gallery/team/tech/subordinates/akhilesh.png`),
+          amulya: v(`${IMAGEKIT_BASE}/gallery/team/tech/subordinates/amulya.jpg`),
           balajiSiddharthaKatiki: v(
             `${IMAGEKIT_BASE}/gallery/team/tech/subordinates/balaji-siddhartha-katiki.png`
           ),
@@ -312,6 +313,9 @@ export const IMAGES = {
           ),
           eraganaboinaKrishnaKoushik: v(
             `${IMAGEKIT_BASE}/gallery/team/tech/subordinates/eraganaboina-krishna-koushik.png`
+          ),
+          gorantalaVyshnavi: v(
+            `${IMAGEKIT_BASE}/gallery/team/tech/subordinates/gorantala-vyshnavi.jpg`
           ),
           gPremKumar: v(`${IMAGEKIT_BASE}/gallery/team/tech/subordinates/g-prem-kumar.png`),
           meesalaPawanKumar: v(
