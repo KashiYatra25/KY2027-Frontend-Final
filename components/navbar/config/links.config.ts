@@ -8,6 +8,7 @@ export const primaryLinks = [
   { label: "SPONSORS", href: "/sponsors" },
   { label: "PASSES", href: "/passes" },
   { label: "CA", href: "/campus-ambassador" },
+  { label: "GALLERY", href: "/gallery" },
   { label: "ABOUT", href: "/about" },
 ];
 
