@@ -8,7 +8,7 @@ import { PhotoReels } from "./sections/PhotoReels/PhotoReels";
 import { VideoReelSection } from "./sections/VideoReelSection";
 import { SpecialVideosSection } from "./sections/SpecialVideosSection/SpecialVideosSection";
 import { PerformersSection } from "./sections/PerformersSection";
-import { TeamSection } from "./sections/TeamSection/TeamSection";
+// import { TeamSection } from "./sections/TeamSection/TeamSection";
 import { FooterSection } from "./sections/FooterSection";
 import { Lightbox } from "./sections/Lightbox";
 import { GlowBackgrounds, Sparkles, DecoElements } from "./sections/decor";
@@ -80,8 +80,8 @@ export function GalleryPageContent() {
           {/* Performers section */}
           <PerformersSection onCardClick={openLightbox} />
 
-          {/* Team photo section */}
-          <TeamSection onPhotoClick={openLightbox} />
+          {/* Team photo section - commented out for now */}
+          {/* <TeamSection onPhotoClick={openLightbox} /> */}
 
           {/* Footer */}
           <FooterSection />
