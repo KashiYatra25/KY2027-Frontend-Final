@@ -58,7 +58,7 @@ export const ContactInfo = memo(function ContactInfo() {
             textShadow: "0 2px 20px rgba(255,215,0,0.3)",
           }}
         >
-          Reach The Yatra
+          Reach Us
         </h2>
 
         {/* Info cards */}
