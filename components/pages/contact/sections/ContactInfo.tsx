@@ -20,9 +20,9 @@ const infoCards: {
   },
   {
     icon: <PhoneIcon />,
-    label: "Call Us",
-    value: "+91 79069 49235",
-    href: "tel:+917906949235",
+    label: "Rudra",
+    value: "+91 97370 11173",
+    href: "tel:+919737011173",
   },
   {
     icon: <PinIcon />,
