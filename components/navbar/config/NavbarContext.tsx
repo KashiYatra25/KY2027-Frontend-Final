@@ -3,7 +3,7 @@
 import { createContext, useContext, useMemo, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { primaryLinks, secondaryLinks } from "./links.config";
+import { primaryLinks, secondaryLinks, desktopOnlyLinks, authLinks } from "./links.config";
 
 // ═══════════════════════════════════════════════════════════════════
 // TYPES
@@ -41,6 +41,9 @@ interface NavbarContextValue {
   primaryLinks: PrimaryLink[];
   secondaryLinks: SecondaryLink[];
   allLinks: AllLink[];
+
+  // Mobile-specific links (excludes desktop-only links like Gallery)
+  mobileLinks: AllLink[];
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -90,6 +93,23 @@ export function NavbarProvider({ children, theme = "main" }: NavbarProviderProps
       ? secondaryLinks.filter((link) => link.label !== "LOGIN")
       : secondaryLinks;
 
+    // All links for desktop
+    const allLinks: AllLink[] = [...primaryLinks, ...filteredSecondaryLinks];
+
+    // Mobile links: exclude desktop-only links (like Gallery), add auth links if authenticated
+    const mobilePrimaryLinks = primaryLinks.filter(
+      (link) => !desktopOnlyLinks.includes(link.label)
+    );
+
+    // Add auth-specific links (like Purchases) when user is authenticated
+    const mobileAuthLinks = isAuthenticated ? authLinks : [];
+
+    const mobileLinks: AllLink[] = [
+      ...mobilePrimaryLinks,
+      ...mobileAuthLinks,
+      ...filteredSecondaryLinks,
+    ];
+
     return {
       theme,
       pathname,
@@ -101,7 +121,8 @@ export function NavbarProvider({ children, theme = "main" }: NavbarProviderProps
       userInitials,
       primaryLinks,
       secondaryLinks: filteredSecondaryLinks,
-      allLinks: [...primaryLinks, ...filteredSecondaryLinks],
+      allLinks,
+      mobileLinks,
     };
   }, [pathname, session, status, theme]);
 
