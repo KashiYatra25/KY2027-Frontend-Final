@@ -204,49 +204,101 @@ export function FooterSection() {
             />
 
             {/* Security Badge - Secured by RTS */}
-            <div className="mt-8 flex flex-col items-center justify-center gap-2">
+            <motion.div
+              className="mt-10 flex justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <a
                 href="https://rudrasec.in/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-row items-center gap-3 transition-opacity hover:opacity-80"
+                className="group relative"
               >
-                <Image
-                  src="/security/RTSf_logo.png"
-                  alt="RTS Security"
-                  width={32}
-                  height={32}
-                  className="object-contain"
+                {/* Outer glow effect */}
+                <div
+                  className="absolute -inset-1 rounded-xl opacity-50 blur-lg transition-all duration-500 group-hover:opacity-80 group-hover:blur-xl"
+                  style={{
+                    background: `linear-gradient(135deg, ${FOOTER_COLORS.NEON_CYAN}40, ${FOOTER_COLORS.NEON_PURPLE}40)`,
+                  }}
                 />
-                <span
-                  className="flex items-center gap-2 text-xs tracking-wider"
-                  style={{ color: FOOTER_COLORS.TEXT_SECONDARY }}
+
+                {/* Main badge container */}
+                <div
+                  className="relative flex items-center gap-4 rounded-xl border px-6 py-3 backdrop-blur-md transition-all duration-300 group-hover:scale-[1.02]"
+                  style={{
+                    background: `linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,20,40,0.8))`,
+                    borderColor: `${FOOTER_COLORS.NEON_CYAN}30`,
+                    boxShadow: `0 0 20px ${FOOTER_COLORS.NEON_CYAN}10, inset 0 1px 0 ${FOOTER_COLORS.NEON_CYAN}20`,
+                  }}
                 >
-                  <svg
-                    className="h-3.5 w-3.5 animate-pulse"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                  </svg>
-                  Secured by <span className="font-bold">RTS</span>
-                </span>
+                  {/* Shield icon with glow */}
+                  <div className="relative">
+                    <div
+                      className="absolute inset-0 animate-pulse rounded-full blur-md"
+                      style={{ background: `${FOOTER_COLORS.NEON_CYAN}40` }}
+                    />
+                    <svg
+                      className="relative h-8 w-8"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke={FOOTER_COLORS.NEON_CYAN}
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      <path d="M9 12l2 2 4-4" stroke={FOOTER_COLORS.NEON_PINK} strokeWidth="2" />
+                    </svg>
+                  </div>
+
+                  {/* Text content */}
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="text-xs font-medium tracking-[0.2em] uppercase"
+                        style={{ color: FOOTER_COLORS.TEXT_SECONDARY }}
+                      >
+                        Secured by
+                      </span>
+                      <span
+                        className="text-lg font-black tracking-wider"
+                        style={{
+                          background: `linear-gradient(135deg, ${FOOTER_COLORS.NEON_CYAN}, ${FOOTER_COLORS.NEON_PINK})`,
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          textShadow: `0 0 30px ${FOOTER_COLORS.NEON_CYAN}50`,
+                        }}
+                      >
+                        RTS
+                      </span>
+                    </div>
+                    <span
+                      className="text-[10px] tracking-wider opacity-60 transition-opacity group-hover:opacity-100"
+                      style={{ color: FOOTER_COLORS.NEON_CYAN }}
+                    >
+                      rudrasec.in →
+                    </span>
+                  </div>
+
+                  {/* RTS Logo */}
+                  <div className="relative ml-2">
+                    <div
+                      className="absolute inset-0 animate-pulse rounded-full blur-sm"
+                      style={{ background: `${FOOTER_COLORS.NEON_PURPLE}30` }}
+                    />
+                    <Image
+                      src="/security/RTSf_logo.png"
+                      alt="RTS Security"
+                      width={36}
+                      height={36}
+                      className="relative object-contain drop-shadow-lg"
+                    />
+                  </div>
+                </div>
               </a>
-              <a
-                href="https://rudrasec.in/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[10px] tracking-wider underline underline-offset-2 transition-opacity hover:opacity-80"
-                style={{ color: FOOTER_COLORS.TEXT_SECONDARY }}
-              >
-                rudrasec.in
-              </a>
-            </div>
+            </motion.div>
           </div>
 
           {/* ═══ Ambient Glows ═══ */}
