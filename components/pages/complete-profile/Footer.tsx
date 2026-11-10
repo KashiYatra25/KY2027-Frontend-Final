@@ -41,13 +41,13 @@ const Footer = () => {
         href="https://rudrasec.in/"
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-6 flex flex-col items-center gap-2 transition-opacity hover:opacity-80"
+        className="mt-6 flex flex-row items-center justify-center gap-3 transition-opacity hover:opacity-80"
       >
         <Image
           src="/security/RTSf_logo.png"
           alt="RTS Security"
-          width={40}
-          height={40}
+          width={28}
+          height={28}
           className="object-contain"
         />
         <span className="text-xs tracking-wider" style={{ color: `${COLORS.GOLD}50` }}>

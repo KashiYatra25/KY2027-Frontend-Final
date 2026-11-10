@@ -64,13 +64,13 @@ export const FooterSection = memo(function FooterSection() {
           href="https://rudrasec.in/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex flex-col items-center gap-2 transition-opacity hover:opacity-80"
+          className="inline-flex flex-row items-center gap-3 transition-opacity hover:opacity-80"
         >
           <Image
             src="/security/RTSf_logo.png"
             alt="RTS Security"
-            width={48}
-            height={48}
+            width={32}
+            height={32}
             className="object-contain"
           />
           <span className="text-xs tracking-wider" style={{ color: PALETTE.TEXT_MUTED }}>

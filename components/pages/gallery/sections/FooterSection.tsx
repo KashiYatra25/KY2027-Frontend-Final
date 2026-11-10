@@ -42,7 +42,7 @@ export function FooterSection() {
         href="https://rudrasec.in/"
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-8 inline-flex flex-col items-center gap-2 transition-opacity hover:opacity-80"
+        className="mt-8 inline-flex flex-row items-center gap-3 transition-opacity hover:opacity-80"
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.7, delay: 0.4 }}
@@ -50,8 +50,8 @@ export function FooterSection() {
         <Image
           src="/security/RTSf_logo.png"
           alt="RTS Security"
-          width={48}
-          height={48}
+          width={32}
+          height={32}
           className="object-contain"
         />
         <span className="text-xs tracking-wider" style={{ color: COLORS.TEXT_DIM }}>

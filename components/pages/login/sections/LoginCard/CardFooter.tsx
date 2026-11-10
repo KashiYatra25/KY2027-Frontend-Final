@@ -33,13 +33,13 @@ export function CardFooter() {
         href="https://rudrasec.in/"
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-5 flex flex-col items-center gap-2 transition-opacity hover:opacity-80"
+        className="mt-5 flex flex-row items-center justify-center gap-3 transition-opacity hover:opacity-80"
       >
         <Image
           src="/security/RTSf_logo.png"
           alt="RTS Security"
-          width={36}
-          height={36}
+          width={24}
+          height={24}
           className="object-contain"
         />
         <span className="text-xs tracking-wider" style={{ color: `${ROYAL_COLORS.GOLD}50` }}>

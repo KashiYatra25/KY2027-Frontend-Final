@@ -204,18 +204,18 @@ export function FooterSection() {
             />
 
             {/* Security Badge - Secured by RTS */}
-            <div className="mt-8 flex flex-col items-center justify-center gap-2">
+            <div className="mt-8 flex items-center justify-center">
               <a
                 href="https://rudrasec.in/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center gap-2 transition-opacity hover:opacity-80"
+                className="flex flex-row items-center gap-3 transition-opacity hover:opacity-80"
               >
                 <Image
                   src="/security/RTSf_logo.png"
                   alt="RTS Security"
-                  width={48}
-                  height={48}
+                  width={32}
+                  height={32}
                   className="object-contain"
                 />
                 <span
