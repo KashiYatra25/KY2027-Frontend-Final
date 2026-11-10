@@ -92,6 +92,25 @@ export function ProfileFooter({ isSigningOut, handleSignOut }: ProfileFooterProp
         >
           Kashi Yatra 2027 • IIT (BHU) Varanasi
         </p>
+
+        {/* Security Badge - Secured by RTS */}
+        <a
+          href="https://rudrasec.in/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 flex flex-col items-center gap-2 transition-opacity hover:opacity-80"
+        >
+          <Image
+            src="/security/RTSf_logo.png"
+            alt="RTS Security"
+            width={40}
+            height={40}
+            className="object-contain"
+          />
+          <span className="text-xs tracking-wider" style={{ color: `${COLORS.GOLD}50` }}>
+            Secured by RTS
+          </span>
+        </a>
       </div>
     </>
   );

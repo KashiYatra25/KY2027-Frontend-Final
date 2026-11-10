@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import Image from "next/image";
 import { PALETTE, GRADIENTS } from "@/components/pages/sponsors/constants/palette";
 
 // ═══════════════════════════════════════════════════════════════════
@@ -54,9 +55,28 @@ export const FooterSection = memo(function FooterSection() {
         </div>
 
         {/* Copyright */}
-        <p className="text-xs" style={{ color: PALETTE.TEXT_MUTED }}>
+        <p className="mb-6 text-xs" style={{ color: PALETTE.TEXT_MUTED }}>
           © 2027 Kashiyatra. All rights reserved.
         </p>
+
+        {/* Security Badge - Secured by RTS */}
+        <a
+          href="https://rudrasec.in/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex flex-col items-center gap-2 transition-opacity hover:opacity-80"
+        >
+          <Image
+            src="/security/RTSf_logo.png"
+            alt="RTS Security"
+            width={48}
+            height={48}
+            className="object-contain"
+          />
+          <span className="text-xs tracking-wider" style={{ color: PALETTE.TEXT_MUTED }}>
+            Secured by RTS
+          </span>
+        </a>
       </div>
     </footer>
   );

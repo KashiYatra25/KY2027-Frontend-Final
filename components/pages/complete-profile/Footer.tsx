@@ -13,7 +13,7 @@ const Footer = () => {
             background: `linear-gradient(90deg, transparent, ${COLORS.GOLD}40)`,
           }}
         />
-        <div className="w-7 h-7 relative">
+        <div className="relative h-7 w-7">
           <Image
             src={IMAGES.contact.floatingDiya}
             alt=""
@@ -30,11 +30,30 @@ const Footer = () => {
         />
       </div>
       <p
-        className="text-center text-xs mt-3 tracking-widest uppercase"
+        className="mt-3 text-center text-xs tracking-widest uppercase"
         style={{ color: `${COLORS.GOLD}50` }}
       >
         Your data is secure and encrypted
       </p>
+
+      {/* Security Badge - Secured by RTS */}
+      <a
+        href="https://rudrasec.in/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-6 flex flex-col items-center gap-2 transition-opacity hover:opacity-80"
+      >
+        <Image
+          src="/security/RTSf_logo.png"
+          alt="RTS Security"
+          width={40}
+          height={40}
+          className="object-contain"
+        />
+        <span className="text-xs tracking-wider" style={{ color: `${COLORS.GOLD}50` }}>
+          Secured by RTS
+        </span>
+      </a>
     </>
   );
 };

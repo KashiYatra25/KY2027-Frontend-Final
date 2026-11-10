@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ROYAL_COLORS } from "@/components/pages/login/constants/palette";
 
 export function CardFooter() {
@@ -26,6 +27,25 @@ export function CardFooter() {
       >
         ✦ IIT (BHU) Varanasi ✦
       </p>
+
+      {/* Security Badge - Secured by RTS */}
+      <a
+        href="https://rudrasec.in/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-5 flex flex-col items-center gap-2 transition-opacity hover:opacity-80"
+      >
+        <Image
+          src="/security/RTSf_logo.png"
+          alt="RTS Security"
+          width={36}
+          height={36}
+          className="object-contain"
+        />
+        <span className="text-xs tracking-wider" style={{ color: `${ROYAL_COLORS.GOLD}50` }}>
+          Secured by RTS
+        </span>
+      </a>
     </div>
   );
 }

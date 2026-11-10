@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { COLORS } from "../constants/palette";
 
@@ -35,6 +36,28 @@ export function FooterSection() {
       >
         Kashiyatra, IIT BHU
       </motion.p>
+
+      {/* Security Badge - Secured by RTS */}
+      <motion.a
+        href="https://rudrasec.in/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-8 inline-flex flex-col items-center gap-2 transition-opacity hover:opacity-80"
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: 0.7, delay: 0.4 }}
+      >
+        <Image
+          src="/security/RTSf_logo.png"
+          alt="RTS Security"
+          width={48}
+          height={48}
+          className="object-contain"
+        />
+        <span className="text-xs tracking-wider" style={{ color: COLORS.TEXT_DIM }}>
+          Secured by RTS
+        </span>
+      </motion.a>
     </footer>
   );
 }
