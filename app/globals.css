@@ -3059,3 +3059,77 @@ body {
     opacity: 0.5;
   }
 }
+
+/* ── Hero CTA stone (Register / Profile): golden glow behind the stone ── */
+.stone-cta .stone-interactive {
+  isolation: isolate; /* keep the glow layers behind the stone, above the water */
+}
+.stone-cta .stone-interactive::before,
+.stone-cta .stone-interactive::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+/* Soft golden halo that breathes */
+.stone-cta .stone-interactive::before {
+  width: 150%;
+  height: 130%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 215, 0, 0.75) 0%,
+    rgba(255, 180, 0, 0.45) 30%,
+    rgba(255, 150, 30, 0.18) 55%,
+    rgba(255, 150, 30, 0) 72%
+  );
+  filter: blur(10px);
+  animation: stoneCtaGlow 2.4s ease-in-out infinite;
+}
+/* Expanding ring that radiates outward */
+.stone-cta .stone-interactive::after {
+  width: 90%;
+  height: 80%;
+  transform: translate(-50%, -50%) scale(0.8);
+  border: 2px solid rgba(255, 215, 0, 0.7);
+  box-shadow: 0 0 18px rgba(255, 200, 40, 0.7);
+  opacity: 0;
+  animation: stoneCtaRing 2.4s ease-out infinite;
+}
+.stone-cta:hover .stone-interactive::before {
+  filter: blur(8px) brightness(1.25);
+}
+@keyframes stoneCtaGlow {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+}
+@keyframes stoneCtaRing {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.7);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stone-cta .stone-interactive::before {
+    animation: none;
+    opacity: 0.85;
+  }
+  .stone-cta .stone-interactive::after {
+    animation: none;
+    display: none;
+  }
+}
