@@ -91,19 +91,31 @@ export default function FestEvents() {
   const T = EVENTS[shown.cur],
     x = T.s[shown.sub],
     n = T.s.length;
-  const NW = nar ? (W < 360 ? 72 : 84) : 138,
-    NH = nar ? (W < 360 ? 52 : 58) : 90;
+  // For categories with many items (8+), use smaller nodes
+  const NW = nar ? (W < 360 ? 72 : 84) : n > 8 ? 110 : 138,
+    NH = nar ? (W < 360 ? 52 : 58) : n > 8 ? 70 : 90;
   const GAP = 40; // space between the rangoli edge and the nodes
   let D: number, Rn: number, cx: number, cy: number, step: number;
   if (nar) {
-    // Phones: rangoli centred in the stage, nodes form a crown around its top half
-    const spread = Math.min(150, 40 * (n - 1));
-    const half = ((spread / 2) * Math.PI) / 180;
-    Rn = Math.min(150, (W / 2 - 12 - NW / 2) / Math.max(Math.sin(half), 0.5));
-    D = 2 * (Rn - NH / 2 - 24);
-    cx = W / 2;
-    cy = Rn + NH / 2 + 14;
-    step = spread / (n - 1);
+    // Phones: for categories with many sub-events, use vertical list layout
+    const manyItems = n > 6;
+    if (manyItems) {
+      // Vertical stacked layout for 7+ items
+      D = Math.min(W * 0.55, 200);
+      Rn = 0; // not used in vertical layout
+      cx = W * 0.35;
+      cy = D / 2 + 50;
+      step = 0; // not used
+    } else {
+      // Normal radial layout for 6 or fewer items
+      const spread = Math.min(150, 40 * (n - 1));
+      const half = ((spread / 2) * Math.PI) / 180;
+      Rn = Math.min(150, (W / 2 - 12 - NW / 2) / Math.max(Math.sin(half), 0.5));
+      D = 2 * (Rn - NH / 2 - 24);
+      cx = W / 2;
+      cy = Rn + NH / 2 + 14;
+      step = spread / (n - 1);
+    }
   } else {
     // Desktop: nodes sit fully outside the rangoli and stay inside the stage
     D = Math.min(H * 0.92, 880, 2 * (W - NW - GAP - 16));
@@ -111,7 +123,9 @@ export default function FestEvents() {
     cx = 0;
     cy = H / 2;
     const maxHalf = (Math.asin(Math.min(1, (H / 2 - NH / 2 - 8) / Rn)) * 180) / Math.PI;
-    step = Math.min(26, 110 / (n - 1), (2 * maxHalf) / (n - 1));
+    // For many items (>8), use wider spread with tighter spacing
+    const baseStep = n > 8 ? 160 / (n - 1) : 110 / (n - 1);
+    step = Math.min(26, baseStep, (2 * maxHalf) / (n - 1));
   }
   const stageVars = {
     "--D": D + "px",
@@ -193,7 +207,18 @@ export default function FestEvents() {
           >
             {W > 0 &&
               T.s.map((s, i) => {
-                const a = (((nar ? -90 : 0) + (i - (n - 1) / 2) * step) * Math.PI) / 180;
+                const manyItems = nar && n > 6;
+                let left: number, top: number;
+                if (manyItems) {
+                  // Vertical stacked layout - cascade down the right side
+                  left = cx + D / 2 + NW / 2 + 20;
+                  top = 60 + i * (NH + 12);
+                } else {
+                  // Radial layout
+                  const a = (((nar ? -90 : 0) + (i - (n - 1) / 2) * step) * Math.PI) / 180;
+                  left = cx + Rn * Math.cos(a);
+                  top = cy + Rn * Math.sin(a);
+                }
                 const on = shown.cur === cur ? i === sub : i === shown.sub;
                 return (
                   <button
@@ -201,8 +226,8 @@ export default function FestEvents() {
                     className={on ? "node on" : "node"}
                     style={
                       {
-                        left: cx + Rn * Math.cos(a),
-                        top: cy + Rn * Math.sin(a),
+                        left,
+                        top,
                         "--rt": "-2deg",
                       } as CSSProperties
                     }
