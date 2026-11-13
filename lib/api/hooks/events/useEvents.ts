@@ -31,6 +31,10 @@ export type {
 // CATEGORY METADATA
 // ═══════════════════════════════════════════════════════════════════
 
+// Colors derived from hue values in events.ts to match main events page:
+// Abhinay h:4 → red/crimson, Bandish h:36 → orange/gold, Crosswindz h:222 → blue,
+// Enquizta h:285 → purple/violet, Mirage h:258 → blue-violet, Natraj h:325 → magenta/pink,
+// Samwaad h:205 → cyan/teal, Toolika h:95 → yellow-green
 export const CATEGORY_METADATA: Record<
   EventCategorySlug,
   { name: string; icon: string; color: string; tagline: string; description: string }
@@ -38,63 +42,63 @@ export const CATEGORY_METADATA: Record<
   NATRAJ: {
     name: "Natraj",
     icon: "💃",
-    color: "#E91E63",
+    color: "hsl(325 80% 55%)", // h:325 - magenta/pink
     tagline: "Dance Events",
-    description: "Express yourself through the art of movement",
+    description: "Dance like the cosmos is watching",
   },
   CROSSWINDZ: {
     name: "Crosswindz",
     icon: "🎸",
-    color: "#9C27B0",
+    color: "hsl(222 70% 55%)", // h:222 - blue
     tagline: "Music Events",
-    description: "Where melodies meet magic",
+    description: "Where melodies meet the soul",
   },
   BANDISH: {
     name: "Bandish",
     icon: "🎵",
-    color: "#673AB7",
-    tagline: "Classical Music",
-    description: "Traditional rhythms, timeless beauty",
+    color: "hsl(36 85% 50%)", // h:36 - orange/gold
+    tagline: "Indian Classical",
+    description: "Classical notes, timeless beauty",
   },
   ABHINAY: {
     name: "Abhinay",
     icon: "🎭",
-    color: "#3F51B5",
+    color: "hsl(4 75% 50%)", // h:4 - red/crimson (matching the theatre theme!)
     tagline: "Theatre & Drama",
-    description: "Stories that come alive on stage",
+    description: "The world is a stage",
   },
   MIRAGE: {
     name: "Mirage",
     icon: "👗",
-    color: "#2196F3",
+    color: "hsl(258 70% 60%)", // h:258 - blue-violet
     tagline: "Fashion Events",
-    description: "Style meets creativity on the runway",
+    description: "Where fashion meets fantasy",
   },
   TOOLIKA: {
     name: "Toolika",
     icon: "🎨",
-    color: "#00BCD4",
+    color: "hsl(95 60% 45%)", // h:95 - yellow-green
     tagline: "Art & Design",
-    description: "Canvas of imagination and color",
+    description: "Art speaks where words fail",
   },
   ENQUIZTA: {
     name: "Enquizta",
     icon: "🧠",
-    color: "#009688",
+    color: "hsl(285 65% 55%)", // h:285 - purple/violet
     tagline: "Quiz Events",
-    description: "Test your knowledge, win glory",
+    description: "Knowledge is the ultimate power",
   },
   SAMWAAD: {
     name: "Samwaad",
     icon: "🎤",
-    color: "#4CAF50",
+    color: "hsl(205 70% 50%)", // h:205 - cyan/teal
     tagline: "Literary Events",
-    description: "Words that inspire and ignite",
+    description: "The power of words",
   },
   ZAIKA: {
     name: "Zaika",
     icon: "🍳",
-    color: "#FF9800",
+    color: "hsl(30 90% 50%)", // warm orange for culinary
     tagline: "Culinary Events",
     description: "A feast for the senses",
   },
