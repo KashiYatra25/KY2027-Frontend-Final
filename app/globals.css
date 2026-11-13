@@ -3060,47 +3060,30 @@ body {
   }
 }
 
-/* ── Hero CTA stone (Register / Profile): golden glow behind the stone ── */
+/* ── Hero CTA stone (Register / Profile): soft golden glow behind the stone ── */
 .stone-cta .stone-interactive {
-  isolation: isolate; /* keep the glow layers behind the stone, above the water */
+  isolation: isolate; /* keep the glow behind the stone, above the water */
 }
-.stone-cta .stone-interactive::before,
-.stone-cta .stone-interactive::after {
+.stone-cta .stone-interactive::before {
   content: "";
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 55%;
+  width: 135%;
+  height: 100%;
   border-radius: 50%;
   pointer-events: none;
   z-index: -1;
-}
-/* Soft golden halo that breathes */
-.stone-cta .stone-interactive::before {
-  width: 150%;
-  height: 130%;
   transform: translate(-50%, -50%);
   background: radial-gradient(
-    ellipse at center,
-    rgba(255, 215, 0, 0.75) 0%,
-    rgba(255, 180, 0, 0.45) 30%,
-    rgba(255, 150, 30, 0.18) 55%,
-    rgba(255, 150, 30, 0) 72%
+    closest-side,
+    rgba(255, 215, 0, 0.7) 0%,
+    rgba(255, 180, 0, 0.4) 35%,
+    rgba(255, 150, 30, 0.14) 70%,
+    rgba(255, 150, 30, 0) 100%
   );
-  filter: blur(10px);
-  animation: stoneCtaGlow 2.4s ease-in-out infinite;
-}
-/* Expanding ring that radiates outward */
-.stone-cta .stone-interactive::after {
-  width: 90%;
-  height: 80%;
-  transform: translate(-50%, -50%) scale(0.8);
-  border: 2px solid rgba(255, 215, 0, 0.7);
-  box-shadow: 0 0 18px rgba(255, 200, 40, 0.7);
-  opacity: 0;
-  animation: stoneCtaRing 2.4s ease-out infinite;
-}
-.stone-cta:hover .stone-interactive::before {
-  filter: blur(8px) brightness(1.25);
+  filter: blur(8px);
+  animation: stoneCtaGlow 2.6s ease-in-out infinite;
 }
 @keyframes stoneCtaGlow {
   0%,
@@ -3110,17 +3093,7 @@ body {
   }
   50% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.12);
-  }
-}
-@keyframes stoneCtaRing {
-  0% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.7);
+    transform: translate(-50%, -50%) scale(1.08);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -3128,8 +3101,13 @@ body {
     animation: none;
     opacity: 0.85;
   }
-  .stone-cta .stone-interactive::after {
-    animation: none;
-    display: none;
+}
+
+/* Desktop: never let the CTA stone outgrow the river (river is 30vh tall), so it
+   stays below the ghats on shorter screens such as 14" laptops. */
+@media (min-width: 640px) {
+  .stone-cta .stone-interactive {
+    width: min(var(--stone-size), 21vh);
+    height: min(var(--stone-size), 21vh);
   }
 }
