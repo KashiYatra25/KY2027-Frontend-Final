@@ -91,10 +91,25 @@ export default function FestEvents() {
   const T = EVENTS[shown.cur],
     x = T.s[shown.sub],
     n = T.s.length;
-  // For categories with many items (8+), use smaller nodes
-  const NW = nar ? (W < 360 ? 72 : 84) : n > 8 ? 110 : 138,
-    NH = nar ? (W < 360 ? 52 : 58) : n > 8 ? 70 : 90;
-  const GAP = 40; // space between the rangoli edge and the nodes
+  // For categories with many items, use progressively smaller nodes
+  // 12 items (Samwaad) needs smallest nodes to prevent overlap
+  const getNW = () => {
+    if (nar) return W < 360 ? 72 : 84;
+    if (n >= 12) return 90; // Very small for 12 items
+    if (n >= 10) return 100; // Small for 10-11 items
+    if (n > 8) return 110; // Medium-small for 9 items
+    return 138; // Default
+  };
+  const getNH = () => {
+    if (nar) return W < 360 ? 52 : 58;
+    if (n >= 12) return 56; // Very small for 12 items
+    if (n >= 10) return 62; // Small for 10-11 items
+    if (n > 8) return 70; // Medium-small for 9 items
+    return 90; // Default
+  };
+  const NW = getNW(),
+    NH = getNH();
+  const GAP = n >= 10 ? 30 : 40; // Tighter gap for many items
   let D: number, Rn: number, cx: number, cy: number, step: number;
   if (nar) {
     // Phones: for categories with many sub-events, use vertical list layout
@@ -118,14 +133,24 @@ export default function FestEvents() {
     }
   } else {
     // Desktop: nodes sit fully outside the rangoli and stay inside the stage
-    D = Math.min(H * 0.92, 880, 2 * (W - NW - GAP - 16));
+    // For small screens (14" laptops ~900-1200px), reduce rangoli size more aggressively
+    const isSmallDesktop = W < 1200;
+    const maxD = isSmallDesktop ? Math.min(H * 0.75, 600) : Math.min(H * 0.92, 880);
+    D = Math.min(maxD, 2 * (W - NW - GAP - 16));
     Rn = D / 2 + NW / 2 + GAP;
     cx = 0;
     cy = H / 2;
     const maxHalf = (Math.asin(Math.min(1, (H / 2 - NH / 2 - 8) / Rn)) * 180) / Math.PI;
-    // For many items (>8), use wider spread with tighter spacing
-    const baseStep = n > 8 ? 160 / (n - 1) : 110 / (n - 1);
-    step = Math.min(26, baseStep, (2 * maxHalf) / (n - 1));
+    // For many items, use much wider spread to prevent overlap
+    // 12 items needs ~200° spread, 10 items ~180°, 8+ items ~160°
+    const getBaseSpread = () => {
+      if (n >= 12) return 200;
+      if (n >= 10) return 180;
+      if (n > 8) return 160;
+      return 110;
+    };
+    const baseStep = getBaseSpread() / (n - 1);
+    step = Math.min(isSmallDesktop ? 20 : 26, baseStep, (2 * maxHalf) / (n - 1));
   }
   const stageVars = {
     "--D": D + "px",
