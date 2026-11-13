@@ -3069,37 +3069,37 @@ body {
   position: absolute;
   left: 50%;
   top: 55%;
-  width: 135%;
-  height: 100%;
+  width: 175%;
+  height: 135%;
   border-radius: 50%;
   pointer-events: none;
   z-index: -1;
   transform: translate(-50%, -50%);
   background: radial-gradient(
     closest-side,
-    rgba(255, 215, 0, 0.7) 0%,
-    rgba(255, 180, 0, 0.4) 35%,
-    rgba(255, 150, 30, 0.14) 70%,
+    rgba(255, 225, 60, 0.95) 0%,
+    rgba(255, 200, 0, 0.7) 30%,
+    rgba(255, 165, 20, 0.35) 60%,
     rgba(255, 150, 30, 0) 100%
   );
-  filter: blur(8px);
+  filter: blur(12px);
   animation: stoneCtaGlow 2.6s ease-in-out infinite;
 }
 @keyframes stoneCtaGlow {
   0%,
   100% {
-    opacity: 0.65;
+    opacity: 0.8;
     transform: translate(-50%, -50%) scale(0.95);
   }
   50% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.08);
+    transform: translate(-50%, -50%) scale(1.12);
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .stone-cta .stone-interactive::before {
     animation: none;
-    opacity: 0.85;
+    opacity: 0.95;
   }
 }
 
