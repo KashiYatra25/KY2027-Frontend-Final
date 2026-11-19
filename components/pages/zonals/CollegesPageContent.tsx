@@ -3,17 +3,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { MapPin, Calendar, ArrowRight, ArrowLeft } from "lucide-react";
+import { MapPin, Calendar, ArrowRight, Home } from "lucide-react";
 import { COLORS, GRADIENTS, SHADOWS } from "@/components/pages/zonals/constants/palette";
 import { ZONAL_COLLEGES } from "@/components/pages/zonals/config/zonals.config";
 import { IMAGES } from "@/lib/images";
-import { ZonalsNavbar } from "./sections";
+import { ZonalsNavbar, HeroSection, AtmosphereSection, FinalCTA } from "./sections";
 
 // ═══════════════════════════════════════════════════════════════════
 // ZONALS — COLLEGES PAGE
 //
 // Dedicated, vibrant, animated page where the COLLEGE CARDS are the hero.
 // Decorated with the single/multi pass artwork as floating elements.
+// Now includes the full marketing sections: Hero, Atmosphere, Final CTA.
 // ═══════════════════════════════════════════════════════════════════
 
 // Floating pass-artwork decor — tagged with position + motion params.
@@ -103,44 +104,8 @@ export function CollegesPageContent() {
           aria-hidden
         />
 
-        {/* ── Header ── */}
-        <section className="relative z-10 px-4 pt-32 pb-10 text-center sm:pt-40">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* Eyebrow */}
-            <span
-              className="inline-block rounded-full px-4 py-1.5 text-xs font-black tracking-[0.2em] uppercase"
-              style={{
-                background: COLORS.ACID_LIME,
-                color: COLORS.DEEP_INK,
-                boxShadow: SHADOWS.LIME_GLOW,
-              }}
-            >
-              Zonals · Partner Colleges
-            </span>
-
-            <h1
-              className="mt-5 text-5xl font-black tracking-tight uppercase sm:text-7xl lg:text-8xl"
-              style={{
-                background: GRADIENTS.TITLE,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                filter: SHADOWS.TITLE_DROP,
-              }}
-            >
-              Pick Your College
-            </h1>
-            <p
-              className="mx-auto mt-4 max-w-2xl text-base sm:text-lg"
-              style={{ color: `${COLORS.PAPER_WHITE}cc` }}
-            >
-              Your campus, your stage. Choose your zonal and jump straight into the events.
-            </p>
-          </motion.div>
-        </section>
+        {/* ── Hero Section (ZONALS. branding) ── */}
+        <HeroSection />
 
         {/* ── College cards (the hero of this page) ── */}
         <section className="relative z-10 mx-auto max-w-6xl px-4 pb-28">
@@ -178,24 +143,9 @@ export function CollegesPageContent() {
                         }}
                       />
 
-                      {/* Trending badge - only for RGIPT */}
-                      {isTrending && (
-                        <span
-                          className="absolute top-5 left-5 flex items-center gap-1 rounded-full px-3 py-1 text-xs font-black uppercase"
-                          style={{
-                            background: `linear-gradient(90deg, ${COLORS.SIGNAL_ORANGE}, ${COLORS.ELECTRIC_VIOLET})`,
-                            color: COLORS.PAPER_WHITE,
-                            boxShadow: `0 0 12px ${COLORS.SIGNAL_ORANGE}55`,
-                          }}
-                        >
-                          <span className="text-sm">🔥</span>
-                          Trending
-                        </span>
-                      )}
-
                       {/* Status badge */}
                       <span
-                        className="absolute top-5 right-5 rounded-full px-3 py-1 text-xs font-black uppercase"
+                        className="absolute top-4 right-4 rounded-full px-3 py-1 text-xs font-black uppercase"
                         style={{
                           background:
                             college.status === "registration-open"
@@ -214,10 +164,24 @@ export function CollegesPageContent() {
                       </span>
 
                       <h3
-                        className="relative text-3xl font-black uppercase"
+                        className="relative flex items-center gap-2 text-3xl font-black uppercase"
                         style={{ color: COLORS.PAPER_WHITE }}
                       >
                         {college.shortName}
+                        {isTrending && (
+                          <span
+                            className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-black uppercase"
+                            style={{
+                              background: `linear-gradient(90deg, ${COLORS.SIGNAL_ORANGE}, ${COLORS.ELECTRIC_VIOLET})`,
+                              color: COLORS.PAPER_WHITE,
+                              boxShadow: `0 0 8px ${COLORS.SIGNAL_ORANGE}55`,
+                              lineHeight: 1,
+                            }}
+                          >
+                            <span className="text-[8px]">🔥</span>
+                            Trending
+                          </span>
+                        )}
                       </h3>
                       <p
                         className="relative mt-1 text-sm"
@@ -267,7 +231,7 @@ export function CollegesPageContent() {
                           className="text-sm font-black uppercase"
                           style={{ color: COLORS.ACID_LIME }}
                         >
-                          View Events &amp; Register
+                          View Events & Register
                         </span>
                         <ArrowRight
                           className="h-5 w-5 transition-transform group-hover:translate-x-1"
@@ -281,18 +245,24 @@ export function CollegesPageContent() {
             })}
           </div>
 
-          {/* Back to Zonals */}
+          {/* Back to Home */}
           <div className="mt-14 flex justify-center">
             <Link
-              href="/zonals"
+              href="/"
               className="group inline-flex items-center gap-2 rounded-full border-2 px-6 py-3 text-sm font-black tracking-[0.14em] uppercase transition-colors"
               style={{ borderColor: `${COLORS.PAPER_WHITE}33`, color: COLORS.PAPER_WHITE }}
             >
-              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
-              Back to Zonals
+              <Home className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+              Back to Home
             </Link>
           </div>
         </section>
+
+        {/* ── Atmosphere Section ── */}
+        <AtmosphereSection />
+
+        {/* ── Final CTA ── */}
+        <FinalCTA />
       </main>
     </>
   );

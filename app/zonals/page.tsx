@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { ZonalsLandingContent } from "@/components/pages/zonals";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Zonals | Kashi Yatra 2027",
@@ -10,10 +10,11 @@ export const metadata: Metadata = {
     "IIT BHU fest zonals",
     "regional rounds",
     "RGIPT zonals",
+    "OGI zonals",
     "Kashi Yatra 2027",
   ],
 };
 
 export default function ZonalsPage() {
-  return <ZonalsLandingContent />;
+  redirect("/zonals/colleges");
 }

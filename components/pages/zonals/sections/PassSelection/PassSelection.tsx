@@ -64,6 +64,7 @@ export function PassSelection({ college }: Props) {
 
   return (
     <section
+      id="pass-selection"
       className="relative w-full overflow-hidden px-5 py-20 sm:px-8 sm:py-28"
       style={{ background: COLORS.DEEP_INK }}
       aria-label="Pass selection"

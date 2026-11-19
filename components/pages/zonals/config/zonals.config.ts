@@ -204,6 +204,70 @@ export const ZONAL_COLLEGES: ZonalCollege[] = [
       participation: "Certificate for all participants",
     },
   },
+  {
+    id: "ogi",
+    slug: "ogi",
+    name: "Oriental Group of Institutions",
+    shortName: "OGI",
+    city: "Bhopal",
+    state: "Madhya Pradesh",
+    venue: "TBD",
+    // date: "2026-12-02",
+    date: "Coming Soon",
+    status: "registration-open",
+    accentColor: "HOT_PINK",
+    registrationUrl: "https://konfhub.com/kashi-yatra-2027-ogi-zonals",
+    description:
+      "Join us at OGI Bhopal for an exciting showcase of talent across 12 events. Compete, perform, and win amazing prizes!",
+    passes: [
+      {
+        type: "SINGLE_EVENT",
+        price: 199,
+        description: "Register for any 1 event of your choice",
+        perks: ["Access to 1 event", "Participation certificate", "Chance to win prizes"],
+      },
+      {
+        type: "MULTI_EVENT",
+        price: 499,
+        description: "Register for unlimited events",
+        perks: [
+          "Access to all 12 events",
+          "Participation certificate for each event",
+          "Best value for multi-talented performers",
+          "Chance to win prizes in multiple categories",
+        ],
+      },
+    ],
+    events: [
+      { id: "ogi-solo-dance", slug: "solo-dance", name: "Solo Dance", category: "DANCE" },
+      { id: "ogi-solo-music", slug: "solo-music", name: "Solo Music", category: "MUSIC" },
+      {
+        id: "ogi-solo-instrumental",
+        slug: "solo-instrumental",
+        name: "Solo Instrumental",
+        category: "MUSIC",
+      },
+      { id: "ogi-mono-act", slug: "mono-act", name: "Mono Act", category: "THEATRE" },
+      {
+        id: "ogi-mr-ms-oriental",
+        slug: "mr-ms-oriental",
+        name: "Mr. & Ms. Oriental",
+        category: "PERSONALITY",
+      },
+      { id: "ogi-group-dance", slug: "group-dance", name: "Group Dance", category: "DANCE" },
+      { id: "ogi-debate", slug: "debate", name: "Debate", category: "LITERARY" },
+      { id: "ogi-quiz", slug: "quiz", name: "Quiz", category: "LITERARY" },
+      { id: "ogi-open-mic", slug: "open-mic", name: "Open Mic", category: "MUSIC" },
+      { id: "ogi-face-painting", slug: "face-painting", name: "Face Painting", category: "ART" },
+      { id: "ogi-sketching", slug: "sketching", name: "Sketching", category: "ART" },
+      { id: "ogi-nukkad-natak", slug: "nukkad-natak", name: "Nukkad Natak", category: "THEATRE" },
+    ],
+    prizeDistribution: {
+      first: "40% of prize pool",
+      second: "30% of prize pool",
+      participation: "Certificate for all participants",
+    },
+  },
 ];
 
 // ═══════════════════════════════════════════════════════════════════
