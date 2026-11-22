@@ -85,25 +85,14 @@ export function PerformerCard({ performer, index, onClick }: PerformerCardProps)
           Performer
         </span>
       ) : (
-        <>
-          <span
-            className="block px-1 pt-3 text-[clamp(16px,2.2vw,22px)] leading-[1.2]"
-            style={{
-              fontFamily: "var(--font-cinzel-decorative), var(--font-cinzel), Georgia, serif",
-            }}
-          >
-            {performer.name}
-          </span>
-          {performer.subtitle && (
-            <span
-              className="block pb-3 font-mono text-[10px] tracking-[0.14em] uppercase"
-              style={{ color: "#4a2a10" }}
-            >
-              {performer.subtitle}
-            </span>
-          )}
-          {!performer.subtitle && <span className="block pb-3.5" />}
-        </>
+        <span
+          className="block px-1 py-3 text-[clamp(16px,2.2vw,22px)] leading-[1.2]"
+          style={{
+            fontFamily: "var(--font-cinzel-decorative), var(--font-cinzel), Georgia, serif",
+          }}
+        >
+          {performer.name}
+        </span>
       )}
     </motion.button>
   );

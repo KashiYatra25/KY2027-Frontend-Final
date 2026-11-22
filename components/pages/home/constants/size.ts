@@ -22,7 +22,7 @@ export const SIZE_RIVER = {
 export const SIZE_STONES = {
   SCHEDULE: { mobile: 120, desktop: 200 },
   EVENTS: { mobile: 100, desktop: 160 },
-  REGISTER: { mobile: 94, desktop: 180 },
+  REGISTER: { mobile: 120, desktop: 230 },
   GALLERY: { mobile: 105, desktop: 180 },
   ABOUT: { mobile: 95, desktop: 170 },
 } as const;

@@ -68,7 +68,7 @@ export function CategoryPageContent({
           <ThemedNavbar position="relative" topOffset={18} theme="main" />
         </div>
         <main
-          className="flex min-h-screen items-center justify-center px-4 pt-28 pb-20"
+          className="flex min-h-screen items-center justify-center px-4 pt-36 pb-20"
           style={{
             background: "linear-gradient(180deg, #0c0810 0%, #150a14 50%, #0c0810 100%)",
           }}
@@ -138,7 +138,7 @@ export function CategoryPageContent({
       </div>
 
       <main
-        className="relative min-h-screen overflow-hidden px-4 pt-28 pb-20 sm:px-6 sm:pt-32"
+        className="relative min-h-screen overflow-hidden px-4 pt-36 pb-20 sm:px-6 sm:pt-40"
         style={{
           background: `linear-gradient(180deg, 
             #0c0810 0%,
