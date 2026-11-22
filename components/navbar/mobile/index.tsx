@@ -18,7 +18,8 @@ export const NavbarMobile = memo(function NavbarMobile({
   theme?: NavbarTheme;
 }) {
   const [open, setOpen] = useState(false);
-  const { isActive, isSessionLoading, isAuthenticated, user, userInitials, allLinks } = useNavbar();
+  const { isActive, isSessionLoading, isAuthenticated, user, userInitials, mobileLinks } =
+    useNavbar();
   const styles = MOBILE_THEME_STYLES[theme];
 
   // Lock body scroll when menu is open
@@ -235,7 +236,7 @@ export const NavbarMobile = memo(function NavbarMobile({
             </div>
           )}
 
-          {allLinks.map((link, i, arr) => {
+          {mobileLinks.map((link, i, arr) => {
             const active = isActive(link.href);
             const isLoginLink = link.label === "LOGIN";
             return (
@@ -351,7 +352,7 @@ export const NavbarMobile = memo(function NavbarMobile({
                       ? "translateY(0) scale(1.02)"
                       : "translateY(0)"
                     : "translateY(-8px)",
-                  transitionDelay: open ? `${50 + allLinks.length * 30}ms` : "0ms",
+                  transitionDelay: open ? `${50 + mobileLinks.length * 30}ms` : "0ms",
                 }}
               >
                 <span

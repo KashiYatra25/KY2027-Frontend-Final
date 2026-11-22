@@ -3059,3 +3059,55 @@ body {
     opacity: 0.5;
   }
 }
+
+/* ── Hero CTA stone (Register / Profile): soft golden glow behind the stone ── */
+.stone-cta .stone-interactive {
+  isolation: isolate; /* keep the glow behind the stone, above the water */
+}
+.stone-cta .stone-interactive::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 175%;
+  height: 135%;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 225, 60, 0.95) 0%,
+    rgba(255, 200, 0, 0.7) 30%,
+    rgba(255, 165, 20, 0.35) 60%,
+    rgba(255, 150, 30, 0) 100%
+  );
+  filter: blur(12px);
+  animation: stoneCtaGlow 2.6s ease-in-out infinite;
+}
+@keyframes stoneCtaGlow {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stone-cta .stone-interactive::before {
+    animation: none;
+    opacity: 0.95;
+  }
+}
+
+/* Desktop: never let the CTA stone outgrow the river (river is 30vh tall), so it
+   stays below the ghats on shorter screens such as 14" laptops. */
+@media (min-width: 640px) {
+  .stone-cta .stone-interactive {
+    width: min(var(--stone-size), 21vh);
+    height: min(var(--stone-size), 21vh);
+  }
+}

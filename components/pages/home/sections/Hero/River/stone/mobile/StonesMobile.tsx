@@ -65,6 +65,7 @@ export const StonesMobile = memo(function StonesMobile() {
           href={isLoggedIn ? "/profile" : "/login"}
           size={SIZE_STONES.REGISTER.mobile}
           phase={-1.6}
+          className="stone-cta"
           loadingSpinner={isLoading}
         />
       </div>

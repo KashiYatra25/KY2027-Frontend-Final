@@ -65,6 +65,7 @@ export const StonesDesktop = memo(function StonesDesktop() {
           href={isLoggedIn ? "/profile" : "/login"}
           size={SIZE_STONES.REGISTER.desktop}
           phase={-1.6}
+          className="stone-cta"
           loadingSpinner={isLoading}
         />
       </div>
