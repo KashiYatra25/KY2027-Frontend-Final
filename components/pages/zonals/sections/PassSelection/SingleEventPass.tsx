@@ -140,7 +140,7 @@ export function SingleEventPass({ college }: Props) {
             >
               <li>→ Entry to one zone of your choice</li>
               <li>→ Full line-up access</li>
-              <li>→ Collectible zine ticket</li>
+              <li>→ Collectible zine pass</li>
             </ul>
           </motion.div>
 

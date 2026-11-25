@@ -79,9 +79,9 @@ export const EVENTS: MainEvent[] = [
     1.5144,
     0.5,
     [
-      "Rangmanch|T|Stage Play|The grand stage awaits: sets, costumes and a full cast for theatrical excellence.",
+      "Rangmanch|T|Stage Play (10-25)|The grand stage awaits: sets, costumes and a full cast for theatrical excellence.",
       "Asmita|I|Monoact|One actor, many characters, infinite emotion. Solo theatre at its finest.",
-      "Hullad|T|Street Play|Raw, powerful street theatre that speaks to society and moves the masses.",
+      "Hullad|T|Street Play (15-30)|Raw, powerful street theatre that speaks to society and moves the masses.",
       "Chestha|T|Mime|Express without words. The art of silent storytelling through movement.",
     ],
     "Anand Manmora: +91 93524 45131, Shubham: 7877126672"
@@ -98,10 +98,11 @@ export const EVENTS: MainEvent[] = [
     0.4767,
     [
       "Sur|I|Classical Solo Singing|Immerse yourself in the depth of Indian classical vocals and ragas.",
-      "Sanlayan|T|Percussion Instrumentals|Let the rhythm speak through tabla, dholak and percussion mastery.",
+      "Sanlayan|T|Percussion Instrumentals|Percussion Instrumentals. From the tabla to the drums, let the rhythm speak through percussion mastery.",
       "Kriti|I|Original Composition|Showcase your original classical compositions and creative arrangements.",
-      "Swar Sangati|T|Choir & Acapella|Voices unite in perfect harmony. Choral excellence without instruments.",
+      "Swar Sangati|T|Choir & Acapella|Choir & Acapella. Voices unite in perfect harmony.",
       "Raagsamar|T|Unplugged Band|Acoustic fusion of classical and contemporary. Raw talent, pure music.",
+      "Ragascape|I|Ragascape|Where raw musical soul meets pure imagination. Step into the studio of the mind.",
     ],
     "Anand Manmora: +91 93524 45131, Rudra: 9737011173"
   ),

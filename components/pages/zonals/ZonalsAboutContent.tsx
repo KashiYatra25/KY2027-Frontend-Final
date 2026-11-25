@@ -11,7 +11,7 @@ import { ZonalsNavbar } from "./sections";
 //
 // Explains what Zonals are (KY-team events hosted at partner colleges)
 // and the headline reward: winning teams get a heavy discount on
-// Kashi Yatra festival tickets.
+// Kashi Yatra festival passes.
 // ═══════════════════════════════════════════════════════════════════
 
 const STEPS = [
@@ -180,7 +180,7 @@ export function ZonalsAboutContent() {
                 style={{ color: `${COLORS.PAPER_WHITE}dd` }}
               >
                 Win your Zonal and your team earns a heavy discount — around <strong>35–40%</strong>{" "}
-                — on Kashi Yatra festival tickets. Compete locally, celebrate at the main stage for
+                — on Kashi Yatra festival passes. Compete locally, celebrate at the main stage for
                 less.
               </p>
 

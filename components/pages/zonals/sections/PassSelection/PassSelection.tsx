@@ -97,7 +97,7 @@ export function PassSelection({ college }: Props) {
             className="mx-auto mt-4 max-w-xl text-base"
             style={{ color: `${COLORS.PAPER_WHITE}cc` }}
           >
-            Collectible by design. Grab a single-zone zine ticket or go full holographic with
+            Collectible by design. Grab a single-zone zine pass or go full holographic with
             all-access.
           </p>
         </motion.div>

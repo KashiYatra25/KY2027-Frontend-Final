@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Kashi Yatra passes",
     "IIT BHU fest passes",
     "pro nite passes",
-    "cultural fest tickets",
+    "cultural fest passes",
     "Kashi Yatra 2027 registration",
   ],
   openGraph: {
