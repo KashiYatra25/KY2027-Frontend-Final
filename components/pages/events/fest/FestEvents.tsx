@@ -14,8 +14,8 @@ import "./fest-events.css";
 const serif = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["600", "700"],
-  style: ["normal", "italic"],
   variable: "--fe-serif",
+  display: "swap",
 });
 const sans = Hind({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--fe-sans" });
 
